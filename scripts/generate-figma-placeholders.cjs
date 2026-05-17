@@ -1,6 +1,5 @@
 const fs = require('fs')
 const path = require('path')
-const glob = require('glob')
 
 const repoRoot = path.resolve(__dirname, '..')
 const srcDir = path.join(repoRoot, 'src')
@@ -8,7 +7,17 @@ const assetsDir = path.join(srcDir, 'assets')
 
 if (!fs.existsSync(assetsDir)) fs.mkdirSync(assetsDir, { recursive: true })
 
-const files = glob.sync(path.join(srcDir, '**/*.{ts,tsx,js,jsx}'))
+function walk(dir, exts = ['.ts', '.tsx', '.js', '.jsx']) {
+  const out = []
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name)
+    if (entry.isDirectory()) out.push(...walk(full, exts))
+    else if (exts.includes(path.extname(entry.name))) out.push(full)
+  }
+  return out
+}
+
+const files = walk(srcDir)
 const regex = /figma:asset\/([A-Za-z0-9]+\.png)/g
 const found = new Set()
 
@@ -18,16 +27,19 @@ for (const file of files) {
     let m
     while ((m = regex.exec(content)) !== null) found.add(m[1])
   } catch (e) {
-    // ignore
+    // ignore unreadable files
   }
 }
+
+// 1x1 transparent PNG (base64)
+const tinyPngBase64 = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII='
+const pngBuffer = Buffer.from(tinyPngBase64, 'base64')
 
 let created = 0
 for (const name of found) {
   const target = path.join(assetsDir, name)
   if (!fs.existsSync(target)) {
-    const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='512' height='512'><rect width='100%' height='100%' fill='%23EEE'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='24' fill='%23999'>${name}</text></svg>`
-    fs.writeFileSync(target, svg, 'utf8')
+    fs.writeFileSync(target, pngBuffer)
     console.log('Created placeholder:', path.relative(repoRoot, target))
     created++
   }
