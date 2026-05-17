@@ -11,14 +11,12 @@ function figmaAssetResolver() {
     resolveId(id) {
       if (id.startsWith('figma:asset/')) {
         const filename = id.replace('figma:asset/', '')
-        const full = path.resolve(__dirname, 'src/assets', filename)
-        if (fs.existsSync(full)) return full
-        // return the original id so `load` can provide a virtual placeholder
-        return id
+        // Always return an internal virtual id so Rollup/Vite won't treat it as an asset file
+        return `\0figma:asset/${filename}`
       }
     },
     load(id) {
-      if (typeof id === 'string' && id.startsWith('figma:asset/')) {
+      if (typeof id === 'string' && id.includes('figma:asset/')) {
         // Return a small SVG data URL as a placeholder image so builds succeed
         const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='256' height='256'><rect width='100%' height='100%' fill='%23EEE'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='20' fill='%23999'>placeholder</text></svg>`
         const dataUrl = `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`
