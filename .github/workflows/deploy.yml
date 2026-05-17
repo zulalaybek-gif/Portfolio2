@@ -1,7 +1,7 @@
 name: Deploy
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -11,7 +11,7 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -30,14 +30,21 @@ jobs:
       - name: Build project
         run: npm run build --if-present
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload build artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          personal_token: ${{ secrets.GH_PAGES_TOKEN }}
-          publish_dir: ./dist
-          publish_branch: gh-pages
-          cname: zulal-aybek.com
-          user_name: github-actions[bot]
-          user_email: 41898282+github-actions[bot]@users.noreply.github.com
-          commit_message: "chore: publish site via GH Actions"
+          path: ./dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
