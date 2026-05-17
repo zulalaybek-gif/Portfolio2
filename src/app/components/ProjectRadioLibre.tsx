@@ -137,6 +137,16 @@ const radioWaveKeyframes = `
 }
 `;
 
+function sanitizeInlineSvg(svg: string) {
+  return svg
+    .replace(/<\?xml[^?]*\?>\s*/g, "")
+    .replace(/<!doctype[\s\S]*?>/gi, "")
+    .replace(/<script[\s\S]*?<\/script>/gi, "")
+    .replace(/<foreignObject[\s\S]*?<\/foreignObject>/gi, "")
+    .replace(/\son[a-z]+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, "")
+    .replace(/\s(?:href|xlink:href)\s*=\s*["']\s*(?:javascript:|data:text\/html)[^"']*["']/gi, "");
+}
+
 /* ═══════════════════════════════════════════
    1. HERO
    ═══════════════════════════════════════════ */
@@ -637,8 +647,7 @@ function ElementsSection() {
   const { isDark, r, p } = useTheme();
   const body = useBodyStyle();
   const rawSvg = isDark ? elemDarkRaw : elemLightRaw;
-  // Strip XML declaration and clean for inline injection
-  const svgContent = rawSvg.replace(/<\?xml[^?]*\?>\s*/g, "").trim();
+  const svgContent = sanitizeInlineSvg(rawSvg).trim();
 
   return (
     <section className="px-6 md:px-12 py-20">

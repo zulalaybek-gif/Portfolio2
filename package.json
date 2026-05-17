@@ -4,8 +4,10 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
+    "audit:security": "npm audit --audit-level=moderate --omit=dev",
     "build": "vite build && cp dist/index.html dist/404.html",
-    "dev": "vite"
+    "dev": "vite",
+    "security:scan": "node scripts/security-scan.cjs"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "1.2.3",

@@ -1,0 +1,4 @@
+Contact: mailto:zulal.aybek@gmail.com
+Preferred-Languages: fr, en
+Canonical: https://www.zulal-aybek.com/.well-known/security.txt
+Policy: https://www.zulal-aybek.com/
