@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite'
 import path from 'path'
-import fs from 'fs'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 
@@ -27,6 +26,33 @@ function figmaAssetResolver() {
 }
 
 export default defineConfig({
+  build: {
+    target: 'es2020',
+    cssCodeSplit: true,
+    sourcemap: false,
+    modulePreload: {
+      polyfill: false,
+    },
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (!id.includes('node_modules')) return
+          if (id.includes('/react/') || id.includes('/react-dom/') || id.includes('/react-router/')) {
+            return 'vendor-react'
+          }
+          if (id.includes('/motion/')) {
+            return 'vendor-motion'
+          }
+          if (id.includes('/three/') || id.includes('/@react-three/')) {
+            return 'vendor-three'
+          }
+          if (id.includes('/lucide-react/')) {
+            return 'vendor-icons'
+          }
+        },
+      },
+    },
+  },
   plugins: [
     figmaAssetResolver(),
     // The React and Tailwind plugins are both required for Make, even if

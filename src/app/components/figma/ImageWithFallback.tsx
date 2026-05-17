@@ -17,6 +17,7 @@ export function ImageWithFallback(props: React.ImgHTMLAttributes<HTMLImageElemen
     className,
     loading = 'lazy',
     decoding = 'async',
+    referrerPolicy = 'strict-origin-when-cross-origin',
     ...rest
   } = props
 
@@ -26,10 +27,10 @@ export function ImageWithFallback(props: React.ImgHTMLAttributes<HTMLImageElemen
       style={style}
     >
       <div className="flex items-center justify-center w-full h-full">
-        <img src={ERROR_IMG_SRC} alt="Error loading image" loading={loading} decoding={decoding} {...rest} data-original-url={src} />
+        <img src={ERROR_IMG_SRC} alt="Error loading image" loading={loading} decoding={decoding} referrerPolicy={referrerPolicy} {...rest} data-original-url={src} />
       </div>
     </div>
   ) : (
-    <img src={src} alt={alt} className={className} style={style} loading={loading} decoding={decoding} {...rest} onError={handleError} />
+    <img src={src} alt={alt} className={className} style={style} loading={loading} decoding={decoding} referrerPolicy={referrerPolicy} {...rest} onError={handleError} />
   )
 }

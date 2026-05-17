@@ -8,4 +8,52 @@
     <loc>https://www.zulal-aybek.com/projects</loc>
     <priority>0.9</priority>
   </url>
+  <url>
+    <loc>https://www.zulal-aybek.com/projects/mya</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.zulal-aybek.com/projects/roma</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.zulal-aybek.com/projects/maker-week</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.zulal-aybek.com/projects/mzw</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.zulal-aybek.com/projects/kittyhub</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.zulal-aybek.com/projects/snatsh</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.zulal-aybek.com/projects/arte</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.zulal-aybek.com/projects/digital-campus</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.zulal-aybek.com/projects/narratiiv</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.zulal-aybek.com/projects/sncf-connect</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.zulal-aybek.com/projects/haiti</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.zulal-aybek.com/projects/radio-libre</loc>
+    <priority>0.7</priority>
+  </url>
 </urlset>
