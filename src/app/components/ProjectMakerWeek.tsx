@@ -1,0 +1,682 @@
+import React, { useRef, useEffect } from "react";
+import { motion, useScroll, useTransform } from "motion/react";
+import { ArrowLeft, MousePointerClick } from "lucide-react";
+import { useNavigate } from "react-router";
+import { useI18n, type TranslationKey } from "./i18n";
+import { useTheme } from "./theme";
+import { Sphere3D } from "./Sphere3D";
+
+/* -- Assets -- */
+import svgLogoWhite from "../../imports/svg-izx27lwoj7";
+import imgInk from "figma:asset/c82306997b813d54d937539bb775206a10b447a4.png";
+import imgMainPoster from "figma:asset/304162fbb650c3da41604692e94bf94f0bd8797c.png";
+import imgBrochure1 from "figma:asset/a52d20c25a98c4aae0114349b9f73daab3edcae5.png";
+import imgBrochure2 from "figma:asset/3978e4e54f2d3bfae17f60941f2d9d5bbd4b0e15.png";
+import imgKakemonos from "figma:asset/c9705bce7316d9db99c4e91ee1f215b41f7a75d1.png";
+import imgPoster from "figma:asset/dfd03f1c9733feb3ab02f5a1a45afb72c4459691.png";
+import imgSignaletique from "figma:asset/73056d67984b47a03e0bcfb0faad5d07c6559023.png";
+import imgPhotocall from "figma:asset/ffe54e86b56d3fa1077e76a94c154f437489a301.png";
+import imgDepliant1 from "figma:asset/c62830a069b22b8031e9409acaa963c0222601f5.png";
+import imgDepliant2 from "figma:asset/8553bfdd59642886c5b702dcab7f1d2087fb7ff4.png";
+import imgPhoto1 from "figma:asset/3d909879fcc1e93a34d818a3aa05bd0b466e1d00.png";
+import imgPhoto2 from "figma:asset/81d2bcac06c699e3e434bbd44e3d4d4f44a46849.png";
+import imgPhoto3 from "figma:asset/ddddae191688d5fcac52fe803131a7cfb943d1fd.png";
+import imgPhoto4 from "figma:asset/4d20a743d42c54b216655096d2d51c2b978d4d99.png";
+import imgPhoto5 from "figma:asset/9b199eab6ee72610e79cfbc66cd47940eb97a8fb.png";
+import imgPhoto6 from "figma:asset/5d82fca472b493204174082d1343ff5c08cf88a4.png";
+import imgPhoto7 from "figma:asset/d9ea1e57ffe752bc6ab6a9729fb0d6f1f0344181.png";
+import imgPhoto8 from "figma:asset/059b9598f52927b2af0bc5366e631b7ecfe58a95.png";
+import imgPhoto9 from "figma:asset/fec2a4f36620a48f8fa21e022fd899f18204354d.png";
+import imgPhoto10 from "figma:asset/61cf5c181d7df87510d2a1e7cf84ae47490bc8ca.png";
+import imgPhoto11 from "figma:asset/5ef7c100e60381ec9ea0150cd7374787de130d75.png";
+import imgPhoto12 from "figma:asset/f85e98152fa6749766c31a38c2ee4d7155672441.png";
+
+/* -- Helpers -- */
+const ACCENT = "#0095C1";
+const ACCENT_RGB = "0,149,193";
+const DARK_BLUE = "#0A1A2A";
+
+const PALETTE = [
+  { hex: "#E5775B", name: "Coral Maker" },
+  { hex: "#0095C1", name: "Digital Blue" },
+  { hex: "#DA3483", name: "Neon Fuchsia" },
+  { hex: "#1C5481", name: "Deep Ocean" },
+  { hex: "#A95693", name: "Amethyst" },
+  { hex: "#D8272B", name: "Signal Red" },
+];
+
+function SectionLabel({ children }: { children: string }) {
+  const { r } = useTheme();
+  return (
+    <span
+      className="uppercase tracking-[0.3em] block"
+      style={{
+        fontFamily: "'Inter', sans-serif",
+        fontSize: "0.6rem",
+        color: r(0.25),
+        letterSpacing: "0.25em",
+      }}
+    >
+      {children}
+    </span>
+  );
+}
+
+function FadeIn({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.8, delay, ease: "easeOut" }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/* helper for small body text style */
+function useBodyStyle() {
+  const { r } = useTheme();
+  return {
+    fontFamily: "'Inter', sans-serif",
+    fontSize: "0.85rem",
+    lineHeight: 2,
+    color: r(0.35),
+  } as const;
+}
+
+/* ===================================
+   1. HERO — Strong opening visual (sphere)
+   =================================== */
+function HeroSection() {
+  const { t } = useI18n();
+  const { isDark, r } = useTheme();
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
+  const imgOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
+  return (
+    <section ref={ref} className="relative w-full min-h-[80vh] flex flex-col items-center justify-center overflow-hidden px-6 py-20">
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: isDark
+            ? `radial-gradient(ellipse 60% 50% at 50% 45%, rgba(${ACCENT_RGB},0.08) 0%, transparent 70%)`
+            : `radial-gradient(ellipse 60% 50% at 50% 45%, rgba(${ACCENT_RGB},0.12) 0%, transparent 70%)`,
+        }}
+      />
+
+      <motion.div className="relative z-10 flex flex-col items-center" style={{ scale: imgScale, opacity: imgOpacity }}>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.3 }}
+          className="mb-8 flex items-center gap-4 justify-center"
+        >
+          <div className="w-8 h-[1px]" style={{ background: r(0.1) }} />
+          <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase", color: r(0.3) }}>
+            {t("mw.hero.label")} — {t("mw.hero.year")}
+          </span>
+          <div className="w-8 h-[1px]" style={{ background: r(0.1) }} />
+        </motion.div>
+
+        <Sphere3D backgroundUrl={imgInk} size="large" />
+
+        {/* Hint — drag to rotate */}
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 1.5 }}
+          className="mt-4 flex items-center gap-2"
+        >
+          <MousePointerClick size={13} style={{ color: r(0.2) }} />
+          <span
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "0.6rem",
+              letterSpacing: "0.12em",
+              color: r(0.2),
+            }}
+          >
+            {t("mw.hero.hint")}
+          </span>
+        </motion.div>
+      </motion.div>
+    </section>
+  );
+}
+
+/* ===================================
+   2. INTRO — Title + short intro
+   =================================== */
+function IntroSection() {
+  const { t } = useI18n();
+  const { r, isDark } = useTheme();
+
+  return (
+    <section className="px-6 md:px-16 py-16 max-w-4xl mx-auto">
+      <FadeIn>
+        <h1
+          className="text-center mb-6"
+          style={{
+            fontFamily: "'Space Grotesk', sans-serif",
+            fontSize: "clamp(1.8rem, 5vw, 3rem)",
+            fontWeight: 700,
+            letterSpacing: "-0.02em",
+            color: isDark ? "#fff" : DARK_BLUE,
+            transition: "color 0.5s ease",
+          }}
+        >
+          Maker Week
+        </h1>
+      </FadeIn>
+      <FadeIn delay={0.1}>
+        <p
+          className="text-center"
+          style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: "clamp(0.95rem, 2vw, 1.15rem)",
+            lineHeight: 1.9,
+            color: r(0.45),
+          }}
+        >
+          {t("mw.intro.subtitle")}
+        </p>
+      </FadeIn>
+      <FadeIn delay={0.15}>
+        <div className="w-12 h-[1px] mx-auto my-8" style={{ background: `rgba(${ACCENT_RGB},0.3)` }} />
+      </FadeIn>
+      <FadeIn delay={0.2}>
+        <p
+          className="text-center max-w-2xl mx-auto"
+          style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: "0.85rem",
+            lineHeight: 2,
+            color: r(0.3),
+          }}
+        >
+          {t("mw.intro.desc")}
+        </p>
+      </FadeIn>
+    </section>
+  );
+}
+
+/* ===================================
+   3. CONTEXT — Text + Main poster
+   =================================== */
+function ContextSection() {
+  const { t } = useI18n();
+  const { r } = useTheme();
+  const body = useBodyStyle();
+
+  return (
+    <section className="px-6 md:px-16 py-16">
+      <div className="max-w-5xl mx-auto">
+        {/* Label + text */}
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start mb-10">
+          <FadeIn>
+            <SectionLabel>{t("mw.context.label")}</SectionLabel>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <p style={body}>{t("mw.context.text")}</p>
+          </FadeIn>
+        </div>
+
+        {/* Main poster directly below */}
+        <FadeIn delay={0.15}>
+          <div className="max-w-2xl mx-auto rounded-2xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
+            <img src={imgMainPoster} alt="Affiche principale Maker Week" className="w-full object-cover" />
+          </div>
+        </FadeIn>
+      </div>
+    </section>
+  );
+}
+
+/* ===================================
+   4. DIRECTION VISUELLE — Text + Brochures
+   =================================== */
+function DirectionSection() {
+  const { t } = useI18n();
+  const { r } = useTheme();
+  const body = useBodyStyle();
+
+  return (
+    <section className="px-6 md:px-16 py-16">
+      <div className="max-w-5xl mx-auto">
+        {/* Label + text */}
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start mb-10">
+          <FadeIn>
+            <SectionLabel>{t("mw.direction.label")}</SectionLabel>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <p style={body}>{t("mw.direction.text")}</p>
+          </FadeIn>
+        </div>
+
+        {/* Brochures — the visual that illustrates direction */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FadeIn delay={0.15}>
+            <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
+              <img src={imgBrochure1} alt="Brochure Maker Week — extérieur" className="w-full object-cover" />
+            </div>
+          </FadeIn>
+          <FadeIn delay={0.2}>
+            <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
+              <img src={imgBrochure2} alt="Brochure Maker Week — intérieur" className="w-full object-cover" />
+            </div>
+          </FadeIn>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ===================================
+   5. CHOIX GRAPHIQUES — Text only (logo follows)
+   =================================== */
+function ChoicesSection() {
+  const { t } = useI18n();
+  const body = useBodyStyle();
+
+  return (
+    <section className="px-6 md:px-16 py-16">
+      <div className="max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start">
+          <FadeIn>
+            <SectionLabel>{t("mw.choices.label")}</SectionLabel>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <p style={body}>{t("mw.choices.text")}</p>
+          </FadeIn>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ===================================
+   5b. DÉPLIANTS — Editorial print materials
+   =================================== */
+function DepliantSection() {
+  const { t } = useI18n();
+  const { r } = useTheme();
+
+  return (
+    <section className="px-6 md:px-16 py-16">
+      <div className="max-w-5xl mx-auto">
+        <FadeIn className="mb-10">
+          <SectionLabel>{t("mw.editorial.label")}</SectionLabel>
+        </FadeIn>
+        <div className="flex flex-col gap-4">
+          <FadeIn delay={0.06}>
+            <div className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
+              <img src={imgDepliant2} alt="Dépliant Maker Week — recto" className="w-full object-cover" />
+            </div>
+          </FadeIn>
+          <FadeIn delay={0.12}>
+            <div className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
+              <img src={imgDepliant1} alt="Dépliant Maker Week — verso" className="w-full object-cover" />
+            </div>
+          </FadeIn>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ===================================
+   6. PALETTE — Text + Color swatches
+   =================================== */
+function PaletteSection() {
+  const { t } = useI18n();
+  const { isDark, r } = useTheme();
+  const body = useBodyStyle();
+
+  return (
+    <section className="px-6 md:px-16 py-16">
+      <div className="max-w-5xl mx-auto">
+        {/* Label + text */}
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start mb-10">
+          <FadeIn>
+            <SectionLabel>{t("mw.palette.label")}</SectionLabel>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <p style={body}>{t("mw.palette.text")}</p>
+          </FadeIn>
+        </div>
+
+        {/* Color swatches */}
+        <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+          {PALETTE.map((color, i) => (
+            <FadeIn key={color.hex} delay={0.12 + i * 0.06}>
+              <div className="flex flex-col items-center gap-3">
+                <div
+                  className="w-full aspect-square rounded-xl transition-transform duration-300 hover:scale-105"
+                  style={{
+                    background: color.hex,
+                    boxShadow: isDark
+                      ? `0 12px 30px ${color.hex}33`
+                      : `0 8px 24px ${color.hex}22`,
+                  }}
+                />
+                <span
+                  style={{
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "0.6rem",
+                    letterSpacing: "0.05em",
+                    color: r(0.25),
+                  }}
+                >
+                  {color.hex}
+                </span>
+              </div>
+            </FadeIn>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ===================================
+   7. LOGO
+   =================================== */
+function LogoSection() {
+  const { t } = useI18n();
+  const { isDark, r } = useTheme();
+
+  return (
+    <section className="px-6 md:px-16 py-16">
+      <div className="max-w-5xl mx-auto">
+        <FadeIn className="mb-10">
+          <SectionLabel>{t("mw.logo.label")}</SectionLabel>
+        </FadeIn>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* White logo on dark */}
+          <FadeIn delay={0.08}>
+            <div
+              className="flex items-center justify-center rounded-2xl p-12 md:p-16 transition-all duration-700"
+              style={{
+                background: isDark
+                  ? "linear-gradient(160deg, #1a1a1a 0%, #0d0d0d 100%)"
+                  : "linear-gradient(160deg, #1a1a2a 0%, #0a0a14 100%)",
+                border: `1px solid ${r(0.05)}`,
+              }}
+            >
+              <svg className="w-full max-w-[220px]" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="0 0 144.41 92.37">
+                <g id="Calque 1">
+                  <g id="Group">
+                    <path d={svgLogoWhite.p331d6500} fill="white" />
+                    <path d={svgLogoWhite.p11732800} fill="white" />
+                    <path d={svgLogoWhite.p32ee6800} fill="white" />
+                    <path d={svgLogoWhite.p32a71980} fill="white" />
+                    <path d={svgLogoWhite.p296d0900} fill="white" />
+                  </g>
+                  <path d={svgLogoWhite.pb0e7500} fill="white" />
+                  <g id="Group_2">
+                    <path d={svgLogoWhite.p5ce4700} fill="white" />
+                    <path d={svgLogoWhite.p2002ea40} fill="white" />
+                    <path d={svgLogoWhite.p35a5ec80} fill="white" />
+                    <path d={svgLogoWhite.p2e1b500} fill="white" />
+                    <path d={svgLogoWhite.p3d296200} fill="white" />
+                    <path d={svgLogoWhite.p3eb3fd80} fill="white" />
+                    <path d={svgLogoWhite.p33778a00} fill="white" />
+                    <path d={svgLogoWhite.p3aeb1000} fill="white" />
+                    <path d={svgLogoWhite.p24af4880} fill="white" />
+                    <path d={svgLogoWhite.p19a76400} fill="white" />
+                    <path d={svgLogoWhite.p1d54d840} fill="white" />
+                    <path d={svgLogoWhite.p20997000} fill="white" />
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </FadeIn>
+
+          {/* Black logo on light */}
+          <FadeIn delay={0.14}>
+            <div
+              className="flex items-center justify-center rounded-2xl p-12 md:p-16 transition-all duration-700"
+              style={{
+                background: isDark
+                  ? "linear-gradient(160deg, #f0ebe4 0%, #e8e2d9 100%)"
+                  : "linear-gradient(160deg, #faf7f3 0%, #f0ebe4 100%)",
+                border: `1px solid ${r(0.05)}`,
+              }}
+            >
+              <svg className="w-full max-w-[220px]" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="0 0 143.58 92.37">
+                <g id="Calque 1">
+                  <g id="Group">
+                    <path d={svgLogoWhite.p3b7d9440 ?? svgLogoWhite.p331d6500} fill="black" />
+                    <path d={svgLogoWhite.p5aee500 ?? svgLogoWhite.p11732800} fill="black" />
+                    <path d={svgLogoWhite.p179e400 ?? svgLogoWhite.p32ee6800} fill="black" />
+                    <path d={svgLogoWhite.p37d6af80 ?? svgLogoWhite.p32a71980} fill="black" />
+                    <path d={svgLogoWhite.p1ea74500 ?? svgLogoWhite.p296d0900} fill="black" />
+                  </g>
+                  <path d={svgLogoWhite.pb0e7500} fill="black" />
+                  <g id="Group_2">
+                    <path d={svgLogoWhite.p9818a80 ?? svgLogoWhite.p5ce4700} fill="black" />
+                    <path d={svgLogoWhite.p3e91b1c0 ?? svgLogoWhite.p2002ea40} fill="black" />
+                    <path d={svgLogoWhite.p3dd053e0 ?? svgLogoWhite.p35a5ec80} fill="black" />
+                    <path d={svgLogoWhite.p3e0cc380 ?? svgLogoWhite.p2e1b500} fill="black" />
+                    <path d={svgLogoWhite.p32927c00 ?? svgLogoWhite.p3d296200} fill="black" />
+                    <path d={svgLogoWhite.p3c6026c0 ?? svgLogoWhite.p3eb3fd80} fill="black" />
+                    <path d={svgLogoWhite.p1e881900 ?? svgLogoWhite.p33778a00} fill="black" />
+                    <path d={svgLogoWhite.p18109480 ?? svgLogoWhite.p3aeb1000} fill="black" />
+                    <path d={svgLogoWhite.p15e06540 ?? svgLogoWhite.p24af4880} fill="black" />
+                    <path d={svgLogoWhite.p8398971 ?? svgLogoWhite.p19a76400} fill="black" />
+                    <path d={svgLogoWhite.p97bc000 ?? svgLogoWhite.p1d54d840} fill="black" />
+                    <path d={svgLogoWhite.p13dd1700 ?? svgLogoWhite.p20997000} fill="black" />
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </FadeIn>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ===================================
+   8. SUPPORTS ÉVÉNEMENTIELS — Text + Kakemonos, poster, signalétique, photocall
+   =================================== */
+function EventSection() {
+  const { t } = useI18n();
+  const { r } = useTheme();
+  const body = useBodyStyle();
+
+  return (
+    <section className="px-6 md:px-16 py-16">
+      <div className="max-w-5xl mx-auto">
+        {/* Label + text */}
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start mb-10">
+          <FadeIn>
+            <SectionLabel>{t("mw.event.label")}</SectionLabel>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <p style={body}>{t("mw.event.text")}</p>
+          </FadeIn>
+        </div>
+
+        {/* Poster + Kakemonos */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <FadeIn delay={0.15}>
+            <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
+              <img src={imgPoster} alt="Poster — stands" className="w-full object-cover" />
+            </div>
+          </FadeIn>
+          <FadeIn delay={0.2}>
+            <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
+              <img src={imgKakemonos} alt="Kakemonos" className="w-full object-cover" />
+            </div>
+          </FadeIn>
+        </div>
+
+        {/* Signalétique */}
+        <FadeIn delay={0.25}>
+          <div className="rounded-2xl overflow-hidden mb-4" style={{ border: `1px solid ${r(0.04)}` }}>
+            <img src={imgSignaletique} alt="Signalétique ateliers" className="w-full object-cover" />
+          </div>
+        </FadeIn>
+
+        {/* Photocall */}
+        <FadeIn delay={0.3}>
+          <div className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
+            <img src={imgPhotocall} alt="Photocall Maker Week" className="w-full object-cover" />
+          </div>
+        </FadeIn>
+      </div>
+    </section>
+  );
+}
+
+/* ===================================
+   9. GALERIE — Photos de l'événement
+   =================================== */
+function GallerySection() {
+  const { t } = useI18n();
+  const { r } = useTheme();
+
+  const photos = [
+    imgPhoto10, imgPhoto11, imgPhoto1,
+    imgPhoto2, imgPhoto9, imgPhoto12,
+    imgPhoto3, imgPhoto4, imgPhoto5,
+    imgPhoto6, imgPhoto7, imgPhoto8,
+  ];
+
+  return (
+    <section className="px-6 md:px-16 py-16">
+      <div className="max-w-5xl mx-auto">
+        <FadeIn className="mb-10">
+          <SectionLabel>{t("mw.gallery.label")}</SectionLabel>
+        </FadeIn>
+
+        <div className="grid grid-cols-3 md:grid-cols-4 gap-2 md:gap-3">
+          {photos.map((src, i) => (
+            <FadeIn key={i} delay={i * 0.04}>
+              <div
+                className="rounded-lg overflow-hidden aspect-square"
+                style={{ border: `1px solid ${r(0.04)}` }}
+              >
+                <img src={src} alt={`Maker Week event photo ${i + 1}`} className="w-full h-full object-cover" />
+              </div>
+            </FadeIn>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ===================================
+   10. FINAL — Closing visual + back
+   =================================== */
+function FinalSection() {
+  const { t } = useI18n();
+  const { isDark, r } = useTheme();
+  const navigate = useNavigate();
+
+  return (
+    <section className="px-6 md:px-16 py-24">
+      <div className="max-w-5xl mx-auto flex flex-col items-center">
+        <FadeIn className="mb-6">
+          <SectionLabel>{t("mw.final.label")}</SectionLabel>
+        </FadeIn>
+
+        {/* Closing sphere */}
+        <FadeIn>
+          <div className="flex justify-center mb-10">
+            <Sphere3D backgroundUrl={imgInk} size="small" />
+          </div>
+        </FadeIn>
+
+        <FadeIn>
+          <p
+            className="text-center max-w-md mb-12"
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "0.85rem",
+              lineHeight: 2,
+              color: r(0.3),
+            }}
+          >
+            {t("mw.final.text")}
+          </p>
+        </FadeIn>
+
+        <FadeIn>
+          <button
+            onClick={() => navigate("/projects")}
+            className="group flex items-center gap-3 px-6 py-3 rounded-full transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "0.8rem",
+              border: `1px solid ${r(0.1)}`,
+              color: r(0.4),
+            }}
+          >
+            <ArrowLeft size={14} className="transition-transform group-hover:-translate-x-1" />
+            {t("mw.back")}
+          </button>
+        </FadeIn>
+      </div>
+    </section>
+  );
+}
+
+/* ===================================
+   MAIN EXPORT
+   =================================== */
+export function ProjectMakerWeek() {
+  const { t } = useI18n();
+  const { r, isDark } = useTheme();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  return (
+    <div className="relative w-full">
+      {/* Back button — top left */}
+      <motion.button
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, delay: 0.8 }}
+        onClick={() => navigate("/projects")}
+        className="fixed top-6 left-6 z-50 group flex items-center gap-2 px-4 py-2.5 rounded-full backdrop-blur-md transition-all duration-300 hover:scale-[1.05] active:scale-[0.97]"
+        style={{
+          fontFamily: "'Inter', sans-serif",
+          fontSize: "0.7rem",
+          letterSpacing: "0.03em",
+          background: isDark ? "rgba(15,8,23,0.7)" : "rgba(255,255,255,0.7)",
+          border: `1px solid ${r(0.08)}`,
+          color: r(0.5),
+          boxShadow: isDark ? "0 4px 20px rgba(0,0,0,0.3)" : "0 4px 20px rgba(0,0,0,0.08)",
+        }}
+      >
+        <ArrowLeft size={13} className="transition-transform group-hover:-translate-x-1" />
+        {t("mw.back")}
+      </motion.button>
+
+      <HeroSection />
+      <IntroSection />
+      <ContextSection />
+      <DirectionSection />
+      <PaletteSection />
+      <ChoicesSection />
+      <LogoSection />
+      <DepliantSection />
+      <EventSection />
+      <GallerySection />
+      <FinalSection />
+    </div>
+  );
+}

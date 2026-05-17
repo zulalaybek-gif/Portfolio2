@@ -1,0 +1,23 @@
+@import './fonts.css';
+@import './tailwind.css';
+@import './theme.css';
+
+/* Hide scrollbar for horizontal reel */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Theme-aware particle canvas styling */
+[data-theme="light"] .particle-orbit-canvas {
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+}
+
+[data-theme="light"] .particle-overlay-canvas {
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+}

@@ -1,0 +1,279 @@
+import { motion, AnimatePresence } from "motion/react";
+import { useState, useCallback, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router";
+import { useI18n } from "./i18n";
+import { useTheme } from "./theme";
+import { Globe, Sun, Moon, Menu, X } from "lucide-react";
+
+export function Navigation() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { t, lang, setLang } = useI18n();
+  const { isDark, toggle, p, r } = useTheme();
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
+
+  const navItems = [
+    { key: "nav.home" as const, path: "/" },
+    { key: "nav.services" as const, path: "/#services" },
+    { key: "nav.work" as const, path: "/projects" },
+    { key: "nav.about" as const, path: "/#about" },
+  ];
+
+  const getActiveKey = () => {
+    if (location.pathname.startsWith("/projects")) return "nav.work";
+    return "nav.home";
+  };
+
+  const active = getActiveKey();
+
+  /** Handle hash-based navigation (scroll to section) */
+  const handleNav = useCallback(
+    (path: string) => {
+      setMobileOpen(false);
+      if (path.startsWith("/#")) {
+        const sectionId = path.slice(2); // e.g. "services"
+        const findSection = () =>
+          document.querySelector(`[data-section="${sectionId}"]`) ||
+          document.querySelector(`[data-section-alias="${sectionId}"]`);
+
+        if (location.pathname === "/") {
+          // Already on home — scroll to section
+          const el = findSection();
+          if (el) {
+            el.scrollIntoView({ behavior: "smooth", block: "start" });
+            return;
+          }
+        }
+        // Navigate to home, then scroll after mount
+        navigate("/");
+        setTimeout(() => {
+          const el = findSection();
+          if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 300);
+      } else {
+        navigate(path);
+      }
+    },
+    [navigate, location.pathname]
+  );
+
+  return (
+    <>
+      <motion.nav
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.3 }}
+        className="flex items-center justify-between w-full px-6 md:px-8 py-5 relative z-20"
+        role="navigation"
+        aria-label={lang === "fr" ? "Navigation principale" : "Main navigation"}
+      >
+        {/* Logo */}
+        <button
+          onClick={() => handleNav("/")}
+          className="flex items-center gap-3 cursor-pointer"
+          aria-label={lang === "fr" ? "Retour à l'accueil" : "Go to homepage"}
+        >
+          <svg
+            viewBox="0 0 1253.25 850.21"
+            className="h-8"
+            style={{ fill: p.text }}
+          >
+            <path d="m1225.95,850.16l-562.28-.11c-21.48-.06-33.64-24.54-20.28-41.79l497.51-660.5c13.06-17.05,1.09-41.42-20.38-41.7l-282.22-.02c-13.88.36-24.74,11.14-25.18,25.09v261.94c.07,5.15-1.27,10.22-4.51,14.42l-60.16,79.89c-17.9,19.47-47.95,4.5-45.14-20.33l.16-336.22c-.62-13.72-11.54-24.45-25.27-24.61-3.69.23-15.34.29-23.04,13.62L116.56,839.59c-4.93,6.62-12.7,10.53-20.95,10.53H26.15c-21.75,0-33.96-25.75-20.57-42.89L605.03,11.43c5.96-8.33,14.7-11.79,25.65-11.39l596.15.31c14.42,0,26.11,11.69,26.11,26.11v142.68c0,5.73-1.88,11.29-5.36,15.84l-390.83,516.34c-13.12,17.19-.86,41.96,20.76,41.96l346.68.1c15.3-1.62,29.09,8.86,29.06,26.2l-.14,56.92c-1.17,14.82-14.15,24.56-27.17,23.67Z" />
+          </svg>
+        </button>
+
+        {/* Desktop Nav Links */}
+        <div
+          className="hidden md:flex items-center gap-1 backdrop-blur-md rounded-full px-2 py-1.5"
+          style={{
+            background: p.navPillBg,
+            border: `1px solid ${p.navPillBorder}`,
+          }}
+        >
+          {navItems.map((item) => (
+            <button
+              key={item.key}
+              onClick={() => handleNav(item.path)}
+              className="relative px-5 py-2 rounded-full transition-all duration-300"
+              style={{
+                fontSize: "0.85rem",
+                fontFamily: "'Inter', sans-serif",
+                color: active === item.key ? p.navActiveTxt : r(0.6),
+              }}
+            >
+              {active === item.key && (
+                <motion.div
+                  layoutId="activeNav"
+                  className="absolute inset-0 rounded-full"
+                  style={{ background: p.navActiveGrad }}
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                />
+              )}
+              <span className="relative z-10">{t(item.key)}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Right side: Theme + Lang + CTA + Mobile burger */}
+        <div className="flex items-center gap-2">
+          {/* Theme Switcher */}
+          <button
+            onClick={toggle}
+            className="flex items-center justify-center w-9 h-9 rounded-full transition-all duration-300 backdrop-blur-md"
+            style={{
+              border: `1px solid ${r(0.1)}`,
+              background: r(0.03),
+            }}
+            aria-label={isDark ? (lang === "fr" ? "Passer en mode clair" : "Switch to light mode") : (lang === "fr" ? "Passer en mode sombre" : "Switch to dark mode")}
+          >
+            {isDark ? (
+              <Sun size={14} style={{ color: r(0.5) }} />
+            ) : (
+              <Moon size={14} style={{ color: r(0.5) }} />
+            )}
+          </button>
+
+          {/* Language Switcher */}
+          <button
+            onClick={() => setLang(lang === "fr" ? "en" : "fr")}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-full transition-all duration-300 backdrop-blur-md"
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              border: `1px solid ${r(0.1)}`,
+              background: r(0.03),
+            }}
+            aria-label={lang === "fr" ? "Switch to English" : "Passer en Français"}
+          >
+            <Globe size={14} style={{ color: r(0.4) }} />
+            <span
+              className="uppercase"
+              style={{ fontSize: "0.7rem", fontWeight: 500, letterSpacing: "0.05em", color: r(0.6) }}
+            >
+              {lang === "fr" ? "EN" : "FR"}
+            </span>
+          </button>
+
+          {/* Desktop CTA */}
+          <button
+            className="hidden md:block px-6 py-2.5 rounded-full transition-all duration-300"
+            style={{
+              fontSize: "0.85rem",
+              fontFamily: "'Inter', sans-serif",
+              border: `1px solid ${r(0.2)}`,
+              color: p.text,
+            }}
+          >
+            {t("nav.contact")}
+          </button>
+
+          {/* Mobile burger */}
+          <button
+            className="flex md:hidden items-center justify-center w-9 h-9 rounded-full transition-all duration-300 backdrop-blur-md"
+            style={{
+              border: `1px solid ${r(0.1)}`,
+              background: r(0.03),
+            }}
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label={mobileOpen ? (lang === "fr" ? "Fermer le menu" : "Close menu") : (lang === "fr" ? "Ouvrir le menu" : "Open menu")}
+            aria-expanded={mobileOpen}
+          >
+            {mobileOpen ? (
+              <X size={16} style={{ color: r(0.5) }} />
+            ) : (
+              <Menu size={16} style={{ color: r(0.5) }} />
+            )}
+          </button>
+        </div>
+      </motion.nav>
+
+      {/* ── Mobile overlay menu ── */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="fixed inset-0 z-50 flex flex-col md:hidden"
+            style={{
+              background: isDark ? "rgba(8,8,8,0.97)" : "rgba(250,248,245,0.97)",
+              backdropFilter: "blur(20px)",
+            }}
+          >
+            {/* Close bar */}
+            <div className="flex items-center justify-between px-6 py-5">
+              <svg
+                viewBox="0 0 1253.25 850.21"
+                className="h-8"
+                style={{ fill: p.text }}
+              >
+                <path d="m1225.95,850.16l-562.28-.11c-21.48-.06-33.64-24.54-20.28-41.79l497.51-660.5c13.06-17.05,1.09-41.42-20.38-41.7l-282.22-.02c-13.88.36-24.74,11.14-25.18,25.09v261.94c.07,5.15-1.27,10.22-4.51,14.42l-60.16,79.89c-17.9,19.47-47.95,4.5-45.14-20.33l.16-336.22c-.62-13.72-11.54-24.45-25.27-24.61-3.69.23-15.34.29-23.04,13.62L116.56,839.59c-4.93,6.62-12.7,10.53-20.95,10.53H26.15c-21.75,0-33.96-25.75-20.57-42.89L605.03,11.43c5.96-8.33,14.7-11.79,25.65-11.39l596.15.31c14.42,0,26.11,11.69,26.11,26.11v142.68c0,5.73-1.88,11.29-5.36,15.84l-390.83,516.34c-13.12,17.19-.86,41.96,20.76,41.96l346.68.1c15.3-1.62,29.09,8.86,29.06,26.2l-.14,56.92c-1.17,14.82-14.15,24.56-27.17,23.67Z" />
+              </svg>
+              <button
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-center w-9 h-9 rounded-full"
+                style={{
+                  border: `1px solid ${r(0.1)}`,
+                  background: r(0.03),
+                }}
+                aria-label={lang === "fr" ? "Fermer le menu" : "Close menu"}
+              >
+                <X size={16} style={{ color: r(0.5) }} />
+              </button>
+            </div>
+
+            {/* Nav links */}
+            <div className="flex-1 flex flex-col items-center justify-center gap-2 px-8">
+              {navItems.map((item, i) => (
+                <motion.button
+                  key={item.key}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.05 + i * 0.06 }}
+                  onClick={() => handleNav(item.path)}
+                  className="w-full text-center py-4 rounded-2xl transition-all duration-300"
+                  style={{
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontSize: "1.4rem",
+                    fontWeight: active === item.key ? 700 : 400,
+                    color: active === item.key ? p.text : r(0.4),
+                    background: active === item.key ? r(0.04) : "transparent",
+                  }}
+                >
+                  {t(item.key)}
+                </motion.button>
+              ))}
+
+              {/* Mobile CTA */}
+              <motion.button
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.3 }}
+                className="mt-6 w-full py-4 rounded-full transition-all duration-300"
+                style={{
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: "0.9rem",
+                  border: `1px solid ${r(0.15)}`,
+                  color: p.text,
+                }}
+              >
+                {t("nav.contact")}
+              </motion.button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
