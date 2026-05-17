@@ -1,18 +1,33 @@
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Outlet } from "react-router";
 import { Navigation } from "./Navigation";
 import { Footer } from "./Footer";
-import { ParticleOrbit } from "./ParticleOrbit";
-import { ParticleOverlay } from "./ParticleOverlay";
 import { useTheme } from "./theme";
+
+const ParticleOrbit = lazy(() =>
+  import("./ParticleOrbit").then((module) => ({ default: module.ParticleOrbit }))
+);
+const ParticleOverlay = lazy(() =>
+  import("./ParticleOverlay").then((module) => ({ default: module.ParticleOverlay }))
+);
 
 export function Layout() {
   const { p, theme } = useTheme();
+  const [showParticles, setShowParticles] = useState(false);
 
   // Set data-theme on <html> for CSS-based particle styling
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isMobile = window.innerWidth < 768;
+    if (reduceMotion || isMobile) return;
+
+    const timer = window.setTimeout(() => setShowParticles(true), 900);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   return (
     <div
@@ -24,7 +39,11 @@ export function Layout() {
       }}
     >
       {/* Background particles — behind everything */}
-      <ParticleOrbit />
+      {showParticles ? (
+        <Suspense fallback={null}>
+          <ParticleOrbit />
+        </Suspense>
+      ) : null}
 
       <div
         className="w-full max-w-[1440px] relative transition-all duration-700"
@@ -38,7 +57,11 @@ export function Layout() {
         }}
       >
         {/* Inner particle overlay — floats through content */}
-        <ParticleOverlay />
+        {showParticles ? (
+          <Suspense fallback={null}>
+            <ParticleOverlay />
+          </Suspense>
+        ) : null}
 
         {/* Content */}
         <div className="relative" style={{ zIndex: 2 }}>

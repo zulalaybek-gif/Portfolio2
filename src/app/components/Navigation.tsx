@@ -1,4 +1,3 @@
-import { motion, AnimatePresence } from "motion/react";
 import { useState, useCallback, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { useI18n } from "./i18n";
@@ -70,11 +69,8 @@ export function Navigation() {
 
   return (
     <>
-      <motion.nav
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.3 }}
-        className="flex items-center justify-between w-full px-6 md:px-8 py-5 relative z-20"
+      <nav
+        className="flex items-center justify-between w-full px-6 md:px-8 py-5 relative z-20 animate-soft-enter"
         role="navigation"
         aria-label={lang === "fr" ? "Navigation principale" : "Main navigation"}
       >
@@ -113,11 +109,9 @@ export function Navigation() {
               }}
             >
               {active === item.key && (
-                <motion.div
-                  layoutId="activeNav"
+                <div
                   className="absolute inset-0 rounded-full"
                   style={{ background: p.navActiveGrad }}
-                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 />
               )}
               <span className="relative z-10">{t(item.key)}</span>
@@ -195,16 +189,11 @@ export function Navigation() {
             )}
           </button>
         </div>
-      </motion.nav>
+      </nav>
 
       {/* ── Mobile overlay menu ── */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
+      {mobileOpen && (
+          <div
             className="fixed inset-0 z-50 flex flex-col md:hidden"
             style={{
               background: isDark ? "rgba(8,8,8,0.97)" : "rgba(250,248,245,0.97)",
@@ -236,44 +225,39 @@ export function Navigation() {
             {/* Nav links */}
             <div className="flex-1 flex flex-col items-center justify-center gap-2 px-8">
               {navItems.map((item, i) => (
-                <motion.button
+                <button
                   key={item.key}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: 0.05 + i * 0.06 }}
                   onClick={() => handleNav(item.path)}
-                  className="w-full text-center py-4 rounded-2xl transition-all duration-300"
+                  className="w-full text-center py-4 rounded-2xl transition-all duration-300 animate-soft-enter"
                   style={{
                     fontFamily: "'Space Grotesk', sans-serif",
                     fontSize: "1.4rem",
                     fontWeight: active === item.key ? 700 : 400,
                     color: active === item.key ? p.text : r(0.4),
                     background: active === item.key ? r(0.04) : "transparent",
+                    animationDelay: `${0.05 + i * 0.04}s`,
                   }}
                 >
                   {t(item.key)}
-                </motion.button>
+                </button>
               ))}
 
               {/* Mobile CTA */}
-              <motion.button
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.3 }}
-                className="mt-6 w-full py-4 rounded-full transition-all duration-300"
+              <button
+                className="mt-6 w-full py-4 rounded-full transition-all duration-300 animate-soft-enter"
                 style={{
                   fontFamily: "'Inter', sans-serif",
                   fontSize: "0.9rem",
                   border: `1px solid ${r(0.15)}`,
                   color: p.text,
+                  animationDelay: "0.24s",
                 }}
               >
                 {t("nav.contact")}
-              </motion.button>
+              </button>
             </div>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
     </>
   );
 }

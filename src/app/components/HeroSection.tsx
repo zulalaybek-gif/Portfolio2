@@ -1,4 +1,3 @@
-import { motion, useScroll, useTransform } from "motion/react";
 import { useRef, useEffect, useCallback, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router";
@@ -12,23 +11,35 @@ function MagneticField() {
   const { isDark } = useTheme();
   const dots = useRef<Array<{ ox: number; oy: number; x: number; y: number; vx: number; vy: number }>>([]);
   const raf = useRef(0);
+  const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (reduceMotion || !canHover || window.innerWidth < 1024) return;
+
+    const timer = window.setTimeout(() => setEnabled(true), 700);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) return;
     const cvs = canvasRef.current;
     if (!cvs) return;
     const ctx = cvs.getContext("2d");
     if (!ctx) return;
+    let isVisible = !document.hidden;
 
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio, 2);
+      const dpr = Math.min(window.devicePixelRatio, 1.5);
       const rect = cvs.getBoundingClientRect();
       cvs.width = rect.width * dpr;
       cvs.height = rect.height * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       // Re-create grid
-      const cols = Math.floor(rect.width / 32);
-      const rows = Math.floor(rect.height / 32);
+      const cols = Math.max(1, Math.floor(rect.width / 48));
+      const rows = Math.max(1, Math.floor(rect.height / 48));
       dots.current = [];
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
@@ -40,8 +51,16 @@ function MagneticField() {
     };
     resize();
     window.addEventListener("resize", resize);
+    const onVisibilityChange = () => {
+      isVisible = !document.hidden;
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
 
     const animate = () => {
+      if (!isVisible) {
+        raf.current = requestAnimationFrame(animate);
+        return;
+      }
       const rect = cvs.getBoundingClientRect();
       const w = rect.width, h = rect.height;
       ctx.clearRect(0, 0, w, h);
@@ -86,14 +105,17 @@ function MagneticField() {
     return () => {
       cancelAnimationFrame(raf.current);
       window.removeEventListener("resize", resize);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
     };
-  }, [isDark]);
+  }, [enabled, isDark]);
 
   const onMove = useCallback((e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();
     mouse.current = { x: e.clientX - rect.left, y: e.clientY - rect.top, active: true };
   }, []);
   const onLeave = useCallback(() => { mouse.current.active = false; }, []);
+
+  if (!enabled) return null;
 
   return (
     <canvas
@@ -113,10 +135,9 @@ function Marquee({ items, reverse = false }: { items: string[]; reverse?: boolea
 
   return (
     <div className="overflow-hidden whitespace-nowrap py-3" style={{ maskImage: "linear-gradient(90deg, transparent, black 10%, black 90%, transparent)" }}>
-      <motion.div
-        className="inline-flex gap-8"
-        animate={{ x: reverse ? ["0%", "-50%"] : ["-50%", "0%"] }}
-        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+      <div
+        className="inline-flex gap-8 marquee-track"
+        style={{ animationDirection: reverse ? "reverse" : "normal" }}
       >
         {content.map((item, i) => (
           <span key={i} className="inline-flex items-center gap-3 shrink-0">
@@ -126,7 +147,7 @@ function Marquee({ items, reverse = false }: { items: string[]; reverse?: boolea
             <span className="w-1 h-1 rounded-full" style={{ background: accent, opacity: 0.4 }} />
           </span>
         ))}
-      </motion.div>
+      </div>
     </div>
   );
 }
@@ -137,9 +158,6 @@ export function HeroSection() {
   const { p, r, isDark } = useTheme();
   const accent = isDark ? "#8BAD4A" : "#4A6B2A";
   const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const yContent = useTransform(scrollYProgress, [0, 1], [0, 120]);
-  const opContent = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
   const marqueeItems1 = lang === "fr"
     ? ["Design Graphique", "Direction Artistique", "Identité Visuelle", "Brand Content", "Motion Design", "Print & Édition", "Web Design", "Photographie"]
@@ -153,17 +171,9 @@ export function HeroSection() {
       </div>
 
       {/* Main content — vertically centered */}
-      <motion.div
-        className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 pt-32 pb-16"
-        style={{ y: yContent, opacity: opContent }}
-      >
+      <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 pt-32 pb-16">
         {/* Role badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.4 }}
-          className="mb-10"
-        >
+        <div className="mb-10 animate-soft-enter" style={{ animationDelay: "0.15s" }}>
           <span
             className="inline-block px-5 py-2 rounded-full uppercase tracking-widest"
             style={{
@@ -177,15 +187,11 @@ export function HeroSection() {
           >
             {t("hero.badge")}
           </span>
-        </motion.div>
+        </div>
 
         {/* Name — massive typographic treatment */}
         <div className="text-center mb-8">
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          >
+          <div className="animate-soft-enter" style={{ animationDelay: "0.25s" }}>
             <h1
               style={{
                 fontFamily: "'Space Grotesk', sans-serif",
@@ -199,12 +205,8 @@ export function HeroSection() {
             >
               {lang === "fr" ? "CRÉER" : "CREATE"}
             </h1>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
-          >
+          </div>
+          <div className="animate-soft-enter" style={{ animationDelay: "0.35s" }}>
             <span
               style={{
                 fontFamily: "'Georgia', serif",
@@ -225,15 +227,13 @@ export function HeroSection() {
             >
               {lang === "fr" ? "l'inoubliable." : "the unforgettable."}
             </span>
-          </motion.div>
+          </div>
         </div>
 
         {/* Tagline + CTA — asymmetric layout */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.9 }}
-          className="flex flex-col items-center gap-8 max-w-lg text-center"
+        <div
+          className="flex flex-col items-center gap-8 max-w-lg text-center animate-soft-enter"
+          style={{ animationDelay: "0.45s" }}
         >
           <p
             style={{
@@ -277,14 +277,12 @@ export function HeroSection() {
               {t("hero.cta2")}
             </button>
           </div>
-        </motion.div>
+        </div>
 
         {/* Stats — floating pills at bottom */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1.3 }}
-          className="mt-20 flex items-center gap-6 md:gap-10 flex-wrap justify-center"
+        <div
+          className="mt-20 flex items-center gap-6 md:gap-10 flex-wrap justify-center animate-soft-enter"
+          style={{ animationDelay: "0.6s" }}
         >
           {[
             { value: "11+", labelKey: "hero.stat1" as const },
@@ -323,19 +321,16 @@ export function HeroSection() {
               </span>
             </div>
           ))}
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
 
       {/* Marquee strip at bottom */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.6 }}
-        className="relative z-10 border-t border-b"
-        style={{ borderColor: r(0.04) }}
+      <div
+        className="relative z-10 border-t border-b animate-soft-enter"
+        style={{ borderColor: r(0.04), animationDelay: "0.75s" }}
       >
         <Marquee items={marqueeItems1} />
-      </motion.div>
+      </div>
     </section>
   );
 }
