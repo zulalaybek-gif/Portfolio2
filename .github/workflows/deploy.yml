@@ -37,6 +37,7 @@ jobs:
           personal_token: ${{ secrets.GH_PAGES_TOKEN }}
           publish_dir: ./dist
           publish_branch: gh-pages
+          cname: zulal-aybek.com
           user_name: github-actions[bot]
           user_email: 41898282+github-actions[bot]@users.noreply.github.com
           commit_message: "chore: publish site via GH Actions"
