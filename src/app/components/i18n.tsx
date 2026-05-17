@@ -40,7 +40,7 @@ const translations = {
   "services.s3.desc": { fr: "Magazines, brochures, affiches, flyers, CV\u2026", en: "Magazines, brochures, posters, flyers, CVs\u2026" },
   "services.s4.title": { fr: "Vid\u00E9o &\nMotion", en: "Video &\nMotion" },
   "services.s4.desc": { fr: "Montage, motion design, contenus anim\u00E9s\u2026", en: "Editing, motion design, animated content\u2026" },
-  "services.s5.title": { fr: "Photo-\ngraphie", en: "Photo-\ngraphy" },
+  "services.s5.title": { fr: "Photographie", en: "Photography" },
   "services.s5.desc": { fr: "Prise de vue, retouche, direction photo\u2026", en: "Shooting, retouching, photo direction\u2026" },
   "services.s6.title": { fr: "Brand\nContent", en: "Brand\nContent" },
   "services.s6.desc": { fr: "Contenus de marque, strat\u00E9gie visuelle, storytelling\u2026", en: "Brand content, visual strategy, storytelling\u2026" },
