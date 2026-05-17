@@ -35,8 +35,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
+      - name: Approve pnpm builds
+        run: pnpm config set --global auto-install-peers true
+
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile=false
+        run: pnpm install --no-frozen-lockfile
 
       - name: Build project
         run: pnpm run build
