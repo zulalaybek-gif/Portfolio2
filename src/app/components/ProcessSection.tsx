@@ -78,34 +78,8 @@ export function ProcessSection() {
           </div>
         </motion.div>
 
-        {/* Steps with animated connector line */}
+        {/* Steps with segmented connector lines */}
         <div className="relative" ref={lineRef}>
-          {/* Animated connector line — desktop only, starts at first node center, ends at last node center */}
-          <div className="absolute top-[2.75rem] left-[12.5%] right-[12.5%] h-[2px] hidden lg:block z-0 overflow-hidden rounded-full">
-            {/* Background track */}
-            <div className="absolute inset-0 rounded-full" style={{ background: r(0.04) }} />
-            {/* Animated green fill */}
-            <div
-              className="absolute inset-y-0 left-0 rounded-full"
-              style={{
-                background: `linear-gradient(90deg, ${accent}, ${accent}80)`,
-                width: isInView ? "100%" : "0%",
-                transition: "width 2.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s",
-              }}
-            />
-            {/* Glow effect on the tip */}
-            <div
-              className="absolute inset-y-0 rounded-full"
-              style={{
-                right: isInView ? "0%" : "100%",
-                width: 40,
-                background: `radial-gradient(circle, ${accent}60, transparent)`,
-                filter: "blur(6px)",
-                transition: "right 2.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s",
-              }}
-            />
-          </div>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
             {steps.map((step, i) => (
               <div
@@ -117,21 +91,73 @@ export function ProcessSection() {
                   transition: `opacity 0.6s ease ${0.3 + i * 0.25}s, transform 0.6s ease ${0.3 + i * 0.25}s`,
                 }}
               >
-                {/* Node circle on the line */}
-                <div className="relative z-10 mb-6">
+                {i < steps.length - 1 && (
                   <div
-                    className="w-[5.5rem] h-[5.5rem] rounded-full flex items-center justify-center"
+                    className="absolute top-[2.75rem] hidden lg:block h-[2px] overflow-visible"
                     style={{
-                      background: isDark
-                        ? `radial-gradient(circle, rgba(139,173,74,0.08) 0%, rgba(139,173,74,0.02) 70%)`
-                        : `radial-gradient(circle, rgba(74,107,42,0.08) 0%, rgba(74,107,42,0.02) 70%)`,
-                      border: `1px solid ${isDark ? "rgba(139,173,74,0.15)" : "rgba(74,107,42,0.15)"}`,
-                      transform: isInView ? "scale(1)" : "scale(0)",
-                      transition: `transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${0.5 + i * 0.3}s`,
+                      left: "calc(50% + 2.75rem)",
+                      width: "calc(100% - 5.5rem)",
+                      zIndex: 0,
                     }}
                   >
-                    <step.icon size={24} style={{ color: accent }} />
+                    <div
+                      className="absolute inset-0 rounded-full"
+                      style={{ background: r(0.045) }}
+                    />
+                    <div
+                      className="absolute inset-y-0 left-0 rounded-full"
+                      style={{
+                        width: "100%",
+                        background: `linear-gradient(90deg, ${accent} 0%, ${accent}88 72%, transparent 100%)`,
+                        transform: isInView ? "scaleX(1)" : "scaleX(0)",
+                        transformOrigin: "left center",
+                        transition: `transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) ${0.65 + i * 0.28}s`,
+                      }}
+                    />
+                    <div
+                      className="absolute top-1/2 -translate-y-1/2 rounded-full"
+                      style={{
+                        right: -6,
+                        width: 28,
+                        height: 28,
+                        background: `radial-gradient(circle, ${accent}55 0%, transparent 65%)`,
+                        filter: "blur(8px)",
+                        opacity: isInView ? 0.65 : 0,
+                        transition: `opacity 0.7s ease ${1 + i * 0.28}s`,
+                      }}
+                    />
                   </div>
+                )}
+
+                {/* Node circle */}
+                <div className="relative z-10 mb-7">
+                  <motion.div
+                    className="w-[5.5rem] h-[5.5rem] rounded-full flex items-center justify-center"
+                    initial={{ opacity: 0, scale: 0.86 }}
+                    animate={isInView ? { opacity: 1, scale: 1, y: [0, -3, 0] } : { opacity: 0, scale: 0.86, y: 0 }}
+                    transition={{
+                      opacity: { duration: 0.45, delay: 0.45 + i * 0.22 },
+                      scale: { duration: 0.55, delay: 0.45 + i * 0.22, ease: [0.16, 1, 0.3, 1] },
+                      y: { duration: 4.2, delay: 1.2 + i * 0.3, repeat: Infinity, ease: "easeInOut" },
+                    }}
+                    style={{
+                      background: isDark
+                        ? `radial-gradient(circle at 45% 35%, rgba(139,173,74,0.18) 0%, rgba(139,173,74,0.055) 58%, rgba(12,12,12,0.96) 100%)`
+                        : `radial-gradient(circle at 45% 35%, rgba(74,107,42,0.13) 0%, rgba(74,107,42,0.035) 58%, rgba(252,250,247,0.96) 100%)`,
+                      border: `1px solid ${isDark ? "rgba(139,173,74,0.20)" : "rgba(74,107,42,0.16)"}`,
+                      boxShadow: isDark
+                        ? `0 18px 55px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.05), 0 0 28px rgba(139,173,74,0.08)`
+                        : `0 18px 55px rgba(74,107,42,0.07), inset 0 1px 0 rgba(255,255,255,0.75), 0 0 28px rgba(74,107,42,0.08)`,
+                      transform: "translateZ(0)",
+                    }}
+                  >
+                    <motion.div
+                      animate={isInView ? { rotate: [0, -3, 3, 0], scale: [1, 1.04, 1] } : { rotate: 0, scale: 1 }}
+                      transition={{ duration: 3.8, delay: 1.35 + i * 0.24, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                      <step.icon size={24} strokeWidth={1.8} style={{ color: accent }} />
+                    </motion.div>
+                  </motion.div>
                   {/* Step number badge */}
                   <span
                     className="absolute -top-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center"
