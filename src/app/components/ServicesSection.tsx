@@ -1,5 +1,4 @@
 import { useState, useRef, useCallback, useEffect } from "react";
-import { motion } from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useI18n, type TranslationKey } from "./i18n";
 import { useTheme } from "./theme";
@@ -23,10 +22,12 @@ export function ServicesSection() {
   const [activeIdx, setActiveIdx] = useState(0);
 
   const scrollToIdx = useCallback((idx: number) => {
-    if (!scrollRef.current) return;
-    const cards = scrollRef.current.children;
+    const el = scrollRef.current;
+    if (!el) return;
+    const cards = el.children;
     if (cards[idx]) {
-      (cards[idx] as HTMLElement).scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+      const card = cards[idx] as HTMLElement;
+      el.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
     }
     setActiveIdx(idx);
   }, []);
@@ -37,31 +38,33 @@ export function ServicesSection() {
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
+    let raf = 0;
     const onScroll = () => {
-      const children = Array.from(el.children) as HTMLElement[];
-      let closest = 0;
-      let minDist = Infinity;
-      children.forEach((child, i) => {
-        const dist = Math.abs(child.offsetLeft - el.scrollLeft);
-        if (dist < minDist) { minDist = dist; closest = i; }
+      if (raf) return;
+      raf = window.requestAnimationFrame(() => {
+        raf = 0;
+        const children = Array.from(el.children) as HTMLElement[];
+        let closest = 0;
+        let minDist = Infinity;
+        children.forEach((child, i) => {
+          const dist = Math.abs(child.offsetLeft - el.scrollLeft);
+          if (dist < minDist) { minDist = dist; closest = i; }
+        });
+        setActiveIdx((current) => (current === closest ? current : closest));
       });
-      setActiveIdx(closest);
     };
     el.addEventListener("scroll", onScroll, { passive: true });
-    return () => el.removeEventListener("scroll", onScroll);
+    return () => {
+      if (raf) window.cancelAnimationFrame(raf);
+      el.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   return (
     <section data-section="services" className="relative w-full px-6 md:px-12 py-24">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "200px 0px" }}
-          transition={{ duration: 0.8 }}
-          className="mb-14"
-        >
+        <div className="mb-14">
           <span
             className="inline-block uppercase tracking-widest mb-5"
             style={{ fontSize: "0.65rem", fontFamily: "'Inter', sans-serif", color: r(0.35), letterSpacing: "0.15em" }}
@@ -101,13 +104,13 @@ export function ServicesSection() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Horizontal scrollable cards */}
         <div
           ref={scrollRef}
-          className="relative flex gap-4 overflow-x-auto pb-6"
-          style={{ scrollSnapType: "x mandatory", scrollbarWidth: "none", msOverflowStyle: "none" }}
+          className="relative flex gap-4 overflow-x-auto pb-6 scrollbar-hide"
+          style={{ scrollSnapType: "x mandatory", scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}
         >
           {services.map((service, i) => {
             const title = t(service.titleKey as TranslationKey).replace("\n", " ");
@@ -115,19 +118,16 @@ export function ServicesSection() {
             const rest = title.slice(1);
 
             return (
-              <motion.div
+              <div
                 key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.05, margin: "200px 0px" }}
-                transition={{ duration: 0.5, delay: i * 0.06 }}
-                className="shrink-0 relative rounded-2xl p-7 flex flex-col justify-between overflow-hidden group transition-all duration-500"
+                className="shrink-0 relative rounded-2xl p-7 flex flex-col justify-between overflow-hidden group"
                 style={{
                   width: "clamp(260px, 30vw, 320px)",
                   minHeight: 280,
                   scrollSnapAlign: "start",
                   background: p.cardBg,
                   border: `1px solid ${p.cardBorder}`,
+                  transform: "translateZ(0)",
                 }}
               >
                 {/* Number */}
@@ -174,7 +174,7 @@ export function ServicesSection() {
                     {t(service.descKey as TranslationKey)}
                   </p>
                 </div>
-              </motion.div>
+              </div>
             );
           })}
         </div>

@@ -1,4 +1,3 @@
-import { motion } from "motion/react";
 import { useI18n } from "./i18n";
 import { useTheme } from "./theme";
 
@@ -19,34 +18,25 @@ export function ToolsSection() {
   return (
     <section className="relative w-full px-6 md:px-12 py-20">
       <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "200px 0px" }}
-          transition={{ duration: 0.8 }}
-          className="mb-12"
-        >
+        <div className="mb-12">
           <span
             className="inline-block uppercase tracking-widest mb-6"
             style={{ fontSize: "0.65rem", fontFamily: "'Inter', sans-serif", color: r(0.35), letterSpacing: "0.15em" }}
           >
             — {t("tools.badge")}
           </span>
-        </motion.div>
+        </div>
 
         {/* Tools as elegant horizontal strip */}
         <div className="flex flex-wrap gap-3">
           {tools.map((tool, i) => (
-            <motion.div
+            <div
               key={tool.name}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, amount: 0.05, margin: "200px 0px" }}
-              transition={{ duration: 0.4, delay: i * 0.05 }}
               className="group flex items-center gap-3 px-5 py-3 rounded-full transition-all duration-300 cursor-default"
               style={{
                 border: `1px solid ${p.cardBorder}`,
                 background: p.cardBg,
+                transform: "translateZ(0)",
               }}
             >
               <span
@@ -77,7 +67,7 @@ export function ToolsSection() {
               >
                 {tool.name}
               </span>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
