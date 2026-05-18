@@ -56,6 +56,7 @@
   font-family: "Space Grotesk", sans-serif;
   line-height: 0.86;
   text-transform: uppercase;
+  isolation: isolate;
 }
 
 .composite-title--center {
@@ -79,21 +80,39 @@
   z-index: 2;
   margin-top: var(--composite-secondary-overlap);
   margin-left: var(--composite-secondary-offset);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: "Ballet", "Times New Roman", serif;
   font-size: var(--composite-secondary-size);
-  font-style: italic;
+  font-optical-sizing: auto;
+  font-style: normal;
   font-weight: 400;
-  line-height: 0.82;
-  letter-spacing: -0.035em;
+  line-height: 0.72;
+  letter-spacing: -0.085em;
   text-transform: none;
   color: transparent;
   background: var(--composite-accent-gradient);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 18px 45px color-mix(in srgb, var(--composite-accent) 22%, transparent);
-  transform: translate3d(0, var(--composite-secondary-drop), 0) rotate(-1.4deg) skewX(-3deg);
-  transform-origin: 20% 55%;
+  text-shadow:
+    0 10px 34px color-mix(in srgb, var(--composite-accent) 24%, transparent),
+    0 1px 0 color-mix(in srgb, var(--composite-accent) 18%, transparent);
+  transform: translate3d(0, var(--composite-secondary-drop), 0) rotate(-5deg) skewX(-6deg);
+  transform-origin: 18% 52%;
+  filter: drop-shadow(0 12px 22px color-mix(in srgb, var(--composite-accent) 12%, transparent));
+}
+
+.composite-title__secondary::after {
+  content: "";
+  position: absolute;
+  left: 11%;
+  right: 4%;
+  bottom: 0.02em;
+  height: 1px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--composite-accent), transparent);
+  opacity: 0.28;
+  transform: rotate(-1.5deg) scaleX(0.94);
+  transform-origin: left center;
 }
 
 .composite-title--left .composite-title__secondary {
@@ -106,34 +125,34 @@
 
 .composite-title--hero {
   --composite-primary-size: clamp(3.1rem, 10vw, 8rem);
-  --composite-secondary-size: clamp(2.35rem, 6.6vw, 5.35rem);
-  --composite-secondary-overlap: clamp(-0.34em, -0.28em, -0.22em);
-  --composite-secondary-offset: clamp(0.3rem, 1.5vw, 1.15rem);
-  --composite-secondary-drop: 0.02em;
+  --composite-secondary-size: clamp(3.25rem, 8.2vw, 6.9rem);
+  --composite-secondary-overlap: -0.42em;
+  --composite-secondary-offset: clamp(0.15rem, 1.1vw, 0.9rem);
+  --composite-secondary-drop: 0.06em;
 }
 
 .composite-title--section {
-  --composite-primary-size: clamp(2.75rem, 6.4vw, 4.9rem);
-  --composite-secondary-size: clamp(1.9rem, 4vw, 3.2rem);
-  --composite-secondary-overlap: -0.24em;
-  --composite-secondary-offset: clamp(0.2rem, 1.15vw, 0.85rem);
-  --composite-secondary-drop: 0.02em;
+  --composite-primary-size: clamp(2.75rem, 6.2vw, 4.85rem);
+  --composite-secondary-size: clamp(2.45rem, 5vw, 4.15rem);
+  --composite-secondary-overlap: -0.38em;
+  --composite-secondary-offset: clamp(0.15rem, 0.9vw, 0.7rem);
+  --composite-secondary-drop: 0.04em;
 }
 
 .composite-title--cta {
   --composite-primary-size: clamp(2.65rem, 6vw, 4.7rem);
-  --composite-secondary-size: clamp(2rem, 4.2vw, 3.35rem);
-  --composite-secondary-overlap: -0.24em;
+  --composite-secondary-size: clamp(2.7rem, 5.2vw, 4.45rem);
+  --composite-secondary-overlap: -0.39em;
   --composite-secondary-offset: 0;
-  --composite-secondary-drop: 0.03em;
+  --composite-secondary-drop: 0.05em;
 }
 
 .composite-title--projects {
   --composite-primary-size: clamp(4rem, 12vw, 10rem);
-  --composite-secondary-size: clamp(2.7rem, 7vw, 6.1rem);
-  --composite-secondary-overlap: -0.19em;
-  --composite-secondary-offset: clamp(0.35rem, 1.2vw, 1rem);
-  --composite-secondary-drop: 0.01em;
+  --composite-secondary-size: clamp(3.7rem, 8.4vw, 7.5rem);
+  --composite-secondary-overlap: -0.34em;
+  --composite-secondary-offset: clamp(0.1rem, 0.9vw, 0.8rem);
+  --composite-secondary-drop: 0.04em;
 }
 
 @media (max-width: 767px) {
@@ -143,14 +162,24 @@
 
   .composite-title--section {
     --composite-primary-size: clamp(2.25rem, 13vw, 3.8rem);
-    --composite-secondary-size: clamp(1.75rem, 9vw, 2.65rem);
-    --composite-secondary-overlap: -0.18em;
+    --composite-secondary-size: clamp(2.2rem, 11vw, 3.45rem);
+    --composite-secondary-overlap: -0.32em;
   }
 
   .composite-title--projects {
     --composite-primary-size: clamp(3.4rem, 18vw, 6rem);
-    --composite-secondary-size: clamp(2.35rem, 12vw, 4rem);
-    --composite-secondary-overlap: -0.16em;
+    --composite-secondary-size: clamp(3rem, 14vw, 5rem);
+    --composite-secondary-overlap: -0.28em;
+  }
+
+  .composite-title--hero {
+    --composite-secondary-size: clamp(2.85rem, 13vw, 5.1rem);
+    --composite-secondary-overlap: -0.35em;
+  }
+
+  .composite-title__secondary {
+    letter-spacing: -0.07em;
+    transform: translate3d(0, var(--composite-secondary-drop), 0) rotate(-4deg) skewX(-4deg);
   }
 }
 
