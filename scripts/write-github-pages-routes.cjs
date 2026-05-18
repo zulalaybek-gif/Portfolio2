@@ -30,7 +30,8 @@ function escapeHtml(value) {
 }
 
 function getRouteUrl(routePath) {
-  return `${siteUrl}${routePath === "/" ? "/" : routePath}`;
+  if (routePath === "/") return `${siteUrl}/`;
+  return `${siteUrl}${routePath}/`;
 }
 
 function getRouteFilePath(routePath) {
