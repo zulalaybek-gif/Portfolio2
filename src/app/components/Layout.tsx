@@ -1,4 +1,5 @@
 import { Outlet } from "react-router";
+import { useState } from "react";
 import { Navigation } from "./Navigation";
 import { Footer } from "./Footer";
 import { useTheme } from "./theme";
@@ -7,12 +8,12 @@ import { ParticleOverlay } from "./ParticleOverlay";
 
 export function Layout() {
   const { p } = useTheme();
-  const showParticles = (() => {
+  const [showParticles] = useState(() => {
     if (typeof window === "undefined") return false;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const isMobile = window.innerWidth < 768;
     return !reduceMotion && !isMobile;
-  })();
+  });
 
   return (
     <div

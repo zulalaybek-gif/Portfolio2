@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { useI18n } from "./i18n";
 import { useTheme } from "./theme";
@@ -10,6 +10,20 @@ export function Navigation() {
   const { t, lang, setLang } = useI18n();
   const { isDark, toggle, p, r } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const scrollTimers = useRef<number[]>([]);
+
+  const clearScrollTimers = useCallback(() => {
+    scrollTimers.current.forEach((timer) => window.clearTimeout(timer));
+    scrollTimers.current = [];
+  }, []);
+
+  const scheduleScroll = useCallback((callback: () => void, delay: number) => {
+    const timer = window.setTimeout(() => {
+      scrollTimers.current = scrollTimers.current.filter((id) => id !== timer);
+      callback();
+    }, delay);
+    scrollTimers.current.push(timer);
+  }, []);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -18,22 +32,21 @@ export function Navigation() {
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
+    if (!mobileOpen) return undefined;
+
     const previousBodyOverflow = document.body.style.overflow;
     const previousHtmlOverflow = document.documentElement.style.overflow;
 
-    if (mobileOpen) {
-      document.body.style.overflow = "hidden";
-      document.documentElement.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
-    }
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
 
     return () => {
       document.body.style.overflow = previousBodyOverflow;
       document.documentElement.style.overflow = previousHtmlOverflow;
     };
   }, [mobileOpen]);
+
+  useEffect(() => clearScrollTimers, [clearScrollTimers]);
 
   const navItems = [
     { key: "nav.home" as const, path: "/" },
@@ -50,6 +63,8 @@ export function Navigation() {
   const active = getActiveKey();
 
   const scrollToSection = useCallback((sectionId: string) => {
+    clearScrollTimers();
+
     const findSection = () =>
       document.querySelector(`[data-section="${sectionId}"]`) ||
       document.querySelector(`[data-section-alias="${sectionId}"]`);
@@ -57,20 +72,23 @@ export function Navigation() {
     const scroll = () => {
       const el = findSection();
       if (!el) return false;
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      const { top } = el.getBoundingClientRect();
+      window.scrollTo({
+        top: Math.max(0, top + window.scrollY - 8),
+        behavior: "smooth",
+      });
       return true;
     };
 
     if (scroll()) {
-      window.setTimeout(scroll, 220);
-      window.setTimeout(scroll, 700);
+      scheduleScroll(scroll, 260);
       return;
     }
 
-    window.setTimeout(scroll, 120);
-    window.setTimeout(scroll, 420);
-    window.setTimeout(scroll, 900);
-  }, []);
+    scheduleScroll(scroll, 120);
+    scheduleScroll(scroll, 420);
+    scheduleScroll(scroll, 900);
+  }, [clearScrollTimers, scheduleScroll]);
 
   /** Handle hash-based navigation (scroll to section) */
   const handleNav = useCallback(
@@ -85,18 +103,19 @@ export function Navigation() {
         }
         // Navigate to home, then scroll after mount
         navigate("/");
-        setTimeout(() => scrollToSection(sectionId), 300);
+        scheduleScroll(() => scrollToSection(sectionId), 300);
       } else {
+        clearScrollTimers();
         navigate(path);
       }
     },
-    [navigate, location.pathname, scrollToSection]
+    [clearScrollTimers, navigate, location.pathname, scheduleScroll, scrollToSection]
   );
 
   return (
     <>
       <nav
-        className="flex items-center justify-between w-full px-6 md:px-8 py-5 relative z-20 animate-soft-enter"
+        className="flex items-center justify-between w-full px-6 md:px-8 py-5 relative z-20"
         role="navigation"
         aria-label={lang === "fr" ? "Navigation principale" : "Main navigation"}
         style={{ isolation: "isolate", zIndex: 80 }}

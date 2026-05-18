@@ -137,6 +137,7 @@ export function ParticleOrbit() {
     ];
 
     const sectionVisibility = new Map<string, number>();
+    const observedSections = new WeakSet<Element>();
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -157,14 +158,26 @@ export function ParticleOrbit() {
     );
 
     const observeSections = () => {
-      document.querySelectorAll("[data-section]").forEach((el) => observer.observe(el));
+      document.querySelectorAll("[data-section]").forEach((el) => {
+        if (observedSections.has(el)) return;
+        observedSections.add(el);
+        observer.observe(el);
+      });
     };
     let sectionObserveTimer = window.setTimeout(observeSections, 500);
     const scheduleSectionObserve = () => {
       window.clearTimeout(sectionObserveTimer);
       sectionObserveTimer = window.setTimeout(observeSections, 300);
     };
-    const mutObs = new MutationObserver(scheduleSectionObserve);
+    const mutObs = new MutationObserver((mutations) => {
+      const hasSectionChange = mutations.some((mutation) =>
+        Array.from(mutation.addedNodes).some((node) => {
+          if (!(node instanceof Element)) return false;
+          return node.matches("[data-section]") || Boolean(node.querySelector("[data-section]"));
+        })
+      );
+      if (hasSectionChange) scheduleSectionObserve();
+    });
     mutObs.observe(document.body, { childList: true, subtree: true });
 
     /* ── Nebulae (reduced to 5) ── */

@@ -178,21 +178,41 @@ function FloatingFlowers() {
   }, []);
 
   useEffect(() => {
+    let raf = 0;
     const onScroll = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (docHeight > 0) setScrollPct(scrollTop / docHeight);
+      if (raf) return;
+      raf = window.requestAnimationFrame(() => {
+        raf = 0;
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        if (docHeight > 0) setScrollPct(scrollTop / docHeight);
+      });
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) window.cancelAnimationFrame(raf);
+    };
   }, []);
 
   // Track global mouse position
   useEffect(() => {
-    const onMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY });
+    let raf = 0;
+    let nextMousePos = { x: -9999, y: -9999 };
+    const onMove = (e: MouseEvent) => {
+      nextMousePos = { x: e.clientX, y: e.clientY };
+      if (raf) return;
+      raf = window.requestAnimationFrame(() => {
+        raf = 0;
+        setMousePos(nextMousePos);
+      });
+    };
     window.addEventListener("mousemove", onMove, { passive: true });
-    return () => window.removeEventListener("mousemove", onMove);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      if (raf) window.cancelAnimationFrame(raf);
+    };
   }, []);
 
   if (isMobile) return null;
