@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import { useI18n, type TranslationKey } from "./i18n";
 import { useTheme } from "./theme";
 import { preloadProjectRoute } from "../projectRouteLoaders";
+import { CompositeTitle } from "./CompositeTitle";
 
 const projects = [
   {
@@ -90,12 +91,10 @@ export function WorkSection() {
               — {t("work.badge")}
             </span>
             <div>
-              <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(2.2rem, 5vw, 3.5rem)", fontWeight: 700, lineHeight: 0.95, letterSpacing: "-0.03em", color: p.text }}>
-                {t("work.title1" as TranslationKey)}
-              </h2>
-              <span style={{ fontFamily: "'Georgia', serif", fontStyle: "italic", fontSize: "clamp(1.5rem, 3.5vw, 2.2rem)", fontWeight: 400, color: accent, display: "block", marginTop: "-0.1em" }}>
-                {t("work.title2" as TranslationKey)}
-              </span>
+              <CompositeTitle
+                primary={t("work.title1" as TranslationKey)}
+                secondary={t("work.title2" as TranslationKey)}
+              />
             </div>
           </div>
           <button

@@ -2,6 +2,7 @@ import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import { useI18n, type TranslationKey } from "./i18n";
 import { useTheme } from "./theme";
+import { CompositeTitle } from "./CompositeTitle";
 
 export function CTASection() {
   const { t } = useI18n();
@@ -76,34 +77,12 @@ export function CTASection() {
 
           {/* Title */}
           <div className="mb-10">
-            <h2
-              style={{
-                fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: "clamp(2.2rem, 5vw, 3.5rem)",
-                fontWeight: 700,
-                lineHeight: 0.95,
-                letterSpacing: "-0.03em",
-                color: p.text,
-                textShadow: isDark ? "0 18px 55px rgba(0,0,0,0.34)" : "0 18px 55px rgba(42,35,24,0.08)",
-                transition: "color 0.5s ease",
-              }}
-            >
-              {t("cta.title1" as TranslationKey)}
-            </h2>
-            <span
-              style={{
-                fontFamily: "'Georgia', serif",
-                fontStyle: "italic",
-                fontSize: "clamp(1.7rem, 3.8vw, 2.5rem)",
-                fontWeight: 400,
-                color: accent,
-                display: "block",
-                marginTop: "-0.05em",
-                textShadow: `0 12px 38px rgba(${glowColor},0.16)`,
-              }}
-            >
-              {t("cta.title2" as TranslationKey)}
-            </span>
+            <CompositeTitle
+              align="center"
+              size="cta"
+              primary={t("cta.title1" as TranslationKey)}
+              secondary={t("cta.title2" as TranslationKey)}
+            />
           </div>
 
           {/* Button */}

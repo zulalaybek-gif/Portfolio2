@@ -3,6 +3,7 @@ import { useRef, useState, useEffect, type RefObject } from "react";
 import { Ear, Lightbulb, SlidersHorizontal, Rocket } from "lucide-react";
 import { useI18n, type TranslationKey } from "./i18n";
 import { useTheme } from "./theme";
+import { CompositeTitle } from "./CompositeTitle";
 
 const steps = [
   { icon: Ear, titleKey: "process.step1.title" as const, descKey: "process.step1.desc" as const, num: "01" },
@@ -69,12 +70,10 @@ export function ProcessSection() {
             — {t("process.badge")}
           </span>
           <div>
-            <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(2.2rem, 5vw, 3.5rem)", fontWeight: 700, lineHeight: 0.95, letterSpacing: "-0.03em", color: p.text }}>
-              {t("process.title1" as TranslationKey)}
-            </h2>
-            <span style={{ fontFamily: "'Georgia', serif", fontStyle: "italic", fontSize: "clamp(1.5rem, 3.5vw, 2.2rem)", fontWeight: 400, color: accent, display: "block", marginTop: "-0.1em" }}>
-              {t("process.title2" as TranslationKey)}
-            </span>
+            <CompositeTitle
+              primary={t("process.title1" as TranslationKey)}
+              secondary={t("process.title2" as TranslationKey)}
+            />
           </div>
         </motion.div>
 

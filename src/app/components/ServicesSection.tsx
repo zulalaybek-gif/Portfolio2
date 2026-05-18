@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useI18n, type TranslationKey } from "./i18n";
 import { useTheme } from "./theme";
+import { CompositeTitle } from "./CompositeTitle";
 
 const services = [
   { titleKey: "services.s1.title" as const, descKey: "services.s1.desc" as const },
@@ -105,12 +106,10 @@ export function ServicesSection() {
           </span>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div>
-              <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(2.2rem, 5vw, 3.5rem)", fontWeight: 700, lineHeight: 0.95, letterSpacing: "-0.03em", color: p.text }}>
-                {t("services.title1" as TranslationKey)}
-              </h2>
-              <span style={{ fontFamily: "'Georgia', serif", fontStyle: "italic", fontSize: "clamp(1.5rem, 3.5vw, 2.2rem)", fontWeight: 400, color: accent, display: "block", marginTop: "-0.1em" }}>
-                {t("services.title2" as TranslationKey)}
-              </span>
+              <CompositeTitle
+                primary={t("services.title1" as TranslationKey)}
+                secondary={t("services.title2" as TranslationKey)}
+              />
             </div>
             <div className="flex items-center gap-6">
               <p className="max-w-[280px] hidden md:block" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", lineHeight: 1.7, color: r(0.4) }}>

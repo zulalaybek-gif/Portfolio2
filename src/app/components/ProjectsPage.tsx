@@ -7,6 +7,7 @@ import { useI18n, type TranslationKey } from "./i18n";
 import { useTheme } from "./theme";
 import { useNavigate } from "react-router";
 import { preloadProjectRoute } from "../projectRouteLoaders";
+import { CompositeTitle } from "./CompositeTitle";
 
 /* ─── Data ─── */
 type ViewMode = "standard" | "projects" | "workshops";
@@ -146,7 +147,7 @@ type Project = (typeof projects)[number];
    ═══════════════════════════════════════════ */
 function ProjectsHero() {
   const { t } = useI18n();
-  const { p, r, isDark } = useTheme();
+  const { r } = useTheme();
 
   return (
     <section data-section="projects-hero" className="relative px-6 md:px-12 pt-16 pb-20 overflow-hidden">
@@ -166,45 +167,26 @@ function ProjectsHero() {
         </motion.div>
 
         <div className="relative">
-          <motion.h1
+          <motion.div
             initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
             className="relative z-10"
-            style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: "clamp(3.5rem, 12vw, 10rem)",
-              fontWeight: 700, lineHeight: 0.85, letterSpacing: "-0.05em",
-              color: p.text,
-            }}
           >
-            {t("projects.title1")}
-          </motion.h1>
+            <CompositeTitle
+              as="h1"
+              size="projects"
+              primary={t("projects.title1")}
+              secondary={t("projects.title2")}
+            />
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.45, ease: "easeOut" }}
-            className="flex items-end gap-4 md:gap-8"
+            className="flex items-end gap-4 md:gap-8 mt-5"
           >
-            <h1
-              style={{
-                fontFamily: "'Georgia', serif",
-                fontStyle: "italic",
-                fontSize: "clamp(2.5rem, 8vw, 7rem)",
-                fontWeight: 400, lineHeight: 0.95, letterSpacing: "-0.02em",
-                background: isDark
-                  ? "linear-gradient(135deg, #8BAD4A 0%, #C8D94A 40%, #6B8F3A 100%)"
-                  : "linear-gradient(135deg, #4A6B2A 0%, #8BAD4A 40%, #3D5A20 100%)",
-                WebkitBackgroundClip: "text",
-                backgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                color: "transparent",
-              }}
-            >
-              {t("projects.title2")}
-            </h1>
-
             <motion.div
               initial={{ opacity: 0, width: 0 }}
               animate={{ opacity: 1, width: "auto" }}

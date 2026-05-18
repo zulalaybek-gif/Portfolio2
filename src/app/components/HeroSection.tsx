@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useI18n } from "./i18n";
 import { useTheme } from "./theme";
+import { CompositeTitle } from "./CompositeTitle";
 
 /* ── Magnetic cursor canvas ── */
 function MagneticField() {
@@ -152,7 +153,6 @@ export function HeroSection() {
   const navigate = useNavigate();
   const { t, lang } = useI18n();
   const { p, r, isDark } = useTheme();
-  const accent = isDark ? "#8BAD4A" : "#4A6B2A";
   const ref = useRef<HTMLElement>(null);
 
   const marqueeItems1 = lang === "fr"
@@ -187,43 +187,14 @@ export function HeroSection() {
 
         {/* Name — massive typographic treatment */}
         <div className="text-center mb-8">
-          <div className="animate-soft-enter" style={{ animationDelay: "0.25s" }}>
-            <h1
-              style={{
-                fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: "clamp(2.8rem, 10vw, 8rem)",
-                fontWeight: 700,
-                lineHeight: 0.9,
-                letterSpacing: "-0.04em",
-                color: p.text,
-                textTransform: "uppercase",
-              }}
-            >
-              {lang === "fr" ? "CRÉER" : "CREATE"}
-            </h1>
-          </div>
-          <div className="animate-soft-enter" style={{ animationDelay: "0.35s" }}>
-            <span
-              style={{
-                fontFamily: "'Georgia', serif",
-                fontStyle: "italic",
-                fontSize: "clamp(2.2rem, 7vw, 6rem)",
-                fontWeight: 400,
-                lineHeight: 1,
-                display: "block",
-                marginTop: "-0.05em",
-                background: isDark
-                  ? "linear-gradient(135deg, #8BAD4A 0%, #C8D94A 50%, #6B8F3A 100%)"
-                  : "linear-gradient(135deg, #4A6B2A 0%, #8BAD4A 50%, #3D5A20 100%)",
-                WebkitBackgroundClip: "text",
-                backgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                color: "transparent",
-              }}
-            >
-              {lang === "fr" ? "l'inoubliable." : "the unforgettable."}
-            </span>
-          </div>
+          <CompositeTitle
+            as="h1"
+            align="center"
+            size="hero"
+            className="animate-soft-enter"
+            primary={lang === "fr" ? "CRÉER" : "CREATE"}
+            secondary={lang === "fr" ? "l'inoubliable." : "the unforgettable."}
+          />
         </div>
 
         {/* Tagline + CTA — asymmetric layout */}

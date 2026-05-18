@@ -47,6 +47,113 @@
   transform: translateZ(0);
 }
 
+.composite-title {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0;
+  color: var(--composite-title-color);
+  font-family: "Space Grotesk", sans-serif;
+  line-height: 0.86;
+  text-transform: uppercase;
+}
+
+.composite-title--center {
+  align-items: center;
+  text-align: center;
+}
+
+.composite-title__primary {
+  display: block;
+  position: relative;
+  z-index: 1;
+  font-size: var(--composite-primary-size);
+  font-weight: 700;
+  line-height: 0.86;
+  letter-spacing: -0.055em;
+}
+
+.composite-title__secondary {
+  display: block;
+  position: relative;
+  z-index: 2;
+  margin-top: var(--composite-secondary-overlap);
+  margin-left: var(--composite-secondary-offset);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: var(--composite-secondary-size);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 0.82;
+  letter-spacing: -0.035em;
+  text-transform: none;
+  color: transparent;
+  background: var(--composite-accent-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 18px 45px color-mix(in srgb, var(--composite-accent) 22%, transparent);
+  transform: translate3d(0, var(--composite-secondary-drop), 0) rotate(-1.4deg) skewX(-3deg);
+  transform-origin: 20% 55%;
+}
+
+.composite-title--left .composite-title__secondary {
+  align-self: flex-start;
+}
+
+.composite-title--center .composite-title__secondary {
+  margin-left: 0;
+}
+
+.composite-title--hero {
+  --composite-primary-size: clamp(3.1rem, 10vw, 8rem);
+  --composite-secondary-size: clamp(2.35rem, 6.6vw, 5.35rem);
+  --composite-secondary-overlap: clamp(-0.34em, -0.28em, -0.22em);
+  --composite-secondary-offset: clamp(0.3rem, 1.5vw, 1.15rem);
+  --composite-secondary-drop: 0.02em;
+}
+
+.composite-title--section {
+  --composite-primary-size: clamp(2.75rem, 6.4vw, 4.9rem);
+  --composite-secondary-size: clamp(1.9rem, 4vw, 3.2rem);
+  --composite-secondary-overlap: -0.24em;
+  --composite-secondary-offset: clamp(0.2rem, 1.15vw, 0.85rem);
+  --composite-secondary-drop: 0.02em;
+}
+
+.composite-title--cta {
+  --composite-primary-size: clamp(2.65rem, 6vw, 4.7rem);
+  --composite-secondary-size: clamp(2rem, 4.2vw, 3.35rem);
+  --composite-secondary-overlap: -0.24em;
+  --composite-secondary-offset: 0;
+  --composite-secondary-drop: 0.03em;
+}
+
+.composite-title--projects {
+  --composite-primary-size: clamp(4rem, 12vw, 10rem);
+  --composite-secondary-size: clamp(2.7rem, 7vw, 6.1rem);
+  --composite-secondary-overlap: -0.19em;
+  --composite-secondary-offset: clamp(0.35rem, 1.2vw, 1rem);
+  --composite-secondary-drop: 0.01em;
+}
+
+@media (max-width: 767px) {
+  .composite-title {
+    line-height: 0.9;
+  }
+
+  .composite-title--section {
+    --composite-primary-size: clamp(2.25rem, 13vw, 3.8rem);
+    --composite-secondary-size: clamp(1.75rem, 9vw, 2.65rem);
+    --composite-secondary-overlap: -0.18em;
+  }
+
+  .composite-title--projects {
+    --composite-primary-size: clamp(3.4rem, 18vw, 6rem);
+    --composite-secondary-size: clamp(2.35rem, 12vw, 4rem);
+    --composite-secondary-overlap: -0.16em;
+  }
+}
+
 @keyframes marquee-scroll {
   from {
     transform: translateX(-50%);
