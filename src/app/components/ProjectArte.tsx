@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { useI18n, type TranslationKey } from "./i18n";
 import { useTheme } from "./theme";
 import { ColorGlow } from "./ColorGlow";
+import { ProjectBackButton } from "./ProjectBackButton";
 
 /* -- Assets -- */
 import imgMockup2 from "figma:asset/643f467219777cb9c1e2a683ccd9ff139b50a7f0.png";
@@ -583,17 +584,9 @@ export function ProjectArte() {
 
   return (
     <div className="relative w-full">
-      {/* Back button — top left */}
-      <motion.button
-        initial={{ opacity: 0, x: -10 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6, delay: 0.8 }}
+      <ProjectBackButton
         onClick={() => navigate("/projects")}
-        className="fixed top-6 left-6 z-50 group flex items-center gap-2 px-4 py-2.5 rounded-full backdrop-blur-md transition-all duration-300 hover:scale-[1.05] active:scale-[0.97]"
         style={{
-          fontFamily: "'Inter', sans-serif",
-          fontSize: "0.7rem",
-          letterSpacing: "0.03em",
           background: isDark ? "rgba(12,10,16,0.7)" : "rgba(255,255,255,0.7)",
           border: `1px solid ${r(0.08)}`,
           color: r(0.5),
@@ -602,12 +595,8 @@ export function ProjectArte() {
             : "0 4px 20px rgba(0,0,0,0.08)",
         }}
       >
-        <ArrowLeft
-          size={13}
-          className="transition-transform group-hover:-translate-x-1"
-        />
         {t("arte.back")}
-      </motion.button>
+      </ProjectBackButton>
 
       <HeroSection />
       <IntroSection />

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { useI18n, type TranslationKey } from "./i18n";
 import { useTheme } from "./theme";
 import { FloatingSquares } from "./FloatingSquares";
+import { ProjectBackButton } from "./ProjectBackButton";
 
 /* -- Assets -- */
 import svgPaths from "../../imports/svg-u09fl664kx";
@@ -905,26 +906,17 @@ export function ProjectSnatsh() {
 
   return (
     <div className="relative w-full">
-      {/* Back button — top left */}
-      <motion.button
-        initial={{ opacity: 0, x: -10 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6, delay: 0.8 }}
+      <ProjectBackButton
         onClick={() => navigate("/projects")}
-        className="fixed top-6 left-6 z-50 group flex items-center gap-2 px-4 py-2.5 rounded-full backdrop-blur-md transition-all duration-300 hover:scale-[1.05] active:scale-[0.97]"
         style={{
-          fontFamily: "'Inter', sans-serif",
-          fontSize: "0.7rem",
-          letterSpacing: "0.03em",
           background: isDark ? "rgba(10,12,8,0.7)" : "rgba(255,255,255,0.7)",
           border: `1px solid ${r(0.08)}`,
           color: r(0.5),
           boxShadow: isDark ? "0 4px 20px rgba(0,0,0,0.3)" : "0 4px 20px rgba(0,0,0,0.08)",
         }}
       >
-        <ArrowLeft size={13} className="transition-transform group-hover:-translate-x-1" />
         {t("sn.back")}
-      </motion.button>
+      </ProjectBackButton>
 
       <HeroSection />
       <IntroSection />

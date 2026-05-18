@@ -1,9 +1,9 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
-import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useI18n } from "./i18n";
 import { useTheme } from "./theme";
+import { ProjectBackButton } from "./ProjectBackButton";
 
 /* ── SVG element files (graphic elements provided by user) ── */
 import elemDarkRaw from "../../imports/Fichier_2-2.svg?raw";
@@ -943,23 +943,21 @@ export function ProjectRadioLibre() {
 
   return (
     <div className="relative w-full overflow-hidden">
-      <motion.button
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
+      <ProjectBackButton
+        delay={0.3}
+        top="7rem"
         onClick={() => navigate("/projects")}
-        className="fixed top-28 left-6 z-40 flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-md transition-all duration-300 hover:scale-105"
         style={{
+          paddingTop: "0.5rem",
+          paddingBottom: "0.5rem",
           background: r(0.03),
           border: `1px solid ${r(0.08)}`,
-          fontFamily: "'Inter', sans-serif",
           fontSize: "0.75rem",
           color: r(0.4),
         }}
       >
-        <ArrowLeft size={14} />
         {t("rl.back")}
-      </motion.button>
+      </ProjectBackButton>
 
       <HeroSection />
       <IntroSection />
