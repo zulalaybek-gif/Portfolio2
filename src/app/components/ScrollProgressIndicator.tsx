@@ -1,16 +1,9 @@
-import { motion, useReducedMotion, useScroll, useSpring } from "motion/react";
+import { motion, useScroll } from "motion/react";
 import { useTheme } from "./theme";
 
 export function ScrollProgressIndicator() {
   const { isDark, r } = useTheme();
   const { scrollYProgress } = useScroll();
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 28,
-    mass: 0.45,
-  });
-  const reduceMotion = useReducedMotion();
-  const progress = reduceMotion ? scrollYProgress : smoothProgress;
 
   return (
     <div
@@ -25,7 +18,7 @@ export function ScrollProgressIndicator() {
       <div className="scroll-progress-indicator__track">
         <motion.div
           className="scroll-progress-indicator__fill"
-          style={{ scaleY: progress }}
+          style={{ scaleY: scrollYProgress }}
         >
           <span className="scroll-progress-indicator__tip" />
         </motion.div>
