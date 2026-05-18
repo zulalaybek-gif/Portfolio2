@@ -17,9 +17,11 @@ const CTASection = lazy(() =>
 function DeferredSection({
   Component,
   sectionId,
+  minHeight = 0,
 }: {
   Component: ComponentType;
   sectionId?: string;
+  minHeight?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [shouldRender, setShouldRender] = useState(false);
@@ -47,7 +49,11 @@ function DeferredSection({
   }, [shouldRender]);
 
   return (
-    <div ref={ref} data-section={sectionId}>
+    <div
+      ref={ref}
+      data-section-alias={sectionId}
+      style={!shouldRender && minHeight ? { minHeight } : undefined}
+    >
       {shouldRender ? (
         <Suspense fallback={null}>
           <Component />
@@ -61,10 +67,10 @@ export function HomePage() {
   return (
     <>
       <HeroSection />
-      <DeferredSection Component={ServicesSection} sectionId="services" />
-      <DeferredSection Component={ProcessSection} />
-      <DeferredSection Component={ToolsSection} />
-      <DeferredSection Component={CTASection} sectionId="about" />
+      <DeferredSection Component={ServicesSection} sectionId="services" minHeight={640} />
+      <DeferredSection Component={ProcessSection} minHeight={560} />
+      <DeferredSection Component={ToolsSection} minHeight={320} />
+      <DeferredSection Component={CTASection} sectionId="about" minHeight={420} />
     </>
   );
 }

@@ -39,11 +39,6 @@
   animation: marquee-scroll 40s linear infinite;
 }
 
-section:not([data-section="hero"]) {
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 900px;
-}
-
 img,
 video,
 canvas,
