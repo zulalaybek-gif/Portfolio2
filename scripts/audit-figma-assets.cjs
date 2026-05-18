@@ -5,6 +5,7 @@ const rootDir = path.resolve(__dirname, '..')
 const sourceDir = path.join(rootDir, 'src')
 const assetsDir = path.join(sourceDir, 'assets')
 const assetImportPattern = /figma:asset\/([^"')\s;]+)/g
+const minUsefulAssetSizeBytes = 1024
 
 function walk(dir, files = []) {
   if (!fs.existsSync(dir)) return files
@@ -59,6 +60,7 @@ for (const filePath of walk(sourceDir)) {
 
 const missing = []
 const placeholders = []
+const lightweight = []
 const valid = []
 
 for (const [filename, locations] of imports) {
@@ -74,6 +76,11 @@ for (const [filename, locations] of imports) {
 
   if (dimensions?.width === 1 && dimensions?.height === 1) {
     placeholders.push({ filename, locations, size: stats.size })
+    continue
+  }
+
+  if (stats.size < minUsefulAssetSizeBytes) {
+    lightweight.push({ filename, locations, size: stats.size, dimensions })
     continue
   }
 
@@ -104,10 +111,12 @@ console.log(`Imports found: ${imports.size}`)
 console.log(`Valid assets: ${valid.length}`)
 console.log(`Missing assets: ${missing.length}`)
 console.log(`1x1 placeholder assets: ${placeholders.length}`)
+console.log(`Suspicious lightweight assets: ${lightweight.length}`)
 
 printGroup('Missing assets', missing)
 printGroup('1x1 placeholder assets', placeholders)
+printGroup('Suspicious lightweight assets', lightweight)
 
-if (missing.length || placeholders.length) {
+if (missing.length || placeholders.length || lightweight.length) {
   process.exitCode = 1
 }
