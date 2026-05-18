@@ -11,16 +11,12 @@ function MagneticField() {
   const { isDark } = useTheme();
   const dots = useRef<Array<{ ox: number; oy: number; x: number; y: number; vx: number; vy: number }>>([]);
   const raf = useRef(0);
-  const [enabled, setEnabled] = useState(false);
-
-  useEffect(() => {
+  const [enabled] = useState(() => {
+    if (typeof window === "undefined") return false;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    if (reduceMotion || !canHover || window.innerWidth < 1024) return;
-
-    const timer = window.setTimeout(() => setEnabled(true), 700);
-    return () => window.clearTimeout(timer);
-  }, []);
+    return !reduceMotion && canHover && window.innerWidth >= 1024;
+  });
 
   useEffect(() => {
     if (!enabled) return;

@@ -1,37 +1,22 @@
-import { lazy, Suspense, useEffect, useState } from "react";
 import { Outlet } from "react-router";
 import { Navigation } from "./Navigation";
 import { Footer } from "./Footer";
 import { useTheme } from "./theme";
-
-const ParticleOrbit = lazy(() =>
-  import("./ParticleOrbit").then((module) => ({ default: module.ParticleOrbit }))
-);
-const ParticleOverlay = lazy(() =>
-  import("./ParticleOverlay").then((module) => ({ default: module.ParticleOverlay }))
-);
+import { ParticleOrbit } from "./ParticleOrbit";
+import { ParticleOverlay } from "./ParticleOverlay";
 
 export function Layout() {
-  const { p, theme } = useTheme();
-  const [showParticles, setShowParticles] = useState(false);
-
-  // Set data-theme on <html> for CSS-based particle styling
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-  }, [theme]);
-
-  useEffect(() => {
+  const { p } = useTheme();
+  const showParticles = (() => {
+    if (typeof window === "undefined") return false;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const isMobile = window.innerWidth < 768;
-    if (reduceMotion || isMobile) return;
-
-    const timer = window.setTimeout(() => setShowParticles(true), 900);
-    return () => window.clearTimeout(timer);
-  }, []);
+    return !reduceMotion && !isMobile;
+  })();
 
   return (
     <div
-      className="min-h-screen w-full flex items-center justify-center relative transition-colors duration-700"
+      className="min-h-screen w-full flex items-center justify-center relative"
       style={{
         background: p.pageBg,
         padding: "clamp(32px, 5vw, 80px)",
@@ -39,14 +24,10 @@ export function Layout() {
       }}
     >
       {/* Background particles — behind everything */}
-      {showParticles ? (
-        <Suspense fallback={null}>
-          <ParticleOrbit />
-        </Suspense>
-      ) : null}
+      {showParticles ? <ParticleOrbit /> : null}
 
       <div
-        className="w-full max-w-[1440px] relative transition-all duration-700"
+        className="w-full max-w-[1440px] relative"
         style={{
           borderRadius: "clamp(16px, 3vw, 40px)",
           background: p.containerBg,
@@ -57,11 +38,7 @@ export function Layout() {
         }}
       >
         {/* Inner particle overlay — floats through content */}
-        {showParticles ? (
-          <Suspense fallback={null}>
-            <ParticleOverlay />
-          </Suspense>
-        ) : null}
+        {showParticles ? <ParticleOverlay /> : null}
 
         {/* Content */}
         <div className="relative" style={{ zIndex: 2 }}>
