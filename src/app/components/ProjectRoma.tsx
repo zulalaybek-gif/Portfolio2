@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from "motion/react";
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useI18n, type TranslationKey } from "./i18n";
@@ -428,10 +428,6 @@ export function ProjectRoma() {
   const { t } = useI18n();
   const { r, isDark } = useTheme();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   return (
     <div className="relative w-full">

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowLeft, MousePointerClick } from "lucide-react";
 import { useNavigate } from "react-router";
@@ -639,10 +639,6 @@ export function ProjectMakerWeek() {
   const { t } = useI18n();
   const { r, isDark } = useTheme();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   return (
     <div className="relative w-full">

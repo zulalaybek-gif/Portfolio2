@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform, AnimatePresence } from "motion/react";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useI18n, type TranslationKey } from "./i18n";
@@ -899,10 +899,6 @@ export function ProjectSnatsh() {
   const { t } = useI18n();
   const { r, isDark } = useTheme();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   return (
     <div className="relative w-full">

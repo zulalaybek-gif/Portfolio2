@@ -22,7 +22,10 @@ function figmaAssetResolver() {
     },
     load(id) {
       if (typeof id === 'string' && id.includes('figma:asset/')) {
-        // Return a small SVG data URL as a placeholder image so builds succeed
+        const filename = id.split('figma:asset/').pop() ?? id
+        this.warn(`Missing Figma asset "${filename}". Add it to src/assets/${filename}.`)
+
+        // Keep a visible placeholder only as a fallback for incomplete exports.
         const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='256' height='256'><rect width='100%' height='100%' fill='%23EEE'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='20' fill='%23999'>placeholder</text></svg>`
         const dataUrl = `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`
         return `export default "${dataUrl}"`

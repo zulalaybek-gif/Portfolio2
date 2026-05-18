@@ -1,10 +1,30 @@
-import { Outlet } from "react-router";
-import { useState } from "react";
+import { Outlet, useLocation } from "react-router";
+import { useLayoutEffect, useState } from "react";
 import { Navigation } from "./Navigation";
 import { Footer } from "./Footer";
 import { useTheme } from "./theme";
 import { ParticleOrbit } from "./ParticleOrbit";
 import { ParticleOverlay } from "./ParticleOverlay";
+
+function RouteViewport() {
+  const location = useLocation();
+
+  useLayoutEffect(() => {
+    if (location.hash) return;
+
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "auto",
+    });
+  }, [location.pathname, location.hash]);
+
+  return (
+    <main key={location.pathname} className="route-shell">
+      <Outlet />
+    </main>
+  );
+}
 
 export function Layout() {
   const { p } = useTheme();
@@ -44,7 +64,7 @@ export function Layout() {
         {/* Content */}
         <div className="relative" style={{ zIndex: 2 }}>
           <Navigation />
-          <Outlet />
+          <RouteViewport />
           <Footer />
         </div>
       </div>

@@ -22,6 +22,11 @@ export const projectRouteLoaders = {
 } satisfies Record<string, RouteLoader>;
 
 export function preloadProjectRoute(path: string) {
+  if (path === "/projects") {
+    void projectsIndexLoader();
+    return;
+  }
+
   const loader = projectRouteLoaders[path as keyof typeof projectRouteLoaders];
   if (loader) void loader();
 }

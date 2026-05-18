@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useI18n } from "./i18n";
@@ -1295,10 +1295,6 @@ function ClosingSection() {
    MAIN EXPORT
    ══════════════════════════════════════════ */
 export function ProjectHaiti() {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <div className="relative w-full">
       <HeroSection />

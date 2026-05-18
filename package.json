@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "assets:audit": "node scripts/audit-assets.cjs",
+    "assets:figma-audit": "node scripts/audit-figma-assets.cjs",
     "audit:security": "npm audit --audit-level=moderate --omit=dev",
     "build": "vite build && node scripts/write-github-pages-routes.cjs",
     "dev": "vite",

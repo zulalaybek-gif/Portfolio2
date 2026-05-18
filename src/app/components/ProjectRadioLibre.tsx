@@ -939,10 +939,6 @@ export function ProjectRadioLibre() {
   const { t } = useI18n();
   const { r } = useTheme();
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <div className="relative w-full overflow-hidden">
       <ProjectBackButton

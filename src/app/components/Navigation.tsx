@@ -11,10 +11,15 @@ export function Navigation() {
   const { isDark, toggle, p, r } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const scrollTimers = useRef<number[]>([]);
+  const scrollFrame = useRef<number | null>(null);
 
   const clearScrollTimers = useCallback(() => {
     scrollTimers.current.forEach((timer) => window.clearTimeout(timer));
     scrollTimers.current = [];
+    if (scrollFrame.current !== null) {
+      window.cancelAnimationFrame(scrollFrame.current);
+      scrollFrame.current = null;
+    }
   }, []);
 
   const scheduleScroll = useCallback((callback: () => void, delay: number) => {
@@ -64,6 +69,7 @@ export function Navigation() {
 
   const scrollToSection = useCallback((sectionId: string) => {
     clearScrollTimers();
+    let attempts = 0;
 
     const findSection = () =>
       document.querySelector(`[data-section="${sectionId}"]`) ||
@@ -71,23 +77,26 @@ export function Navigation() {
 
     const scroll = () => {
       const el = findSection();
-      if (!el) return false;
+      if (!el) {
+        attempts += 1;
+        if (attempts <= 8) {
+          scheduleScroll(scroll, attempts < 3 ? 80 : 160);
+        }
+        return;
+      }
+
       const { top } = el.getBoundingClientRect();
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       window.scrollTo({
         top: Math.max(0, top + window.scrollY - 8),
-        behavior: "smooth",
+        behavior: reduceMotion ? "auto" : "smooth",
       });
-      return true;
     };
 
-    if (scroll()) {
-      scheduleScroll(scroll, 260);
-      return;
-    }
-
-    scheduleScroll(scroll, 120);
-    scheduleScroll(scroll, 420);
-    scheduleScroll(scroll, 900);
+    scrollFrame.current = window.requestAnimationFrame(() => {
+      scrollFrame.current = null;
+      scroll();
+    });
   }, [clearScrollTimers, scheduleScroll]);
 
   /** Handle hash-based navigation (scroll to section) */
@@ -206,6 +215,7 @@ export function Navigation() {
 
           {/* Desktop CTA */}
           <button
+            onClick={() => window.location.href = "mailto:zulal.aybek@gmail.com"}
             className="hidden md:block px-6 py-2.5 rounded-full transition-all duration-300"
             style={{
               fontSize: "0.85rem",
@@ -290,6 +300,7 @@ export function Navigation() {
 
               {/* Mobile CTA */}
               <button
+                onClick={() => window.location.href = "mailto:zulal.aybek@gmail.com"}
                 className="mt-6 w-full py-4 rounded-full transition-all duration-300 animate-soft-enter"
                 style={{
                   fontFamily: "'Inter', sans-serif",

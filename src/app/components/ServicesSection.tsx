@@ -19,7 +19,30 @@ export function ServicesSection() {
   const { p, r, isDark } = useTheme();
   const accent = isDark ? "#8BAD4A" : "#4A6B2A";
   const scrollRef = useRef<HTMLDivElement>(null);
+  const programmaticScrollRef = useRef<number | null>(null);
+  const scrollEndTimerRef = useRef<number | null>(null);
   const [activeIdx, setActiveIdx] = useState(0);
+
+  const getClosestIndex = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return 0;
+
+    const viewportCenter = el.scrollLeft + el.clientWidth / 2;
+    const children = Array.from(el.children) as HTMLElement[];
+    let closest = 0;
+    let minDist = Infinity;
+
+    children.forEach((child, i) => {
+      const childCenter = child.offsetLeft + child.offsetWidth / 2;
+      const dist = Math.abs(childCenter - viewportCenter);
+      if (dist < minDist) {
+        minDist = dist;
+        closest = i;
+      }
+    });
+
+    return closest;
+  }, []);
 
   const scrollToIdx = useCallback((idx: number) => {
     const el = scrollRef.current;
@@ -27,10 +50,21 @@ export function ServicesSection() {
     const cards = el.children;
     if (cards[idx]) {
       const card = cards[idx] as HTMLElement;
-      el.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      programmaticScrollRef.current = idx;
+      el.scrollTo({ left: card.offsetLeft, behavior: reduceMotion ? "auto" : "smooth" });
     }
     setActiveIdx(idx);
-  }, []);
+
+    if (scrollEndTimerRef.current !== null) {
+      window.clearTimeout(scrollEndTimerRef.current);
+    }
+
+    scrollEndTimerRef.current = window.setTimeout(() => {
+      programmaticScrollRef.current = null;
+      setActiveIdx(getClosestIndex());
+    }, 460);
+  }, [getClosestIndex]);
 
   const prev = () => scrollToIdx(Math.max(0, activeIdx - 1));
   const next = () => scrollToIdx(Math.min(services.length - 1, activeIdx + 1));
@@ -40,25 +74,23 @@ export function ServicesSection() {
     if (!el) return;
     let raf = 0;
     const onScroll = () => {
+      if (programmaticScrollRef.current !== null) return;
       if (raf) return;
       raf = window.requestAnimationFrame(() => {
         raf = 0;
-        const children = Array.from(el.children) as HTMLElement[];
-        let closest = 0;
-        let minDist = Infinity;
-        children.forEach((child, i) => {
-          const dist = Math.abs(child.offsetLeft - el.scrollLeft);
-          if (dist < minDist) { minDist = dist; closest = i; }
-        });
+        const closest = getClosestIndex();
         setActiveIdx((current) => (current === closest ? current : closest));
       });
     };
     el.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       if (raf) window.cancelAnimationFrame(raf);
+      if (scrollEndTimerRef.current !== null) {
+        window.clearTimeout(scrollEndTimerRef.current);
+      }
       el.removeEventListener("scroll", onScroll);
     };
-  }, []);
+  }, [getClosestIndex]);
 
   return (
     <section data-section="services" className="relative w-full px-6 md:px-12 py-24">

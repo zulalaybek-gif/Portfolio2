@@ -858,10 +858,6 @@ export function ProjectMya() {
   const { r, isDark } = useTheme();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <div className="relative w-full">
       <ProjectBackButton

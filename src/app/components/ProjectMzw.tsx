@@ -1326,10 +1326,6 @@ export function ProjectMzw() {
   const { r, isDark } = useTheme();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   return (

@@ -653,10 +653,6 @@ function ClosingSection() {
 
 /* ── Main Export ── */
 export function ProjectSncf() {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <div className="relative w-full">
       <HeroSection />

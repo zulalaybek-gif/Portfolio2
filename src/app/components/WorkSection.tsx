@@ -5,6 +5,7 @@ import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { useNavigate } from "react-router";
 import { useI18n, type TranslationKey } from "./i18n";
 import { useTheme } from "./theme";
+import { preloadProjectRoute } from "../projectRouteLoaders";
 
 const projects = [
   {
@@ -99,6 +100,8 @@ export function WorkSection() {
           </div>
           <button
             onClick={() => navigate("/projects")}
+            onMouseEnter={() => preloadProjectRoute("/projects")}
+            onFocus={() => preloadProjectRoute("/projects")}
             className="px-6 py-2.5 rounded-full transition-all duration-300 flex items-center gap-2 hover:scale-105"
             style={{ fontSize: "0.85rem", fontFamily: "'Inter', sans-serif", border: `1px solid ${r(0.15)}`, color: r(0.6) }}
           >
@@ -118,8 +121,18 @@ export function WorkSection() {
               transition={{ duration: 0.5, delay: i * 0.06 }}
               className="group cursor-pointer relative"
               onMouseEnter={() => setHoveredIdx(i)}
+              onPointerEnter={() => preloadProjectRoute(project.slug)}
+              onFocus={() => preloadProjectRoute(project.slug)}
               onMouseLeave={() => setHoveredIdx(null)}
               onClick={() => navigate(project.slug)}
+              tabIndex={0}
+              role="button"
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  navigate(project.slug);
+                }
+              }}
             >
               {/* Hover background glow */}
               <div
