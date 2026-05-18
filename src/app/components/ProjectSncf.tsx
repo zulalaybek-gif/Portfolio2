@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "motion/react";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { lazy, Suspense, useState, useEffect, useRef, useCallback } from "react";
 import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, Maximize2, Minimize2 } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useI18n } from "./i18n";
@@ -8,30 +8,32 @@ import svgLogoSncf from "../../imports/svg-xsk7542b73";
 import svgSlideIcons from "../../imports/svg-8lle55gqj4";
 
 /* ── Lazy slide imports ── */
-import Slide1 from "../../imports/1";
-import Slide2 from "../../imports/2";
-import Slide3 from "../../imports/3";
-import Slide4 from "../../imports/4";
-import Slide5 from "../../imports/5";
-import Slide6 from "../../imports/6";
-import Slide7 from "../../imports/7";
-import Slide8 from "../../imports/8";
-import Slide9 from "../../imports/9";
-import Slide10 from "../../imports/10";
-import Slide11 from "../../imports/11";
-import Slide13 from "../../imports/13";
-import Slide14 from "../../imports/14";
-import Slide15 from "../../imports/15";
-import Slide16 from "../../imports/16";
-import Slide17 from "../../imports/17";
-import Slide18 from "../../imports/18";
-import Slide19 from "../../imports/19";
-import Slide20 from "../../imports/20";
-import Slide21 from "../../imports/21";
-import Slide22 from "../../imports/22";
-import Slide23 from "../../imports/23";
-import Slide24 from "../../imports/24";
-import Slide25 from "../../imports/25";
+const SLIDE_LOADERS = [
+  () => import("../../imports/1"),
+  () => import("../../imports/2"),
+  () => import("../../imports/3"),
+  () => import("../../imports/4"),
+  () => import("../../imports/5"),
+  () => import("../../imports/6"),
+  () => import("../../imports/7"),
+  () => import("../../imports/8"),
+  () => import("../../imports/9"),
+  () => import("../../imports/10"),
+  () => import("../../imports/11"),
+  () => import("../../imports/13"),
+  () => import("../../imports/14"),
+  () => import("../../imports/15"),
+  () => import("../../imports/16"),
+  () => import("../../imports/17"),
+  () => import("../../imports/18"),
+  () => import("../../imports/19"),
+  () => import("../../imports/20"),
+  () => import("../../imports/21"),
+  () => import("../../imports/22"),
+  () => import("../../imports/23"),
+  () => import("../../imports/24"),
+  () => import("../../imports/25"),
+];
 
 /* ── Onboarding phone images ── */
 import imgPhone1 from "figma:asset/2636e6ec7110e5eca67c760f081cd3058b72c3d8.png";
@@ -39,7 +41,7 @@ import imgPhone2 from "figma:asset/ab6ac30c707710def679592d42d3252ff64d76b2.png"
 import imgPhone3 from "figma:asset/5af6ccef921b97ccb914a7aa411e5dad4d0d0326.png";
 import imgPhone4 from "figma:asset/2b3c16c913980c097f83c4a8c1644d3fec07a85c.png";
 
-const SLIDES = [Slide1, Slide2, Slide3, Slide4, Slide5, Slide6, Slide7, Slide8, Slide9, Slide10, Slide11, Slide13, Slide14, Slide15, Slide16, Slide17, Slide18, Slide19, Slide20, Slide21, Slide22, Slide23, Slide24, Slide25];
+const SLIDES = SLIDE_LOADERS.map((load) => lazy(load));
 const SLIDE_W = 1920;
 const SLIDE_H = 1080;
 const ACCENT = "#8DE8FE";
@@ -310,6 +312,12 @@ function PresentationViewer() {
     return () => window.removeEventListener("resize", measure);
   }, [isFullscreen]);
 
+  useEffect(() => {
+    void SLIDE_LOADERS[current]?.();
+    void SLIDE_LOADERS[current + 1]?.();
+    void SLIDE_LOADERS[current - 1]?.();
+  }, [current]);
+
   const SlideComponent = SLIDES[current];
 
   const slideViewer = (
@@ -346,7 +354,21 @@ function PresentationViewer() {
               position: "relative",
             }}
           >
-            <SlideComponent />
+            <Suspense
+              fallback={
+                <div
+                  className="flex items-center justify-center"
+                  style={{ width: SLIDE_W, height: SLIDE_H, background: BG_DARK }}
+                >
+                  <div
+                    className="h-8 w-8 rounded-full border-2 border-t-transparent opacity-40 animate-spin"
+                    style={{ borderColor: ACCENT, borderTopColor: "transparent" }}
+                  />
+                </div>
+              }
+            >
+              <SlideComponent />
+            </Suspense>
           </motion.div>
         </AnimatePresence>
       </div>

@@ -6,6 +6,7 @@ import { ParticleDivider } from "./ParticleDivider";
 import { useI18n, type TranslationKey } from "./i18n";
 import { useTheme } from "./theme";
 import { useNavigate } from "react-router";
+import { preloadProjectRoute } from "../projectRouteLoaders";
 
 /* ─── Data ─── */
 type ViewMode = "standard" | "projects" | "workshops";
@@ -257,6 +258,8 @@ function FeaturedProject({ onSelect }: { onSelect: (p: Project) => void }) {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
           className="relative group cursor-pointer rounded-[2rem] overflow-hidden"
+          onMouseEnter={() => preloadProjectRoute(featured.slug)}
+          onFocus={() => preloadProjectRoute(featured.slug)}
           onClick={() => onSelect(featured)}
           style={{ border: `1px solid ${r(0.05)}` }}
         >
@@ -387,7 +390,22 @@ function ProjectIndex({ activeCategory, setActiveCategory, onSelect }: {
 
           <AnimatePresence mode="popLayout">
             {filtered.map((project, i) => (
-              <motion.div key={project.id} layout initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} transition={{ duration: 0.4, delay: i * 0.04 }} className="group cursor-pointer relative" onMouseEnter={() => setHoveredId(project.id)} onMouseLeave={() => setHoveredId(null)} onClick={() => onSelect(project)}>
+              <motion.div
+                key={project.id}
+                layout
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.4, delay: i * 0.04 }}
+                className="group cursor-pointer relative"
+                onMouseEnter={() => {
+                  setHoveredId(project.id);
+                  preloadProjectRoute(project.slug);
+                }}
+                onFocus={() => preloadProjectRoute(project.slug)}
+                onMouseLeave={() => setHoveredId(null)}
+                onClick={() => onSelect(project)}
+              >
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" style={{ background: `linear-gradient(90deg, rgba(${project.accent},0.03), transparent 50%)` }} />
                 <div className="relative flex items-center py-5 md:py-7 border-b transition-colors duration-500 px-2 md:px-4" style={{ borderColor: r(0.03) }}>
                   <span className="w-12 shrink-0 hidden md:block transition-colors duration-500" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.75rem", color: r(0.1) }}>
@@ -481,7 +499,18 @@ function HorizontalReel({ onSelect }: { onSelect: (p: Project) => void }) {
 
       <div ref={scrollRef} className="relative flex gap-4 overflow-x-auto px-6 md:px-12 pb-4 scrollbar-hide" style={{ scrollSnapType: "x mandatory", msOverflowStyle: "none", scrollbarWidth: "none" }}>
         {projects.map((project, i) => (
-          <motion.div key={project.id} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.08 }} className="group shrink-0 cursor-pointer" style={{ scrollSnapAlign: "start" }} onClick={() => onSelect(project)}>
+          <motion.div
+            key={project.id}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: i * 0.08 }}
+            className="group shrink-0 cursor-pointer"
+            style={{ scrollSnapAlign: "start" }}
+            onMouseEnter={() => preloadProjectRoute(project.slug)}
+            onFocus={() => preloadProjectRoute(project.slug)}
+            onClick={() => onSelect(project)}
+          >
             <div className="relative w-[280px] md:w-[340px] aspect-[3/4] rounded-2xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
               <ImageWithFallback src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.8) 100%)" }} />
@@ -628,6 +657,7 @@ export function ProjectsPage() {
 
   /* Always open modal first */
   const handleSelect = (project: Project) => {
+    preloadProjectRoute(project.slug);
     setSelectedProject(project);
   };
 

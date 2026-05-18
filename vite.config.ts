@@ -1,16 +1,22 @@
 import { defineConfig } from 'vite'
 import path from 'path'
+import fs from 'fs'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 
 
 function figmaAssetResolver() {
+  const assetsDir = path.resolve(__dirname, 'src/assets')
+
   return {
     name: 'figma-asset-resolver',
     resolveId(id) {
       if (id.startsWith('figma:asset/')) {
         const filename = id.replace('figma:asset/', '')
-        // Always return an internal virtual id so Rollup/Vite won't treat it as an asset file
+        const assetPath = path.join(assetsDir, filename)
+        if (fs.existsSync(assetPath)) {
+          return assetPath
+        }
         return `\0figma:asset/${filename}`
       }
     },

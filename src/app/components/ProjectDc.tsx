@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, BookOpen } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useI18n, type TranslationKey } from "./i18n";
@@ -117,23 +117,40 @@ const SECONDARY_RGB = "248,124,86";
 /* ── Horizontal scroll row with arrows ── */
 function ScrollRow({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   const { r, isDark } = useTheme();
-  const scrollRef = useCallback((node: HTMLDivElement | null) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const leftRef = useRef<HTMLButtonElement>(null);
+  const rightRef = useRef<HTMLButtonElement>(null);
+
+  const updateButtons = useCallback(() => {
+    const node = scrollRef.current;
+    const left = leftRef.current;
+    const right = rightRef.current;
     if (!node) return;
-    const parent = node.parentElement;
-    const update = () => {
-      if (!parent) return;
-      const left = parent.querySelector("[data-scroll-left]") as HTMLElement;
-      const right = parent.querySelector("[data-scroll-right]") as HTMLElement;
-      if (left) left.style.opacity = node.scrollLeft > 10 ? "1" : "0";
-      if (right) right.style.opacity = node.scrollLeft < node.scrollWidth - node.clientWidth - 10 ? "1" : "0";
-    };
-    node.addEventListener("scroll", update, { passive: true });
-    requestAnimationFrame(update);
+    if (left) left.style.opacity = node.scrollLeft > 10 ? "1" : "0";
+    if (right) right.style.opacity = node.scrollLeft < node.scrollWidth - node.clientWidth - 10 ? "1" : "0";
   }, []);
 
+  useEffect(() => {
+    const node = scrollRef.current;
+    if (!node) return;
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = window.requestAnimationFrame(() => {
+        raf = 0;
+        updateButtons();
+      });
+    };
+    node.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => {
+      node.removeEventListener("scroll", onScroll);
+      if (raf) window.cancelAnimationFrame(raf);
+    };
+  }, [updateButtons]);
+
   const scroll = (dir: number) => {
-    const el = document.querySelector(`[data-scroll-container="${className}"]`) as HTMLElement;
-    if (el) el.scrollBy({ left: dir * 300, behavior: "smooth" });
+    scrollRef.current?.scrollBy({ left: dir * 300, behavior: "smooth" });
   };
 
   return (
@@ -142,11 +159,11 @@ function ScrollRow({ children, className = "" }: { children: React.ReactNode; cl
         {children}
       </div>
       {/* Left arrow */}
-      <button data-scroll-left onClick={() => scroll(-1)} className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-md transition-all opacity-0" style={{ background: isDark ? "rgba(0,0,0,0.6)" : "rgba(255,255,255,0.85)", border: `1px solid ${r(0.1)}`, boxShadow: "0 2px 8px rgba(0,0,0,0.15)" }}>
+      <button ref={leftRef} data-scroll-left onClick={() => scroll(-1)} className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-md transition-all opacity-0" style={{ background: isDark ? "rgba(0,0,0,0.6)" : "rgba(255,255,255,0.85)", border: `1px solid ${r(0.1)}`, boxShadow: "0 2px 8px rgba(0,0,0,0.15)" }}>
         <ChevronLeft size={16} style={{ color: r(0.6) }} />
       </button>
       {/* Right arrow */}
-      <button data-scroll-right onClick={() => scroll(1)} className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-md transition-all opacity-0" style={{ background: isDark ? "rgba(0,0,0,0.6)" : "rgba(255,255,255,0.85)", border: `1px solid ${r(0.1)}`, boxShadow: "0 2px 8px rgba(0,0,0,0.15)" }}>
+      <button ref={rightRef} data-scroll-right onClick={() => scroll(1)} className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-md transition-all opacity-0" style={{ background: isDark ? "rgba(0,0,0,0.6)" : "rgba(255,255,255,0.85)", border: `1px solid ${r(0.1)}`, boxShadow: "0 2px 8px rgba(0,0,0,0.15)" }}>
         <ChevronRight size={16} style={{ color: r(0.6) }} />
       </button>
       {/* Scroll hint */}

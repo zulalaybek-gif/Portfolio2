@@ -1,58 +1,23 @@
-import { createBrowserRouter, type RouteObject } from "react-router";
+import { createBrowserRouter } from "react-router";
 import { lazy, Suspense, createElement, useEffect, useState } from "react";
 import { Layout } from "./components/Layout";
 import { HomePage } from "./components/HomePage";
+import { projectsIndexLoader, projectRouteLoaders } from "./projectRouteLoaders";
 
 /* ── Lazy-loaded project pages ── */
-const ProjectMya = lazy(() =>
-  import("./components/ProjectMya").then((m) => ({ default: m.ProjectMya }))
-);
-const ProjectRoma = lazy(() =>
-  import("./components/ProjectRoma").then((m) => ({ default: m.ProjectRoma }))
-);
-const ProjectMakerWeek = lazy(() =>
-  import("./components/ProjectMakerWeek").then((m) => ({
-    default: m.ProjectMakerWeek,
-  }))
-);
-const ProjectMzw = lazy(() =>
-  import("./components/ProjectMzw").then((m) => ({ default: m.ProjectMzw }))
-);
-const ProjectKh = lazy(() =>
-  import("./components/ProjectKh").then((m) => ({ default: m.ProjectKh }))
-);
-const ProjectSnatsh = lazy(() =>
-  import("./components/ProjectSnatsh").then((m) => ({
-    default: m.ProjectSnatsh,
-  }))
-);
-const ProjectArte = lazy(() =>
-  import("./components/ProjectArte").then((m) => ({
-    default: m.ProjectArte,
-  }))
-);
-const ProjectDc = lazy(() =>
-  import("./components/ProjectDc").then((m) => ({
-    default: m.ProjectDc,
-  }))
-);
-const ProjectNrtv = lazy(() =>
-  import("./components/ProjectNrtv").then((m) => ({ default: m.ProjectNrtv }))
-);
-const ProjectSncf = lazy(() =>
-  import("./components/ProjectSncf").then((m) => ({ default: m.ProjectSncf }))
-);
-const ProjectHaiti = lazy(() =>
-  import("./components/ProjectHaiti").then((m) => ({ default: m.ProjectHaiti }))
-);
-const ProjectRadioLibre = lazy(() =>
-  import("./components/ProjectRadioLibre").then((m) => ({ default: m.ProjectRadioLibre }))
-);
-const ProjectsPage = lazy(() =>
-  import("./components/ProjectsPage").then((m) => ({
-    default: m.ProjectsPage,
-  }))
-);
+const ProjectsPage = lazy(projectsIndexLoader);
+const ProjectMya = lazy(projectRouteLoaders["/projects/mya"]);
+const ProjectRoma = lazy(projectRouteLoaders["/projects/roma"]);
+const ProjectMakerWeek = lazy(projectRouteLoaders["/projects/maker-week"]);
+const ProjectMzw = lazy(projectRouteLoaders["/projects/mzw"]);
+const ProjectKh = lazy(projectRouteLoaders["/projects/kittyhub"]);
+const ProjectSnatsh = lazy(projectRouteLoaders["/projects/snatsh"]);
+const ProjectArte = lazy(projectRouteLoaders["/projects/arte"]);
+const ProjectDc = lazy(projectRouteLoaders["/projects/digital-campus"]);
+const ProjectNrtv = lazy(projectRouteLoaders["/projects/narratiiv"]);
+const ProjectSncf = lazy(projectRouteLoaders["/projects/sncf-connect"]);
+const ProjectHaiti = lazy(projectRouteLoaders["/projects/haiti"]);
+const ProjectRadioLibre = lazy(projectRouteLoaders["/projects/radio-libre"]);
 
 function DelayedRouteFallback() {
   const [show, setShow] = useState(false);
