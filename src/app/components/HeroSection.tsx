@@ -153,6 +153,7 @@ export function HeroSection() {
   const navigate = useNavigate();
   const { t, lang } = useI18n();
   const { p, r, isDark } = useTheme();
+  const accent = isDark ? "#8BAD4A" : "#4A6B2A";
   const ref = useRef<HTMLElement>(null);
 
   const marqueeItems1 = lang === "fr"
