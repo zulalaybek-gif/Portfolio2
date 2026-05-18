@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, type RefObject } from "react";
 import { Ear, Lightbulb, SlidersHorizontal, Rocket } from "lucide-react";
 import { useI18n, type TranslationKey } from "./i18n";
 import { useTheme } from "./theme";
@@ -11,17 +11,37 @@ const steps = [
   { icon: Rocket, titleKey: "process.step4.title" as const, descKey: "process.step4.desc" as const, num: "04" },
 ];
 
-function useInView(ref: React.RefObject<HTMLElement | null>, margin = "-100px") {
+function useInView(ref: RefObject<HTMLElement | null>, margin = "200px 0px") {
   const [inView, setInView] = useState(false);
   useEffect(() => {
-    if (!ref.current) return;
+    if (!ref.current || inView) return;
+
+    const fallbackTimer = window.setTimeout(() => {
+      setInView(true);
+    }, 1000);
+
+    if (!("IntersectionObserver" in window)) {
+      window.clearTimeout(fallbackTimer);
+      setInView(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setInView(true); observer.disconnect(); } },
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          window.clearTimeout(fallbackTimer);
+          setInView(true);
+          observer.disconnect();
+        }
+      },
       { rootMargin: margin }
     );
     observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [ref, margin]);
+    return () => {
+      window.clearTimeout(fallbackTimer);
+      observer.disconnect();
+    };
+  }, [inView, ref, margin]);
   return inView;
 }
 
@@ -38,7 +58,7 @@ export function ProcessSection() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "200px 0px" }}
           transition={{ duration: 0.8 }}
           className="mb-16"
         >

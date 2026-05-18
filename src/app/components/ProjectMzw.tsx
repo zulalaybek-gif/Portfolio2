@@ -9,7 +9,6 @@ import { ProjectBackButton } from "./ProjectBackButton";
 /* -- Assets -- */
 import svgPaths from "../../imports/svg-8j0m9nldaw";
 import playerSvg from "../../imports/svg-c1cvk0n26k";
-import decorativeSvg from "../../imports/svg-dgqe0tacnj";
 import imgNoSenseA3 from "figma:asset/f0782cd8941d77b28e775c2412d7b0004e3fc4a7.png";
 import imgVinyle from "figma:asset/9770aceb814e4effa7b6e625ada52b430207efc8.png";
 import imgTShirt from "figma:asset/21fe877e1d876a50789d329e49632e24452c7158.png";
@@ -38,8 +37,7 @@ const ACCENT = "#5d4792";
 const ACCENT_RGB = "93,71,146";
 const DARK_BG = "#0f0817";
 
-/* All decorative S-shape SVG path keys */
-const SWIRL_PATHS = Object.values(decorativeSvg);
+const MZW_SWIRL_PATHS_URL = "/assets/mzw-swirl-paths.json";
 
 /* Butterfly tap animation generators — each returns randomised values so no two clicks feel the same */
 const TAP_GENERATORS: Array<() => { x: number; y: number; scale: number; rotate: number; opacity: number; dur: number }> = [
@@ -100,7 +98,7 @@ function FadeIn({ children, className = "", delay = 0 }: { children: React.React
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
+      viewport={{ once: true, margin: "160px 0px" }}
       transition={{ duration: 0.8, delay, ease: "easeOut" }}
       className={className}
     >
@@ -1142,16 +1140,24 @@ function FloatingButterfly() {
   }, []);
 
   useEffect(() => {
+    let raf = 0;
     const onScroll = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (docHeight > 0) {
-        setScrollPct(scrollTop / docHeight);
-      }
+      if (raf) return;
+      raf = window.requestAnimationFrame(() => {
+        raf = 0;
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        if (docHeight > 0) {
+          setScrollPct(scrollTop / docHeight);
+        }
+      });
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      if (raf) window.cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   if (isMobile) return null;
@@ -1162,6 +1168,57 @@ function FloatingButterfly() {
         <SingleButterfly key={b.id} data={b} scrollPct={scrollPct} isDark={isDark} />
       ))}
     </>
+  );
+}
+
+function DecorativeSwirl({ isDark }: { isDark: boolean }) {
+  const [paths, setPaths] = useState<string[]>([]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const timer = window.setTimeout(() => {
+      fetch(MZW_SWIRL_PATHS_URL, { signal: controller.signal })
+        .then((response) => (response.ok ? response.json() : []))
+        .then((data) => {
+          if (Array.isArray(data)) setPaths(data.filter((item): item is string => typeof item === "string"));
+        })
+        .catch(() => {
+          if (!controller.signal.aborted) setPaths([]);
+        });
+    }, 350);
+
+    return () => {
+      window.clearTimeout(timer);
+      controller.abort();
+    };
+  }, []);
+
+  if (paths.length === 0) return null;
+
+  return (
+    <div className="absolute inset-0 z-[0] pointer-events-none overflow-hidden" aria-hidden="true">
+      <motion.div
+        className="absolute"
+        style={{ width: "clamp(900px, 100vw, 1800px)", top: "18%", left: "-25%", aspectRatio: "1112.71 / 1487.03" }}
+        animate={{ rotate: [0, 3, -2, 0], scale: [1, 1.04, 0.97, 1] }}
+        transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 1112.71 1487.03"
+          style={{ opacity: isDark ? 0.2 : 0.08 }}>
+          <defs>
+            <linearGradient id="swirl-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#254d9b" />
+              <stop offset="30%" stopColor="#5d4792" />
+              <stop offset="60%" stopColor="#b3428a" />
+              <stop offset="100%" stopColor="#e2c049" />
+            </linearGradient>
+          </defs>
+          {paths.map((d, i) => (
+            <path key={i} d={d} fill="url(#swirl-grad)" />
+          ))}
+        </svg>
+      </motion.div>
+    </div>
   );
 }
 
@@ -1315,30 +1372,8 @@ export function ProjectMzw() {
         <FinalSection />
       </div>
 
-      {/* Decorative S-shape swirl — single large instance, behind content */}
-      <div className="absolute inset-0 z-[0] pointer-events-none overflow-hidden" aria-hidden="true">
-        <motion.div
-          className="absolute"
-          style={{ width: "clamp(900px, 100vw, 1800px)", top: "18%", left: "-25%", aspectRatio: "1112.71 / 1487.03" }}
-          animate={{ rotate: [0, 3, -2, 0], scale: [1, 1.04, 0.97, 1] }}
-          transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 1112.71 1487.03"
-            style={{ opacity: isDark ? 0.2 : 0.08 }}>
-            <defs>
-              <linearGradient id="swirl-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#254d9b" />
-                <stop offset="30%" stopColor="#5d4792" />
-                <stop offset="60%" stopColor="#b3428a" />
-                <stop offset="100%" stopColor="#e2c049" />
-              </linearGradient>
-            </defs>
-            {SWIRL_PATHS.map((d, i) => (
-              <path key={i} d={d} fill="url(#swirl-grad)" />
-            ))}
-          </svg>
-        </motion.div>
-      </div>
+      {/* Decorative S-shape swirl — data loaded outside the JS bundle for lighter navigation */}
+      <DecorativeSwirl isDark={isDark} />
 
       <FloatingButterfly />
     </div>

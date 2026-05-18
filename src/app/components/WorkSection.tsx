@@ -77,7 +77,7 @@ export function WorkSection() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "200px 0px" }}
           transition={{ duration: 0.8 }}
           className="flex items-end justify-between mb-16 flex-wrap gap-6"
         >
@@ -114,7 +114,7 @@ export function WorkSection() {
               key={project.title}
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              viewport={{ once: true, margin: "160px 0px" }}
               transition={{ duration: 0.5, delay: i * 0.06 }}
               className="group cursor-pointer relative"
               onMouseEnter={() => setHoveredIdx(i)}

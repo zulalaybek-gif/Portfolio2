@@ -1,4 +1,5 @@
 import { useEffect, useRef, useCallback } from "react";
+import { useAnimationActive } from "./useAnimationActive";
 
 /**
  * ColorGlow — Soft, pulsing colored light orbs on canvas.
@@ -48,6 +49,7 @@ export function ColorGlow({ colors, count = 6, className = "", style }: Props) {
   const orbsRef = useRef<Orb[]>([]);
   const rafRef = useRef<number>(0);
   const colorsRef = useRef(colors);
+  const isAnimationActive = useAnimationActive(canvasRef);
   colorsRef.current = colors;
 
   const init = useCallback(
@@ -63,7 +65,7 @@ export function ColorGlow({ colors, count = 6, className = "", style }: Props) {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || !isAnimationActive) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
@@ -132,7 +134,7 @@ export function ColorGlow({ colors, count = 6, className = "", style }: Props) {
       cancelAnimationFrame(rafRef.current);
       window.removeEventListener("resize", resize);
     };
-  }, [init]);
+  }, [init, isAnimationActive]);
 
   // Update colors when they change
   useEffect(() => {

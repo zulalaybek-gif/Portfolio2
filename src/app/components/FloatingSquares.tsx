@@ -1,5 +1,6 @@
 import { useEffect, useRef, useCallback } from "react";
 import { useTheme } from "./theme";
+import { useAnimationActive } from "./useAnimationActive";
 
 /**
  * FloatingSquares — animated rounded squares in the project colors.
@@ -83,6 +84,7 @@ export function FloatingSquares({ count = 18, className = "" }: Props) {
   const squaresRef = useRef<Square[]>([]);
   const rafRef = useRef<number>(0);
   const { isDark } = useTheme();
+  const isAnimationActive = useAnimationActive(canvasRef);
   const isDarkRef = useRef(isDark);
   isDarkRef.current = isDark;
 
@@ -102,7 +104,7 @@ export function FloatingSquares({ count = 18, className = "" }: Props) {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || !isAnimationActive) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
@@ -187,7 +189,7 @@ export function FloatingSquares({ count = 18, className = "" }: Props) {
       cancelAnimationFrame(rafRef.current);
       window.removeEventListener("resize", resize);
     };
-  }, [init]);
+  }, [init, isAnimationActive]);
 
   return (
     <canvas

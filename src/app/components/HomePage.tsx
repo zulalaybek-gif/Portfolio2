@@ -18,10 +18,12 @@ function DeferredSection({
   Component,
   sectionId,
   minHeight = 0,
+  renderDelay = 280,
 }: {
   Component: ComponentType;
   sectionId?: string;
   minHeight?: number;
+  renderDelay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [shouldRender, setShouldRender] = useState(false);
@@ -32,7 +34,7 @@ function DeferredSection({
 
     const fallbackTimer = window.setTimeout(() => {
       setShouldRender(true);
-    }, 1600);
+    }, renderDelay);
 
     const renderSection = () => {
       window.clearTimeout(fallbackTimer);
@@ -51,7 +53,7 @@ function DeferredSection({
           observer.disconnect();
         }
       },
-      { rootMargin: "900px 0px" }
+      { rootMargin: "1400px 0px" }
     );
 
     observer.observe(node);
@@ -59,7 +61,7 @@ function DeferredSection({
       window.clearTimeout(fallbackTimer);
       observer.disconnect();
     };
-  }, [shouldRender]);
+  }, [renderDelay, shouldRender]);
 
   return (
     <div
@@ -81,10 +83,10 @@ export function HomePage() {
   return (
     <>
       <HeroSection />
-      <DeferredSection Component={ServicesSection} sectionId="services" minHeight={640} />
-      <DeferredSection Component={ProcessSection} minHeight={560} />
-      <DeferredSection Component={ToolsSection} minHeight={320} />
-      <DeferredSection Component={CTASection} sectionId="about" minHeight={420} />
+      <DeferredSection Component={ServicesSection} sectionId="services" minHeight={640} renderDelay={120} />
+      <DeferredSection Component={ProcessSection} minHeight={560} renderDelay={220} />
+      <DeferredSection Component={ToolsSection} minHeight={320} renderDelay={320} />
+      <DeferredSection Component={CTASection} sectionId="about" minHeight={420} renderDelay={420} />
     </>
   );
 }

@@ -13,7 +13,7 @@ export function CTASection() {
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
+        viewport={{ once: true, margin: "200px 0px" }}
         transition={{ duration: 0.8 }}
         className="max-w-6xl mx-auto relative overflow-hidden rounded-[2.5rem] p-12 md:p-20"
         style={{

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { useI18n } from "./i18n";
 import { useTheme } from "./theme";
 import { ProjectBackButton } from "./ProjectBackButton";
+import { useAnimationActive } from "./useAnimationActive";
 
 /* ── SVG element files (graphic elements provided by user) ── */
 import elemDarkRaw from "../../imports/Fichier_2-2.svg?raw";
@@ -106,7 +107,7 @@ function FadeIn({ children, className = "", delay = 0 }: { children: React.React
     <motion.div
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={{ once: true, margin: "160px 0px" }}
       transition={{ duration: 0.7, delay, ease: [0.25, 0.1, 0.25, 1] }}
       className={className}
     >
@@ -703,6 +704,7 @@ const STRING_COLORS = [BLUE, PURPLE, PEACH];
 function SoundStringsCanvas() {
   const { isDark } = useTheme();
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const isAnimationActive = useAnimationActive(canvasRef);
   const mouseRef = useRef({ x: 0.5, y: 0.5, active: false });
   const stringsRef = useRef<Array<{ phase: number; freq: number; amp: number; damping: number; color: string; baseY: number }>>(
     Array.from({ length: NUM_STRINGS }, (_, i) => ({
@@ -719,7 +721,7 @@ function SoundStringsCanvas() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || !isAnimationActive) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
@@ -829,7 +831,7 @@ function SoundStringsCanvas() {
       cancelAnimationFrame(rafRef.current);
       window.removeEventListener("resize", resize);
     };
-  }, [isDark]);
+  }, [isDark, isAnimationActive]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();

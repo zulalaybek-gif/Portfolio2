@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from "react";
+import { useAnimationActive } from "./useAnimationActive";
 
 /**
  * ParticleDivider — OPTIMIZED horizontal particle stream
@@ -34,6 +35,7 @@ export function ParticleDivider({
   const particles = useRef<StreamParticle[]>([]);
   const mouse = useRef({ x: -1, y: -1, active: false });
   const sizeRef = useRef({ w: 0, h: 0 });
+  const isAnimationActive = useAnimationActive(canvasRef);
 
   // Skip on mobile for performance
   const [isMobile] = useState(() => window.innerWidth < 768);
@@ -42,7 +44,7 @@ export function ParticleDivider({
   const actualCount = Math.min(count, 15);
 
   useEffect(() => {
-    if (isMobile) return;
+    if (isMobile || !isAnimationActive) return;
     const cvs = canvasRef.current;
     if (!cvs) return;
     const ctx = cvs.getContext("2d");
@@ -147,7 +149,7 @@ export function ParticleDivider({
       cvs.removeEventListener("mousemove", onMove);
       cvs.removeEventListener("mouseleave", onLeave);
     };
-  }, [accent, height, actualCount, direction, isMobile]);
+  }, [accent, height, actualCount, direction, isMobile, isAnimationActive]);
 
   if (isMobile) return <div style={{ height: height / 2 }} />;
 

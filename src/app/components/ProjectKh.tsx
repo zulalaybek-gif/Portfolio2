@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { useI18n, type TranslationKey } from "./i18n";
 import { useTheme } from "./theme";
 import { ProjectBackButton } from "./ProjectBackButton";
+import { useAnimationActive } from "./useAnimationActive";
 
 /* -- Assets -- */
 import svgPaths from "../../imports/svg-h5iq7vbtzp";
@@ -56,7 +57,7 @@ function FadeIn({ children, className = "", delay = 0 }: { children: React.React
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
+      viewport={{ once: true, margin: "160px 0px" }}
       transition={{ duration: 0.8, delay, ease: "easeOut" }}
       className={className}
     >
@@ -1011,6 +1012,7 @@ const MEW_MESSAGES = [
 
 function FloatingMew() {
   const mewRef = useRef<HTMLDivElement>(null);
+  const isAnimationActive = useAnimationActive(mewRef);
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const [state, setState] = useState<MewState>("idle");
   const [bubble, setBubble] = useState<string | null>(null);
@@ -1053,6 +1055,7 @@ function FloatingMew() {
 
   // Main animation loop
   useEffect(() => {
+    if (!isAnimationActive) return;
     let time = 0;
     const loop = () => {
       time += 0.016;
@@ -1117,7 +1120,7 @@ function FloatingMew() {
     };
     rafId.current = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(rafId.current);
-  }, [baseX, baseY, state]);
+  }, [baseX, baseY, isAnimationActive, state]);
 
   // Hover = petting
   const onEnter = useCallback(() => {
