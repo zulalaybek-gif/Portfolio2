@@ -6,7 +6,7 @@
   "scripts": {
     "assets:audit": "node scripts/audit-assets.cjs",
     "audit:security": "npm audit --audit-level=moderate --omit=dev",
-    "build": "vite build && node scripts/write-github-pages-404.cjs",
+    "build": "vite build && node scripts/write-github-pages-routes.cjs",
     "dev": "vite",
     "optimize-images": "node scripts/optimize-images.cjs",
     "security:scan": "node scripts/security-scan.cjs"

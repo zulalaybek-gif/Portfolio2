@@ -29,30 +29,44 @@ function DeferredSection({
   useEffect(() => {
     const node = ref.current;
     if (!node || shouldRender) return;
-    if (!("IntersectionObserver" in window)) {
+
+    const fallbackTimer = window.setTimeout(() => {
       setShouldRender(true);
+    }, 1600);
+
+    const renderSection = () => {
+      window.clearTimeout(fallbackTimer);
+      setShouldRender(true);
+    };
+
+    if (!("IntersectionObserver" in window)) {
+      renderSection();
       return;
     }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setShouldRender(true);
+          renderSection();
           observer.disconnect();
         }
       },
-      { rootMargin: "600px 0px" }
+      { rootMargin: "900px 0px" }
     );
 
     observer.observe(node);
-    return () => observer.disconnect();
+    return () => {
+      window.clearTimeout(fallbackTimer);
+      observer.disconnect();
+    };
   }, [shouldRender]);
 
   return (
     <div
       ref={ref}
       data-section-alias={sectionId}
-      style={!shouldRender && minHeight ? { minHeight } : undefined}
+      data-deferred-rendered={shouldRender ? "true" : "false"}
+      style={minHeight ? { minHeight } : undefined}
     >
       {shouldRender ? (
         <Suspense fallback={null}>

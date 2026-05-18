@@ -18,8 +18,21 @@ export function Navigation() {
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+    };
   }, [mobileOpen]);
 
   const navItems = [
@@ -36,35 +49,48 @@ export function Navigation() {
 
   const active = getActiveKey();
 
+  const scrollToSection = useCallback((sectionId: string) => {
+    const findSection = () =>
+      document.querySelector(`[data-section="${sectionId}"]`) ||
+      document.querySelector(`[data-section-alias="${sectionId}"]`);
+
+    const scroll = () => {
+      const el = findSection();
+      if (!el) return false;
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      return true;
+    };
+
+    if (scroll()) {
+      window.setTimeout(scroll, 220);
+      window.setTimeout(scroll, 700);
+      return;
+    }
+
+    window.setTimeout(scroll, 120);
+    window.setTimeout(scroll, 420);
+    window.setTimeout(scroll, 900);
+  }, []);
+
   /** Handle hash-based navigation (scroll to section) */
   const handleNav = useCallback(
     (path: string) => {
       setMobileOpen(false);
       if (path.startsWith("/#")) {
         const sectionId = path.slice(2); // e.g. "services"
-        const findSection = () =>
-          document.querySelector(`[data-section="${sectionId}"]`) ||
-          document.querySelector(`[data-section-alias="${sectionId}"]`);
 
         if (location.pathname === "/") {
-          // Already on home — scroll to section
-          const el = findSection();
-          if (el) {
-            el.scrollIntoView({ behavior: "smooth", block: "start" });
-            return;
-          }
+          scrollToSection(sectionId);
+          return;
         }
         // Navigate to home, then scroll after mount
         navigate("/");
-        setTimeout(() => {
-          const el = findSection();
-          if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-        }, 300);
+        setTimeout(() => scrollToSection(sectionId), 300);
       } else {
         navigate(path);
       }
     },
-    [navigate, location.pathname]
+    [navigate, location.pathname, scrollToSection]
   );
 
   return (
@@ -73,6 +99,7 @@ export function Navigation() {
         className="flex items-center justify-between w-full px-6 md:px-8 py-5 relative z-20 animate-soft-enter"
         role="navigation"
         aria-label={lang === "fr" ? "Navigation principale" : "Main navigation"}
+        style={{ isolation: "isolate", zIndex: 80 }}
       >
         {/* Logo */}
         <button

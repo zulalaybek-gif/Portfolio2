@@ -42,6 +42,7 @@ export function ParticleOverlay() {
     if (!parent) return;
 
     let raf: number;
+    let isVisible = !document.hidden;
 
     const mkEmber = (w: number, h: number): Ember => {
       const depth = 0.3 + Math.random() * 0.7;
@@ -88,11 +89,20 @@ export function ParticleOverlay() {
       };
     };
     const onLeave = () => { mouse.current.active = false; };
+    const onVisibilityChange = () => {
+      isVisible = !document.hidden;
+    };
 
     parent.addEventListener("mousemove", onMove);
     parent.addEventListener("mouseleave", onLeave);
+    document.addEventListener("visibilitychange", onVisibilityChange);
 
     const animate = () => {
+      if (!isVisible) {
+        raf = requestAnimationFrame(animate);
+        return;
+      }
+
       const { w, h } = containerRef.current;
       ctx.clearRect(0, 0, w, h);
       time.current += 0.016;
@@ -159,6 +169,7 @@ export function ParticleOverlay() {
       ro.disconnect();
       parent.removeEventListener("mousemove", onMove);
       parent.removeEventListener("mouseleave", onLeave);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
     };
   }, [isMobile]);
 

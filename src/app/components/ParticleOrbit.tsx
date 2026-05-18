@@ -126,6 +126,7 @@ export function ParticleOrbit() {
     let clickWave: { x: number; y: number; t: number } | null = null;
     let scrollSpeed = 0;
     let scrollPrev = 0;
+    let isVisible = !document.hidden;
 
     /* ── Section-aware aurora colors ── */
     const auroraCurrentColors: number[][] = [
@@ -158,8 +159,12 @@ export function ParticleOrbit() {
     const observeSections = () => {
       document.querySelectorAll("[data-section]").forEach((el) => observer.observe(el));
     };
-    const obsTimer = setTimeout(observeSections, 500);
-    const mutObs = new MutationObserver(() => setTimeout(observeSections, 300));
+    let sectionObserveTimer = window.setTimeout(observeSections, 500);
+    const scheduleSectionObserve = () => {
+      window.clearTimeout(sectionObserveTimer);
+      sectionObserveTimer = window.setTimeout(observeSections, 300);
+    };
+    const mutObs = new MutationObserver(scheduleSectionObserve);
     mutObs.observe(document.body, { childList: true, subtree: true });
 
     /* ── Nebulae (reduced to 5) ── */
@@ -272,9 +277,13 @@ export function ParticleOrbit() {
       if (e.touches[0]) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; mouse.active = true; }
     };
     const onTouchEnd = () => { mouse.active = false; };
+    const onVisibilityChange = () => {
+      isVisible = !document.hidden;
+    };
 
     addEventListener("mousemove", onMove);
     document.addEventListener("mouseleave", onLeave);
+    document.addEventListener("visibilitychange", onVisibilityChange);
     addEventListener("click", onClick);
     addEventListener("scroll", onScroll, { passive: true });
     addEventListener("touchmove", onTouch, { passive: true });
@@ -282,6 +291,11 @@ export function ParticleOrbit() {
 
     /* ── RENDER ── */
     const animate = () => {
+      if (!isVisible) {
+        raf = requestAnimationFrame(animate);
+        return;
+      }
+
       frame++;
       time += 0.016;
       const sSpeed = Math.min(scrollSpeed, 60);
@@ -516,11 +530,12 @@ export function ParticleOrbit() {
       removeEventListener("resize", resize);
       removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseleave", onLeave);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       removeEventListener("click", onClick);
       removeEventListener("scroll", onScroll);
       removeEventListener("touchmove", onTouch);
       removeEventListener("touchend", onTouchEnd);
-      clearTimeout(obsTimer);
+      window.clearTimeout(sectionObserveTimer);
       observer.disconnect();
       mutObs.disconnect();
     };

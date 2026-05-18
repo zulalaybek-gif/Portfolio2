@@ -4,7 +4,7 @@ const path = require("node:path");
 const distDir = path.resolve(__dirname, "../dist");
 const siteUrl = "https://www.zulal-aybek.com";
 
-const routeMeta = [
+const routes = [
   { path: "/", title: "Zulal Aybek - Portfolio" },
   { path: "/projects", title: "Projets - Zulal Aybek" },
   { path: "/projects/mya", title: "Mya - Zulal Aybek" },
@@ -29,37 +29,38 @@ function escapeHtml(value) {
     .replace(/>/g, "&gt;");
 }
 
+function getRouteUrl(routePath) {
+  return `${siteUrl}${routePath === "/" ? "/" : routePath}`;
+}
+
+function getRouteFilePath(routePath) {
+  if (routePath === "/") return path.join(distDir, "index.html");
+  return path.join(distDir, routePath, "index.html");
+}
+
 function withRouteMeta(html, route) {
-  const url = `${siteUrl}${route.path === "/" ? "/" : route.path}`;
+  const title = escapeHtml(route.title);
+  const url = escapeHtml(getRouteUrl(route.path));
+
   return html
-    .replace(/<title>.*?<\/title>/, `<title>${escapeHtml(route.title)}</title>`)
-    .replace(
-      /<meta property="og:title" content="[^"]*" \/>/,
-      `<meta property="og:title" content="${escapeHtml(route.title)}" />`
-    )
-    .replace(
-      /<meta property="og:url" content="[^"]*" \/>/,
-      `<meta property="og:url" content="${escapeHtml(url)}" />`
-    )
-    .replace(
-      /<link rel="canonical" href="[^"]*" \/>/,
-      `<link rel="canonical" href="${escapeHtml(url)}" />`
-    );
+    .replace(/<title>.*?<\/title>/, `<title>${title}</title>`)
+    .replace(/<meta property="og:title" content="[^"]*" \/>/, `<meta property="og:title" content="${title}" />`)
+    .replace(/<meta property="og:url" content="[^"]*" \/>/, `<meta property="og:url" content="${url}" />`)
+    .replace(/<link rel="canonical" href="[^"]*" \/>/, `<link rel="canonical" href="${url}" />`);
 }
 
-const indexHtml = fs.readFileSync(path.join(distDir, "index.html"), "utf8");
+function writeRoutePages() {
+  const indexHtml = fs.readFileSync(path.join(distDir, "index.html"), "utf8");
 
-for (const route of routeMeta) {
-  const filePath =
-    route.path === "/"
-      ? path.join(distDir, "index.html")
-      : path.join(distDir, route.path, "index.html");
-
-  fs.mkdirSync(path.dirname(filePath), { recursive: true });
-  fs.writeFileSync(filePath, withRouteMeta(indexHtml, route));
+  for (const route of routes) {
+    const filePath = getRouteFilePath(route.path);
+    fs.mkdirSync(path.dirname(filePath), { recursive: true });
+    fs.writeFileSync(filePath, withRouteMeta(indexHtml, route));
+  }
 }
 
-const notFoundHtml = `<!doctype html>
+function writeNotFoundPage() {
+  const html = `<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="utf-8">
@@ -72,4 +73,8 @@ const notFoundHtml = `<!doctype html>
 </html>
 `;
 
-fs.writeFileSync(path.join(distDir, "404.html"), notFoundHtml);
+  fs.writeFileSync(path.join(distDir, "404.html"), html);
+}
+
+writeRoutePages();
+writeNotFoundPage();
