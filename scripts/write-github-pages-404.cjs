@@ -1,4 +1,8 @@
-<!doctype html>
+const fs = require("node:fs");
+const path = require("node:path");
+
+const distDir = path.resolve(__dirname, "../dist");
+const html = `<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="utf-8">
@@ -9,3 +13,6 @@
   </head>
   <body></body>
 </html>
+`;
+
+fs.writeFileSync(path.join(distDir, "404.html"), html);
