@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback, useMemo, type ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, useMemo, useLayoutEffect, type ReactNode } from "react";
 
 export type Theme = "dark" | "light";
 
@@ -110,6 +110,13 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   const isDark = theme === "dark";
   const p = palettes[theme];
+
+  useLayoutEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.classList.toggle("dark", isDark);
+    document.documentElement.style.colorScheme = isDark ? "dark" : "light";
+    document.body.style.background = p.pageBg;
+  }, [isDark, p.pageBg, theme]);
 
   const r = useCallback(
     (opacity: number) => `rgba(${p.textBase},${opacity})`,

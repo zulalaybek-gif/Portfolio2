@@ -7,7 +7,7 @@ export function useAnimationActive<T extends Element>(
   const [isDocumentVisible, setIsDocumentVisible] = useState(() =>
     typeof document === "undefined" ? true : !document.hidden
   );
-  const [isInView, setIsInView] = useState(true);
+  const [isInView, setIsInView] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(() =>
     typeof window === "undefined"
       ? false

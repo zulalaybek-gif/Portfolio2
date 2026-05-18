@@ -14,16 +14,20 @@
 @keyframes soft-enter {
   from {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translate3d(0, 18px, 0);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 .animate-soft-enter {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
   animation: soft-enter 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  backface-visibility: hidden;
+  will-change: opacity, transform;
 }
 
 @keyframes marquee-scroll {
