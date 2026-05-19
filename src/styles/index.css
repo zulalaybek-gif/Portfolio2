@@ -57,6 +57,7 @@
   line-height: 0.86;
   text-transform: uppercase;
   isolation: isolate;
+  overflow: visible;
 }
 
 .composite-title--center {
@@ -80,21 +81,23 @@
   z-index: 2;
   margin-top: var(--composite-secondary-overlap);
   margin-left: var(--composite-secondary-offset);
-  font-family: "WindSong", "Brush Script MT", cursive;
+  padding: 0.04em 0.18em 0.22em;
+  font-family: "Reenie Beanie", "Brush Script MT", cursive;
   font-size: var(--composite-secondary-size);
   font-style: normal;
-  font-weight: 500;
-  line-height: 0.74;
-  letter-spacing: -0.065em;
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.045em;
   text-transform: none;
   color: transparent;
   background: var(--composite-accent-gradient);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 18px 48px color-mix(in srgb, var(--composite-accent) 28%, transparent);
-  transform: translate3d(0, var(--composite-secondary-drop), 0) rotate(-2.8deg) skewX(-5deg);
-  transform-origin: 14% 55%;
+  text-shadow: 0 18px 48px color-mix(in srgb, var(--composite-accent) 30%, transparent);
+  transform: translate3d(0, var(--composite-secondary-drop), 0) rotate(-7deg) skewX(-7deg);
+  transform-origin: 8% 60%;
+  overflow: visible;
 }
 
 .composite-title--left .composite-title__secondary {
@@ -160,34 +163,34 @@
 
 .composite-title--hero {
   --composite-primary-size: clamp(3.1rem, 10vw, 8rem);
-  --composite-secondary-size: clamp(3.05rem, 7.7vw, 6.55rem);
-  --composite-secondary-overlap: clamp(-0.42em, -0.36em, -0.28em);
-  --composite-secondary-offset: clamp(0.15rem, 1.1vw, 0.95rem);
-  --composite-secondary-drop: -0.01em;
+  --composite-secondary-size: clamp(3.45rem, 8.8vw, 7.35rem);
+  --composite-secondary-overlap: clamp(-0.32em, -0.26em, -0.2em);
+  --composite-secondary-offset: clamp(0.35rem, 1.35vw, 1.15rem);
+  --composite-secondary-drop: 0.1em;
 }
 
 .composite-title--section {
   --composite-primary-size: clamp(2.75rem, 6.4vw, 4.9rem);
-  --composite-secondary-size: clamp(2.55rem, 5.35vw, 4.5rem);
-  --composite-secondary-overlap: -0.34em;
-  --composite-secondary-offset: clamp(0.05rem, 0.8vw, 0.65rem);
-  --composite-secondary-drop: -0.01em;
+  --composite-secondary-size: clamp(2.95rem, 6.2vw, 5.1rem);
+  --composite-secondary-overlap: -0.24em;
+  --composite-secondary-offset: clamp(0.25rem, 1vw, 0.9rem);
+  --composite-secondary-drop: 0.08em;
 }
 
 .composite-title--cta {
   --composite-primary-size: clamp(2.65rem, 6vw, 4.7rem);
-  --composite-secondary-size: clamp(2.55rem, 5.2vw, 4.3rem);
-  --composite-secondary-overlap: -0.34em;
+  --composite-secondary-size: clamp(2.95rem, 6vw, 5rem);
+  --composite-secondary-overlap: -0.24em;
   --composite-secondary-offset: 0;
-  --composite-secondary-drop: -0.01em;
+  --composite-secondary-drop: 0.08em;
 }
 
 .composite-title--projects {
   --composite-primary-size: clamp(4rem, 12vw, 10rem);
-  --composite-secondary-size: clamp(3.3rem, 8vw, 7rem);
-  --composite-secondary-overlap: -0.3em;
-  --composite-secondary-offset: clamp(0.15rem, 0.9vw, 0.75rem);
-  --composite-secondary-drop: -0.02em;
+  --composite-secondary-size: clamp(3.75rem, 9.4vw, 7.8rem);
+  --composite-secondary-overlap: -0.22em;
+  --composite-secondary-offset: clamp(0.35rem, 1.2vw, 1rem);
+  --composite-secondary-drop: 0.08em;
 }
 
 @media (max-width: 767px) {
@@ -197,14 +200,16 @@
 
   .composite-title--section {
     --composite-primary-size: clamp(2.25rem, 13vw, 3.8rem);
-    --composite-secondary-size: clamp(2.15rem, 11vw, 3.25rem);
-    --composite-secondary-overlap: -0.26em;
+    --composite-secondary-size: clamp(2.65rem, 13vw, 3.9rem);
+    --composite-secondary-overlap: -0.18em;
+    --composite-secondary-drop: 0.06em;
   }
 
   .composite-title--projects {
     --composite-primary-size: clamp(3.4rem, 18vw, 6rem);
-    --composite-secondary-size: clamp(2.75rem, 14vw, 4.8rem);
-    --composite-secondary-overlap: -0.24em;
+    --composite-secondary-size: clamp(3.2rem, 16vw, 5.4rem);
+    --composite-secondary-overlap: -0.18em;
+    --composite-secondary-drop: 0.06em;
   }
 }
 
