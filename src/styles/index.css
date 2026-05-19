@@ -138,6 +138,30 @@
   color: #1a1a1a;
 }
 
+:root[data-theme="light"] .contact-label {
+  color: rgba(26, 26, 26, 0.5);
+}
+
+:root[data-theme="light"] .contact-input {
+  color: #1a1a1a;
+  border-color: rgba(26, 26, 26, 0.12);
+  background: rgba(26, 26, 26, 0.025);
+}
+
+:root[data-theme="light"] .contact-input:focus {
+  border-color: rgba(74, 107, 42, 0.48);
+  background: rgba(74, 107, 42, 0.035);
+  box-shadow: 0 0 0 4px rgba(74, 107, 42, 0.1);
+}
+
+:root[data-theme="dark"] .contact-label {
+  color: rgba(255, 255, 255, 0.42);
+}
+
+:root[data-theme="dark"] .contact-input {
+  color: #ffffff;
+}
+
 .composite-title--hero {
   --composite-primary-size: clamp(3.1rem, 10vw, 8rem);
   --composite-secondary-size: clamp(2.35rem, 6.6vw, 5.35rem);

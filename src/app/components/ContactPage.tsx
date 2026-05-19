@@ -109,6 +109,7 @@ export function ContactPage() {
           transition={{ duration: 0.9, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
           className="relative overflow-hidden rounded-[2rem] p-6 md:p-9"
           style={{
+            color: isDark ? "#ffffff" : "#1a1a1a",
             background: isDark
               ? "linear-gradient(145deg, rgba(255,255,255,0.055), rgba(255,255,255,0.018))"
               : "linear-gradient(145deg, rgba(255,255,255,0.76), rgba(255,255,255,0.36))",
