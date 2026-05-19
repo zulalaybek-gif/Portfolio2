@@ -113,9 +113,9 @@
   --contact-input-color: #ffffff;
   --contact-input-border: color-mix(in srgb, currentColor 10%, transparent);
   --contact-input-bg: color-mix(in srgb, currentColor 3%, transparent);
-  --contact-input-focus-border: color-mix(in srgb, #8bad4a 46%, currentColor 18%);
+  --contact-input-focus-border: color-mix(in srgb, #a7ad8b 46%, currentColor 18%);
   --contact-input-focus-bg: color-mix(in srgb, currentColor 4.5%, transparent);
-  --contact-input-focus-ring: color-mix(in srgb, #8bad4a 10%, transparent);
+  --contact-input-focus-ring: color-mix(in srgb, #a7ad8b 10%, transparent);
 }
 
 :root[data-theme="light"] {
@@ -123,9 +123,9 @@
   --contact-input-color: #1a1a1a;
   --contact-input-border: rgba(26, 26, 26, 0.12);
   --contact-input-bg: rgba(26, 26, 26, 0.025);
-  --contact-input-focus-border: rgba(74, 107, 42, 0.48);
-  --contact-input-focus-bg: rgba(74, 107, 42, 0.035);
-  --contact-input-focus-ring: rgba(74, 107, 42, 0.1);
+  --contact-input-focus-border: rgba(91, 98, 77, 0.5);
+  --contact-input-focus-bg: rgba(91, 98, 77, 0.035);
+  --contact-input-focus-ring: rgba(91, 98, 77, 0.1);
 }
 
 .contact-label {

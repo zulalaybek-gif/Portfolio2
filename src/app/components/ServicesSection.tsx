@@ -18,7 +18,7 @@ const services = [
 export function ServicesSection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
-  const accent = isDark ? "#8BAD4A" : "#4A6B2A";
+  const accent = isDark ? "#A7AD8B" : "#5B624D";
   const scrollRef = useRef<HTMLDivElement>(null);
   const programmaticScrollRef = useRef<number | null>(null);
   const scrollEndTimerRef = useRef<number | null>(null);

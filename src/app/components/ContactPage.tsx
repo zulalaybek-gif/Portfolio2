@@ -17,8 +17,9 @@ export function ContactPage() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
   const [submitted, setSubmitted] = useState(false);
-  const accent = isDark ? "#8BAD4A" : "#4A6B2A";
-  const glowColor = isDark ? "139,173,74" : "74,107,42";
+  const accent = isDark ? "#A7AD8B" : "#5B624D";
+  const accentBright = isDark ? "#C3C7A2" : "#70775E";
+  const glowColor = isDark ? "167,173,139" : "91,98,77";
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -111,8 +112,8 @@ export function ContactPage() {
           style={{
             color: isDark ? "#ffffff" : "#1a1a1a",
             background: isDark
-              ? "linear-gradient(145deg, rgba(255,255,255,0.055), rgba(255,255,255,0.018))"
-              : "linear-gradient(145deg, rgba(255,255,255,0.76), rgba(255,255,255,0.36))",
+              ? "linear-gradient(145deg, rgba(245,241,232,0.052), rgba(245,241,232,0.016))"
+              : "linear-gradient(145deg, rgba(250,247,239,0.78), rgba(242,237,226,0.42))",
             border: `1px solid ${r(0.08)}`,
             boxShadow: isDark
               ? "0 28px 90px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.05)"
@@ -186,8 +187,8 @@ export function ContactPage() {
                 className="group mt-3 inline-flex items-center justify-center gap-3 rounded-full px-8 py-4 transition-all duration-500 hover:scale-[1.018] active:scale-[0.985]"
                 style={{
                   background: isDark
-                    ? `linear-gradient(135deg, ${accent} 0%, #A7C95A 52%, ${accent} 100%)`
-                    : `linear-gradient(135deg, ${accent} 0%, #5E8135 100%)`,
+                    ? `linear-gradient(135deg, ${accent} 0%, ${accentBright} 52%, #777E64 100%)`
+                    : `linear-gradient(135deg, ${accent} 0%, ${accentBright} 100%)`,
                   color: isDark ? "#0a0a0a" : "#ffffff",
                   fontFamily: "'Inter', sans-serif",
                   fontSize: "0.84rem",

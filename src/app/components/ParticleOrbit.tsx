@@ -68,10 +68,10 @@ interface Aurora {
 
 /* ── Palette ── */
 const COLORS = {
-  green: [139, 196, 138], ltGreen: [124, 184, 122],
-  gold: [212, 175, 55], silver: [192, 192, 192],
-  purple: [154, 142, 196], warm: [184, 168, 138],
-  teal: [100, 180, 160], white: [220, 225, 220],
+  green: [167, 173, 139], ltGreen: [126, 132, 105],
+  gold: [184, 168, 138], silver: [205, 199, 186],
+  purple: [54, 42, 68], warm: [180, 170, 145],
+  teal: [111, 124, 111], white: [245, 241, 232],
 };
 const COLOR_KEYS = Object.keys(COLORS) as (keyof typeof COLORS)[];
 const rgb = (k: keyof typeof COLORS) => COLORS[k].join(",");
@@ -92,16 +92,16 @@ const DAMPING = 0.975;
 type SectionTheme = { colors: [number[], number[], number[]] };
 
 const SECTION_THEMES: Record<string, SectionTheme> = {
-  hero:             { colors: [[139,196,138], [100,180,160], [124,184,122]] },
-  services:         { colors: [[212,175,55],  [184,168,138], [192,192,192]] },
-  work:             { colors: [[154,142,196], [139,196,138], [212,175,55]]  },
-  cta:              { colors: [[100,180,160], [139,196,138], [124,184,122]] },
-  "projects-hero":  { colors: [[139,196,138], [212,175,55],  [192,192,192]] },
-  "projects-index": { colors: [[154,142,196], [184,168,138], [212,175,55]]  },
-  "projects-reel":  { colors: [[212,175,55],  [154,142,196], [100,180,160]] },
+  hero:             { colors: [[167,173,139], [111,124,111], [126,132,105]] },
+  services:         { colors: [[184,168,138], [180,170,145], [205,199,186]] },
+  work:             { colors: [[54,42,68], [167,173,139], [184,168,138]]  },
+  cta:              { colors: [[111,124,111], [167,173,139], [126,132,105]] },
+  "projects-hero":  { colors: [[167,173,139], [184,168,138], [205,199,186]] },
+  "projects-index": { colors: [[54,42,68], [180,170,145], [184,168,138]]  },
+  "projects-reel":  { colors: [[184,168,138], [54,42,68], [111,124,111]] },
 };
 
-const DEFAULT_THEME: SectionTheme = { colors: [[139,196,138], [154,142,196], [212,175,55]] };
+const DEFAULT_THEME: SectionTheme = { colors: [[167,173,139], [54,42,68], [184,168,138]] };
 
 export function ParticleOrbit() {
   const canvasRef = useRef<HTMLCanvasElement>(null);

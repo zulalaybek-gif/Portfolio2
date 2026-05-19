@@ -64,7 +64,7 @@ function MagneticField() {
 
       const m = mouse.current;
       const baseAlpha = isDark ? 0.06 : 0.04;
-      const accentRGB = isDark ? "139,173,74" : "74,107,42";
+      const accentRGB = isDark ? "167,173,139" : "91,98,77";
 
       for (const d of dots.current) {
         let fx = 0, fy = 0;
@@ -127,7 +127,7 @@ function MagneticField() {
 /* ── Infinite marquee ── */
 function Marquee({ items, reverse = false }: { items: string[]; reverse?: boolean }) {
   const { r, isDark } = useTheme();
-  const accent = isDark ? "#8BAD4A" : "#4A6B2A";
+  const accent = isDark ? "#A7AD8B" : "#5B624D";
   const content = [...items, ...items, ...items, ...items];
 
   return (
@@ -153,7 +153,7 @@ export function HeroSection() {
   const navigate = useNavigate();
   const { t, lang } = useI18n();
   const { p, r, isDark } = useTheme();
-  const accent = isDark ? "#8BAD4A" : "#4A6B2A";
+  const accent = isDark ? "#A7AD8B" : "#5B624D";
   const ref = useRef<HTMLElement>(null);
 
   const marqueeItems1 = lang === "fr"
@@ -219,8 +219,8 @@ export function HeroSection() {
               className="group flex items-center gap-3 px-8 py-4 rounded-full transition-all duration-300 hover:scale-105"
               style={{
                 background: isDark
-                  ? "linear-gradient(135deg, #8BAD4A 0%, #6B8F3A 100%)"
-                  : "linear-gradient(135deg, #4A6B2A 0%, #3D5A20 100%)",
+                  ? "linear-gradient(135deg, #A7AD8B 0%, #747B61 100%)"
+                  : "linear-gradient(135deg, #70775E 0%, #4F553F 100%)",
                 fontFamily: "'Inter', sans-serif",
                 fontSize: "0.85rem",
                 fontWeight: 500,

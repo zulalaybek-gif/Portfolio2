@@ -49,7 +49,7 @@ function useInView(ref: RefObject<HTMLElement | null>, margin = "200px 0px") {
 export function ProcessSection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
-  const accent = isDark ? "#8BAD4A" : "#4A6B2A";
+  const accent = isDark ? "#A7AD8B" : "#5B624D";
   const sectionRef = useRef<HTMLElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(lineRef);
@@ -200,12 +200,12 @@ export function ProcessSection() {
                     }}
                     style={{
                       background: isDark
-                        ? `radial-gradient(circle at 45% 35%, rgba(139,173,74,0.18) 0%, rgba(139,173,74,0.055) 58%, rgba(12,12,12,0.96) 100%)`
-                        : `radial-gradient(circle at 45% 35%, rgba(74,107,42,0.13) 0%, rgba(74,107,42,0.035) 58%, rgba(252,250,247,0.96) 100%)`,
-                      border: `1px solid ${isDark ? "rgba(139,173,74,0.20)" : "rgba(74,107,42,0.16)"}`,
+                        ? `radial-gradient(circle at 45% 35%, rgba(167,173,139,0.16) 0%, rgba(167,173,139,0.05) 58%, rgba(12,12,10,0.96) 100%)`
+                        : `radial-gradient(circle at 45% 35%, rgba(91,98,77,0.12) 0%, rgba(91,98,77,0.032) 58%, rgba(250,247,239,0.96) 100%)`,
+                      border: `1px solid ${isDark ? "rgba(167,173,139,0.18)" : "rgba(91,98,77,0.16)"}`,
                       boxShadow: isDark
-                        ? `0 18px 55px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.05), 0 0 ${isHovered ? 52 : 28}px rgba(139,173,74,${isHovered ? 0.2 : 0.08})`
-                        : `0 18px 55px rgba(74,107,42,0.07), inset 0 1px 0 rgba(255,255,255,0.75), 0 0 ${isHovered ? 48 : 28}px rgba(74,107,42,${isHovered ? 0.18 : 0.08})`,
+                        ? `0 18px 55px rgba(0,0,0,0.28), inset 0 1px 0 rgba(245,241,232,0.05), 0 0 ${isHovered ? 52 : 28}px rgba(167,173,139,${isHovered ? 0.16 : 0.06})`
+                        : `0 18px 55px rgba(91,98,77,0.06), inset 0 1px 0 rgba(255,255,255,0.75), 0 0 ${isHovered ? 48 : 28}px rgba(91,98,77,${isHovered ? 0.16 : 0.06})`,
                       transform: "translateZ(0)",
                     }}
                   >

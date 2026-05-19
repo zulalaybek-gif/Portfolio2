@@ -10,8 +10,10 @@ export function CTASection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
   const cardRef = useRef<HTMLDivElement>(null);
-  const accent = isDark ? "#8BAD4A" : "#4A6B2A";
-  const glowColor = isDark ? "139,173,74" : "74,107,42";
+  const accent = isDark ? "#A7AD8B" : "#5B624D";
+  const accentBright = isDark ? "#C3C7A2" : "#70775E";
+  const glowColor = isDark ? "167,173,139" : "91,98,77";
+  const violetGlow = isDark ? "54,42,68" : "70,55,86";
 
   return (
     <section data-section="cta" data-section-alias="about" className="relative w-full px-6 md:px-12 py-20">
@@ -24,12 +26,12 @@ export function CTASection() {
         className="max-w-6xl mx-auto relative overflow-hidden rounded-[2.5rem] p-12 md:p-24"
         style={{
           background: isDark
-            ? `linear-gradient(145deg, rgba(${glowColor},0.12) 0%, rgba(14,14,14,0.98) 34%, rgba(8,8,8,0.99) 100%)`
-            : `linear-gradient(145deg, rgba(${glowColor},0.075) 0%, rgba(252,250,247,0.99) 38%, rgba(248,246,242,0.98) 100%)`,
+            ? `linear-gradient(145deg, rgba(${glowColor},0.09) 0%, rgba(15,15,13,0.98) 34%, rgba(8,8,7,0.99) 100%)`
+            : `linear-gradient(145deg, rgba(${glowColor},0.06) 0%, rgba(250,247,239,0.99) 38%, rgba(242,237,226,0.98) 100%)`,
           border: `1px solid ${p.ctaBorder}`,
           boxShadow: isDark
-            ? `0 28px 90px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.05), 0 0 80px rgba(${glowColor},0.04)`
-            : `0 28px 90px rgba(42,35,24,0.08), inset 0 1px 0 rgba(255,255,255,0.85), 0 0 90px rgba(${glowColor},0.08)`,
+            ? `0 28px 90px rgba(0,0,0,0.38), inset 0 1px 0 rgba(245,241,232,0.05), 0 0 80px rgba(${violetGlow},0.08)`
+            : `0 28px 90px rgba(42,35,24,0.08), inset 0 1px 0 rgba(255,255,255,0.85), 0 0 90px rgba(${violetGlow},0.045)`,
           ["--cta-glow-rgb" as string]: glowColor,
         }}
       >
@@ -81,8 +83,8 @@ export function CTASection() {
             className="group inline-flex items-center gap-3 px-10 py-4 rounded-full transition-all duration-500 hover:scale-[1.035] active:scale-[0.985]"
             style={{
               background: isDark
-                ? `linear-gradient(135deg, ${accent} 0%, #A7C95A 52%, ${accent} 100%)`
-                : `linear-gradient(135deg, ${accent} 0%, #5E8135 100%)`,
+                ? `linear-gradient(135deg, ${accent} 0%, ${accentBright} 52%, #777E64 100%)`
+                : `linear-gradient(135deg, ${accent} 0%, ${accentBright} 100%)`,
               fontFamily: "'Inter', sans-serif",
               fontSize: "0.85rem",
               fontWeight: 600,
