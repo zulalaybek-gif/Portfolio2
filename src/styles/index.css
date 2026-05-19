@@ -270,7 +270,9 @@ img {
   overflow: hidden;
   border-radius: 999px;
   background: var(--scroll-progress-track);
-  box-shadow: inset 0 1px 0 var(--scroll-progress-track-edge);
+  box-shadow:
+    inset 0 1px 0 var(--scroll-progress-track-edge),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.42);
 }
 
 .scroll-progress-indicator__track::before {
