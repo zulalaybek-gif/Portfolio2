@@ -63,7 +63,8 @@ export function ProcessSection() {
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     if (reduceMotion) return;
-    const nextCount = Math.max(1, Math.min(steps.length, Math.floor(latest * steps.length) + 1));
+    const revealProgress = Math.min(1, Math.max(0, (latest - 0.08) / 0.84));
+    const nextCount = Math.max(1, Math.min(steps.length, Math.floor(revealProgress * steps.length) + 1));
     setRevealedCount((current) => (current === nextCount ? current : nextCount));
   });
 
@@ -77,14 +78,14 @@ export function ProcessSection() {
   }, [isInView, reduceMotion]);
 
   return (
-    <section ref={sectionRef} className="relative w-full px-6 md:px-12 py-24 md:py-0 lg:min-h-[300vh]">
-      <div className="max-w-6xl mx-auto lg:sticky lg:top-0 lg:min-h-screen lg:flex lg:flex-col lg:justify-center lg:py-16">
+    <section ref={sectionRef} className="relative w-full px-6 md:px-12 py-24 md:py-0 lg:min-h-[380vh]">
+      <div className="max-w-6xl mx-auto lg:sticky lg:top-0 lg:min-h-screen lg:flex lg:flex-col lg:justify-center lg:py-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "200px 0px" }}
           transition={{ duration: 0.8 }}
-          className="mb-16"
+          className="mb-12 md:mb-14"
         >
           <span
             className="inline-block uppercase tracking-widest mb-5"
@@ -107,6 +108,7 @@ export function ProcessSection() {
               const isHovered = hoveredIdx === i;
               const shouldGlowLine = hoveredIdx === i || hoveredIdx === i + 1;
               const isStepVisible = reduceMotion || i < revealedCount;
+              const isStepActive = reduceMotion || i === revealedCount - 1;
               const isLineVisible = reduceMotion || i + 1 < revealedCount;
 
               return (
@@ -120,8 +122,8 @@ export function ProcessSection() {
                   tabIndex={0}
                   style={{
                     opacity: isStepVisible ? 1 : 0,
-                    transform: isStepVisible ? "translateY(0)" : "translateY(36px)",
-                    transition: "opacity 0.55s ease, transform 0.65s cubic-bezier(0.16, 1, 0.3, 1)",
+                    transform: isStepVisible ? "translateY(0) scale(1)" : "translateY(44px) scale(0.96)",
+                    transition: "opacity 0.72s ease, transform 0.82s cubic-bezier(0.16, 1, 0.3, 1)",
                   }}
                 >
                   {i < steps.length - 1 && (
@@ -146,7 +148,7 @@ export function ProcessSection() {
                         opacity: shouldGlowLine ? 1 : 0.78,
                         transform: isLineVisible ? "scaleX(1)" : "scaleX(0)",
                         transformOrigin: "left center",
-                        transition: "transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 260ms ease, opacity 260ms ease",
+                        transition: "transform 1.05s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 260ms ease, opacity 260ms ease",
                       }}
                     />
                     <div
@@ -170,10 +172,10 @@ export function ProcessSection() {
                     aria-hidden="true"
                     className="absolute inset-[-1.15rem] rounded-full pointer-events-none"
                     animate={{
-                      opacity: isHovered ? (isDark ? 0.58 : 0.36) : 0,
-                      scale: isHovered ? [0.88, 1.12, 1.02] : 0.72,
+                      opacity: isHovered || isStepActive ? (isDark ? 0.58 : 0.36) : 0,
+                      scale: isHovered ? [0.88, 1.12, 1.02] : isStepActive ? [0.84, 1.08, 0.96] : 0.72,
                     }}
-                    transition={{ duration: isHovered ? 0.7 : 0.28, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: isHovered ? 0.7 : 1.4, ease: [0.16, 1, 0.3, 1] }}
                     style={{
                       background: `radial-gradient(circle, ${accent}58 0%, ${accent}24 36%, transparent 70%)`,
                       filter: "blur(10px)",
@@ -186,13 +188,15 @@ export function ProcessSection() {
                       isStepVisible
                         ? isHovered
                           ? { opacity: 1, scale: 1.08, y: -7 }
-                          : { opacity: 1, scale: 1, y: [0, -3, 0] }
+                          : isStepActive
+                            ? { opacity: 1, scale: [0.94, 1.06, 1], y: [0, -5, 0] }
+                            : { opacity: 0.82, scale: 0.98, y: 0 }
                         : { opacity: 0, scale: 0.86, y: 0 }
                     }
                     transition={{
-                      opacity: { duration: 0.45, delay: 0.45 + i * 0.22 },
-                      scale: { duration: 0.55, delay: 0.45 + i * 0.22, ease: [0.16, 1, 0.3, 1] },
-                      y: { duration: 4.2, delay: 1.2 + i * 0.3, repeat: Infinity, ease: "easeInOut" },
+                      opacity: { duration: 0.5 },
+                      scale: { duration: isStepActive ? 0.95 : 0.55, ease: [0.16, 1, 0.3, 1] },
+                      y: { duration: isStepActive ? 0.95 : 0.55, ease: "easeInOut" },
                     }}
                     style={{
                       background: isDark
@@ -246,9 +250,9 @@ export function ProcessSection() {
                     fontFamily: "'Space Grotesk', sans-serif",
                     fontSize: "1.1rem",
                     fontWeight: 600,
-                    color: isHovered ? accent : p.text,
+                    color: isHovered || isStepActive ? accent : p.text,
                     transition: "color 260ms ease, transform 260ms ease",
-                    transform: isHovered ? "translateY(-2px)" : "translateY(0)",
+                    transform: isHovered || isStepActive ? "translateY(-2px)" : "translateY(0)",
                   }}
                 >
                   {t(step.titleKey)}
@@ -258,7 +262,7 @@ export function ProcessSection() {
                     fontFamily: "'Inter', sans-serif",
                     fontSize: "0.82rem",
                     lineHeight: 1.7,
-                    color: isHovered ? r(0.58) : r(0.4),
+                    color: isHovered || isStepActive ? r(0.62) : r(0.4),
                     maxWidth: 200,
                     transition: "color 260ms ease",
                   }}
