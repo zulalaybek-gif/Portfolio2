@@ -18,7 +18,7 @@ export function ScrollProgressIndicator() {
       <div className="scroll-progress-indicator__track">
         <motion.div
           className="scroll-progress-indicator__fill"
-          style={{ scaleY: scrollYProgress }}
+          style={{ scaleX: scrollYProgress }}
         >
           <span className="scroll-progress-indicator__tip" />
         </motion.div>

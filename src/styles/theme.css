@@ -130,27 +130,28 @@
 
   /* Custom scrollbar */
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 0;
+    height: 0;
   }
   ::-webkit-scrollbar-track {
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(139, 173, 74, 0.2);
+    background: transparent;
     border-radius: 999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(139, 173, 74, 0.4);
+    background: transparent;
   }
   .dark ::-webkit-scrollbar-thumb {
-    background: rgba(139, 173, 74, 0.15);
+    background: transparent;
   }
   .dark ::-webkit-scrollbar-thumb:hover {
-    background: rgba(139, 173, 74, 0.35);
+    background: transparent;
   }
   html {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(139, 173, 74, 0.2) transparent;
+    scrollbar-width: none;
+    scrollbar-color: transparent transparent;
     font-size: var(--font-size);
   }
 

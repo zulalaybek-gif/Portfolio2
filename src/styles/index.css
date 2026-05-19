@@ -238,68 +238,69 @@ img {
 
 .scroll-progress-indicator {
   position: fixed;
-  top: 50%;
-  right: max(clamp(28px, 4.4vw, 78px), env(safe-area-inset-right));
+  left: max(clamp(18px, 5vw, 72px), env(safe-area-inset-left));
+  right: max(clamp(18px, 5vw, 72px), env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
   z-index: 45;
-  width: 16px;
-  height: clamp(112px, 18vh, 188px);
-  transform: translateY(-50%);
+  height: 16px;
   pointer-events: none;
   display: flex;
-  justify-content: center;
-  opacity: 0.72;
+  align-items: center;
+  opacity: 0.86;
 }
 
 .scroll-progress-indicator__track {
   position: relative;
-  width: 1px;
-  height: 100%;
+  width: 100%;
+  height: 1px;
   overflow: hidden;
   border-radius: 999px;
-  background: var(--scroll-progress-track);
+  background: linear-gradient(90deg, transparent, var(--scroll-progress-track) 8%, var(--scroll-progress-track) 92%, transparent);
 }
 
 .scroll-progress-indicator__track::before {
   content: "";
   position: absolute;
-  inset: -16px -7px;
-  background: radial-gradient(circle, var(--scroll-progress-glow), transparent 62%);
-  opacity: 0.45;
+  inset: -10px 0;
+  background: linear-gradient(90deg, transparent, var(--scroll-progress-glow), transparent);
+  opacity: 0.32;
 }
 
 .scroll-progress-indicator__fill {
   position: absolute;
   inset: 0;
-  transform-origin: 50% 0%;
+  transform-origin: 0% 50%;
   will-change: transform;
   border-radius: inherit;
   background: linear-gradient(
-    180deg,
+    90deg,
     transparent 0%,
     var(--scroll-progress-fill) 18%,
-    var(--scroll-progress-fill) 100%
+    var(--scroll-progress-fill) 92%,
+    transparent 100%
   );
-  box-shadow: 0 0 18px var(--scroll-progress-glow);
+  box-shadow: 0 0 16px var(--scroll-progress-glow);
 }
 
 .scroll-progress-indicator__tip {
   position: absolute;
-  left: 50%;
-  bottom: 0;
+  right: 0;
+  top: 50%;
   width: 5px;
   height: 5px;
   border-radius: 999px;
   background: var(--scroll-progress-fill);
-  box-shadow: 0 0 16px var(--scroll-progress-glow);
-  transform: translate(-50%, 50%);
+  box-shadow: 0 0 14px var(--scroll-progress-glow);
+  transform: translate(50%, -50%);
 }
 
 @media (max-width: 767px) {
   .scroll-progress-indicator {
-    right: max(18px, env(safe-area-inset-right));
-    width: 12px;
-    height: clamp(88px, 15vh, 132px);
-    opacity: 0.55;
+    left: max(16px, env(safe-area-inset-left));
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(14px, env(safe-area-inset-bottom));
+    height: 14px;
+    opacity: 0.78;
   }
 }
 
