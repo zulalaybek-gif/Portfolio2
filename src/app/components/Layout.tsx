@@ -55,7 +55,7 @@ export function Layout() {
           border: `1px solid ${p.containerBorder}`,
           boxShadow: p.containerShadow,
           zIndex: 2,
-          overflow: "hidden",
+          overflow: "clip",
         }}
       >
         {/* Inner particle overlay — floats through content */}

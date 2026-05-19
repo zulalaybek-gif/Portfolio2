@@ -58,7 +58,7 @@ export function ProcessSection() {
   const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start 72%", "end 46%"],
+    offset: ["start start", "end end"],
   });
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
@@ -77,7 +77,7 @@ export function ProcessSection() {
   }, [isInView, reduceMotion]);
 
   return (
-    <section ref={sectionRef} className="relative w-full px-6 md:px-12 py-24 md:py-0 lg:min-h-[260vh]">
+    <section ref={sectionRef} className="relative w-full px-6 md:px-12 py-24 md:py-0 lg:min-h-[300vh]">
       <div className="max-w-6xl mx-auto lg:sticky lg:top-0 lg:min-h-screen lg:flex lg:flex-col lg:justify-center lg:py-16">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
