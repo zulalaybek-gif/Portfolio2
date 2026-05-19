@@ -122,6 +122,27 @@ export function Navigation() {
     [clearScrollTimers, navigate, location.pathname, scheduleScroll, scrollToSection]
   );
 
+  const handleLogoClick = useCallback(() => {
+    setMobileOpen(false);
+    clearScrollTimers();
+
+    if (location.pathname !== "/") {
+      navigate("/");
+      return;
+    }
+
+    if (location.hash) {
+      navigate("/", { replace: true });
+    }
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
+  }, [clearScrollTimers, location.hash, location.pathname, navigate]);
+
   return (
     <>
       <nav
@@ -132,13 +153,13 @@ export function Navigation() {
       >
         {/* Logo */}
         <button
-          onClick={() => handleNav("/")}
-          className="flex items-center gap-3 cursor-pointer"
+          onClick={handleLogoClick}
+          className="group flex items-center gap-3 cursor-pointer transition-opacity duration-300 hover:opacity-90"
           aria-label={lang === "fr" ? "Retour à l'accueil" : "Go to homepage"}
         >
           <svg
             viewBox="0 0 1253.25 850.21"
-            className="h-8"
+            className="h-8 transition-transform duration-500 ease-out group-hover:-translate-y-0.5 group-hover:scale-[1.035]"
             style={{ fill: p.text }}
           >
             <path d="m1225.95,850.16l-562.28-.11c-21.48-.06-33.64-24.54-20.28-41.79l497.51-660.5c13.06-17.05,1.09-41.42-20.38-41.7l-282.22-.02c-13.88.36-24.74,11.14-25.18,25.09v261.94c.07,5.15-1.27,10.22-4.51,14.42l-60.16,79.89c-17.9,19.47-47.95,4.5-45.14-20.33l.16-336.22c-.62-13.72-11.54-24.45-25.27-24.61-3.69.23-15.34.29-23.04,13.62L116.56,839.59c-4.93,6.62-12.7,10.53-20.95,10.53H26.15c-21.75,0-33.96-25.75-20.57-42.89L605.03,11.43c5.96-8.33,14.7-11.79,25.65-11.39l596.15.31c14.42,0,26.11,11.69,26.11,26.11v142.68c0,5.73-1.88,11.29-5.36,15.84l-390.83,516.34c-13.12,17.19-.86,41.96,20.76,41.96l346.68.1c15.3-1.62,29.09,8.86,29.06,26.2l-.14,56.92c-1.17,14.82-14.15,24.56-27.17,23.67Z" />
