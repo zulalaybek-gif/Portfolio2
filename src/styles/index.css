@@ -238,32 +238,33 @@ img {
 
 .scroll-progress-indicator {
   position: fixed;
-  left: max(clamp(18px, 5vw, 72px), env(safe-area-inset-left));
-  right: max(clamp(18px, 5vw, 72px), env(safe-area-inset-right));
-  bottom: max(18px, env(safe-area-inset-bottom));
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 45;
-  height: 16px;
+  height: calc(8px + env(safe-area-inset-bottom));
   pointer-events: none;
   display: flex;
-  align-items: center;
-  opacity: 0.86;
+  align-items: flex-end;
+  opacity: 1;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .scroll-progress-indicator__track {
   position: relative;
   width: 100%;
-  height: 1px;
+  height: 2px;
   overflow: hidden;
   border-radius: 999px;
-  background: linear-gradient(90deg, transparent, var(--scroll-progress-track) 8%, var(--scroll-progress-track) 92%, transparent);
+  background: var(--scroll-progress-track);
 }
 
 .scroll-progress-indicator__track::before {
   content: "";
   position: absolute;
-  inset: -10px 0;
+  inset: -12px 0 0;
   background: linear-gradient(90deg, transparent, var(--scroll-progress-glow), transparent);
-  opacity: 0.32;
+  opacity: 0.42;
 }
 
 .scroll-progress-indicator__fill {
@@ -279,28 +280,28 @@ img {
     var(--scroll-progress-fill) 92%,
     transparent 100%
   );
-  box-shadow: 0 0 16px var(--scroll-progress-glow);
+  box-shadow: 0 -2px 18px var(--scroll-progress-glow);
 }
 
 .scroll-progress-indicator__tip {
   position: absolute;
   right: 0;
   top: 50%;
-  width: 5px;
-  height: 5px;
+  width: 4px;
+  height: 4px;
   border-radius: 999px;
   background: var(--scroll-progress-fill);
-  box-shadow: 0 0 14px var(--scroll-progress-glow);
+  box-shadow: 0 0 18px var(--scroll-progress-glow);
   transform: translate(50%, -50%);
 }
 
 @media (max-width: 767px) {
   .scroll-progress-indicator {
-    left: max(16px, env(safe-area-inset-left));
-    right: max(16px, env(safe-area-inset-right));
-    bottom: max(14px, env(safe-area-inset-bottom));
-    height: 14px;
-    opacity: 0.78;
+    height: calc(7px + env(safe-area-inset-bottom));
+  }
+
+  .scroll-progress-indicator__track {
+    height: 2px;
   }
 }
 
