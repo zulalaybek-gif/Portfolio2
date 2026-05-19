@@ -242,7 +242,7 @@ img {
   right: 0;
   bottom: 0;
   z-index: 45;
-  height: calc(10px + env(safe-area-inset-bottom));
+  height: calc(13px + env(safe-area-inset-bottom));
   pointer-events: none;
   display: flex;
   align-items: flex-end;
@@ -253,7 +253,7 @@ img {
 .scroll-progress-indicator__track {
   position: relative;
   width: 100%;
-  height: 3px;
+  height: 5px;
   overflow: hidden;
   border-radius: 999px;
   background: var(--scroll-progress-track);
@@ -264,7 +264,7 @@ img {
   position: absolute;
   inset: -12px 0 0;
   background: linear-gradient(90deg, transparent, var(--scroll-progress-glow), transparent);
-  opacity: 0.56;
+  opacity: 0.7;
 }
 
 .scroll-progress-indicator__fill {
@@ -280,28 +280,28 @@ img {
     var(--scroll-progress-fill) 92%,
     transparent 100%
   );
-  box-shadow: 0 -2px 22px var(--scroll-progress-glow);
+  box-shadow: 0 -3px 28px var(--scroll-progress-glow);
 }
 
 .scroll-progress-indicator__tip {
   position: absolute;
   right: 0;
   top: 50%;
-  width: 5px;
-  height: 5px;
+  width: 7px;
+  height: 7px;
   border-radius: 999px;
   background: var(--scroll-progress-fill);
-  box-shadow: 0 0 18px var(--scroll-progress-glow);
+  box-shadow: 0 0 24px var(--scroll-progress-glow);
   transform: translate(50%, -50%);
 }
 
 @media (max-width: 767px) {
   .scroll-progress-indicator {
-    height: calc(9px + env(safe-area-inset-bottom));
+    height: calc(12px + env(safe-area-inset-bottom));
   }
 
   .scroll-progress-indicator__track {
-    height: 3px;
+    height: 5px;
   }
 }
 
