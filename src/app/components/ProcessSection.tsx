@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion, useMotionValueEvent, useReducedMotion, useScroll } from "motion/react";
 import { useRef, useState, useEffect, type RefObject } from "react";
 import { Ear, Lightbulb, SlidersHorizontal, Rocket } from "lucide-react";
 import { useI18n, type TranslationKey } from "./i18n";
@@ -50,13 +50,35 @@ export function ProcessSection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
   const accent = isDark ? "#8BAD4A" : "#4A6B2A";
+  const sectionRef = useRef<HTMLElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(lineRef);
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+  const [revealedCount, setRevealedCount] = useState(0);
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start 72%", "end 46%"],
+  });
+
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    if (reduceMotion) return;
+    const nextCount = Math.max(0, Math.min(steps.length, Math.ceil(latest * steps.length)));
+    setRevealedCount((current) => (current === nextCount ? current : nextCount));
+  });
+
+  useEffect(() => {
+    if (reduceMotion || isInView) {
+      setRevealedCount((current) => (current > 0 ? current : 1));
+    }
+    if (reduceMotion) {
+      setRevealedCount(steps.length);
+    }
+  }, [isInView, reduceMotion]);
 
   return (
-    <section className="relative w-full px-6 md:px-12 py-24">
-      <div className="max-w-6xl mx-auto">
+    <section ref={sectionRef} className="relative w-full px-6 md:px-12 py-24 md:py-32 lg:min-h-[150vh]">
+      <div className="max-w-6xl mx-auto lg:sticky lg:top-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -84,6 +106,8 @@ export function ProcessSection() {
             {steps.map((step, i) => {
               const isHovered = hoveredIdx === i;
               const shouldGlowLine = hoveredIdx === i || hoveredIdx === i + 1;
+              const isStepVisible = reduceMotion || i < revealedCount;
+              const isLineVisible = reduceMotion || i + 1 < revealedCount;
 
               return (
                 <div
@@ -95,9 +119,9 @@ export function ProcessSection() {
                   onBlur={() => setHoveredIdx(null)}
                   tabIndex={0}
                   style={{
-                    opacity: isInView ? 1 : 0,
-                    transform: isInView ? "translateY(0)" : "translateY(30px)",
-                    transition: `opacity 0.6s ease ${0.3 + i * 0.25}s, transform 0.6s ease ${0.3 + i * 0.25}s`,
+                    opacity: isStepVisible ? 1 : 0,
+                    transform: isStepVisible ? "translateY(0)" : "translateY(36px)",
+                    transition: "opacity 0.55s ease, transform 0.65s cubic-bezier(0.16, 1, 0.3, 1)",
                   }}
                 >
                   {i < steps.length - 1 && (
@@ -120,9 +144,9 @@ export function ProcessSection() {
                         background: `linear-gradient(90deg, ${accent} 0%, ${accent}88 72%, transparent 100%)`,
                         boxShadow: shouldGlowLine ? `0 0 24px ${accent}70` : "none",
                         opacity: shouldGlowLine ? 1 : 0.78,
-                        transform: isInView ? "scaleX(1)" : "scaleX(0)",
+                        transform: isLineVisible ? "scaleX(1)" : "scaleX(0)",
                         transformOrigin: "left center",
-                        transition: `transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) ${0.65 + i * 0.28}s, box-shadow 260ms ease, opacity 260ms ease`,
+                        transition: "transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 260ms ease, opacity 260ms ease",
                       }}
                     />
                     <div
@@ -133,8 +157,8 @@ export function ProcessSection() {
                         height: 28,
                         background: `radial-gradient(circle, ${accent}55 0%, transparent 65%)`,
                         filter: "blur(8px)",
-                        opacity: isInView ? 0.65 : 0,
-                        transition: `opacity 0.7s ease ${1 + i * 0.28}s`,
+                        opacity: isLineVisible ? 0.65 : 0,
+                        transition: "opacity 0.7s ease",
                       }}
                     />
                   </div>
@@ -159,7 +183,7 @@ export function ProcessSection() {
                     className="w-[5.5rem] h-[5.5rem] rounded-full flex items-center justify-center"
                     initial={{ opacity: 0, scale: 0.86 }}
                     animate={
-                      isInView
+                      isStepVisible
                         ? isHovered
                           ? { opacity: 1, scale: 1.08, y: -7 }
                           : { opacity: 1, scale: 1, y: [0, -3, 0] }
@@ -185,7 +209,7 @@ export function ProcessSection() {
                       animate={
                         isHovered
                           ? { rotate: [0, -7, 8, 0], scale: [1, 1.16, 1.08] }
-                          : isInView
+                          : isStepVisible
                             ? { rotate: [0, -3, 3, 0], scale: [1, 1.04, 1] }
                             : { rotate: 0, scale: 1 }
                       }
@@ -203,7 +227,7 @@ export function ProcessSection() {
                       fontSize: "0.55rem",
                       fontWeight: 700,
                       color: isDark ? "#0a0a0a" : "#fff",
-                      transform: isInView ? `scale(${isHovered ? 1.12 : 1})` : "scale(0)",
+                      transform: isStepVisible ? `scale(${isHovered ? 1.12 : 1})` : "scale(0)",
                       transition: `transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) ${0.7 + i * 0.3}s`,
                     }}
                   >
