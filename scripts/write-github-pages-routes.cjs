@@ -6,6 +6,7 @@ const siteUrl = "https://www.zulal-aybek.com";
 
 const routes = [
   { path: "/", title: "Zulal Aybek - Portfolio" },
+  { path: "/contact", title: "Contact - Zulal Aybek" },
   { path: "/projects", title: "Projets - Zulal Aybek" },
   { path: "/projects/mya", title: "Mya - Zulal Aybek" },
   { path: "/projects/roma", title: "Roma - Zulal Aybek" },

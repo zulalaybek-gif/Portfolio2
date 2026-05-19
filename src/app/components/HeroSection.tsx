@@ -226,7 +226,7 @@ export function HeroSection() {
                 fontWeight: 500,
                 color: isDark ? "#0a0a0a" : "#ffffff",
               }}
-              onClick={() => window.location.href = "mailto:zulal.aybek@gmail.com"}
+              onClick={() => navigate("/contact")}
             >
               {t("hero.cta1")}
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />

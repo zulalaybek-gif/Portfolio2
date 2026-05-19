@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { Link } from "react-router";
 import { ArrowUpRight } from "lucide-react";
 import { useI18n, type TranslationKey } from "./i18n";
 import { useTheme } from "./theme";
@@ -86,8 +87,8 @@ export function CTASection() {
           </div>
 
           {/* Button */}
-          <a
-            href="mailto:zulal.aybek@gmail.com"
+          <Link
+            to="/contact"
             className="group inline-flex items-center gap-3 px-10 py-4 rounded-full transition-all duration-500 hover:scale-[1.035] active:scale-[0.985]"
             style={{
               background: isDark
@@ -107,7 +108,7 @@ export function CTASection() {
           >
             {t("cta.button")}
             <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </a>
+          </Link>
         </div>
       </motion.div>
     </section>

@@ -4,6 +4,20 @@ import fs from 'fs'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 
+const cspMeta = `<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https://images.unsplash.com https://img.youtube.com https://i.ytimg.com; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com ws: wss:; frame-src https://www.youtube.com https://www.youtube-nocookie.com; media-src 'self' data: blob:; worker-src 'self' blob:; manifest-src 'self'; form-action 'none'; upgrade-insecure-requests" />`
+
+function productionCspMeta() {
+  return {
+    name: 'production-csp-meta',
+    apply: 'build' as const,
+    transformIndexHtml(html: string) {
+      return html.replace(
+        '    <meta name="referrer" content="strict-origin-when-cross-origin" />',
+        `    ${cspMeta}\n    <meta name="referrer" content="strict-origin-when-cross-origin" />`,
+      )
+    },
+  }
+}
 
 function figmaAssetResolver() {
   const assetsDir = path.resolve(__dirname, 'src/assets')
@@ -64,6 +78,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    productionCspMeta(),
     figmaAssetResolver(),
     // The React and Tailwind plugins are both required for Make, even if
     // Tailwind is not being actively used – do not remove them

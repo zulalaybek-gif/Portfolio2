@@ -80,6 +80,33 @@ const translations = {
   "cta.title2": { fr: "ensemble", en: "together" },
   "cta.button": { fr: "D\u00E9marrer un Projet", en: "Start a Project" },
 
+  // ── Contact ──
+  "contact.badge": { fr: "Contact", en: "Contact" },
+  "contact.title1": { fr: "PARLONS.", en: "LET'S TALK." },
+  "contact.title2": { fr: "projet", en: "project" },
+  "contact.intro": {
+    fr: "Un brief, une envie, une direction à clarifier ? Partagez quelques lignes et je vous répondrai avec une première lecture du projet.",
+    en: "A brief, an idea, a direction to clarify? Share a few lines and I will get back to you with an initial read of the project.",
+  },
+  "contact.name": { fr: "Nom", en: "Name" },
+  "contact.email": { fr: "Email", en: "Email" },
+  "contact.type": { fr: "Type de projet", en: "Project type" },
+  "contact.typePlaceholder": { fr: "Sélectionner", en: "Select" },
+  "contact.type.identity": { fr: "Identité visuelle", en: "Visual identity" },
+  "contact.type.artDirection": { fr: "Direction artistique", en: "Art direction" },
+  "contact.type.web": { fr: "Web / interface", en: "Web / interface" },
+  "contact.type.motion": { fr: "Motion / contenu", en: "Motion / content" },
+  "contact.type.other": { fr: "Autre", en: "Other" },
+  "contact.message": { fr: "Message", en: "Message" },
+  "contact.submit": { fr: "Envoyer le brief", en: "Send brief" },
+  "contact.sentTitle": { fr: "Brief reçu.", en: "Brief received." },
+  "contact.sentDesc": {
+    fr: "Le formulaire est prêt côté interface. Pour l'instant, aucun email automatique n'est envoyé : cette confirmation prépare l'intégration future avec Vercel, Formspree ou Resend.",
+    en: "The form interface is ready. For now, no automatic email is sent: this confirmation prepares a future integration with Vercel, Formspree or Resend.",
+  },
+  "contact.sendAnother": { fr: "Écrire un autre message", en: "Write another message" },
+  "contact.emailAlt": { fr: "Alternative directe", en: "Direct alternative" },
+
   // ── Footer ──
   "footer.copy": {
     fr: "\u00A9 2026 Zul\u00E2l Aybek. Tous droits r\u00E9serv\u00E9s.",

@@ -62,6 +62,7 @@ export function Navigation() {
 
   const getActiveKey = () => {
     if (location.pathname.startsWith("/projects")) return "nav.work";
+    if (location.pathname === "/contact") return "nav.contact";
     return "nav.home";
   };
 
@@ -215,13 +216,14 @@ export function Navigation() {
 
           {/* Desktop CTA */}
           <button
-            onClick={() => window.location.href = "mailto:zulal.aybek@gmail.com"}
+            onClick={() => handleNav("/contact")}
             className="hidden md:block px-6 py-2.5 rounded-full transition-all duration-300"
             style={{
               fontSize: "0.85rem",
               fontFamily: "'Inter', sans-serif",
               border: `1px solid ${r(0.2)}`,
-              color: p.text,
+              background: active === "nav.contact" ? p.navActiveGrad : "transparent",
+              color: active === "nav.contact" ? p.navActiveTxt : p.text,
             }}
           >
             {t("nav.contact")}
@@ -300,7 +302,7 @@ export function Navigation() {
 
               {/* Mobile CTA */}
               <button
-                onClick={() => window.location.href = "mailto:zulal.aybek@gmail.com"}
+                onClick={() => handleNav("/contact")}
                 className="mt-6 w-full py-4 rounded-full transition-all duration-300 animate-soft-enter"
                 style={{
                   fontFamily: "'Inter', sans-serif",
