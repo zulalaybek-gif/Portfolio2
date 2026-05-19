@@ -2,7 +2,7 @@ import { useI18n } from "./i18n";
 import { useTheme } from "./theme";
 
 export function Footer() {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const { p, r } = useTheme();
 
   return (
@@ -10,8 +10,36 @@ export function Footer() {
       className="w-full px-8 md:px-12 py-10"
       style={{ borderTop: `1px solid ${p.footerBorder}` }}
     >
-      <div className="max-w-6xl mx-auto flex items-center justify-between flex-wrap gap-6">
-        <div className="flex items-center gap-6">
+      <div className="max-w-6xl mx-auto flex items-end justify-between flex-wrap gap-8">
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center gap-3">
+            <span
+              style={{
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: "0.95rem",
+                fontWeight: 600,
+                letterSpacing: "-0.02em",
+                color: r(0.66),
+              }}
+            >
+              Zulâl Aybek
+            </span>
+            <span
+              className="h-px w-10"
+              style={{ background: `linear-gradient(90deg, ${r(0.18)}, transparent)` }}
+            />
+            <span
+              className="uppercase tracking-widest"
+              style={{
+                fontFamily: "'Inter', sans-serif",
+                fontSize: "0.58rem",
+                color: r(0.28),
+                letterSpacing: "0.16em",
+              }}
+            >
+              {lang === "fr" ? "Direction artistique" : "Art direction"}
+            </span>
+          </div>
           <span
             style={{
               fontFamily: "'Inter', sans-serif",

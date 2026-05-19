@@ -102,6 +102,27 @@ export function ContactPage() {
               <ArrowUpRight size={14} />
             </a>
           </div>
+
+          <div className="mt-8">
+            <p
+              className="uppercase tracking-widest mb-2"
+              style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.62rem", color: r(0.25), letterSpacing: "0.14em" }}
+            >
+              Signature
+            </p>
+            <p
+              style={{
+                fontFamily: "'Reenie Beanie', 'Brush Script MT', cursive",
+                fontSize: "clamp(2.2rem, 5vw, 3.2rem)",
+                lineHeight: 0.9,
+                color: accent,
+                transform: "rotate(-5deg)",
+                transformOrigin: "left center",
+              }}
+            >
+              Zulâl Aybek
+            </p>
+          </div>
         </motion.div>
 
         <motion.div
