@@ -1,4 +1,5 @@
-import { motion } from "motion/react";
+import { useEffect, useRef, type RefObject } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import { Link } from "react-router";
 import { ArrowUpRight } from "lucide-react";
 import { useI18n, type TranslationKey } from "./i18n";
@@ -8,6 +9,7 @@ import { CompositeTitle } from "./CompositeTitle";
 export function CTASection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
+  const cardRef = useRef<HTMLDivElement>(null);
   const accent = isDark ? "#8BAD4A" : "#4A6B2A";
   const glowColor = isDark ? "139,173,74" : "74,107,42";
 
@@ -18,6 +20,7 @@ export function CTASection() {
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true, margin: "200px 0px" }}
         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        ref={cardRef}
         className="max-w-6xl mx-auto relative overflow-hidden rounded-[2.5rem] p-12 md:p-24"
         style={{
           background: isDark
@@ -27,24 +30,10 @@ export function CTASection() {
           boxShadow: isDark
             ? `0 28px 90px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.05), 0 0 80px rgba(${glowColor},0.04)`
             : `0 28px 90px rgba(42,35,24,0.08), inset 0 1px 0 rgba(255,255,255,0.85), 0 0 90px rgba(${glowColor},0.08)`,
+          ["--cta-glow-rgb" as string]: glowColor,
         }}
       >
-        <motion.div
-          aria-hidden="true"
-          className="absolute rounded-full pointer-events-none"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: isDark ? 0.38 : 0.42, x: [0, 18, -8, 0], y: [0, -10, 8, 0] }}
-          viewport={{ once: true }}
-          transition={{ opacity: { duration: 1.2, delay: 0.25 }, x: { duration: 12, repeat: Infinity, ease: "easeInOut" }, y: { duration: 13, repeat: Infinity, ease: "easeInOut" } }}
-          style={{
-            width: "clamp(260px, 34vw, 520px)",
-            height: "clamp(260px, 34vw, 520px)",
-            left: "8%",
-            top: "-22%",
-            background: `radial-gradient(circle, rgba(${glowColor},0.22), transparent 68%)`,
-            filter: "blur(18px)",
-          }}
-        />
+        <InteractiveCtaGlow cardRef={cardRef} isDark={isDark} />
         <motion.div
           aria-hidden="true"
           className="absolute pointer-events-none"
@@ -112,5 +101,110 @@ export function CTASection() {
         </div>
       </motion.div>
     </section>
+  );
+}
+
+function InteractiveCtaGlow({
+  cardRef,
+  isDark,
+}: {
+  cardRef: RefObject<HTMLDivElement | null>;
+  isDark: boolean;
+}) {
+  const glowRef = useRef<HTMLDivElement>(null);
+  const pointerRef = useRef({ active: false, x: 0, y: 0 });
+  const physicsRef = useRef({ x: 0, y: 0, vx: 0.36, vy: 0.28, ready: false });
+  const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    const card = cardRef.current;
+    const glow = glowRef.current;
+    if (!card || !glow || reduceMotion) return;
+
+    let frame = 0;
+    let rect = card.getBoundingClientRect();
+    let lastRectRead = 0;
+
+    const onPointerMove = (event: PointerEvent) => {
+      rect = card.getBoundingClientRect();
+      pointerRef.current = {
+        active: true,
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top,
+      };
+    };
+
+    const onPointerLeave = () => {
+      pointerRef.current.active = false;
+    };
+
+    const animate = (time: number) => {
+      if (time - lastRectRead > 650) {
+        rect = card.getBoundingClientRect();
+        lastRectRead = time;
+      }
+
+      const state = physicsRef.current;
+      const width = rect.width || 1;
+      const height = rect.height || 1;
+      const margin = Math.min(150, width * 0.18, height * 0.28);
+      const minX = margin;
+      const maxX = Math.max(minX, width - margin);
+      const minY = margin;
+      const maxY = Math.max(minY, height - margin);
+
+      if (!state.ready) {
+        state.x = width * 0.18;
+        state.y = height * 0.42;
+        state.ready = true;
+      }
+
+      if (pointerRef.current.active) {
+        state.vx += (pointerRef.current.x - state.x) * 0.0032;
+        state.vy += (pointerRef.current.y - state.y) * 0.0032;
+      } else {
+        state.vx += Math.sin(time * 0.0009) * 0.012;
+        state.vy += Math.cos(time * 0.0007) * 0.01;
+      }
+
+      state.vx *= 0.986;
+      state.vy *= 0.986;
+      state.x += state.vx;
+      state.y += state.vy;
+
+      if (state.x < minX || state.x > maxX) {
+        state.x = Math.min(Math.max(state.x, minX), maxX);
+        state.vx *= -0.86;
+      }
+
+      if (state.y < minY || state.y > maxY) {
+        state.y = Math.min(Math.max(state.y, minY), maxY);
+        state.vy *= -0.86;
+      }
+
+      glow.style.transform = `translate3d(${state.x}px, ${state.y}px, 0) translate3d(-50%, -50%, 0)`;
+      frame = window.requestAnimationFrame(animate);
+    };
+
+    card.addEventListener("pointermove", onPointerMove, { passive: true });
+    card.addEventListener("pointerleave", onPointerLeave);
+    frame = window.requestAnimationFrame(animate);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      card.removeEventListener("pointermove", onPointerMove);
+      card.removeEventListener("pointerleave", onPointerLeave);
+    };
+  }, [cardRef, reduceMotion]);
+
+  return (
+    <div
+      ref={glowRef}
+      aria-hidden="true"
+      className="cta-interactive-glow"
+      style={{
+        opacity: isDark ? 0.42 : 0.34,
+      }}
+    />
   );
 }

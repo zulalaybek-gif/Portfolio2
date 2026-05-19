@@ -221,6 +221,23 @@
   animation: marquee-scroll 40s linear infinite;
 }
 
+.cta-interactive-glow {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  width: clamp(280px, 34vw, 560px);
+  height: clamp(280px, 34vw, 560px);
+  border-radius: 44% 56% 52% 48%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 42% 40%, rgba(var(--cta-glow-rgb), 0.36), rgba(var(--cta-glow-rgb), 0.16) 34%, transparent 69%),
+    radial-gradient(circle at 60% 62%, rgba(255, 255, 255, 0.08), transparent 42%);
+  filter: blur(18px);
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+
 img,
 video,
 canvas,
