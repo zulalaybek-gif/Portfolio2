@@ -173,10 +173,11 @@ export function ServicesSection() {
                   {String(i + 1).padStart(2, "0")}
                 </span>
 
-                {/* Accent dot */}
-                {i === 1 && (
-                  <div className="absolute top-7 right-7 w-2 h-2 rounded-full" style={{ background: accent, opacity: 0.5 }} />
-                )}
+                {/* Hover accent dot */}
+                <div
+                  className="absolute top-7 right-7 w-2 h-2 rounded-full opacity-0 scale-50 transition-all duration-300 ease-out group-hover:opacity-70 group-hover:scale-100"
+                  style={{ background: accent, boxShadow: `0 0 18px ${accent}55` }}
+                />
 
                 {/* Title with large first letter */}
                 <div className="mt-auto">
