@@ -63,7 +63,7 @@ export function ProcessSection() {
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     if (reduceMotion) return;
-    const nextCount = Math.max(0, Math.min(steps.length, Math.ceil(latest * steps.length)));
+    const nextCount = Math.max(1, Math.min(steps.length, Math.floor(latest * steps.length) + 1));
     setRevealedCount((current) => (current === nextCount ? current : nextCount));
   });
 
@@ -77,8 +77,8 @@ export function ProcessSection() {
   }, [isInView, reduceMotion]);
 
   return (
-    <section ref={sectionRef} className="relative w-full px-6 md:px-12 py-24 md:py-32 lg:min-h-[150vh]">
-      <div className="max-w-6xl mx-auto lg:sticky lg:top-20">
+    <section ref={sectionRef} className="relative w-full px-6 md:px-12 py-24 md:py-0 lg:min-h-[260vh]">
+      <div className="max-w-6xl mx-auto lg:sticky lg:top-0 lg:min-h-screen lg:flex lg:flex-col lg:justify-center lg:py-16">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
