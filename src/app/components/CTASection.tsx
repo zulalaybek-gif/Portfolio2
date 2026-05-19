@@ -113,7 +113,7 @@ function InteractiveCtaGlow({
 }) {
   const glowRef = useRef<HTMLDivElement>(null);
   const pointerRef = useRef({ active: false, x: 0, y: 0 });
-  const physicsRef = useRef({ x: 0, y: 0, vx: 0.36, vy: 0.28, ready: false });
+  const physicsRef = useRef({ x: 0, y: 0, vx: 0.12, vy: 0.1, ready: false });
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
@@ -160,26 +160,26 @@ function InteractiveCtaGlow({
       }
 
       if (pointerRef.current.active) {
-        state.vx += (pointerRef.current.x - state.x) * 0.0032;
-        state.vy += (pointerRef.current.y - state.y) * 0.0032;
+        state.vx += (pointerRef.current.x - state.x) * 0.00115;
+        state.vy += (pointerRef.current.y - state.y) * 0.00115;
       } else {
-        state.vx += Math.sin(time * 0.0009) * 0.012;
-        state.vy += Math.cos(time * 0.0007) * 0.01;
+        state.vx += Math.sin(time * 0.00055) * 0.0036;
+        state.vy += Math.cos(time * 0.00045) * 0.003;
       }
 
-      state.vx *= 0.986;
-      state.vy *= 0.986;
+      state.vx *= 0.968;
+      state.vy *= 0.968;
       state.x += state.vx;
       state.y += state.vy;
 
       if (state.x < minX || state.x > maxX) {
         state.x = Math.min(Math.max(state.x, minX), maxX);
-        state.vx *= -0.86;
+        state.vx *= -0.42;
       }
 
       if (state.y < minY || state.y > maxY) {
         state.y = Math.min(Math.max(state.y, minY), maxY);
-        state.vy *= -0.86;
+        state.vy *= -0.42;
       }
 
       glow.style.transform = `translate3d(${state.x}px, ${state.y}px, 0) translate3d(-50%, -50%, 0)`;
@@ -203,7 +203,7 @@ function InteractiveCtaGlow({
       aria-hidden="true"
       className="cta-interactive-glow"
       style={{
-        opacity: isDark ? 0.42 : 0.34,
+        opacity: isDark ? 0.28 : 0.22,
       }}
     />
   );
