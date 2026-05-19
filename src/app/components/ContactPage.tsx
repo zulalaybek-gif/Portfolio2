@@ -26,7 +26,11 @@ export function ContactPage() {
   };
 
   return (
-    <section data-section="contact" className="relative w-full px-6 md:px-12 py-16 md:py-24 overflow-hidden">
+    <section
+      data-section="contact"
+      className="relative w-full px-6 md:px-12 py-16 md:py-24 overflow-hidden"
+      style={{ color: p.text }}
+    >
       <motion.div
         aria-hidden="true"
         className="absolute rounded-full pointer-events-none"
