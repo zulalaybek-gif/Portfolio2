@@ -27,7 +27,7 @@ const palettes = {
     navPillBg: "rgba(255,255,255,0.05)",
     navPillBorder: "rgba(255,255,255,0.10)",
     navActiveTxt: "#0a0a0a",
-    navActiveGrad: "linear-gradient(135deg, #8BAD4A 0%, #6B8F3A 100%)",
+    navActiveGrad: "linear-gradient(135deg, #B9F21D 0%, #76B900 100%)",
     // Footer
     footerBorder: "rgba(255,255,255,0.05)",
     // Badge
@@ -61,7 +61,7 @@ const palettes = {
     navPillBg: "rgba(0,0,0,0.04)",
     navPillBorder: "rgba(0,0,0,0.08)",
     navActiveTxt: "#ffffff",
-    navActiveGrad: "linear-gradient(135deg, #4A6B2A 0%, #3A5520 100%)",
+    navActiveGrad: "linear-gradient(135deg, #4F9A00 0%, #3F7E00 100%)",
     footerBorder: "rgba(0,0,0,0.06)",
     badgeBg: "rgba(0,0,0,0.03)",
     badgeBorder: "rgba(0,0,0,0.10)",

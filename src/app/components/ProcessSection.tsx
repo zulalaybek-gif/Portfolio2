@@ -12,6 +12,9 @@ const steps = [
   { icon: Rocket, titleKey: "process.step4.title" as const, descKey: "process.step4.desc" as const, num: "04" },
 ];
 
+const APPLE_GREEN_DARK = "#B9F21D";
+const APPLE_GREEN_LIGHT = "#4F9A00";
+
 function useInView(ref: RefObject<HTMLElement | null>, margin = "200px 0px") {
   const [inView, setInView] = useState(false);
   useEffect(() => {
@@ -50,8 +53,8 @@ export function ProcessSection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
   const stepAccents = isDark
-    ? ["#DFF440", "#4B8197", "#C12144", "#DFF440"]
-    : ["#4B8197", "#232624", "#C12144", "#DFF440"];
+    ? [APPLE_GREEN_DARK, "#4B8197", "#C12144", APPLE_GREEN_DARK]
+    : ["#4B8197", "#232624", "#C12144", APPLE_GREEN_LIGHT];
   const sectionRef = useRef<HTMLElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(lineRef);
@@ -114,7 +117,7 @@ export function ProcessSection() {
               const isLineVisible = reduceMotion || i + 1 < revealedCount;
               const stepAccent = stepAccents[i % stepAccents.length];
               const nextAccent = stepAccents[(i + 1) % stepAccents.length];
-              const badgeText = stepAccent === "#DFF440" ? "#232624" : "#F1F1F1";
+              const badgeText = stepAccent === APPLE_GREEN_DARK || stepAccent === APPLE_GREEN_LIGHT ? "#232624" : "#F1F1F1";
 
               return (
                 <div
