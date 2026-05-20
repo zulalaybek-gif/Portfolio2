@@ -8,7 +8,6 @@ import { ProjectBackButton } from "./ProjectBackButton";
 
 /* -- Assets -- */
 import svgPaths from "../../imports/svg-8j0m9nldaw";
-import playerSvg from "../../imports/svg-c1cvk0n26k";
 import imgNoSenseA3 from "../../assets/mzw/01-affiche.png";
 import imgSupportPrint1 from "../../assets/mzw/02-support-print.jpg";
 import imgSupportPrint2 from "../../assets/mzw/03-support-print.jpg";
@@ -16,18 +15,10 @@ import imgVinyle from "../../assets/mzw/04-vinyle.png";
 import imgTShirt from "../../assets/mzw/05-tshirt.png";
 import imgMockup1 from "../../assets/mzw/06-mockup.png";
 import imgMockup2 from "../../assets/mzw/07-mockup.png";
+import imgPlayerSplash from "../../assets/mzw/08-player.png";
+import imgPlayerCenter from "../../assets/mzw/09-player.png";
+import imgPlayerLibrary from "../../assets/mzw/10-player.png";
 import imgButterfly from "../../assets/mzw/11-papillon.png";
-import imgAlbumArt from "figma:asset/285aae2a2bd3a31891ce93006639e1f4cfc7f16b.png";
-import imgCover1 from "figma:asset/b2dc3411ce1d7da5eedb5f043de453cdcea29c1d.png";
-import imgCover2 from "figma:asset/26ae25ab6f07e30cafc892d0f17cb14a514a6034.png";
-import imgCover3 from "figma:asset/4c9333cbad89d2b7b025a8b2eeb4a232cada0a5a.png";
-import imgCover4 from "figma:asset/621f4ea03c85e1dd9558f377364da9bed12d680b.png";
-import imgCover5 from "figma:asset/fafde56448e896ef13ef6ce3abb1701a45e00563.png";
-
-/* Phone mockups — device frames from Figma */
-import imgPhoneSplash from "figma:asset/bcd888905a245dc8b177e96fd0999cc222dc74ea.png";
-import imgPhonePlayer from "figma:asset/a482d7f9718ca2e04a1977f65d5b924b530f28a9.png";
-import imgPhoneLibrary from "figma:asset/e40ef5803418bf97e54030fd41ac147b6b213cf8.png";
 
 /* -- Helpers -- */
 const ACCENT = "#5d4792";
@@ -35,6 +26,7 @@ const ACCENT_RGB = "93,71,146";
 const DARK_BG = "#0f0817";
 
 const MZW_SWIRL_PATHS_URL = "/assets/mzw-swirl-paths.json";
+const MZW_FINAL_ANIMATION_URL = "/assets/mzw-12-animation.webp";
 
 /* Butterfly tap animation generators — each returns randomised values so no two clicks feel the same */
 const TAP_GENERATORS: Array<() => { x: number; y: number; scale: number; rotate: number; opacity: number; dur: number }> = [
@@ -636,77 +628,6 @@ function AnimatedWaveform() {
   );
 }
 
-/* Built-from-code player phone — the center hero phone */
-function PlayerPhone() {
-  return (
-    <div className="relative overflow-hidden" style={{ background: "#0f0817", borderRadius: "clamp(18px, 3.5vw, 40px)", border: "1px solid rgba(186,168,237,0.12)", width: "100%", aspectRatio: "784 / 1766" }}>
-      {/* Bottom glow blobs */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ borderRadius: "inherit" }}>
-        <div className="absolute" style={{ width: "130%", height: "50%", bottom: "-10%", left: "-15%", background: "radial-gradient(ellipse at 40% 80%, rgba(94,70,248,0.18) 0%, transparent 60%), radial-gradient(ellipse at 65% 70%, rgba(192,62,254,0.14) 0%, transparent 55%)", filter: "blur(40px)" }} />
-      </div>
-      {/* Side decorative lines */}
-      <div className="absolute top-[26%] bottom-[37%] left-[3%] w-[0.4%] rounded-full" style={{ background: "rgba(186,168,237,0.4)" }} />
-      <div className="absolute top-[26%] bottom-[37%] right-[3%] w-[0.4%] rounded-full" style={{ background: "rgba(186,168,237,0.4)" }} />
-      {/* Header */}
-      <div className="relative flex items-center justify-between px-[9%] pt-[6%] pb-[2%]">
-        <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "clamp(7px, 1.5vw, 14px)", fontWeight: 600, color: "white" }}>9:41</span>
-        <div className="flex items-center gap-[4px]">
-          <svg viewBox="0 0 28 20.1" fill="white" style={{ width: "clamp(8px, 1.4vw, 14px)" }}><path d={playerSvg.p2c643cc0} /></svg>
-          <svg viewBox="0 0 33 18.4" fill="white" style={{ width: "clamp(8px, 1.6vw, 16px)" }}><path d={playerSvg.p10769f80} /></svg>
-          <svg viewBox="0 0 37 15.3" fill="white" style={{ width: "clamp(10px, 1.8vw, 18px)" }}><path d={playerSvg.p3f0ff600} /></svg>
-        </div>
-      </div>
-      {/* Navigation */}
-      <div className="relative flex items-center justify-between px-[9%] py-[3%]">
-        <svg viewBox="0 0 19.068 33.369" fill="white" className="rotate-180" style={{ width: "clamp(5px, 1vw, 10px)" }}><path d={playerSvg.p1abbdff0} /></svg>
-        <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "clamp(8px, 1.6vw, 16px)", fontWeight: 600, color: "white" }}>Playslist</span>
-        <svg viewBox="0 0 34.113 8.161" fill="white" className="-rotate-90" style={{ width: "clamp(6px, 1.2vw, 12px)" }}><path d={playerSvg.p3bd47c00} /></svg>
-      </div>
-      {/* Song title + heart */}
-      <div className="relative flex items-start justify-between px-[9%] pt-[2%] pb-[1%]">
-        <div>
-          <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(10px, 2.2vw, 22px)", fontWeight: 700, color: "white", lineHeight: 1.3 }}>Schmetterling</p>
-          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "clamp(8px, 1.6vw, 16px)", color: "rgba(255,255,255,0.4)", marginTop: "2px" }}>MZW</p>
-        </div>
-        <svg viewBox="0 0 42.5 42.3" fill="white" style={{ width: "clamp(10px, 2.2vw, 24px)", marginTop: "4px", flexShrink: 0 }}><path d={playerSvg.pee6a5c0} /></svg>
-      </div>
-      {/* Album art */}
-      <div className="relative px-[9%] py-[3%]">
-        <div className="relative rounded-[clamp(8px,1.5vw,16px)] overflow-hidden aspect-square">
-          <img src={imgAlbumArt} alt="Schmetterling — Album Art" className="w-full h-full object-cover" />
-        </div>
-      </div>
-      {/* Animated Waveform */}
-      <div className="relative px-[9%] py-[1.5%]" style={{ height: "9%" }}>
-        <AnimatedWaveform />
-      </div>
-      {/* Time */}
-      <div className="relative flex items-center justify-between px-[9%] py-[0.5%]">
-        <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "clamp(6px, 1.1vw, 11px)", color: "#60488e" }}>1:04</span>
-        <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "clamp(6px, 1.1vw, 11px)", color: "#c6c6c6" }}>3:29</span>
-      </div>
-      {/* Play controls */}
-      <div className="relative flex items-center justify-center gap-[10%] px-[9%] py-[3%]">
-        <svg viewBox="0 0 40.12 36" fill="#BAA8ED" style={{ width: "clamp(8px, 1.6vw, 16px)", opacity: 0.6 }}><path d={playerSvg.p1e846700} transform="translate(0,-99.4) scale(1)" /></svg>
-        <motion.div className="relative flex items-center justify-center rounded-full"
-          style={{ width: "clamp(28px, 5.5vw, 56px)", height: "clamp(28px, 5.5vw, 56px)", background: "linear-gradient(135deg, #e8e0f4 0%, #c8bde0 100%)" }}
-          animate={{ boxShadow: ["0 4px 20px rgba(93,71,146,0.3), 0 0 30px rgba(93,71,146,0.1)", "0 6px 30px rgba(93,71,146,0.5), 0 0 50px rgba(93,71,146,0.2)", "0 4px 20px rgba(93,71,146,0.3), 0 0 30px rgba(93,71,146,0.1)"] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}>
-          <div className="flex items-center gap-[12%]">
-            <div className="rounded-sm" style={{ width: "clamp(3px, 0.6vw, 6px)", height: "clamp(10px, 2vw, 20px)", background: "#1a1020" }} />
-            <div className="rounded-sm" style={{ width: "clamp(3px, 0.6vw, 6px)", height: "clamp(10px, 2vw, 20px)", background: "#1a1020" }} />
-          </div>
-        </motion.div>
-        <svg viewBox="0 0 40.12 36" fill="#BAA8ED" style={{ width: "clamp(8px, 1.6vw, 16px)", opacity: 0.6, transform: "scaleX(-1)" }}><path d={playerSvg.p1e846700} transform="translate(0,-99.4) scale(1)" /></svg>
-      </div>
-      {/* Lyrics */}
-      <div className="relative flex justify-center pb-[5%]">
-        <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "clamp(6px, 1.1vw, 11px)", color: "#c6c6c6", letterSpacing: "0.3em" }}>Lyrics</span>
-      </div>
-    </div>
-  );
-}
-
 /* Decorative equalizer — ultra-wide with soft edge fade and slow motion */
 function DecorativeEqualizer({ isDark }: { isDark: boolean }) {
   const barCount = 180;
@@ -732,46 +653,36 @@ function DecorativeEqualizer({ isDark }: { isDark: boolean }) {
   );
 }
 
-/* Phone bezel mockup — wraps content in a realistic device frame */
-function PhoneMockup({ children }: { children: React.ReactNode }) {
+function AnimatedPlayerMockup() {
   return (
-    <div className="relative" style={{ padding: "clamp(4px, 0.6vw, 8px)" }}>
-      {/* Outer bezel */}
+    <div className="relative">
+      <img src={imgPlayerCenter} alt="MZW — lecteur en cours de lecture" className="relative z-10 w-full h-auto object-contain" />
       <div
-        className="relative overflow-hidden"
+        className="absolute z-20"
         style={{
-          borderRadius: "clamp(22px, 4.2vw, 48px)",
-          background: "linear-gradient(145deg, #2a2a2e 0%, #1a1a1e 40%, #0e0e10 100%)",
-          boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06), inset 0 -1px 0 rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.03)",
-          padding: "clamp(6px, 1vw, 12px)",
+          left: "16.2%",
+          right: "16.2%",
+          top: "67.6%",
+          height: "5.8%",
+          filter: "drop-shadow(0 0 10px rgba(93,71,146,0.5))",
+          mixBlendMode: "screen",
         }}
       >
-        {/* Notch */}
-        <div
-          className="absolute top-0 left-1/2 -translate-x-1/2 z-30"
-          style={{
-            width: "30%",
-            height: "clamp(14px, 2.2vw, 28px)",
-            background: "#0e0e10",
-            borderRadius: "0 0 clamp(8px, 1.5vw, 16px) clamp(8px, 1.5vw, 16px)",
-          }}
-        />
-        {/* Side buttons — left */}
-        <div className="absolute top-[18%] -left-[2px] w-[2px] h-[5%] rounded-l-sm" style={{ background: "linear-gradient(180deg, #3a3a3e, #2a2a2e)" }} />
-        <div className="absolute top-[26%] -left-[2px] w-[2px] h-[8%] rounded-l-sm" style={{ background: "linear-gradient(180deg, #3a3a3e, #2a2a2e)" }} />
-        <div className="absolute top-[36%] -left-[2px] w-[2px] h-[8%] rounded-l-sm" style={{ background: "linear-gradient(180deg, #3a3a3e, #2a2a2e)" }} />
-        {/* Side button — right (power) */}
-        <div className="absolute top-[30%] -right-[2px] w-[2px] h-[10%] rounded-r-sm" style={{ background: "linear-gradient(180deg, #3a3a3e, #2a2a2e)" }} />
-        {/* Inner screen */}
-        <div className="relative overflow-hidden" style={{ borderRadius: "clamp(16px, 3.2vw, 38px)" }}>
-          {children}
-        </div>
-        {/* Bottom home indicator */}
-        <div
-          className="absolute bottom-[clamp(3px,0.6vw,7px)] left-1/2 -translate-x-1/2 z-30 rounded-full"
-          style={{ width: "28%", height: "clamp(3px, 0.4vw, 5px)", background: "rgba(255,255,255,0.15)" }}
-        />
+        <AnimatedWaveform />
       </div>
+      <motion.div
+        aria-hidden="true"
+        className="absolute left-1/2 z-20 rounded-full"
+        style={{
+          bottom: "7.8%",
+          width: "19%",
+          aspectRatio: "1 / 1",
+          background: "radial-gradient(circle, rgba(255,255,255,0.18), rgba(93,71,146,0.12) 55%, transparent 72%)",
+          transform: "translateX(-50%)",
+        }}
+        animate={{ scale: [1, 1.1, 1], opacity: [0.35, 0.62, 0.35] }}
+        transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+      />
     </div>
   );
 }
@@ -807,19 +718,17 @@ function MobileSection() {
             <FadeIn delay={0.1} className="relative z-10 self-start mt-4 md:mt-6">
               <motion.div className="relative" initial={{ opacity: 0, x: -40, rotate: 0 }} whileInView={{ opacity: 1, x: 0, rotate: -3 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
                 style={{ width: "clamp(140px, 22vw, 260px)", filter: phoneShadow(false) }}>
-                <img src={imgPhoneSplash} alt="MZW — Splash Screen" className="w-full h-auto object-contain" />
+                <img src={imgPlayerSplash} alt="MZW — écran d'accueil mobile" className="w-full h-auto object-contain" />
               </motion.div>
             </FadeIn>
 
-            {/* Center phone — Player — BUILT IN CODE with phone mockup */}
+            {/* Center phone — Player with animated waveform overlay */}
             <FadeIn delay={0.15} className="relative z-20">
               <motion.div className="relative" initial={{ opacity: 0, y: 50, scale: 0.9 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true }} transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}>
                 <motion.div className="relative" style={{ width: "clamp(190px, 28vw, 320px)" }}
                   animate={{ y: [0, -6, 0], filter: [phoneShadow(true), `drop-shadow(0 40px 80px rgba(0,0,0,${isDark ? 0.7 : 0.3})) drop-shadow(0 0 60px rgba(${ACCENT_RGB},${isDark ? 0.35 : 0.18}))`, phoneShadow(true)] }}
                   transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}>
-                  <PhoneMockup>
-                    <PlayerPhone />
-                  </PhoneMockup>
+                  <AnimatedPlayerMockup />
                 </motion.div>
                 {/* Reflection */}
                 <div className="mt-2 mx-auto overflow-hidden pointer-events-none"
@@ -831,7 +740,7 @@ function MobileSection() {
             <FadeIn delay={0.25} className="relative z-5 self-start mt-4 md:mt-6">
               <motion.div className="relative" initial={{ opacity: 0, x: 40, rotate: 0 }} whileInView={{ opacity: 1, x: 0, rotate: 3 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
                 style={{ width: "clamp(140px, 22vw, 260px)", filter: phoneShadow(false) }}>
-                <img src={imgPhoneLibrary} alt="MZW — Library" className="w-full h-auto object-contain" />
+                <img src={imgPlayerLibrary} alt="MZW — bibliothèque mobile" className="w-full h-auto object-contain" />
               </motion.div>
             </FadeIn>
           </div>
@@ -1250,18 +1159,18 @@ function FinalSection() {
           <SectionLabel>{t("mzw.final.label")}</SectionLabel>
         </FadeIn>
 
-        {/* Closing vinyl */}
+        {/* Closing animation */}
         <FadeIn>
           <div className="flex justify-center mb-10">
             <div
-              className="w-[200px] h-[200px] md:w-[280px] md:h-[280px] rounded-2xl overflow-hidden"
+              className="w-[220px] md:w-[320px] rounded-2xl overflow-hidden"
               style={{
                 boxShadow: isDark
                   ? `0 30px 80px rgba(${ACCENT_RGB},0.2)`
                   : `0 30px 80px rgba(${ACCENT_RGB},0.1)`,
               }}
             >
-              <img src={imgVinyle} alt="MZW — closing" className="w-full h-full object-cover" />
+              <img src={MZW_FINAL_ANIMATION_URL} alt="Animation finale MZW" className="w-full h-auto object-cover" />
             </div>
           </div>
         </FadeIn>
