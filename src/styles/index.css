@@ -463,8 +463,10 @@ img {
   background: linear-gradient(
     90deg,
     var(--scroll-progress-fill) 0%,
-    var(--scroll-progress-fill) 78%,
-    var(--scroll-progress-fill-2) 94%,
+    var(--scroll-progress-fill) 33.333%,
+    var(--scroll-progress-fill-2) 33.333%,
+    var(--scroll-progress-fill-2) 66.666%,
+    var(--scroll-progress-fill-3) 66.666%,
     var(--scroll-progress-fill-3) 100%
   );
   box-shadow: 0 -3px 28px var(--scroll-progress-glow);
