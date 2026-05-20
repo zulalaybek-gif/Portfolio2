@@ -14,10 +14,12 @@
 @keyframes soft-enter {
   from {
     opacity: 0;
-    transform: translate3d(0, 18px, 0);
+    filter: blur(8px);
+    transform: translate3d(0, 22px, 0) scale(0.992);
   }
   to {
     opacity: 1;
+    filter: blur(0);
     transform: translate3d(0, 0, 0);
   }
 }
@@ -25,26 +27,154 @@
 .animate-soft-enter {
   opacity: 0;
   transform: translate3d(0, 18px, 0);
-  animation: soft-enter 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: soft-enter 0.82s cubic-bezier(0.16, 1, 0.3, 1) both;
   backface-visibility: hidden;
   will-change: opacity, transform;
 }
 
 @keyframes route-enter {
   from {
-    opacity: 0.985;
-    transform: translate3d(0, 8px, 0);
+    opacity: 0.92;
+    filter: blur(6px);
+    transform: translate3d(0, 14px, 0) scale(0.995);
   }
   to {
     opacity: 1;
+    filter: blur(0);
     transform: translate3d(0, 0, 0);
   }
 }
 
 .route-shell {
-  animation: route-enter 0.36s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: route-enter 0.48s cubic-bezier(0.16, 1, 0.3, 1) both;
   backface-visibility: hidden;
   transform: translateZ(0);
+}
+
+@keyframes ambient-rift-drift {
+  0%, 100% {
+    transform: translate3d(-4vw, -2vh, 0) rotate(-9deg) scaleX(0.96);
+  }
+  50% {
+    transform: translate3d(3vw, 2vh, 0) rotate(-7deg) scaleX(1.04);
+  }
+}
+
+.ambient-rift {
+  position: fixed;
+  left: -14vw;
+  top: 12vh;
+  z-index: 0;
+  width: 128vw;
+  height: 62vh;
+  pointer-events: none;
+  background:
+    linear-gradient(102deg, transparent 0 40%, rgba(0, 119, 182, 0.18) 48%, rgba(0, 180, 216, 0.22) 50%, rgba(255, 209, 102, 0.06) 52%, transparent 60% 100%),
+    radial-gradient(ellipse at 56% 48%, rgba(0, 180, 216, 0.1), transparent 46%);
+  filter: blur(22px);
+  mix-blend-mode: screen;
+  animation: ambient-rift-drift 16s ease-in-out infinite;
+}
+
+.ambient-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.22) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 70% 40%, rgba(0, 180, 216, 0.16) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 45% 80%, rgba(255, 209, 102, 0.12) 0 1px, transparent 1.5px);
+  background-size: 180px 180px, 240px 240px, 320px 320px;
+  mask-image: radial-gradient(circle at 50% 20%, black 0%, transparent 78%);
+}
+
+.home-flow > section {
+  position: relative;
+}
+
+.home-flow > section:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  left: clamp(1.5rem, 6vw, 5rem);
+  right: clamp(1.5rem, 6vw, 5rem);
+  top: 0;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(230, 232, 235, 0.08), rgba(0, 180, 216, 0.24), transparent);
+}
+
+.home-flow > section:not(:first-child)::after {
+  content: "";
+  position: absolute;
+  left: clamp(1.5rem, 6vw, 5rem);
+  top: -2px;
+  width: 34px;
+  height: 4px;
+  border-radius: 999px;
+  pointer-events: none;
+  background: linear-gradient(90deg, #0077B6, #00B4D8);
+  box-shadow: 0 0 28px rgba(0, 180, 216, 0.34);
+  opacity: 0.6;
+}
+
+.brand-mark {
+  position: relative;
+}
+
+.brand-mark::after {
+  content: "";
+  position: absolute;
+  inset: -0.8rem -1rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(0, 180, 216, 0.18), transparent 64%);
+  opacity: 0;
+  transform: scale(0.86);
+  transition: opacity 320ms ease, transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: -1;
+}
+
+.brand-mark:hover::after,
+.brand-mark:focus-visible::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 1.1rem;
+  right: 1.1rem;
+  bottom: 0.35rem;
+  height: 1px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(0, 180, 216, 0.76), transparent);
+  opacity: 0;
+  transform: scaleX(0.35);
+  transition: opacity 260ms ease, transform 360ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-link:hover::after,
+.nav-link:focus-visible::after {
+  opacity: 0.72;
+  transform: scaleX(1);
+}
+
+.nav-link[data-active="true"]::after {
+  opacity: 0;
+}
+
+.nav-orb,
+.nav-contact {
+  box-shadow: 0 0 0 rgba(0, 180, 216, 0);
+}
+
+.nav-orb:hover,
+.nav-orb:focus-visible,
+.nav-contact:hover,
+.nav-contact:focus-visible {
+  transform: translate3d(0, -1px, 0);
+  box-shadow: 0 12px 28px rgba(0, 180, 216, 0.12);
 }
 
 .composite-title {
@@ -330,6 +460,17 @@ img {
   .animate-soft-enter,
   .route-shell,
   .marquee-track {
+    animation: none;
+  }
+
+  .animate-soft-enter,
+  .route-shell {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+
+  .ambient-rift {
     animation: none;
   }
 }

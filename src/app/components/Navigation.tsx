@@ -154,7 +154,7 @@ export function Navigation() {
         {/* Logo */}
         <button
           onClick={handleLogoClick}
-          className="group flex items-center gap-3 cursor-pointer transition-opacity duration-300 hover:opacity-90"
+          className="brand-mark group flex items-center gap-3 cursor-pointer transition-opacity duration-300 hover:opacity-90"
           aria-label={lang === "fr" ? "Retour à l'accueil" : "Go to homepage"}
         >
           <svg
@@ -178,7 +178,8 @@ export function Navigation() {
             <button
               key={item.key}
               onClick={() => handleNav(item.path)}
-              className="relative px-5 py-2 rounded-full transition-all duration-300"
+              className="nav-link relative px-5 py-2 rounded-full transition-all duration-300"
+              data-active={active === item.key}
               style={{
                 fontSize: "0.85rem",
                 fontFamily: "'Inter', sans-serif",
@@ -201,7 +202,7 @@ export function Navigation() {
           {/* Theme Switcher */}
           <button
             onClick={toggle}
-            className="flex items-center justify-center w-9 h-9 rounded-full transition-all duration-300 backdrop-blur-md"
+            className="nav-orb flex items-center justify-center w-9 h-9 rounded-full transition-all duration-300 backdrop-blur-md"
             style={{
               border: `1px solid ${r(0.1)}`,
               background: r(0.03),
@@ -218,7 +219,7 @@ export function Navigation() {
           {/* Language Switcher */}
           <button
             onClick={() => setLang(lang === "fr" ? "en" : "fr")}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-full transition-all duration-300 backdrop-blur-md"
+            className="nav-orb flex items-center gap-1.5 px-3 py-2 rounded-full transition-all duration-300 backdrop-blur-md"
             style={{
               fontFamily: "'Inter', sans-serif",
               border: `1px solid ${r(0.1)}`,
@@ -238,7 +239,7 @@ export function Navigation() {
           {/* Desktop CTA */}
           <button
             onClick={() => handleNav("/contact")}
-            className="hidden md:block px-6 py-2.5 rounded-full transition-all duration-300"
+            className="nav-contact hidden md:block px-6 py-2.5 rounded-full transition-all duration-300"
             style={{
               fontSize: "0.85rem",
               fontFamily: "'Inter', sans-serif",

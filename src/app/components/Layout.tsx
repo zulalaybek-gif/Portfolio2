@@ -67,6 +67,20 @@ export function Layout() {
           zIndex: 0,
         }}
       />
+      <div
+        aria-hidden="true"
+        className="ambient-rift"
+        style={{
+          opacity: isDark ? 0.78 : 0.4,
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="ambient-grain"
+        style={{
+          opacity: isDark ? 0.18 : 0.12,
+        }}
+      />
       {/* Background particles — behind everything */}
       {showParticles ? <ParticleOrbit /> : null}
 

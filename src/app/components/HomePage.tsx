@@ -6,12 +6,12 @@ import { CTASection } from "./CTASection";
 
 export function HomePage() {
   return (
-    <>
+    <div className="home-flow">
       <HeroSection />
       <ServicesSection />
       <ProcessSection />
       <ToolsSection />
       <CTASection />
-    </>
+    </div>
   );
 }

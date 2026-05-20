@@ -7,9 +7,16 @@ export function Footer() {
 
   return (
     <footer
-      className="w-full px-8 md:px-12 py-10"
+      className="site-footer-signature w-full px-8 md:px-12 py-10 relative"
       style={{ borderTop: `1px solid ${p.footerBorder}` }}
     >
+      <div
+        aria-hidden="true"
+        className="absolute left-8 right-8 md:left-12 md:right-12 top-0 h-px"
+        style={{
+          background: "linear-gradient(90deg, transparent, rgba(0,180,216,0.42), rgba(255,209,102,0.18), transparent)",
+        }}
+      />
       <div className="max-w-6xl mx-auto flex items-end justify-between flex-wrap gap-8">
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-3">
