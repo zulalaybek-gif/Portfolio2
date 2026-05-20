@@ -4,10 +4,10 @@ import { KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { useTheme } from "./theme";
 
-type FormStep = "name" | "email" | "message" | "sending" | "success";
+type FormStep = "name" | "email" | "message" | "review" | "sending" | "success";
 type FormData = { name: string; email: string; message: string };
 
-const steps: Array<Exclude<FormStep, "sending" | "success">> = ["name", "email", "message"];
+const questionSteps: Array<Exclude<FormStep, "review" | "sending" | "success">> = ["name", "email", "message"];
 
 const questions = {
   name: {
@@ -44,21 +44,22 @@ export function ContactPage() {
   const mouseRef = useRef({ x: typeof window === "undefined" ? 0 : window.innerWidth / 2, y: typeof window === "undefined" ? 0 : window.innerHeight / 2 });
   const cursorPosRef = useRef({ x: mouseRef.current.x, y: mouseRef.current.y });
 
-  const activeIndex = steps.includes(step as (typeof steps)[number])
-    ? steps.indexOf(step as (typeof steps)[number])
+  const isReview = step === "review";
+  const activeIndex = questionSteps.includes(step as (typeof questionSteps)[number])
+    ? questionSteps.indexOf(step as (typeof questionSteps)[number])
     : 2;
-  const activeStep = steps[activeIndex];
-  const value = activeStep ? formData[activeStep] : "";
-  const canContinue = value.trim().length > 0;
+  const activeStep = questionSteps[activeIndex];
+  const value = isReview ? "review" : activeStep ? formData[activeStep] : "";
+  const canContinue = isReview || value.trim().length > 0;
   const isLastQuestion = activeStep === "message";
   const bg = isDark ? "#1c1e1b" : "#EAEAEA";
   const text = isDark ? "#F1F1F1" : "#232624";
-  const accent = "#DFF440";
+  const accent = isDark ? "#DFF440" : "#4B8197";
   const textSoft = rgbaFromHex(text, 0.6);
   const textBright = rgbaFromHex(text, 0.85);
 
   useEffect(() => {
-    if (step === "sending" || step === "success") return;
+    if (step === "review" || step === "sending" || step === "success") return;
     const timer = window.setTimeout(() => inputRef.current?.focus(), 600);
     return () => window.clearTimeout(timer);
   }, [step]);
@@ -91,13 +92,18 @@ export function ContactPage() {
     if (!canContinue || step === "sending" || step === "success") return;
     setIsFocused(false);
 
-    if (!isLastQuestion) {
-      setStep(steps[activeIndex + 1]);
+    if (step === "review") {
+      setStep("sending");
+      window.setTimeout(() => setStep("success"), 2000);
       return;
     }
 
-    setStep("sending");
-    window.setTimeout(() => setStep("success"), 2000);
+    if (!isLastQuestion) {
+      setStep(questionSteps[activeIndex + 1]);
+      return;
+    }
+
+    setStep("review");
   }, [activeIndex, canContinue, isLastQuestion, step]);
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -108,17 +114,21 @@ export function ContactPage() {
 
   const handleBackStep = () => {
     if (step === "success" || step === "sending") {
+      setStep("review");
+      return;
+    }
+    if (step === "review") {
       setStep("message");
       return;
     }
     if (activeIndex > 0) {
-      setStep(steps[activeIndex - 1]);
+      setStep(questionSteps[activeIndex - 1]);
       return;
     }
     navigate("/");
   };
 
-  const progress = ((activeIndex + 1) / steps.length) * 100;
+  const progress = isReview ? 100 : ((activeIndex + 1) / questionSteps.length) * 100;
 
   return (
     <section
@@ -144,7 +154,7 @@ export function ContactPage() {
         animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.7, 0.5] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         style={{
-          background: "radial-gradient(ellipse at 50% 0%, rgba(223,244,64,0.06), transparent 70%)",
+          background: `radial-gradient(ellipse at 50% 0%, ${rgbaFromHex(accent, isDark ? 0.06 : 0.045)}, transparent 70%)`,
           filter: "blur(100px)",
         }}
       />
@@ -152,7 +162,7 @@ export function ContactPage() {
         ref={cursorRef}
         className="pointer-events-none absolute left-0 top-0 z-0 h-[400px] w-[400px]"
         style={{
-          background: "radial-gradient(circle, rgba(223,244,64,0.08), transparent 70%)",
+          background: `radial-gradient(circle, ${rgbaFromHex(accent, isDark ? 0.08 : 0.055)}, transparent 70%)`,
           filter: "blur(60px)",
           transform: "translate(-50%, -50%)",
         }}
@@ -205,6 +215,15 @@ export function ContactPage() {
                 Envoi en cours
               </p>
             </motion.div>
+          ) : step === "review" ? (
+            <ReviewState
+              key="review"
+              formData={formData}
+              text={text}
+              accent={accent}
+              onEdit={setStep}
+              onSubmit={goNext}
+            />
           ) : (
             <motion.div
               key={step}
@@ -272,7 +291,7 @@ export function ContactPage() {
                   <div
                     className="h-full"
                     style={{
-                      background: "linear-gradient(90deg, #DFF440, rgba(223,244,64,0.5))",
+                      background: `linear-gradient(90deg, ${accent}, ${rgbaFromHex(accent, 0.5)})`,
                       transform: `scaleX(${isFocused ? 1 : value ? 0.3 : 0})`,
                       transformOrigin: "left",
                       transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
@@ -303,8 +322,8 @@ export function ContactPage() {
                   textTransform: "uppercase",
                 }}
               >
-                {isLastQuestion ? "Envoyer" : "Continuer"}
-                {isLastQuestion ? <Send size={18} /> : <ArrowRight size={18} />}
+                {isLastQuestion ? "Relire" : "Continuer"}
+                <ArrowRight size={18} />
               </motion.button>
             </motion.div>
           )}
@@ -333,12 +352,143 @@ function ProgressIndicator({ current, progress, text, accent }: { current: numbe
           className="h-full"
           style={{
             width: `${progress}%`,
-            background: `linear-gradient(90deg, ${accent}, rgba(223,244,64,0.3))`,
+            background: `linear-gradient(90deg, ${accent}, ${rgbaFromHex(accent, 0.3)})`,
             transition: "width 0.6s ease",
           }}
         />
       </div>
     </div>
+  );
+}
+
+function ReviewState({
+  formData,
+  text,
+  accent,
+  onEdit,
+  onSubmit,
+}: {
+  formData: FormData;
+  text: string;
+  accent: string;
+  onEdit: (step: "name" | "email" | "message") => void;
+  onSubmit: () => void;
+}) {
+  const reviewItems: Array<{ key: "name" | "email" | "message"; label: string; value: string }> = [
+    { key: "name", label: "Nom", value: formData.name },
+    { key: "email", label: "Email", value: formData.email },
+    { key: "message", label: "Message", value: formData.message },
+  ];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 80 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -40 }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <ProgressIndicator current={3} progress={100} text={text} accent={accent} />
+
+      <motion.h1
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+        className="mb-10"
+        style={{
+          fontFamily: "'Space Grotesk', sans-serif",
+          fontSize: "clamp(2.1rem, 5vw, 4.4rem)",
+          fontWeight: 700,
+          lineHeight: 0.98,
+          letterSpacing: "-0.045em",
+          color: text,
+        }}
+      >
+        Relisez votre message.
+      </motion.h1>
+
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+        className="space-y-4"
+      >
+        {reviewItems.map((item) => (
+          <div
+            key={item.key}
+            className="rounded-[1.5rem] px-5 py-4 md:px-6"
+            style={{
+              border: `1px solid ${rgbaFromHex(text, 0.1)}`,
+              background: rgbaFromHex(text, 0.035),
+            }}
+          >
+            <div className="mb-3 flex items-center justify-between gap-4">
+              <p
+                style={{
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontSize: "0.72rem",
+                  fontWeight: 600,
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  color: rgbaFromHex(text, 0.45),
+                }}
+              >
+                {item.label}
+              </p>
+              <button
+                type="button"
+                onClick={() => onEdit(item.key)}
+                className="rounded-full px-3 py-1"
+                style={{
+                  border: `1px solid ${rgbaFromHex(text, 0.12)}`,
+                  color: rgbaFromHex(text, 0.58),
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: "0.72rem",
+                }}
+              >
+                Modifier
+              </button>
+            </div>
+            <p
+              style={{
+                fontFamily: "'Inter', sans-serif",
+                fontSize: item.key === "message" ? "clamp(1rem, 2vw, 1.25rem)" : "clamp(1.15rem, 2.4vw, 1.55rem)",
+                fontWeight: 300,
+                lineHeight: item.key === "message" ? 1.75 : 1.35,
+                color: rgbaFromHex(text, 0.82),
+                whiteSpace: "pre-wrap",
+                overflowWrap: "anywhere",
+              }}
+            >
+              {item.value}
+            </p>
+          </div>
+        ))}
+      </motion.div>
+
+      <motion.button
+        type="button"
+        onClick={onSubmit}
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        whileHover={{ scale: 1.05, borderColor: accent }}
+        whileTap={{ scale: 0.95 }}
+        transition={{ duration: 0.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className="mt-12 inline-flex items-center gap-3 rounded-full px-8 py-4"
+        style={{
+          border: `1px solid ${rgbaFromHex(text, 0.15)}`,
+          color: rgbaFromHex(text, 0.66),
+          cursor: "pointer",
+          fontFamily: "'Space Grotesk', sans-serif",
+          fontSize: "1rem",
+          fontWeight: 600,
+          letterSpacing: "0.1em",
+          textTransform: "uppercase",
+        }}
+      >
+        Envoyer
+        <Send size={18} />
+      </motion.button>
+    </motion.div>
   );
 }
 
