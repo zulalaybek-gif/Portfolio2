@@ -544,31 +544,49 @@ function EventSection() {
    =================================== */
 function GallerySection() {
   const { t } = useI18n();
-  const { r } = useTheme();
+  const { isDark, r } = useTheme();
 
-  const photos = [
-    imgPhoto10, imgPhoto11, imgPhoto1,
-    imgPhoto2, imgPhoto9, imgPhoto12,
-    imgPhoto3, imgPhoto4, imgPhoto5,
-    imgPhoto6, imgPhoto7, imgPhoto8,
-    imgPhoto13,
+  const photos: Array<{ src: string; alt: string; aspect: string }> = [
+    { src: imgPhoto10, alt: "Photo de groupe Maker Week", aspect: "aspect-[4/3]" },
+    { src: imgKakemonos, alt: "Kakemono Maker Week sur scène", aspect: "aspect-[4/3]" },
+    { src: imgPhotocall, alt: "Photocall Maker Week", aspect: "aspect-[4/3]" },
+    { src: imgSignaletique, alt: "Signalétique des ateliers Maker Week", aspect: "aspect-[4/3]" },
+    { src: imgPoster, alt: "Poster Maker Week dans l'école", aspect: "aspect-[4/3]" },
+    { src: imgPhoto11, alt: "Présentation Maker Week sur scène", aspect: "aspect-[4/3]" },
+    { src: imgPhoto1, alt: "Affichage Design d'interface", aspect: "aspect-[4/3]" },
+    { src: imgPhoto2, alt: "Programme Maker Week imprimé", aspect: "aspect-[4/3]" },
+    { src: imgPhoto9, alt: "Stand Maker Week dans le hall", aspect: "aspect-[4/3]" },
+    { src: imgPhoto12, alt: "Étudiants avec une affiche Maker Week", aspect: "aspect-[4/3]" },
+    { src: imgPhoto3, alt: "Atelier Maker Week en salle", aspect: "aspect-[4/3]" },
+    { src: imgPhoto4, alt: "Signalétique de salle Maker Week", aspect: "aspect-[4/3]" },
   ];
 
   return (
-    <section className="px-6 md:px-16 py-16">
-      <div className="max-w-5xl mx-auto">
+    <section className="px-5 md:px-12 lg:px-20 py-20">
+      <div className="max-w-[1500px] mx-auto">
         <FadeIn className="mb-10">
           <SectionLabel>{t("mw.gallery.label")}</SectionLabel>
         </FadeIn>
 
-        <div className="grid grid-cols-3 md:grid-cols-4 gap-2 md:gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
           {photos.map((src, i) => (
             <FadeIn key={i} delay={i * 0.04}>
               <div
-                className="rounded-lg overflow-hidden aspect-square"
-                style={{ border: `1px solid ${r(0.04)}` }}
+                className={`group overflow-hidden rounded-xl ${src.aspect}`}
+                style={{
+                  border: `1px solid ${r(0.06)}`,
+                  background: isDark ? "rgba(255,255,255,0.03)" : "rgba(10,26,42,0.03)",
+                  boxShadow: isDark
+                    ? "0 18px 42px rgba(0,0,0,0.34)"
+                    : "0 18px 42px rgba(10,26,42,0.14)",
+                }}
               >
-                <img src={src} alt={`Maker Week event photo ${i + 1}`} className="w-full h-full object-cover" />
+                <img
+                  src={src.src}
+                  alt={src.alt}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.035]"
+                  loading="lazy"
+                />
               </div>
             </FadeIn>
           ))}
