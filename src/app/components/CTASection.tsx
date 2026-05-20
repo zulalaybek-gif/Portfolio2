@@ -10,9 +10,9 @@ export function CTASection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
   const cardRef = useRef<HTMLDivElement>(null);
-  const glowColor = "32,19,42";
-  const cyanGlow = "83,166,184";
-  const warmGlow = "199,164,106";
+  const glowColor = "99,6,97";
+  const cyanGlow = "249,171,96";
+  const warmGlow = "249,171,96";
 
   return (
     <section data-section="cta" data-section-alias="about" className="relative w-full px-6 md:px-12 py-20">
@@ -25,12 +25,12 @@ export function CTASection() {
         className="max-w-6xl mx-auto relative overflow-hidden rounded-[2.5rem] p-12 md:p-24"
         style={{
           background: isDark
-            ? `radial-gradient(circle at 18% 38%, rgba(${glowColor},0.42), transparent 38%), radial-gradient(circle at 74% 24%, rgba(${warmGlow},0.048), transparent 25%), radial-gradient(circle at 58% 82%, rgba(${cyanGlow},0.058), transparent 36%), linear-gradient(145deg, rgba(15,23,32,0.988) 0%, rgba(5,9,14,0.992) 64%, rgba(13,19,27,0.988) 100%)`
-            : `radial-gradient(circle at 18% 38%, rgba(${glowColor},0.13), transparent 36%), radial-gradient(circle at 72% 22%, rgba(${warmGlow},0.07), transparent 25%), radial-gradient(circle at 58% 82%, rgba(${cyanGlow},0.045), transparent 36%), linear-gradient(145deg, rgba(214,222,230,0.98) 0%, rgba(246,248,250,0.95) 54%, rgba(218,225,232,0.98) 100%)`,
+            ? `radial-gradient(circle at 18% 38%, rgba(${glowColor},0.42), transparent 38%), radial-gradient(circle at 74% 24%, rgba(${warmGlow},0.048), transparent 25%), radial-gradient(circle at 58% 82%, rgba(${cyanGlow},0.058), transparent 36%), linear-gradient(145deg, rgba(34,13,80,0.988) 0%, rgba(12,4,28,0.992) 64%, rgba(20,6,42,0.988) 100%)`
+            : `radial-gradient(circle at 18% 38%, rgba(${glowColor},0.13), transparent 36%), radial-gradient(circle at 72% 22%, rgba(${warmGlow},0.07), transparent 25%), radial-gradient(circle at 58% 82%, rgba(${cyanGlow},0.045), transparent 36%), linear-gradient(145deg, rgba(255,244,234,0.98) 0%, rgba(248,237,232,0.95) 54%, rgba(242,224,222,0.98) 100%)`,
           border: `1px solid ${p.ctaBorder}`,
           boxShadow: isDark
-            ? `0 32px 105px rgba(0,0,0,0.46), inset 0 1px 0 rgba(230,232,235,0.07), 0 0 90px rgba(${glowColor},0.08)`
-            : `0 32px 105px rgba(15,23,32,0.14), inset 0 1px 0 rgba(255,255,255,0.86), 0 0 88px rgba(${glowColor},0.07), 0 0 32px rgba(${warmGlow},0.044)`,
+            ? `0 32px 105px rgba(0,0,0,0.46), inset 0 1px 0 rgba(255,244,234,0.07), 0 0 90px rgba(${glowColor},0.08)`
+            : `0 32px 105px rgba(34,13,80,0.14), inset 0 1px 0 rgba(255,255,255,0.86), 0 0 88px rgba(${glowColor},0.07), 0 0 32px rgba(${warmGlow},0.044)`,
           ["--cta-glow-rgb" as string]: glowColor,
           ["--cta-glow-secondary-rgb" as string]: cyanGlow,
         }}
@@ -49,7 +49,7 @@ export function CTASection() {
             bottom: 0,
             height: 1,
             transformOrigin: "center",
-            background: `linear-gradient(90deg, transparent, rgba(${glowColor},0.42), rgba(12,96,126,0.26), rgba(${warmGlow},0.13), transparent)`,
+            background: `linear-gradient(90deg, transparent, rgba(${glowColor},0.34), rgba(34,13,80,0.3), rgba(${warmGlow},0.18), transparent)`,
           }}
         />
 
@@ -83,14 +83,14 @@ export function CTASection() {
             className="group inline-flex items-center gap-3 px-10 py-4 rounded-full transition-all duration-500 hover:scale-[1.035] active:scale-[0.985]"
             style={{
               background: isDark
-                ? "linear-gradient(135deg, #0F1720 0%, #201326 48%, #0E5C78 100%)"
-                : "linear-gradient(135deg, #0F1720 0%, #201326 48%, #0E5C78 100%)",
+                ? "linear-gradient(135deg, #220D50 0%, #630661 58%, #F9AB60 145%)"
+                : "linear-gradient(135deg, #220D50 0%, #630661 58%, #F9AB60 145%)",
               fontFamily: "'Inter', sans-serif",
               fontSize: "0.85rem",
               fontWeight: 600,
               letterSpacing: "0.05em",
               textTransform: "uppercase",
-              color: "#E6E8EB",
+              color: "#FFF4EA",
               textDecoration: "none",
               boxShadow: isDark
                 ? `0 16px 46px rgba(${cyanGlow},0.1), 0 0 26px rgba(${warmGlow},0.055), inset 0 1px 0 rgba(255,255,255,0.24)`

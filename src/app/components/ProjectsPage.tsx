@@ -661,7 +661,7 @@ export function ProjectsPage() {
   return (
     <div className="relative w-full">
       <ProjectsHero />
-      <ParticleDivider accent="83,166,184" direction={1} count={22} height={45} />
+      <ParticleDivider accent="249,171,96" direction={1} count={22} height={45} />
       <FeaturedProject onSelect={handleSelect} />
       <ProjectIndex activeCategory={activeCategory} setActiveCategory={setActiveCategory} onSelect={handleSelect} />
       <ParticleDivider accent="154,142,196" direction={-1} count={18} height={45} />

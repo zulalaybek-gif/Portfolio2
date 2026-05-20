@@ -54,12 +54,12 @@ export function BackToTopButton() {
         opacity: visible ? 1 : 0,
         pointerEvents: visible ? "auto" : "none",
         transform: visible ? "translateY(0) scale(1)" : "translateY(10px) scale(0.94)",
-        color: isDark ? "#E6E8EB" : "#0F1720",
-        background: isDark ? "rgba(15,23,32,0.64)" : "rgba(230,232,235,0.72)",
-        border: `1px solid ${isDark ? "rgba(230,232,235,0.14)" : "rgba(15,23,32,0.13)"}`,
+        color: isDark ? "#FFF4EA" : "#220D50",
+        background: isDark ? "rgba(34,13,80,0.64)" : "rgba(255,244,234,0.72)",
+        border: `1px solid ${isDark ? "rgba(255,244,234,0.14)" : "rgba(34,13,80,0.13)"}`,
         boxShadow: isDark
-          ? "0 14px 42px rgba(0,0,0,0.34), 0 0 30px rgba(83,166,184,0.075), 0 0 18px rgba(199,164,106,0.04)"
-          : "0 14px 38px rgba(15,23,32,0.11), 0 0 28px rgba(32,19,42,0.065), 0 0 16px rgba(199,164,106,0.045)",
+          ? "0 14px 42px rgba(0,0,0,0.34), 0 0 30px rgba(249,171,96,0.075), 0 0 18px rgba(99,6,97,0.08)"
+          : "0 14px 38px rgba(34,13,80,0.11), 0 0 28px rgba(99,6,97,0.065), 0 0 16px rgba(249,171,96,0.06)",
       }}
     >
       <span
@@ -67,8 +67,8 @@ export function BackToTopButton() {
         className="absolute inset-[5px] rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{
           background: isDark
-            ? "radial-gradient(circle, rgba(83,166,184,0.12), rgba(32,19,42,0.15), transparent 72%)"
-            : "radial-gradient(circle, rgba(12,96,126,0.11), rgba(32,19,42,0.065), transparent 72%)",
+            ? "radial-gradient(circle, rgba(249,171,96,0.12), rgba(99,6,97,0.15), transparent 72%)"
+            : "radial-gradient(circle, rgba(99,6,97,0.11), rgba(249,171,96,0.065), transparent 72%)",
         }}
       />
       <ArrowUp

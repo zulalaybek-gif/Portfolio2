@@ -50,8 +50,8 @@ export function ProcessSection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
   const stepAccents = isDark
-    ? ["#0E5C78", "#5EAFC0", "#0E5C78", "#C7A46A"]
-    : ["#0E5C78", "#5EAFC0", "#201326", "#9D674B"];
+    ? ["#F9AB60", "#630661", "#F9AB60", "#220D50"]
+    : ["#630661", "#220D50", "#F9AB60", "#630661"];
   const sectionRef = useRef<HTMLElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(lineRef);
@@ -114,7 +114,7 @@ export function ProcessSection() {
               const isLineVisible = reduceMotion || i + 1 < revealedCount;
               const stepAccent = stepAccents[i % stepAccents.length];
               const nextAccent = stepAccents[(i + 1) % stepAccents.length];
-              const badgeText = stepAccent === "#C7A46A" || stepAccent === "#9D674B" ? "#0F1720" : "#E6E8EB";
+              const badgeText = stepAccent === "#F9AB60" ? "#220D50" : "#FFF4EA";
 
               return (
                 <div
@@ -205,12 +205,12 @@ export function ProcessSection() {
                     }}
                     style={{
                       background: isDark
-                        ? `radial-gradient(circle at 45% 35%, ${stepAccent}1c 0%, rgba(32,19,42,0.18) 58%, rgba(15,23,32,0.96) 100%)`
-                        : `radial-gradient(circle at 45% 35%, ${stepAccent}18 0%, rgba(32,19,42,0.05) 58%, rgba(230,232,235,0.96) 100%)`,
+                        ? `radial-gradient(circle at 45% 35%, ${stepAccent}1c 0%, rgba(99,6,97,0.18) 58%, rgba(34,13,80,0.96) 100%)`
+                        : `radial-gradient(circle at 45% 35%, ${stepAccent}18 0%, rgba(99,6,97,0.05) 58%, rgba(255,244,234,0.96) 100%)`,
                       border: `1px solid ${stepAccent}44`,
                       boxShadow: isDark
-                        ? `0 18px 55px rgba(0,0,0,0.3), inset 0 1px 0 rgba(230,232,235,0.05), 0 0 ${isHovered ? 48 : 26}px ${stepAccent}${isHovered ? "34" : "1f"}`
-                        : `0 18px 55px rgba(15,23,32,0.08), inset 0 1px 0 rgba(255,255,255,0.75), 0 0 ${isHovered ? 42 : 24}px ${stepAccent}${isHovered ? "2e" : "16"}`,
+                        ? `0 18px 55px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,244,234,0.05), 0 0 ${isHovered ? 48 : 26}px ${stepAccent}${isHovered ? "34" : "1f"}`
+                        : `0 18px 55px rgba(34,13,80,0.08), inset 0 1px 0 rgba(255,255,255,0.75), 0 0 ${isHovered ? 42 : 24}px ${stepAccent}${isHovered ? "2e" : "16"}`,
                       transform: "translateZ(0)",
                     }}
                   >

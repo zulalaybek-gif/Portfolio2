@@ -19,8 +19,8 @@ export function ServicesSection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
   const serviceAccents = isDark
-    ? ["#0E5C78", "#5EAFC0", "#0E5C78", "#201326", "#C7A46A", "#0E5C78", "#5EAFC0", "#0E5C78"]
-    : ["#0E5C78", "#0E5C78", "#0F1720", "#5EAFC0", "#9D674B", "#0E5C78", "#201326", "#0E5C78"];
+    ? ["#F9AB60", "#630661", "#F9AB60", "#220D50", "#F9AB60", "#630661", "#F9AB60", "#220D50"]
+    : ["#630661", "#220D50", "#630661", "#F9AB60", "#630661", "#220D50", "#F9AB60", "#630661"];
   const scrollRef = useRef<HTMLDivElement>(null);
   const programmaticScrollRef = useRef<number | null>(null);
   const scrollEndTimerRef = useRef<number | null>(null);
@@ -162,8 +162,8 @@ export function ServicesSection() {
                   background: p.cardBg,
                   border: `1px solid ${p.cardBorder}`,
                   boxShadow: isDark
-                    ? "inset 0 1px 0 rgba(230,232,235,0.035), 0 20px 60px rgba(0,0,0,0.08)"
-                    : "inset 0 1px 0 rgba(255,255,255,0.72), 0 18px 52px rgba(15,23,32,0.045)",
+                    ? "inset 0 1px 0 rgba(255,244,234,0.035), 0 20px 60px rgba(0,0,0,0.08)"
+                    : "inset 0 1px 0 rgba(255,255,255,0.72), 0 18px 52px rgba(34,13,80,0.045)",
                   transform: "translateZ(0)",
                 }}
               >

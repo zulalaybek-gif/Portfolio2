@@ -17,10 +17,10 @@ export function ContactPage() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
   const [submitted, setSubmitted] = useState(false);
-  const accent = isDark ? "#5EAFC0" : "#0E5C78";
-  const glowColor = "32,19,42";
-  const cyanGlow = "83,166,184";
-  const warmGlow = "199,164,106";
+  const accent = isDark ? "#F9AB60" : "#630661";
+  const glowColor = "99,6,97";
+  const cyanGlow = "249,171,96";
+  const warmGlow = "249,171,96";
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -44,7 +44,7 @@ export function ContactPage() {
           height: "clamp(280px, 42vw, 620px)",
           right: "-12%",
           top: "-18%",
-          background: `radial-gradient(circle, rgba(${glowColor},0.24), rgba(12,96,126,0.09) 42%, rgba(${cyanGlow},0.055) 58%, transparent 74%)`,
+          background: `radial-gradient(circle, rgba(${glowColor},0.22), rgba(34,13,80,0.1) 42%, rgba(${cyanGlow},0.06) 58%, transparent 74%)`,
           filter: "blur(20px)",
         }}
       />
@@ -134,12 +134,12 @@ export function ContactPage() {
           style={{
             color: p.text,
             background: isDark
-              ? `radial-gradient(circle at 18% 18%, rgba(${glowColor},0.32), transparent 36%), radial-gradient(circle at 84% 20%, rgba(${warmGlow},0.042), transparent 25%), linear-gradient(145deg, rgba(230,232,235,0.052), rgba(12,96,126,0.02), rgba(230,232,235,0.014))`
-              : `radial-gradient(circle at 16% 18%, rgba(${glowColor},0.095), transparent 36%), radial-gradient(circle at 84% 18%, rgba(${warmGlow},0.06), transparent 25%), radial-gradient(circle at 68% 82%, rgba(${cyanGlow},0.045), transparent 36%), linear-gradient(145deg, rgba(218,225,232,0.9), rgba(246,248,250,0.84))`,
+              ? `radial-gradient(circle at 18% 18%, rgba(${glowColor},0.3), transparent 36%), radial-gradient(circle at 84% 20%, rgba(${warmGlow},0.045), transparent 25%), linear-gradient(145deg, rgba(255,244,234,0.052), rgba(34,13,80,0.05), rgba(255,244,234,0.014))`
+              : `radial-gradient(circle at 16% 18%, rgba(${glowColor},0.095), transparent 36%), radial-gradient(circle at 84% 18%, rgba(${warmGlow},0.07), transparent 25%), radial-gradient(circle at 68% 82%, rgba(99,6,97,0.04), transparent 36%), linear-gradient(145deg, rgba(255,244,234,0.9), rgba(248,237,232,0.84))`,
             border: `1px solid ${r(0.08)}`,
             boxShadow: isDark
-              ? `0 28px 90px rgba(0,0,0,0.36), inset 0 1px 0 rgba(230,232,235,0.06), 0 0 44px rgba(${cyanGlow},0.038), 0 0 30px rgba(${warmGlow},0.032)`
-              : `0 28px 90px rgba(15,23,32,0.14), inset 0 1px 0 rgba(255,255,255,0.88), 0 0 48px rgba(${glowColor},0.06), 0 0 30px rgba(${warmGlow},0.044)`,
+              ? `0 28px 90px rgba(0,0,0,0.36), inset 0 1px 0 rgba(255,244,234,0.06), 0 0 44px rgba(${cyanGlow},0.038), 0 0 30px rgba(${warmGlow},0.032)`
+              : `0 28px 90px rgba(34,13,80,0.14), inset 0 1px 0 rgba(255,255,255,0.88), 0 0 48px rgba(${glowColor},0.06), 0 0 30px rgba(${warmGlow},0.044)`,
             backdropFilter: "blur(18px)",
           }}
         >
@@ -153,7 +153,7 @@ export function ContactPage() {
             >
               <div
                 className="w-14 h-14 rounded-full flex items-center justify-center mb-6"
-                style={{ background: accent, color: "#E6E8EB" }}
+                style={{ background: accent, color: isDark ? "#220D50" : "#FFF4EA" }}
               >
                 <Check size={22} />
               </div>
@@ -209,9 +209,9 @@ export function ContactPage() {
                 className="group mt-3 inline-flex items-center justify-center gap-3 rounded-full px-8 py-4 transition-all duration-500 hover:scale-[1.018] active:scale-[0.985]"
                 style={{
                   background: isDark
-                    ? "linear-gradient(135deg, #0F1720 0%, #201326 48%, #0E5C78 100%)"
-                    : "linear-gradient(135deg, #0F1720 0%, #201326 48%, #0E5C78 100%)",
-                  color: "#E6E8EB",
+                    ? "linear-gradient(135deg, #220D50 0%, #630661 58%, #F9AB60 145%)"
+                    : "linear-gradient(135deg, #220D50 0%, #630661 58%, #F9AB60 145%)",
+                  color: "#FFF4EA",
                   fontFamily: "'Inter', sans-serif",
                   fontSize: "0.84rem",
                   fontWeight: 650,

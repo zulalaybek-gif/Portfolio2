@@ -68,10 +68,10 @@ interface Aurora {
 
 /* ── Palette ── */
 const COLORS = {
-  green: [12, 96, 126], ltGreen: [83, 166, 184],
-  gold: [199, 164, 106], silver: [230, 232, 235],
-  purple: [32, 19, 42], warm: [157, 103, 75],
-  teal: [83, 166, 184], white: [230, 232, 235],
+  green: [34, 13, 80], ltGreen: [249, 171, 96],
+  gold: [249, 171, 96], silver: [255, 244, 234],
+  purple: [99, 6, 97], warm: [249, 171, 96],
+  teal: [99, 6, 97], white: [255, 244, 234],
 };
 const COLOR_KEYS = Object.keys(COLORS) as (keyof typeof COLORS)[];
 const rgb = (k: keyof typeof COLORS) => COLORS[k].join(",");
@@ -92,16 +92,16 @@ const DAMPING = 0.975;
 type SectionTheme = { colors: [number[], number[], number[]] };
 
 const SECTION_THEMES: Record<string, SectionTheme> = {
-  hero:             { colors: [[32,19,42], [12,96,126], [83,166,184]] },
-  services:         { colors: [[12,96,126], [32,19,42], [83,166,184]] },
-  work:             { colors: [[32,19,42], [12,96,126], [199,164,106]]  },
-  cta:              { colors: [[32,19,42], [12,96,126], [199,164,106]] },
-  "projects-hero":  { colors: [[32,19,42], [12,96,126], [83,166,184]] },
-  "projects-index": { colors: [[15,23,32], [32,19,42], [12,96,126]]  },
-  "projects-reel":  { colors: [[12,96,126], [83,166,184], [157,103,75]] },
+  hero:             { colors: [[99,6,97], [34,13,80], [249,171,96]] },
+  services:         { colors: [[34,13,80], [99,6,97], [249,171,96]] },
+  work:             { colors: [[99,6,97], [34,13,80], [249,171,96]]  },
+  cta:              { colors: [[99,6,97], [34,13,80], [249,171,96]] },
+  "projects-hero":  { colors: [[99,6,97], [34,13,80], [249,171,96]] },
+  "projects-index": { colors: [[12,4,28], [99,6,97], [34,13,80]]  },
+  "projects-reel":  { colors: [[34,13,80], [99,6,97], [249,171,96]] },
 };
 
-const DEFAULT_THEME: SectionTheme = { colors: [[32,19,42], [12,96,126], [83,166,184]] };
+const DEFAULT_THEME: SectionTheme = { colors: [[99,6,97], [34,13,80], [249,171,96]] };
 
 export function ParticleOrbit() {
   const canvasRef = useRef<HTMLCanvasElement>(null);

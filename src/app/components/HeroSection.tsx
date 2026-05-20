@@ -64,7 +64,7 @@ function MagneticField() {
 
       const m = mouse.current;
       const baseAlpha = isDark ? 0.055 : 0.038;
-      const accentRGB = isDark ? "83,166,184" : "12,96,126";
+      const accentRGB = isDark ? "249,171,96" : "99,6,97";
 
       for (const d of dots.current) {
         let fx = 0, fy = 0;
@@ -127,7 +127,7 @@ function MagneticField() {
 /* ── Infinite marquee ── */
 function Marquee({ items, reverse = false }: { items: string[]; reverse?: boolean }) {
   const { r } = useTheme();
-  const dotAccents = ["#0E5C78", "#5EAFC0", "#201326", "#0E5C78", "#C7A46A"];
+  const dotAccents = ["#220D50", "#F9AB60", "#630661", "#220D50", "#F9AB60"];
   const content = [...items, ...items, ...items, ...items];
 
   return (
@@ -154,7 +154,7 @@ export function HeroSection() {
   const { t, lang } = useI18n();
   const { p, r, isDark } = useTheme();
   const ref = useRef<HTMLElement>(null);
-  const statAccents = isDark ? ["#5EAFC0", "#0E5C78", "#C7A46A"] : ["#0E5C78", "#0F1720", "#9D674B"];
+  const statAccents = isDark ? ["#F9AB60", "#FFF4EA", "#630661"] : ["#630661", "#220D50", "#F9AB60"];
 
   const marqueeItems1 = lang === "fr"
     ? ["Design Graphique", "Direction Artistique", "Identité Visuelle", "Brand Content", "Motion Design", "Print & Édition", "Web Design", "Photographie"]
@@ -170,7 +170,7 @@ export function HeroSection() {
           height: "clamp(420px, 60vw, 980px)",
           right: "-22%",
           top: "-24%",
-          background: "radial-gradient(circle, rgba(32,19,42,0.42), rgba(12,96,126,0.105) 40%, transparent 72%)",
+          background: "radial-gradient(circle, rgba(99,6,97,0.34), rgba(249,171,96,0.075) 42%, transparent 72%)",
           filter: "blur(24px)",
           opacity: isDark ? 0.9 : 0.74,
           mixBlendMode: isDark ? "screen" : "multiply",
@@ -185,7 +185,7 @@ export function HeroSection() {
           bottom: "6%",
           width: "clamp(260px, 38vw, 680px)",
           height: "clamp(260px, 38vw, 680px)",
-          background: "radial-gradient(circle, rgba(199,164,106,0.072), rgba(32,19,42,0.16) 44%, transparent 72%)",
+          background: "radial-gradient(circle, rgba(249,171,96,0.075), rgba(99,6,97,0.16) 44%, transparent 72%)",
           filter: "blur(30px)",
           opacity: isDark ? 0.72 : 0.54,
           zIndex: 0,
@@ -248,15 +248,15 @@ export function HeroSection() {
               className="group flex items-center gap-3 px-8 py-4 rounded-full transition-all duration-300 hover:scale-105"
               style={{
                 background: isDark
-                  ? "linear-gradient(135deg, #0F1720 0%, #201326 48%, #0E5C78 100%)"
-                  : "linear-gradient(135deg, #0F1720 0%, #201326 48%, #0E5C78 100%)",
+                  ? "linear-gradient(135deg, #220D50 0%, #630661 58%, #F9AB60 145%)"
+                  : "linear-gradient(135deg, #220D50 0%, #630661 58%, #F9AB60 145%)",
                 fontFamily: "'Inter', sans-serif",
                 fontSize: "0.85rem",
                 fontWeight: 500,
-                color: "#E6E8EB",
+                color: "#FFF4EA",
                 boxShadow: isDark
-                  ? "0 18px 54px rgba(83,166,184,0.11), 0 0 26px rgba(199,164,106,0.055)"
-                  : "0 18px 48px rgba(15,23,32,0.22), 0 0 28px rgba(32,19,42,0.09), 0 0 18px rgba(199,164,106,0.058)",
+                  ? "0 18px 54px rgba(249,171,96,0.12), 0 0 28px rgba(99,6,97,0.12)"
+                  : "0 18px 48px rgba(34,13,80,0.2), 0 0 28px rgba(99,6,97,0.08), 0 0 18px rgba(249,171,96,0.08)",
               }}
               onClick={() => navigate("/contact")}
             >

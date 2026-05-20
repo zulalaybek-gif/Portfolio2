@@ -277,8 +277,8 @@ export function Navigation() {
             className="fixed inset-0 z-50 flex flex-col md:hidden"
             style={{
               background: isDark
-                ? "radial-gradient(circle at 80% 10%, rgba(83,166,184,0.11), transparent 34%), radial-gradient(circle at 12% 74%, rgba(32,19,42,0.24), transparent 42%), rgba(5,9,14,0.97)"
-                : "radial-gradient(circle at 80% 10%, rgba(12,96,126,0.1), transparent 34%), radial-gradient(circle at 12% 74%, rgba(32,19,42,0.08), transparent 42%), rgba(230,232,235,0.97)",
+                ? "radial-gradient(circle at 80% 10%, rgba(249,171,96,0.11), transparent 34%), radial-gradient(circle at 12% 74%, rgba(99,6,97,0.24), transparent 42%), rgba(12,4,28,0.97)"
+                : "radial-gradient(circle at 80% 10%, rgba(249,171,96,0.12), transparent 34%), radial-gradient(circle at 12% 74%, rgba(99,6,97,0.08), transparent 42%), rgba(255,244,234,0.97)",
               backdropFilter: "blur(20px)",
             }}
           >
