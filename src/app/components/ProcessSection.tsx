@@ -13,7 +13,6 @@ const steps = [
 ];
 
 const APPLE_GREEN_DARK = "#B9F21D";
-const APPLE_GREEN_LIGHT = "#4F9A00";
 
 function useInView(ref: RefObject<HTMLElement | null>, margin = "200px 0px") {
   const [inView, setInView] = useState(false);
@@ -54,7 +53,7 @@ export function ProcessSection() {
   const { p, r, isDark } = useTheme();
   const stepAccents = isDark
     ? [APPLE_GREEN_DARK, "#4B8197", "#C12144", APPLE_GREEN_DARK]
-    : ["#4B8197", "#232624", "#C12144", APPLE_GREEN_LIGHT];
+    : ["#4B8197", "#232624", "#C12144", "#4B8197"];
   const sectionRef = useRef<HTMLElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(lineRef);
@@ -117,7 +116,7 @@ export function ProcessSection() {
               const isLineVisible = reduceMotion || i + 1 < revealedCount;
               const stepAccent = stepAccents[i % stepAccents.length];
               const nextAccent = stepAccents[(i + 1) % stepAccents.length];
-              const badgeText = stepAccent === APPLE_GREEN_DARK || stepAccent === APPLE_GREEN_LIGHT ? "#232624" : "#F1F1F1";
+              const badgeText = stepAccent === APPLE_GREEN_DARK ? "#232624" : "#F1F1F1";
 
               return (
                 <div

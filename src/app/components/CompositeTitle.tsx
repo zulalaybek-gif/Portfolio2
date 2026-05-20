@@ -21,7 +21,7 @@ export function CompositeTitle({
   const { p, isDark } = useTheme();
   const accentGradient = isDark
     ? "linear-gradient(128deg, #DFF440 0%, #BBD52C 38%, #4B8197 70%, #C12144 118%)"
-    : "linear-gradient(128deg, #232624 0%, #4B8197 42%, #C12144 74%, #DFF440 118%)";
+    : "linear-gradient(128deg, #232624 0%, #4B8197 48%, #C12144 100%)";
 
   return (
     <Tag

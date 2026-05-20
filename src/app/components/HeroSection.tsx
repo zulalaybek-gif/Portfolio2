@@ -126,8 +126,10 @@ function MagneticField() {
 
 /* ── Infinite marquee ── */
 function Marquee({ items, reverse = false }: { items: string[]; reverse?: boolean }) {
-  const { r } = useTheme();
-  const dotAccents = ["#DFF440", "#4B8197", "#C12144", "#232624", "#DFF440"];
+  const { r, isDark } = useTheme();
+  const dotAccents = isDark
+    ? ["#DFF440", "#4B8197", "#C12144", "#232624", "#DFF440"]
+    : ["#232624", "#4B8197", "#C12144", "#232624", "#4B8197"];
   const content = [...items, ...items, ...items, ...items];
 
   return (

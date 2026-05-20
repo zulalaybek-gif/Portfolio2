@@ -270,7 +270,7 @@
   --contact-input-bg: rgba(35, 38, 36, 0.025);
   --contact-input-focus-border: rgba(75, 129, 151, 0.42);
   --contact-input-focus-bg: rgba(75, 129, 151, 0.04);
-  --contact-input-focus-ring: rgba(223, 244, 64, 0.1);
+  --contact-input-focus-ring: rgba(75, 129, 151, 0.1);
 }
 
 .contact-label {
