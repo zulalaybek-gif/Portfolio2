@@ -13,7 +13,7 @@ export function CTASection() {
   const glowColor = "223,244,64";
   const blueGlow = "75,129,151";
   const cherryGlow = "193,33,68";
-  const cardGlow = isDark ? blueGlow : glowColor;
+  const cardGlow = blueGlow;
   const cardGlowSecondary = isDark ? cherryGlow : blueGlow;
 
   return (
@@ -28,11 +28,11 @@ export function CTASection() {
         style={{
           background: isDark
             ? `radial-gradient(circle at 72% 22%, rgba(${blueGlow},0.12), transparent 28%), radial-gradient(circle at 55% 86%, rgba(${cherryGlow},0.045), transparent 34%), radial-gradient(circle at 18% 34%, rgba(241,241,241,0.035), transparent 32%), linear-gradient(145deg, rgba(18,18,18,0.992) 0%, rgba(8,9,9,0.996) 52%, rgba(14,15,14,0.994) 100%)`
-            : `radial-gradient(circle at 18% 38%, rgba(${blueGlow},0.13), transparent 36%), radial-gradient(circle at 72% 22%, rgba(${glowColor},0.12), transparent 25%), radial-gradient(circle at 58% 82%, rgba(${cherryGlow},0.04), transparent 36%), linear-gradient(145deg, rgba(241,241,241,0.98) 0%, rgba(247,247,245,0.95) 54%, rgba(235,236,233,0.98) 100%)`,
+            : `radial-gradient(circle at 18% 38%, rgba(${blueGlow},0.12), transparent 36%), radial-gradient(circle at 58% 82%, rgba(${cherryGlow},0.035), transparent 36%), linear-gradient(145deg, rgba(241,241,241,0.985) 0%, rgba(247,247,245,0.96) 54%, rgba(235,236,233,0.985) 100%)`,
           border: `1px solid ${isDark ? "rgba(241,241,241,0.075)" : p.ctaBorder}`,
           boxShadow: isDark
             ? `0 32px 105px rgba(0,0,0,0.58), inset 0 1px 0 rgba(241,241,241,0.06), inset 0 -1px 0 rgba(241,241,241,0.025), 0 0 72px rgba(${blueGlow},0.045)`
-            : `0 32px 105px rgba(35,38,36,0.14), inset 0 1px 0 rgba(255,255,255,0.86), 0 0 88px rgba(${blueGlow},0.06), 0 0 32px rgba(${glowColor},0.05)`,
+            : `0 32px 105px rgba(35,38,36,0.14), inset 0 1px 0 rgba(255,255,255,0.86), 0 0 74px rgba(${blueGlow},0.045), 0 0 28px rgba(${cherryGlow},0.025)`,
           ["--cta-glow-rgb" as string]: cardGlow,
           ["--cta-glow-secondary-rgb" as string]: cardGlowSecondary,
         }}
@@ -53,7 +53,7 @@ export function CTASection() {
             transformOrigin: "center",
             background: isDark
               ? `linear-gradient(90deg, transparent, rgba(241,241,241,0.08), rgba(${blueGlow},0.18), rgba(${cherryGlow},0.08), transparent)`
-              : `linear-gradient(90deg, transparent, rgba(${blueGlow},0.28), rgba(${glowColor},0.24), rgba(${cherryGlow},0.14), transparent)`,
+              : `linear-gradient(90deg, transparent, rgba(${blueGlow},0.22), rgba(${cherryGlow},0.12), transparent)`,
           }}
         />
 
