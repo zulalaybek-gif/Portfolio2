@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import path from 'path'
 import fs from 'fs'
+import sharp from 'sharp'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 
@@ -48,6 +49,91 @@ function figmaAssetResolver() {
   }
 }
 
+function sharpImageOptimizer() {
+  const rasterExtensions = new Set(['.jpg', '.jpeg', '.png', '.webp'])
+  const minBytes = 16 * 1024
+  const minSavingRatio = 0.02
+  const maxWidth = 2560
+  const maxHeight = 2560
+  const cache = new Map<string, Promise<{ source: Buffer; fileName: string }>>()
+
+  function cleanId(id: string) {
+    return id.split('?')[0]
+  }
+
+  function shouldOptimize(id: string) {
+    const filePath = cleanId(id)
+    if (filePath.includes(`${path.sep}node_modules${path.sep}`)) return false
+    if (!filePath.startsWith(path.resolve(__dirname, 'src/assets'))) return false
+    return rasterExtensions.has(path.extname(filePath).toLowerCase())
+  }
+
+  async function optimize(filePath: string) {
+    const input = await fs.promises.readFile(filePath)
+    const parsed = path.parse(filePath)
+    const originalFileName = `${parsed.name}${parsed.ext}`
+
+    if (input.length < minBytes) {
+      return { source: input, fileName: originalFileName }
+    }
+
+    const image = sharp(input, { failOn: 'none' }).rotate()
+    const metadata = await image.metadata()
+    if (!metadata.width || !metadata.height) {
+      return { source: input, fileName: originalFileName }
+    }
+
+    let pipeline = image.clone()
+    if (metadata.width > maxWidth || metadata.height > maxHeight) {
+      pipeline = pipeline.resize({
+        width: maxWidth,
+        height: maxHeight,
+        fit: 'inside',
+        withoutEnlargement: true,
+      })
+    }
+
+    const webp = await pipeline
+      .webp({
+        quality: metadata.hasAlpha ? 90 : 84,
+        alphaQuality: 100,
+        effort: 5,
+        smartSubsample: true,
+      })
+      .toBuffer()
+
+    const savingRatio = 1 - webp.length / input.length
+    if (savingRatio < minSavingRatio) {
+      return { source: input, fileName: originalFileName }
+    }
+
+    return { source: webp, fileName: `${parsed.name}.webp` }
+  }
+
+  return {
+    name: 'sharp-image-optimizer',
+    apply: 'build' as const,
+    enforce: 'pre' as const,
+    async load(id: string) {
+      const filePath = cleanId(id)
+      if (!shouldOptimize(filePath)) return null
+
+      if (!cache.has(filePath)) {
+        cache.set(filePath, optimize(filePath))
+      }
+
+      const result = await cache.get(filePath)!
+      const referenceId = this.emitFile({
+        type: 'asset',
+        name: result.fileName,
+        source: result.source,
+      })
+
+      return `export default import.meta.ROLLUP_FILE_URL_${referenceId}`
+    },
+  }
+}
+
 export default defineConfig({
   build: {
     target: 'es2020',
@@ -80,6 +166,7 @@ export default defineConfig({
   plugins: [
     productionCspMeta(),
     figmaAssetResolver(),
+    sharpImageOptimizer(),
     // The React and Tailwind plugins are both required for Make, even if
     // Tailwind is not being actively used – do not remove them
     react(),
