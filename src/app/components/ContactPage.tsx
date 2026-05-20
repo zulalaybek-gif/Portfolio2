@@ -17,10 +17,10 @@ export function ContactPage() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
   const [submitted, setSubmitted] = useState(false);
-  const accent = isDark ? "#F9AB60" : "#630661";
-  const glowColor = "99,6,97";
-  const cyanGlow = "249,171,96";
-  const warmGlow = "249,171,96";
+  const accent = isDark ? "#DFF440" : "#4B8197";
+  const glowColor = "223,244,64";
+  const blueGlow = "75,129,151";
+  const cherryGlow = "193,33,68";
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -44,7 +44,7 @@ export function ContactPage() {
           height: "clamp(280px, 42vw, 620px)",
           right: "-12%",
           top: "-18%",
-          background: `radial-gradient(circle, rgba(${glowColor},0.22), rgba(34,13,80,0.1) 42%, rgba(${cyanGlow},0.06) 58%, transparent 74%)`,
+          background: `radial-gradient(circle, rgba(${blueGlow},0.18), rgba(${glowColor},0.08) 42%, rgba(${cherryGlow},0.055) 58%, transparent 74%)`,
           filter: "blur(20px)",
         }}
       />
@@ -134,12 +134,12 @@ export function ContactPage() {
           style={{
             color: p.text,
             background: isDark
-              ? `radial-gradient(circle at 18% 18%, rgba(${glowColor},0.3), transparent 36%), radial-gradient(circle at 84% 20%, rgba(${warmGlow},0.045), transparent 25%), linear-gradient(145deg, rgba(255,244,234,0.052), rgba(34,13,80,0.05), rgba(255,244,234,0.014))`
-              : `radial-gradient(circle at 16% 18%, rgba(${glowColor},0.095), transparent 36%), radial-gradient(circle at 84% 18%, rgba(${warmGlow},0.07), transparent 25%), radial-gradient(circle at 68% 82%, rgba(99,6,97,0.04), transparent 36%), linear-gradient(145deg, rgba(255,244,234,0.9), rgba(248,237,232,0.84))`,
+              ? `radial-gradient(circle at 18% 18%, rgba(${blueGlow},0.16), transparent 36%), radial-gradient(circle at 84% 20%, rgba(${glowColor},0.055), transparent 25%), linear-gradient(145deg, rgba(241,241,241,0.052), rgba(35,38,36,0.12), rgba(241,241,241,0.014))`
+              : `radial-gradient(circle at 16% 18%, rgba(${blueGlow},0.1), transparent 36%), radial-gradient(circle at 84% 18%, rgba(${glowColor},0.1), transparent 25%), radial-gradient(circle at 68% 82%, rgba(${cherryGlow},0.038), transparent 36%), linear-gradient(145deg, rgba(241,241,241,0.92), rgba(247,247,245,0.84))`,
             border: `1px solid ${r(0.08)}`,
             boxShadow: isDark
-              ? `0 28px 90px rgba(0,0,0,0.36), inset 0 1px 0 rgba(255,244,234,0.06), 0 0 44px rgba(${cyanGlow},0.038), 0 0 30px rgba(${warmGlow},0.032)`
-              : `0 28px 90px rgba(34,13,80,0.14), inset 0 1px 0 rgba(255,255,255,0.88), 0 0 48px rgba(${glowColor},0.06), 0 0 30px rgba(${warmGlow},0.044)`,
+              ? `0 28px 90px rgba(0,0,0,0.36), inset 0 1px 0 rgba(241,241,241,0.06), 0 0 44px rgba(${blueGlow},0.045), 0 0 30px rgba(${glowColor},0.03)`
+              : `0 28px 90px rgba(35,38,36,0.13), inset 0 1px 0 rgba(255,255,255,0.88), 0 0 48px rgba(${blueGlow},0.06), 0 0 30px rgba(${glowColor},0.048)`,
             backdropFilter: "blur(18px)",
           }}
         >
@@ -153,7 +153,7 @@ export function ContactPage() {
             >
               <div
                 className="w-14 h-14 rounded-full flex items-center justify-center mb-6"
-                style={{ background: accent, color: isDark ? "#220D50" : "#FFF4EA" }}
+                style={{ background: accent, color: isDark ? "#232624" : "#F1F1F1" }}
               >
                 <Check size={22} />
               </div>
@@ -209,15 +209,17 @@ export function ContactPage() {
                 className="group mt-3 inline-flex items-center justify-center gap-3 rounded-full px-8 py-4 transition-all duration-500 hover:scale-[1.018] active:scale-[0.985]"
                 style={{
                   background: isDark
-                    ? "linear-gradient(135deg, #220D50 0%, #630661 58%, #F9AB60 145%)"
-                    : "linear-gradient(135deg, #220D50 0%, #630661 58%, #F9AB60 145%)",
-                  color: "#FFF4EA",
+                    ? "linear-gradient(135deg, #DFF440 0%, #CFE83A 58%, #4B8197 145%)"
+                    : "linear-gradient(135deg, #232624 0%, #4B8197 62%, #C12144 145%)",
+                  color: isDark ? "#232624" : "#F1F1F1",
                   fontFamily: "'Inter', sans-serif",
                   fontSize: "0.84rem",
                   fontWeight: 650,
                   letterSpacing: "0.05em",
                   textTransform: "uppercase",
-                  boxShadow: `0 16px 46px rgba(${cyanGlow},0.095), 0 0 24px rgba(${warmGlow},0.055)`,
+                  boxShadow: isDark
+                    ? `0 16px 46px rgba(${glowColor},0.13), 0 0 24px rgba(${blueGlow},0.06)`
+                    : `0 16px 46px rgba(${blueGlow},0.095), 0 0 24px rgba(${cherryGlow},0.05)`,
                 }}
               >
                 {t("contact.submit" as TranslationKey)}

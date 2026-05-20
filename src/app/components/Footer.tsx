@@ -14,7 +14,7 @@ export function Footer() {
         aria-hidden="true"
         className="absolute left-8 right-8 md:left-12 md:right-12 top-0 h-px"
         style={{
-          background: "linear-gradient(90deg, transparent, rgba(99,6,97,0.32), rgba(249,171,96,0.16), transparent)",
+          background: "linear-gradient(90deg, transparent, rgba(75,129,151,0.32), rgba(223,244,64,0.16), rgba(193,33,68,0.12), transparent)",
         }}
       />
       <div className="max-w-6xl mx-auto flex items-end justify-between flex-wrap gap-8">

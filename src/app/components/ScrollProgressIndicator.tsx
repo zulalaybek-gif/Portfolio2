@@ -10,12 +10,12 @@ export function ScrollProgressIndicator() {
       className="scroll-progress-indicator"
       aria-hidden="true"
       style={{
-        ["--scroll-progress-track" as string]: isDark ? "rgba(12, 4, 28, 0.96)" : "rgba(34, 13, 80, 0.58)",
-        ["--scroll-progress-track-edge" as string]: isDark ? "rgba(255, 244, 234, 0.09)" : "rgba(99, 6, 97, 0.18)",
-        ["--scroll-progress-fill" as string]: "#220D50",
-        ["--scroll-progress-fill-2" as string]: "#630661",
-        ["--scroll-progress-fill-3" as string]: "#F9AB60",
-        ["--scroll-progress-glow" as string]: isDark ? "rgba(249, 171, 96, 0.32)" : "rgba(99, 6, 97, 0.22)",
+        ["--scroll-progress-track" as string]: isDark ? "rgba(18, 20, 18, 0.96)" : "rgba(35, 38, 36, 0.52)",
+        ["--scroll-progress-track-edge" as string]: isDark ? "rgba(241, 241, 241, 0.09)" : "rgba(75, 129, 151, 0.18)",
+        ["--scroll-progress-fill" as string]: "#DFF440",
+        ["--scroll-progress-fill-2" as string]: "#4B8197",
+        ["--scroll-progress-fill-3" as string]: "#C12144",
+        ["--scroll-progress-glow" as string]: isDark ? "rgba(223, 244, 64, 0.3)" : "rgba(75, 129, 151, 0.2)",
       }}
     >
       <div className="scroll-progress-indicator__track">

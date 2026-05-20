@@ -10,9 +10,9 @@ export function CTASection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
   const cardRef = useRef<HTMLDivElement>(null);
-  const glowColor = "99,6,97";
-  const cyanGlow = "249,171,96";
-  const warmGlow = "249,171,96";
+  const glowColor = "223,244,64";
+  const blueGlow = "75,129,151";
+  const cherryGlow = "193,33,68";
 
   return (
     <section data-section="cta" data-section-alias="about" className="relative w-full px-6 md:px-12 py-20">
@@ -25,14 +25,14 @@ export function CTASection() {
         className="max-w-6xl mx-auto relative overflow-hidden rounded-[2.5rem] p-12 md:p-24"
         style={{
           background: isDark
-            ? `radial-gradient(circle at 18% 38%, rgba(${glowColor},0.42), transparent 38%), radial-gradient(circle at 74% 24%, rgba(${warmGlow},0.048), transparent 25%), radial-gradient(circle at 58% 82%, rgba(${cyanGlow},0.058), transparent 36%), linear-gradient(145deg, rgba(34,13,80,0.988) 0%, rgba(12,4,28,0.992) 64%, rgba(20,6,42,0.988) 100%)`
-            : `radial-gradient(circle at 18% 38%, rgba(${glowColor},0.13), transparent 36%), radial-gradient(circle at 72% 22%, rgba(${warmGlow},0.07), transparent 25%), radial-gradient(circle at 58% 82%, rgba(${cyanGlow},0.045), transparent 36%), linear-gradient(145deg, rgba(255,244,234,0.98) 0%, rgba(248,237,232,0.95) 54%, rgba(242,224,222,0.98) 100%)`,
+            ? `radial-gradient(circle at 18% 38%, rgba(${glowColor},0.16), transparent 38%), radial-gradient(circle at 74% 24%, rgba(${blueGlow},0.11), transparent 27%), radial-gradient(circle at 58% 82%, rgba(${cherryGlow},0.07), transparent 36%), linear-gradient(145deg, rgba(35,38,36,0.988) 0%, rgba(18,20,18,0.994) 64%, rgba(31,31,31,0.988) 100%)`
+            : `radial-gradient(circle at 18% 38%, rgba(${blueGlow},0.13), transparent 36%), radial-gradient(circle at 72% 22%, rgba(${glowColor},0.12), transparent 25%), radial-gradient(circle at 58% 82%, rgba(${cherryGlow},0.04), transparent 36%), linear-gradient(145deg, rgba(241,241,241,0.98) 0%, rgba(247,247,245,0.95) 54%, rgba(235,236,233,0.98) 100%)`,
           border: `1px solid ${p.ctaBorder}`,
           boxShadow: isDark
-            ? `0 32px 105px rgba(0,0,0,0.46), inset 0 1px 0 rgba(255,244,234,0.07), 0 0 90px rgba(${glowColor},0.08)`
-            : `0 32px 105px rgba(34,13,80,0.14), inset 0 1px 0 rgba(255,255,255,0.86), 0 0 88px rgba(${glowColor},0.07), 0 0 32px rgba(${warmGlow},0.044)`,
+            ? `0 32px 105px rgba(0,0,0,0.46), inset 0 1px 0 rgba(241,241,241,0.07), 0 0 90px rgba(${blueGlow},0.08)`
+            : `0 32px 105px rgba(35,38,36,0.14), inset 0 1px 0 rgba(255,255,255,0.86), 0 0 88px rgba(${blueGlow},0.06), 0 0 32px rgba(${glowColor},0.05)`,
           ["--cta-glow-rgb" as string]: glowColor,
-          ["--cta-glow-secondary-rgb" as string]: cyanGlow,
+          ["--cta-glow-secondary-rgb" as string]: blueGlow,
         }}
       >
         <InteractiveCtaGlow cardRef={cardRef} isDark={isDark} />
@@ -49,7 +49,7 @@ export function CTASection() {
             bottom: 0,
             height: 1,
             transformOrigin: "center",
-            background: `linear-gradient(90deg, transparent, rgba(${glowColor},0.34), rgba(34,13,80,0.3), rgba(${warmGlow},0.18), transparent)`,
+            background: `linear-gradient(90deg, transparent, rgba(${blueGlow},0.28), rgba(${glowColor},0.24), rgba(${cherryGlow},0.14), transparent)`,
           }}
         />
 
@@ -83,18 +83,18 @@ export function CTASection() {
             className="group inline-flex items-center gap-3 px-10 py-4 rounded-full transition-all duration-500 hover:scale-[1.035] active:scale-[0.985]"
             style={{
               background: isDark
-                ? "linear-gradient(135deg, #220D50 0%, #630661 58%, #F9AB60 145%)"
-                : "linear-gradient(135deg, #220D50 0%, #630661 58%, #F9AB60 145%)",
+                ? "linear-gradient(135deg, #DFF440 0%, #CFE83A 58%, #4B8197 145%)"
+                : "linear-gradient(135deg, #232624 0%, #4B8197 62%, #C12144 145%)",
               fontFamily: "'Inter', sans-serif",
               fontSize: "0.85rem",
               fontWeight: 600,
               letterSpacing: "0.05em",
               textTransform: "uppercase",
-              color: "#FFF4EA",
+              color: isDark ? "#232624" : "#F1F1F1",
               textDecoration: "none",
               boxShadow: isDark
-                ? `0 16px 46px rgba(${cyanGlow},0.1), 0 0 26px rgba(${warmGlow},0.055), inset 0 1px 0 rgba(255,255,255,0.24)`
-                : `0 16px 46px rgba(${glowColor},0.12), 0 0 22px rgba(${warmGlow},0.055), inset 0 1px 0 rgba(255,255,255,0.16)`,
+                ? `0 16px 46px rgba(${glowColor},0.14), 0 0 26px rgba(${blueGlow},0.07), inset 0 1px 0 rgba(255,255,255,0.24)`
+                : `0 16px 46px rgba(${blueGlow},0.12), 0 0 22px rgba(${cherryGlow},0.05), inset 0 1px 0 rgba(255,255,255,0.16)`,
             }}
           >
             {t("cta.button")}

@@ -68,10 +68,9 @@ interface Aurora {
 
 /* ── Palette ── */
 const COLORS = {
-  green: [34, 13, 80], ltGreen: [249, 171, 96],
-  gold: [249, 171, 96], silver: [255, 244, 234],
-  purple: [99, 6, 97], warm: [249, 171, 96],
-  teal: [99, 6, 97], white: [255, 244, 234],
+  carbon: [35, 38, 36], graphite: [31, 31, 31],
+  chartreuse: [223, 244, 64], platinum: [241, 241, 241],
+  blue: [75, 129, 151], cherry: [193, 33, 68],
 };
 const COLOR_KEYS = Object.keys(COLORS) as (keyof typeof COLORS)[];
 const rgb = (k: keyof typeof COLORS) => COLORS[k].join(",");
@@ -92,16 +91,16 @@ const DAMPING = 0.975;
 type SectionTheme = { colors: [number[], number[], number[]] };
 
 const SECTION_THEMES: Record<string, SectionTheme> = {
-  hero:             { colors: [[99,6,97], [34,13,80], [249,171,96]] },
-  services:         { colors: [[34,13,80], [99,6,97], [249,171,96]] },
-  work:             { colors: [[99,6,97], [34,13,80], [249,171,96]]  },
-  cta:              { colors: [[99,6,97], [34,13,80], [249,171,96]] },
-  "projects-hero":  { colors: [[99,6,97], [34,13,80], [249,171,96]] },
-  "projects-index": { colors: [[12,4,28], [99,6,97], [34,13,80]]  },
-  "projects-reel":  { colors: [[34,13,80], [99,6,97], [249,171,96]] },
+  hero:             { colors: [[75,129,151], [35,38,36], [223,244,64]] },
+  services:         { colors: [[35,38,36], [75,129,151], [193,33,68]] },
+  work:             { colors: [[75,129,151], [35,38,36], [223,244,64]]  },
+  cta:              { colors: [[223,244,64], [75,129,151], [193,33,68]] },
+  "projects-hero":  { colors: [[75,129,151], [35,38,36], [223,244,64]] },
+  "projects-index": { colors: [[31,31,31], [75,129,151], [35,38,36]]  },
+  "projects-reel":  { colors: [[35,38,36], [75,129,151], [193,33,68]] },
 };
 
-const DEFAULT_THEME: SectionTheme = { colors: [[99,6,97], [34,13,80], [249,171,96]] };
+const DEFAULT_THEME: SectionTheme = { colors: [[75,129,151], [35,38,36], [223,244,64]] };
 
 export function ParticleOrbit() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
