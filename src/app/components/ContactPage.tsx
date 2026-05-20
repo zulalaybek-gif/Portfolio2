@@ -1,253 +1,423 @@
-import { FormEvent, useState } from "react";
-import { motion } from "motion/react";
-import { ArrowUpRight, Check } from "lucide-react";
-import { useI18n, type TranslationKey } from "./i18n";
+import { AnimatePresence, motion } from "motion/react";
+import { ArrowLeft, ArrowRight, CheckCircle2, Send } from "lucide-react";
+import { KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router";
 import { useTheme } from "./theme";
-import { CompositeTitle } from "./CompositeTitle";
 
-const projectTypeKeys = [
-  "contact.type.identity",
-  "contact.type.artDirection",
-  "contact.type.web",
-  "contact.type.motion",
-  "contact.type.other",
-] as const;
+type FormStep = "name" | "email" | "message" | "sending" | "success";
+type FormData = { name: string; email: string; message: string };
+
+const steps: Array<Exclude<FormStep, "sending" | "success">> = ["name", "email", "message"];
+
+const questions = {
+  name: {
+    label: "Comment vous appelez-vous ?",
+    placeholder: "Marie Dupont",
+  },
+  email: {
+    label: "Votre email ?",
+    placeholder: "hello@example.com",
+  },
+  message: {
+    label: "Parlez-moi de votre projet...",
+    placeholder: "Je cherche à créer une identité visuelle pour...",
+  },
+} as const;
+
+function rgbaFromHex(hex: string, alpha: number) {
+  const clean = hex.replace("#", "");
+  const value = parseInt(clean, 16);
+  const r = (value >> 16) & 255;
+  const g = (value >> 8) & 255;
+  const b = value & 255;
+  return `rgba(${r},${g},${b},${alpha})`;
+}
 
 export function ContactPage() {
-  const { t } = useI18n();
-  const { p, r, isDark } = useTheme();
-  const [submitted, setSubmitted] = useState(false);
-  const accent = isDark ? "#DFF440" : "#4B8197";
-  const glowColor = "223,244,64";
-  const blueGlow = "75,129,151";
-  const cherryGlow = "193,33,68";
+  const navigate = useNavigate();
+  const { isDark } = useTheme();
+  const [step, setStep] = useState<FormStep>("name");
+  const [formData, setFormData] = useState<FormData>({ name: "", email: "", message: "" });
+  const [isFocused, setIsFocused] = useState(false);
+  const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement | null>(null);
+  const cursorRef = useRef<HTMLDivElement | null>(null);
+  const mouseRef = useRef({ x: typeof window === "undefined" ? 0 : window.innerWidth / 2, y: typeof window === "undefined" ? 0 : window.innerHeight / 2 });
+  const cursorPosRef = useRef({ x: mouseRef.current.x, y: mouseRef.current.y });
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const activeIndex = steps.includes(step as (typeof steps)[number])
+    ? steps.indexOf(step as (typeof steps)[number])
+    : 2;
+  const activeStep = steps[activeIndex];
+  const value = activeStep ? formData[activeStep] : "";
+  const canContinue = value.trim().length > 0;
+  const isLastQuestion = activeStep === "message";
+  const bg = isDark ? "#1c1e1b" : "#EAEAEA";
+  const text = isDark ? "#F1F1F1" : "#232624";
+  const accent = "#DFF440";
+  const textSoft = rgbaFromHex(text, 0.6);
+  const textBright = rgbaFromHex(text, 0.85);
+
+  useEffect(() => {
+    if (step === "sending" || step === "success") return;
+    const timer = window.setTimeout(() => inputRef.current?.focus(), 600);
+    return () => window.clearTimeout(timer);
+  }, [step]);
+
+  useEffect(() => {
+    const onMove = (event: MouseEvent) => {
+      mouseRef.current = { x: event.clientX, y: event.clientY };
+    };
+    window.addEventListener("mousemove", onMove, { passive: true });
+
+    let frame = 0;
+    const tick = () => {
+      const current = cursorPosRef.current;
+      current.x += (mouseRef.current.x - current.x) * 0.15;
+      current.y += (mouseRef.current.y - current.y) * 0.15;
+      if (cursorRef.current) {
+        cursorRef.current.style.transform = `translate3d(${current.x}px, ${current.y}px, 0) translate(-50%, -50%)`;
+      }
+      frame = window.requestAnimationFrame(tick);
+    };
+    frame = window.requestAnimationFrame(tick);
+
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      window.cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  const goNext = useCallback(() => {
+    if (!canContinue || step === "sending" || step === "success") return;
+    setIsFocused(false);
+
+    if (!isLastQuestion) {
+      setStep(steps[activeIndex + 1]);
+      return;
+    }
+
+    setStep("sending");
+    window.setTimeout(() => setStep("success"), 2000);
+  }, [activeIndex, canContinue, isLastQuestion, step]);
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (event.key !== "Enter" || activeStep === "message") return;
     event.preventDefault();
-    setSubmitted(true);
+    goNext();
   };
+
+  const handleBackStep = () => {
+    if (step === "success" || step === "sending") {
+      setStep("message");
+      return;
+    }
+    if (activeIndex > 0) {
+      setStep(steps[activeIndex - 1]);
+      return;
+    }
+    navigate("/");
+  };
+
+  const progress = ((activeIndex + 1) / steps.length) * 100;
 
   return (
     <section
-      data-section="contact"
-      className="relative w-full px-6 md:px-12 py-16 md:py-24 overflow-hidden"
-      style={{ color: p.text }}
+      className="fixed inset-0 z-[100] flex min-h-screen flex-col items-center justify-center overflow-hidden px-6"
+      style={{
+        ["--bg" as string]: bg,
+        ["--text" as string]: text,
+        ["--accent" as string]: accent,
+        ["--text-bright" as string]: textBright,
+        background: bg,
+        color: text,
+      }}
     >
+      <svg className="pointer-events-none absolute h-0 w-0" aria-hidden="true">
+        <filter id="contact-grain">
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" />
+        </filter>
+      </svg>
+      <div className="pointer-events-none absolute inset-0 opacity-[0.025] mix-blend-overlay" style={{ filter: "url(#contact-grain)" }} />
       <motion.div
         aria-hidden="true"
-        className="absolute rounded-full pointer-events-none"
-        initial={{ opacity: 0, scale: 0.96 }}
-        animate={{ opacity: isDark ? 0.24 : 0.28, scale: 1 }}
-        transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+        className="pointer-events-none absolute left-1/2 top-[-20%] h-[50%] w-[60%] -translate-x-1/2"
+        animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.7, 0.5] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         style={{
-          width: "clamp(280px, 42vw, 620px)",
-          height: "clamp(280px, 42vw, 620px)",
-          right: "-12%",
-          top: "-18%",
-          background: `radial-gradient(circle, rgba(${blueGlow},0.18), rgba(${glowColor},0.08) 42%, rgba(${cherryGlow},0.055) 58%, transparent 74%)`,
-          filter: "blur(20px)",
+          background: "radial-gradient(ellipse at 50% 0%, rgba(223,244,64,0.06), transparent 70%)",
+          filter: "blur(100px)",
         }}
       />
+      <div
+        ref={cursorRef}
+        className="pointer-events-none absolute left-0 top-0 z-0 h-[400px] w-[400px]"
+        style={{
+          background: "radial-gradient(circle, rgba(223,244,64,0.08), transparent 70%)",
+          filter: "blur(60px)",
+          transform: "translate(-50%, -50%)",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{ background: "radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.3) 100%)" }}
+      />
 
-      <div className="relative z-10 max-w-6xl mx-auto grid lg:grid-cols-[0.88fr_1.12fr] gap-10 lg:gap-16 items-start">
-        <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="pt-4"
-        >
-          <span
-            className="inline-block uppercase tracking-widest mb-8"
-            style={{
-              fontSize: "0.65rem",
-              fontFamily: "'Inter', sans-serif",
-              color: r(0.35),
-              letterSpacing: "0.15em",
-            }}
-          >
-            - {t("contact.badge" as TranslationKey)}
-          </span>
+      <motion.button
+        type="button"
+        onClick={handleBackStep}
+        className="absolute left-6 top-6 z-20 inline-flex items-center gap-3 rounded-full px-4 py-3 md:left-10 md:top-10"
+        animate={{ x: [-4, 0, -4] }}
+        whileHover={{ opacity: 1 }}
+        transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+        style={{
+          border: `1px solid ${rgbaFromHex(text, 0.12)}`,
+          color: textSoft,
+          fontFamily: "'Inter', sans-serif",
+          fontSize: "0.8rem",
+          opacity: 0.6,
+        }}
+      >
+        <ArrowLeft size={16} />
+        Retour
+      </motion.button>
 
-          <CompositeTitle
-            as="h1"
-            size="section"
-            primary={t("contact.title1" as TranslationKey)}
-            secondary={t("contact.title2" as TranslationKey)}
-          />
-
-          <p
-            className="mt-8 max-w-md"
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: "0.95rem",
-              lineHeight: 1.8,
-              color: r(0.48),
-            }}
-          >
-            {t("contact.intro" as TranslationKey)}
-          </p>
-
-          <div className="mt-10 pt-6" style={{ borderTop: `1px solid ${r(0.08)}` }}>
-            <p
-              className="uppercase tracking-widest mb-3"
-              style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.62rem", color: r(0.25), letterSpacing: "0.14em" }}
-            >
-              {t("contact.emailAlt" as TranslationKey)}
-            </p>
-            <a
-              href="mailto:zulal.aybek@gmail.com"
-              className="inline-flex items-center gap-2 transition-opacity duration-300 hover:opacity-70"
-              style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.92rem", color: r(0.72), textDecoration: "none" }}
-            >
-              zulal.aybek@gmail.com
-              <ArrowUpRight size={14} />
-            </a>
-          </div>
-
-          <div className="mt-8">
-            <p
-              className="uppercase tracking-widest mb-2"
-              style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.62rem", color: r(0.25), letterSpacing: "0.14em" }}
-            >
-              Signature
-            </p>
-            <p
-              style={{
-                fontFamily: "'Reenie Beanie', 'Brush Script MT', cursive",
-                fontSize: "clamp(2.2rem, 5vw, 3.2rem)",
-                lineHeight: 0.9,
-                color: accent,
-                transform: "rotate(-5deg)",
-                transformOrigin: "left center",
-              }}
-            >
-              Zulâl Aybek
-            </p>
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 32, scale: 0.985 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.9, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-          className="relative overflow-hidden rounded-[2rem] p-6 md:p-9"
-          style={{
-            color: p.text,
-            background: isDark
-              ? `radial-gradient(circle at 18% 18%, rgba(${blueGlow},0.16), transparent 36%), radial-gradient(circle at 84% 20%, rgba(${glowColor},0.055), transparent 25%), linear-gradient(145deg, rgba(241,241,241,0.052), rgba(35,38,36,0.12), rgba(241,241,241,0.014))`
-              : `radial-gradient(circle at 16% 18%, rgba(${blueGlow},0.1), transparent 36%), radial-gradient(circle at 84% 18%, rgba(${glowColor},0.1), transparent 25%), radial-gradient(circle at 68% 82%, rgba(${cherryGlow},0.038), transparent 36%), linear-gradient(145deg, rgba(241,241,241,0.92), rgba(247,247,245,0.84))`,
-            border: `1px solid ${r(0.08)}`,
-            boxShadow: isDark
-              ? `0 28px 90px rgba(0,0,0,0.36), inset 0 1px 0 rgba(241,241,241,0.06), 0 0 44px rgba(${blueGlow},0.045), 0 0 30px rgba(${glowColor},0.03)`
-              : `0 28px 90px rgba(35,38,36,0.13), inset 0 1px 0 rgba(255,255,255,0.88), 0 0 48px rgba(${blueGlow},0.06), 0 0 30px rgba(${glowColor},0.048)`,
-            backdropFilter: "blur(18px)",
-          }}
-        >
-          {submitted ? (
+      <div className="relative z-10 w-full max-w-3xl">
+        <AnimatePresence mode="wait">
+          {step === "success" ? (
+            <SuccessState key="success" text={text} accent={accent} onHome={() => navigate("/")} />
+          ) : step === "sending" ? (
             <motion.div
-              initial={{ opacity: 0, y: 18 }}
+              key="sending"
+              initial={{ opacity: 0, y: 80 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="min-h-[420px] flex flex-col items-center justify-center text-center"
-              aria-live="polite"
+              exit={{ opacity: 0, y: -40 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="flex min-h-[420px] flex-col items-center justify-center text-center"
             >
-              <div
-                className="w-14 h-14 rounded-full flex items-center justify-center mb-6"
-                style={{ background: accent, color: isDark ? "#232624" : "#F1F1F1" }}
-              >
-                <Check size={22} />
-              </div>
-              <h2
-                className="mb-4"
-                style={{
-                  fontFamily: "'Space Grotesk', sans-serif",
-                  fontSize: "clamp(1.8rem, 4vw, 3rem)",
-                  fontWeight: 700,
-                  lineHeight: 1,
-                  letterSpacing: "-0.04em",
-                  color: p.text,
-                }}
-              >
-                {t("contact.sentTitle" as TranslationKey)}
-              </h2>
-              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", lineHeight: 1.8, color: r(0.46), maxWidth: 420 }}>
-                {t("contact.sentDesc" as TranslationKey)}
+              <motion.div
+                className="mb-8 h-12 w-12 rounded-full border border-current border-t-transparent"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                style={{ color: accent }}
+              />
+              <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1rem", letterSpacing: "0.12em", textTransform: "uppercase" }}>
+                Envoi en cours
               </p>
-              <button
-                type="button"
-                onClick={() => setSubmitted(false)}
-                className="mt-8 px-6 py-3 rounded-full transition-all duration-300 hover:scale-[1.02]"
-                style={{ border: `1px solid ${r(0.12)}`, color: r(0.68), fontFamily: "'Inter', sans-serif", fontSize: "0.82rem" }}
-              >
-                {t("contact.sendAnother" as TranslationKey)}
-              </button>
             </motion.div>
           ) : (
-            <form onSubmit={handleSubmit} className="grid gap-5">
-              <ContactField label={t("contact.name" as TranslationKey)} name="name" type="text" required />
-              <ContactField label={t("contact.email" as TranslationKey)} name="email" type="email" required />
+            <motion.div
+              key={step}
+              initial={{ opacity: 0, y: 80 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -40 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <ProgressIndicator current={activeIndex + 1} progress={progress} text={text} accent={accent} />
 
-              <label className="grid gap-2">
-                <span className="contact-label">{t("contact.type" as TranslationKey)}</span>
-                <select name="projectType" required className="contact-input">
-                  <option value="">{t("contact.typePlaceholder" as TranslationKey)}</option>
-                  {projectTypeKeys.map((key) => (
-                    <option key={key} value={t(key)}>
-                      {t(key)}
-                    </option>
-                  ))}
-                </select>
-              </label>
-
-              <label className="grid gap-2">
-                <span className="contact-label">{t("contact.message" as TranslationKey)}</span>
-                <textarea name="message" required rows={6} className="contact-input resize-none" />
-              </label>
-
-              <button
-                type="submit"
-                className="group mt-3 inline-flex items-center justify-center gap-3 rounded-full px-8 py-4 transition-all duration-500 hover:scale-[1.018] active:scale-[0.985]"
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                className="mb-16"
                 style={{
-                  background: isDark
-                    ? "linear-gradient(135deg, #DFF440 0%, #CFE83A 58%, #4B8197 145%)"
-                    : "linear-gradient(135deg, #232624 0%, #4B8197 62%, #C12144 145%)",
-                  color: isDark ? "#232624" : "#F1F1F1",
-                  fontFamily: "'Inter', sans-serif",
-                  fontSize: "0.84rem",
-                  fontWeight: 650,
-                  letterSpacing: "0.05em",
-                  textTransform: "uppercase",
-                  boxShadow: isDark
-                    ? `0 16px 46px rgba(${glowColor},0.13), 0 0 24px rgba(${blueGlow},0.06)`
-                    : `0 16px 46px rgba(${blueGlow},0.095), 0 0 24px rgba(${cherryGlow},0.05)`,
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontSize: "clamp(2.35rem, 6vw, 5rem)",
+                  fontWeight: 700,
+                  lineHeight: 0.95,
+                  letterSpacing: "-0.05em",
                 }}
               >
-                {t("contact.submit" as TranslationKey)}
-                <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </button>
-            </form>
+                {questions[activeStep].label}
+              </motion.h1>
+
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className="w-full"
+              >
+                {activeStep === "message" ? (
+                  <textarea
+                    ref={(node) => {
+                      inputRef.current = node;
+                    }}
+                    rows={4}
+                    value={formData.message}
+                    placeholder={questions.message.placeholder}
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
+                    onKeyDown={handleKeyDown}
+                    onChange={(event) => setFormData((current) => ({ ...current, message: event.target.value }))}
+                    className="w-full resize-none border-none bg-transparent outline-none"
+                    style={inputStyle(textBright)}
+                  />
+                ) : (
+                  <input
+                    ref={(node) => {
+                      inputRef.current = node;
+                    }}
+                    type={activeStep === "email" ? "email" : "text"}
+                    value={formData[activeStep]}
+                    placeholder={questions[activeStep].placeholder}
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
+                    onKeyDown={handleKeyDown}
+                    onChange={(event) => setFormData((current) => ({ ...current, [activeStep]: event.target.value }))}
+                    className="w-full border-none bg-transparent outline-none"
+                    style={inputStyle(textBright)}
+                  />
+                )}
+                <div className="mt-4 h-px w-full overflow-hidden" style={{ background: rgbaFromHex(text, 0.08) }}>
+                  <div
+                    className="h-full"
+                    style={{
+                      background: "linear-gradient(90deg, #DFF440, rgba(223,244,64,0.5))",
+                      transform: `scaleX(${isFocused ? 1 : value ? 0.3 : 0})`,
+                      transformOrigin: "left",
+                      transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+                    }}
+                  />
+                </div>
+              </motion.div>
+
+              <motion.button
+                type="button"
+                onClick={goNext}
+                disabled={!canContinue}
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: canContinue ? 1 : 0.3, y: 0 }}
+                whileHover={canContinue ? { scale: 1.05, borderColor: accent } : undefined}
+                whileTap={canContinue ? { scale: 0.95 } : undefined}
+                transition={{ duration: 0.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="mt-16 inline-flex items-center gap-3 rounded-full px-8 py-4"
+                style={{
+                  border: `1px solid ${rgbaFromHex(text, 0.15)}`,
+                  color: textSoft,
+                  cursor: canContinue ? "pointer" : "default",
+                  pointerEvents: canContinue ? "auto" : "none",
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontSize: "1rem",
+                  fontWeight: 600,
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                }}
+              >
+                {isLastQuestion ? "Envoyer" : "Continuer"}
+                {isLastQuestion ? <Send size={18} /> : <ArrowRight size={18} />}
+              </motion.button>
+            </motion.div>
           )}
-        </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   );
 }
 
-function ContactField({
-  label,
-  name,
-  type,
-  required,
-}: {
-  label: string;
-  name: string;
-  type: string;
-  required?: boolean;
-}) {
+function ProgressIndicator({ current, progress, text, accent }: { current: number; progress: number; text: string; accent: string }) {
   return (
-    <label className="grid gap-2">
-      <span className="contact-label">{label}</span>
-      <input name={name} type={type} required={required} className="contact-input" />
-    </label>
+    <div className="mb-12">
+      <p
+        className="mb-4 uppercase"
+        style={{
+          fontFamily: "'Space Grotesk', sans-serif",
+          fontSize: "0.75rem",
+          letterSpacing: "0.15em",
+          color: rgbaFromHex(text, 0.48),
+        }}
+      >
+        ÉTAPE {current} / 3
+      </p>
+      <div className="h-px w-full overflow-hidden" style={{ background: rgbaFromHex(text, 0.08) }}>
+        <div
+          className="h-full"
+          style={{
+            width: `${progress}%`,
+            background: `linear-gradient(90deg, ${accent}, rgba(223,244,64,0.3))`,
+            transition: "width 0.6s ease",
+          }}
+        />
+      </div>
+    </div>
   );
+}
+
+function SuccessState({ text, accent, onHome }: { text: string; accent: string; onHome: () => void }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 80 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -40 }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      className="flex min-h-[520px] flex-col items-center justify-center text-center"
+    >
+      <div className="relative mb-10">
+        <motion.div
+          className="absolute inset-0 rounded-full"
+          animate={{ scale: [1, 1.5], opacity: [1, 0] }}
+          transition={{ duration: 1.2, repeat: Infinity, ease: "easeOut" }}
+          style={{ border: `1px solid ${accent}` }}
+        />
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", stiffness: 220, damping: 14, delay: 0.2 }}
+        >
+          <CheckCircle2 size={64} color={accent} strokeWidth={1.7} />
+        </motion.div>
+      </div>
+      <h1
+        className="mb-5"
+        style={{
+          fontFamily: "'Space Grotesk', sans-serif",
+          fontSize: "clamp(2rem, 5vw, 3.5rem)",
+          fontWeight: 700,
+          letterSpacing: "-0.04em",
+          color: text,
+        }}
+      >
+        Message envoyé.
+      </h1>
+      <p
+        className="mx-auto max-w-xl"
+        style={{
+          fontFamily: "'Inter', sans-serif",
+          fontSize: "1.1rem",
+          lineHeight: 1.8,
+          color: rgbaFromHex(text, 0.62),
+        }}
+      >
+        Je reviens vers vous très bientôt. Merci pour votre confiance.
+      </p>
+      <motion.button
+        type="button"
+        onClick={onHome}
+        whileHover={{ scale: 1.05, borderColor: accent }}
+        whileTap={{ scale: 0.95 }}
+        className="mt-12 inline-flex items-center gap-3 rounded-full px-8 py-4"
+        style={{
+          border: `1px solid ${rgbaFromHex(text, 0.15)}`,
+          color: rgbaFromHex(text, 0.6),
+          fontFamily: "'Space Grotesk', sans-serif",
+          fontSize: "1rem",
+          fontWeight: 600,
+          letterSpacing: "0.1em",
+          textTransform: "uppercase",
+        }}
+      >
+        Retour à l'accueil
+        <ArrowRight size={18} />
+      </motion.button>
+    </motion.div>
+  );
+}
+
+function inputStyle(color: string) {
+  return {
+    fontFamily: "'Inter', sans-serif",
+    fontSize: "clamp(1.25rem, 3vw, 2rem)",
+    fontWeight: 300,
+    color,
+    lineHeight: 1.45,
+  };
 }
