@@ -9,7 +9,7 @@ import { ProjectBackButton } from "./ProjectBackButton";
 
 /* -- Assets -- */
 import svgLogoWhite from "../../imports/svg-izx27lwoj7";
-import imgInk from "../../assets/maker-week/01-affiche-principale.png";
+import imgSphere from "../../assets/maker-week/00-sphere.png";
 import imgMainPoster from "../../assets/maker-week/01-affiche-principale.png";
 import imgBrochure1 from "../../assets/maker-week/02-brochure-1.png";
 import imgBrochure2 from "../../assets/maker-week/03-brochure-2.png";
@@ -125,7 +125,7 @@ function HeroSection() {
           <div className="w-8 h-[1px]" style={{ background: r(0.1) }} />
         </motion.div>
 
-        <Sphere3D backgroundUrl={imgInk} size="large" />
+        <Sphere3D backgroundUrl={imgSphere} size="large" />
 
         {/* Hint — drag to rotate */}
         <motion.div
@@ -614,7 +614,7 @@ function FinalSection() {
         {/* Closing sphere */}
         <FadeIn>
           <div className="flex justify-center mb-10">
-            <Sphere3D backgroundUrl={imgInk} size="small" />
+            <Sphere3D backgroundUrl={imgSphere} size="small" />
           </div>
         </FadeIn>
 
