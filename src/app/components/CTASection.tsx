@@ -26,11 +26,11 @@ export function CTASection() {
         style={{
           background: isDark
             ? `radial-gradient(circle at 18% 38%, rgba(${glowColor},0.36), transparent 36%), radial-gradient(circle at 74% 24%, rgba(${goldGlow},0.16), transparent 30%), radial-gradient(circle at 58% 82%, rgba(${cyanGlow},0.12), transparent 34%), linear-gradient(145deg, rgba(0,119,182,0.06) 0%, rgba(15,23,32,0.985) 42%, rgba(5,9,14,0.99) 100%)`
-            : `radial-gradient(circle at 18% 38%, rgba(${glowColor},0.13), transparent 34%), radial-gradient(circle at 74% 24%, rgba(${goldGlow},0.16), transparent 30%), radial-gradient(circle at 58% 82%, rgba(${cyanGlow},0.12), transparent 34%), linear-gradient(145deg, rgba(230,232,235,0.98) 0%, rgba(247,249,251,0.98) 52%, rgba(230,232,235,0.96) 100%)`,
+            : `radial-gradient(circle at 18% 38%, rgba(${glowColor},0.2), transparent 34%), radial-gradient(circle at 72% 22%, rgba(${goldGlow},0.26), transparent 29%), radial-gradient(circle at 58% 82%, rgba(${cyanGlow},0.14), transparent 34%), linear-gradient(145deg, rgba(214,222,230,0.98) 0%, rgba(246,248,250,0.94) 52%, rgba(218,225,232,0.96) 100%)`,
           border: `1px solid ${p.ctaBorder}`,
           boxShadow: isDark
             ? `0 32px 105px rgba(0,0,0,0.44), inset 0 1px 0 rgba(230,232,235,0.07), 0 0 90px rgba(${glowColor},0.09)`
-            : `0 32px 105px rgba(15,23,32,0.11), inset 0 1px 0 rgba(255,255,255,0.9), 0 0 80px rgba(${glowColor},0.075)`,
+            : `0 32px 105px rgba(15,23,32,0.14), inset 0 1px 0 rgba(255,255,255,0.86), 0 0 88px rgba(${glowColor},0.095), 0 0 54px rgba(${goldGlow},0.1)`,
           ["--cta-glow-rgb" as string]: glowColor,
           ["--cta-glow-secondary-rgb" as string]: cyanGlow,
         }}
@@ -84,7 +84,7 @@ export function CTASection() {
             style={{
               background: isDark
                 ? "linear-gradient(135deg, #261732 0%, #0077B6 50%, #00B4D8 82%, #FFD166 100%)"
-                : "linear-gradient(135deg, #0F1720 0%, #261732 44%, #0077B6 86%, #FFD166 100%)",
+                : "linear-gradient(135deg, #0F1720 0%, #261732 34%, #B8872E 60%, #0077B6 100%)",
               fontFamily: "'Inter', sans-serif",
               fontSize: "0.85rem",
               fontWeight: 600,

@@ -20,8 +20,8 @@ export function CompositeTitle({
 }: CompositeTitleProps) {
   const { p, isDark } = useTheme();
   const accentGradient = isDark
-    ? "linear-gradient(125deg, #FFD166 0%, #00B4D8 34%, #0077B6 58%, #6F4A86 78%, #FFD166 100%)"
-    : "linear-gradient(125deg, #261732 0%, #0077B6 36%, #00B4D8 62%, #B8872E 100%)";
+    ? "linear-gradient(125deg, #FFD166 0%, #6F4A86 28%, #00B4D8 55%, #0077B6 74%, #FFD166 100%)"
+    : "linear-gradient(125deg, #261732 0%, #B8872E 32%, #0077B6 58%, #00B4D8 74%, #261732 100%)";
 
   return (
     <Tag

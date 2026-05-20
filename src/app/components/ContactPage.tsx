@@ -37,7 +37,7 @@ export function ContactPage() {
         aria-hidden="true"
         className="absolute rounded-full pointer-events-none"
         initial={{ opacity: 0, scale: 0.96 }}
-        animate={{ opacity: isDark ? 0.28 : 0.24, scale: 1 }}
+        animate={{ opacity: isDark ? 0.28 : 0.38, scale: 1 }}
         transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
         style={{
           width: "clamp(280px, 42vw, 620px)",
@@ -135,11 +135,11 @@ export function ContactPage() {
             color: p.text,
             background: isDark
               ? `radial-gradient(circle at 18% 18%, rgba(${glowColor},0.28), transparent 34%), radial-gradient(circle at 84% 20%, rgba(${goldGlow},0.1), transparent 28%), linear-gradient(145deg, rgba(230,232,235,0.06), rgba(0,119,182,0.024), rgba(230,232,235,0.018))`
-              : `radial-gradient(circle at 18% 18%, rgba(${glowColor},0.08), transparent 34%), radial-gradient(circle at 84% 20%, rgba(${goldGlow},0.13), transparent 28%), linear-gradient(145deg, rgba(246,248,250,0.86), rgba(230,232,235,0.58))`,
+              : `radial-gradient(circle at 16% 18%, rgba(${glowColor},0.14), transparent 34%), radial-gradient(circle at 84% 18%, rgba(${goldGlow},0.22), transparent 28%), radial-gradient(circle at 68% 82%, rgba(${cyanGlow},0.1), transparent 34%), linear-gradient(145deg, rgba(218,225,232,0.88), rgba(246,248,250,0.82))`,
             border: `1px solid ${r(0.08)}`,
             boxShadow: isDark
               ? `0 28px 90px rgba(0,0,0,0.32), inset 0 1px 0 rgba(230,232,235,0.06), 0 0 46px rgba(${cyanGlow},0.06), 0 0 54px rgba(${goldGlow},0.055)`
-              : `0 28px 90px rgba(15,23,32,0.11), inset 0 1px 0 rgba(255,255,255,0.9), 0 0 42px rgba(${glowColor},0.055), 0 0 48px rgba(${goldGlow},0.075)`,
+              : `0 28px 90px rgba(15,23,32,0.14), inset 0 1px 0 rgba(255,255,255,0.88), 0 0 50px rgba(${glowColor},0.075), 0 0 54px rgba(${goldGlow},0.12)`,
             backdropFilter: "blur(18px)",
           }}
         >
@@ -210,7 +210,7 @@ export function ContactPage() {
                 style={{
                   background: isDark
                     ? "linear-gradient(135deg, #261732 0%, #0077B6 52%, #00B4D8 84%, #FFD166 100%)"
-                    : "linear-gradient(135deg, #0F1720 0%, #261732 46%, #0077B6 86%, #FFD166 100%)",
+                    : "linear-gradient(135deg, #0F1720 0%, #261732 34%, #B8872E 60%, #0077B6 100%)",
                   color: "#E6E8EB",
                   fontFamily: "'Inter', sans-serif",
                   fontSize: "0.84rem",

@@ -172,7 +172,7 @@ export function HeroSection() {
           top: "-24%",
           background: "radial-gradient(circle, rgba(38,23,50,0.34), rgba(0,180,216,0.17) 34%, transparent 68%)",
           filter: "blur(24px)",
-          opacity: isDark ? 0.9 : 0.62,
+          opacity: isDark ? 0.9 : 0.74,
           mixBlendMode: isDark ? "screen" : "multiply",
           zIndex: 0,
         }}
@@ -187,7 +187,7 @@ export function HeroSection() {
           height: "clamp(260px, 38vw, 680px)",
           background: "radial-gradient(circle, rgba(255,209,102,0.23), rgba(38,23,50,0.16) 42%, transparent 70%)",
           filter: "blur(30px)",
-          opacity: isDark ? 0.72 : 0.4,
+          opacity: isDark ? 0.72 : 0.54,
           zIndex: 0,
         }}
       />
@@ -249,14 +249,14 @@ export function HeroSection() {
               style={{
                 background: isDark
                   ? "linear-gradient(135deg, #261732 0%, #0077B6 52%, #00B4D8 84%, #FFD166 100%)"
-                  : "linear-gradient(135deg, #0F1720 0%, #261732 46%, #0077B6 100%)",
+                  : "linear-gradient(135deg, #0F1720 0%, #261732 34%, #B8872E 62%, #0077B6 100%)",
                 fontFamily: "'Inter', sans-serif",
                 fontSize: "0.85rem",
                 fontWeight: 500,
                 color: "#E6E8EB",
                 boxShadow: isDark
                   ? "0 18px 54px rgba(0,180,216,0.2), 0 0 34px rgba(255,209,102,0.12)"
-                  : "0 18px 48px rgba(15,23,32,0.2), 0 0 30px rgba(38,23,50,0.1)",
+                  : "0 18px 48px rgba(15,23,32,0.22), 0 0 32px rgba(38,23,50,0.13), 0 0 22px rgba(255,209,102,0.14)",
               }}
               onClick={() => navigate("/contact")}
             >
