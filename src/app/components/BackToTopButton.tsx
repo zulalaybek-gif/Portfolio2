@@ -46,7 +46,7 @@ export function BackToTopButton() {
       className="group fixed flex items-center justify-center rounded-full backdrop-blur-md transition-all duration-500 ease-out"
       aria-label={lang === "fr" ? "Retour en haut de la page" : "Back to top"}
       style={{
-        right: "clamp(1rem, 2.4vw, 2.4rem)",
+        right: "calc(clamp(0.45rem, 1vw, 0.9rem) + env(safe-area-inset-right))",
         bottom: "calc(1.55rem + env(safe-area-inset-bottom))",
         zIndex: 48,
         width: 42,
