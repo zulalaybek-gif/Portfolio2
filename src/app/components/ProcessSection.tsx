@@ -50,8 +50,8 @@ export function ProcessSection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
   const stepAccents = isDark
-    ? ["#FFD166", "#00B4D8", "#6F4A86", "#0077B6"]
-    : ["#B8872E", "#0077B6", "#261732", "#00B4D8"];
+    ? ["#0077B6", "#0077B6", "#00B4D8", "#D6A15D"]
+    : ["#0077B6", "#0077B6", "#2A1235", "#B96A3D"];
   const sectionRef = useRef<HTMLElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(lineRef);
@@ -114,7 +114,7 @@ export function ProcessSection() {
               const isLineVisible = reduceMotion || i + 1 < revealedCount;
               const stepAccent = stepAccents[i % stepAccents.length];
               const nextAccent = stepAccents[(i + 1) % stepAccents.length];
-              const badgeText = stepAccent === "#FFD166" || stepAccent === "#B8872E" ? "#0F1720" : "#E6E8EB";
+              const badgeText = stepAccent === "#D6A15D" || stepAccent === "#B96A3D" ? "#0F1720" : "#E6E8EB";
 
               return (
                 <div
@@ -205,8 +205,8 @@ export function ProcessSection() {
                     }}
                     style={{
                       background: isDark
-                        ? `radial-gradient(circle at 45% 35%, ${stepAccent}24 0%, rgba(38,23,50,0.12) 58%, rgba(15,23,32,0.96) 100%)`
-                        : `radial-gradient(circle at 45% 35%, ${stepAccent}1f 0%, rgba(255,209,102,0.07) 58%, rgba(230,232,235,0.96) 100%)`,
+                        ? `radial-gradient(circle at 45% 35%, ${stepAccent}22 0%, rgba(42,18,53,0.16) 58%, rgba(15,23,32,0.96) 100%)`
+                        : `radial-gradient(circle at 45% 35%, ${stepAccent}1c 0%, rgba(42,18,53,0.055) 58%, rgba(230,232,235,0.96) 100%)`,
                       border: `1px solid ${stepAccent}44`,
                       boxShadow: isDark
                         ? `0 18px 55px rgba(0,0,0,0.3), inset 0 1px 0 rgba(230,232,235,0.05), 0 0 ${isHovered ? 52 : 28}px ${stepAccent}${isHovered ? "44" : "24"}`

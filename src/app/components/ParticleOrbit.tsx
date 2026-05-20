@@ -69,8 +69,8 @@ interface Aurora {
 /* ── Palette ── */
 const COLORS = {
   green: [0, 119, 182], ltGreen: [0, 180, 216],
-  gold: [255, 209, 102], silver: [230, 232, 235],
-  purple: [38, 23, 50], warm: [255, 209, 102],
+  gold: [214, 161, 93], silver: [230, 232, 235],
+  purple: [42, 18, 53], warm: [185, 106, 61],
   teal: [0, 180, 216], white: [230, 232, 235],
 };
 const COLOR_KEYS = Object.keys(COLORS) as (keyof typeof COLORS)[];
@@ -92,16 +92,16 @@ const DAMPING = 0.975;
 type SectionTheme = { colors: [number[], number[], number[]] };
 
 const SECTION_THEMES: Record<string, SectionTheme> = {
-  hero:             { colors: [[38,23,50], [255,209,102], [0,180,216]] },
-  services:         { colors: [[0,119,182], [255,209,102], [38,23,50]] },
-  work:             { colors: [[38,23,50], [0,180,216], [255,209,102]]  },
-  cta:              { colors: [[255,209,102], [38,23,50], [0,180,216]] },
-  "projects-hero":  { colors: [[38,23,50], [0,119,182], [255,209,102]] },
-  "projects-index": { colors: [[15,23,32], [38,23,50], [0,180,216]]  },
-  "projects-reel":  { colors: [[0,180,216], [255,209,102], [38,23,50]] },
+  hero:             { colors: [[42,18,53], [0,119,182], [0,180,216]] },
+  services:         { colors: [[0,119,182], [42,18,53], [0,180,216]] },
+  work:             { colors: [[42,18,53], [0,119,182], [214,161,93]]  },
+  cta:              { colors: [[42,18,53], [0,119,182], [214,161,93]] },
+  "projects-hero":  { colors: [[42,18,53], [0,119,182], [0,180,216]] },
+  "projects-index": { colors: [[15,23,32], [42,18,53], [0,119,182]]  },
+  "projects-reel":  { colors: [[0,119,182], [0,180,216], [185,106,61]] },
 };
 
-const DEFAULT_THEME: SectionTheme = { colors: [[38,23,50], [0,119,182], [255,209,102]] };
+const DEFAULT_THEME: SectionTheme = { colors: [[42,18,53], [0,119,182], [0,180,216]] };
 
 export function ParticleOrbit() {
   const canvasRef = useRef<HTMLCanvasElement>(null);

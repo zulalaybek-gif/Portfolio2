@@ -19,8 +19,8 @@ export function ServicesSection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
   const serviceAccents = isDark
-    ? ["#0077B6", "#FFD166", "#6F4A86", "#00B4D8"]
-    : ["#0077B6", "#B8872E", "#261732", "#00B4D8"];
+    ? ["#0077B6", "#0077B6", "#00B4D8", "#0077B6", "#B96A3D", "#0077B6", "#0077B6", "#0077B6"]
+    : ["#0077B6", "#0077B6", "#0F1720", "#0077B6", "#B96A3D", "#0077B6", "#2A1235", "#0077B6"];
   const scrollRef = useRef<HTMLDivElement>(null);
   const programmaticScrollRef = useRef<number | null>(null);
   const scrollEndTimerRef = useRef<number | null>(null);
