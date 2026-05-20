@@ -546,45 +546,46 @@ function GallerySection() {
   const { t } = useI18n();
   const { isDark, r } = useTheme();
 
-  const photos: Array<{ src: string; alt: string; aspect: string }> = [
-    { src: imgPhoto10, alt: "Photo de groupe Maker Week", aspect: "aspect-[4/3]" },
-    { src: imgKakemonos, alt: "Kakemono Maker Week sur scène", aspect: "aspect-[4/3]" },
-    { src: imgPhotocall, alt: "Photocall Maker Week", aspect: "aspect-[4/3]" },
-    { src: imgSignaletique, alt: "Signalétique des ateliers Maker Week", aspect: "aspect-[4/3]" },
-    { src: imgPoster, alt: "Poster Maker Week dans l'école", aspect: "aspect-[4/3]" },
-    { src: imgPhoto11, alt: "Présentation Maker Week sur scène", aspect: "aspect-[4/3]" },
-    { src: imgPhoto1, alt: "Affichage Design d'interface", aspect: "aspect-[4/3]" },
-    { src: imgPhoto2, alt: "Programme Maker Week imprimé", aspect: "aspect-[4/3]" },
-    { src: imgPhoto9, alt: "Stand Maker Week dans le hall", aspect: "aspect-[4/3]" },
-    { src: imgPhoto12, alt: "Étudiants avec une affiche Maker Week", aspect: "aspect-[4/3]" },
-    { src: imgPhoto3, alt: "Atelier Maker Week en salle", aspect: "aspect-[4/3]" },
-    { src: imgPhoto4, alt: "Signalétique de salle Maker Week", aspect: "aspect-[4/3]" },
+  const photos: Array<{ src: string; alt: string; position?: string }> = [
+    { src: imgPhoto10, alt: "Photo de groupe Maker Week", position: "50% 42%" },
+    { src: imgPhoto11, alt: "Présentation Maker Week sur scène", position: "50% 42%" },
+    { src: imgPhoto1, alt: "Affichage Design d'interface", position: "50% 50%" },
+    { src: imgPhoto2, alt: "Programme Maker Week imprimé", position: "50% 45%" },
+    { src: imgPhoto9, alt: "Stand Maker Week dans le hall", position: "50% 44%" },
+    { src: imgPhoto12, alt: "Étudiants avec une affiche Maker Week", position: "50% 48%" },
+    { src: imgPhoto3, alt: "Atelier Maker Week en salle", position: "50% 50%" },
+    { src: imgPhoto4, alt: "Signalétique de salle Maker Week", position: "62% 50%" },
+    { src: imgPhoto5, alt: "Kakemono Maker Week dans le hall", position: "50% 50%" },
+    { src: imgPhoto6, alt: "Détail d'un support Maker Week", position: "50% 50%" },
+    { src: imgPhoto7, alt: "Salle de cours Maker Week", position: "52% 50%" },
+    { src: imgPhoto13, alt: "Signalétique de porte Maker Week", position: "50% 50%" },
   ];
 
   return (
-    <section className="px-5 md:px-12 lg:px-20 py-20">
-      <div className="max-w-[1500px] mx-auto">
-        <FadeIn className="mb-10">
+    <section className="px-5 md:px-10 lg:px-16 py-20 md:py-24">
+      <div className="max-w-[1680px] mx-auto">
+        <FadeIn className="mb-8 md:mb-10">
           <SectionLabel>{t("mw.gallery.label")}</SectionLabel>
         </FadeIn>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
-          {photos.map((src, i) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+          {photos.map((photo, i) => (
             <FadeIn key={i} delay={i * 0.04}>
               <div
-                className={`group overflow-hidden rounded-xl ${src.aspect}`}
+                className="group aspect-square overflow-hidden rounded-[18px]"
                 style={{
-                  border: `1px solid ${r(0.06)}`,
+                  border: `1px solid ${r(0.05)}`,
                   background: isDark ? "rgba(255,255,255,0.03)" : "rgba(10,26,42,0.03)",
                   boxShadow: isDark
-                    ? "0 18px 42px rgba(0,0,0,0.34)"
-                    : "0 18px 42px rgba(10,26,42,0.14)",
+                    ? "0 22px 52px rgba(0,0,0,0.38)"
+                    : "0 22px 52px rgba(10,26,42,0.16)",
                 }}
               >
                 <img
-                  src={src.src}
-                  alt={src.alt}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.035]"
+                  src={photo.src}
+                  alt={photo.alt}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                  style={{ objectPosition: photo.position ?? "50% 50%" }}
                   loading="lazy"
                 />
               </div>
