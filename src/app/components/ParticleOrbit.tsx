@@ -71,6 +71,10 @@ const COLORS = {
   carbon: [35, 38, 36], graphite: [31, 31, 31],
   chartreuse: [223, 244, 64], platinum: [241, 241, 241],
   blue: [75, 129, 151], cherry: [193, 33, 68],
+  green: [223, 244, 64], ltGreen: [75, 129, 151],
+  gold: [223, 244, 64], silver: [241, 241, 241],
+  purple: [193, 33, 68], warm: [75, 129, 151],
+  teal: [75, 129, 151], white: [241, 241, 241],
 };
 const COLOR_KEYS = Object.keys(COLORS) as (keyof typeof COLORS)[];
 const rgb = (k: keyof typeof COLORS) => COLORS[k].join(",");
