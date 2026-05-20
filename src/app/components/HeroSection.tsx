@@ -215,33 +215,6 @@ export function HeroSection() {
           </span>
         </div>
 
-        <div
-          className="mb-9 animate-soft-enter"
-          style={{ animationDelay: "0.28s" }}
-          aria-label="Zulâl Aybek"
-        >
-          <span
-            className="inline-flex items-center gap-3"
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: "0.72rem",
-              letterSpacing: "0.28em",
-              textTransform: "uppercase",
-              color: r(0.34),
-            }}
-          >
-            <span
-              className="hidden sm:block h-px w-10"
-              style={{ background: `linear-gradient(90deg, transparent, ${r(0.2)})` }}
-            />
-            Zulâl Aybek
-            <span
-              className="hidden sm:block h-px w-10"
-              style={{ background: `linear-gradient(90deg, ${r(0.2)}, transparent)` }}
-            />
-          </span>
-        </div>
-
         {/* Name — massive typographic treatment */}
         <div className="text-center mb-8">
           <CompositeTitle

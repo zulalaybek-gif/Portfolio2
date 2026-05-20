@@ -1,4 +1,4 @@
-import{d as Q,j as n,b as x}from"./vendor-react-C19tESaS.js";import{u as W,a as m}from"./index-C03hNdCl.js";import{P as J}from"./ProjectBackButton-fo_3X-g0.js";import{u as n1}from"./useAnimationActive-Bj4356Jr.js";import{b as l1,c as A,m as b}from"./vendor-motion-BjT7vWUd.js";import"./vendor-icons-JIo49_vt.js";const a1=`<?xml version="1.0" encoding="UTF-8"?>
+import{d as Q,j as n,b as x}from"./vendor-react-C19tESaS.js";import{u as W,a as m}from"./index-DrdwnvW6.js";import{P as J}from"./ProjectBackButton-fo_3X-g0.js";import{u as n1}from"./useAnimationActive-Bj4356Jr.js";import{b as l1,c as A,m as b}from"./vendor-motion-BjT7vWUd.js";import"./vendor-icons-JIo49_vt.js";const a1=`<?xml version="1.0" encoding="UTF-8"?>
 <svg id="Calque_2" data-name="Calque 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1038.5 1468.74">
   <defs>
     <style>
