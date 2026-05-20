@@ -5,7 +5,7 @@ export type Theme = "dark" | "light";
 /* ── Carbon Signal global palette ── */
 const palettes = {
   dark: {
-    pageBg: "#181A18",
+    pageBg: "#220D50",
     containerBg: "radial-gradient(circle at 78% 8%, rgba(75,129,151,0.16), transparent 31%), radial-gradient(circle at 12% 30%, rgba(223,244,64,0.09), transparent 40%), radial-gradient(circle at 86% 72%, rgba(193,33,68,0.08), transparent 28%), linear-gradient(180deg, rgba(31,31,31,0.994) 0%, rgba(18,20,18,0.997) 48%, rgba(35,38,36,0.992) 100%)",
     containerBorder: "rgba(241,241,241,0.09)",
     containerShadow: "0 0 120px rgba(0,0,0,0.72), inset 0 1px 0 rgba(241,241,241,0.055), 0 0 84px rgba(75,129,151,0.13), 0 0 34px rgba(223,244,64,0.055)",
@@ -44,7 +44,7 @@ const palettes = {
     dividerLine: "rgba(241,241,241,0.022)",
   },
   light: {
-    pageBg: "#F1F1F1",
+    pageBg: "#F8EDE8",
     containerBg: "radial-gradient(circle at 82% 8%, rgba(223,244,64,0.16), transparent 28%), radial-gradient(circle at 8% 26%, rgba(75,129,151,0.12), transparent 36%), radial-gradient(circle at 78% 78%, rgba(193,33,68,0.055), transparent 26%), linear-gradient(180deg, rgba(241,241,241,0.995) 0%, rgba(247,247,245,0.98) 48%, rgba(235,236,233,0.992) 100%)",
     containerBorder: "rgba(35,38,36,0.13)",
     containerShadow: "0 0 115px rgba(35,38,36,0.16), inset 0 1px 0 rgba(255,255,255,0.82), 0 0 78px rgba(75,129,151,0.08), 0 0 36px rgba(223,244,64,0.07)",
