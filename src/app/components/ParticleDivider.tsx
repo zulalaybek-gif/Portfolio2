@@ -14,8 +14,8 @@ interface StreamParticle {
 }
 
 const STREAM_COLORS = [
-  "42,18,53", "0,119,182", "0,180,216",
-  "230,232,235", "214,161,93", "15,23,32",
+  "32,19,42", "12,96,126", "83,166,184",
+  "230,232,235", "199,164,106", "15,23,32",
 ];
 
 interface Props {
@@ -54,7 +54,7 @@ export function ParticleDivider({
     let raf: number;
 
     const mkP = (w: number, h: number): StreamParticle => {
-      const colors = accent ? [accent, "0,119,182", "42,18,53", ...STREAM_COLORS.slice(2, 4)] : STREAM_COLORS;
+      const colors = accent ? [accent, "12,96,126", "32,19,42", ...STREAM_COLORS.slice(2, 4)] : STREAM_COLORS;
       return {
         x: Math.random() * w,
         y: h / 2 + (Math.random() - 0.5) * h * 0.5,

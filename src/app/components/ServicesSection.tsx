@@ -19,8 +19,8 @@ export function ServicesSection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
   const serviceAccents = isDark
-    ? ["#0077B6", "#0077B6", "#00B4D8", "#0077B6", "#B96A3D", "#0077B6", "#0077B6", "#0077B6"]
-    : ["#0077B6", "#0077B6", "#0F1720", "#0077B6", "#B96A3D", "#0077B6", "#2A1235", "#0077B6"];
+    ? ["#0E5C78", "#5EAFC0", "#0E5C78", "#201326", "#C7A46A", "#0E5C78", "#5EAFC0", "#0E5C78"]
+    : ["#0E5C78", "#0E5C78", "#0F1720", "#5EAFC0", "#9D674B", "#0E5C78", "#201326", "#0E5C78"];
   const scrollRef = useRef<HTMLDivElement>(null);
   const programmaticScrollRef = useRef<number | null>(null);
   const scrollEndTimerRef = useRef<number | null>(null);
@@ -161,7 +161,9 @@ export function ServicesSection() {
                   scrollSnapAlign: "start",
                   background: p.cardBg,
                   border: `1px solid ${p.cardBorder}`,
-                  boxShadow: isDark ? "inset 0 1px 0 rgba(230,232,235,0.035)" : "inset 0 1px 0 rgba(255,255,255,0.72)",
+                  boxShadow: isDark
+                    ? "inset 0 1px 0 rgba(230,232,235,0.035), 0 20px 60px rgba(0,0,0,0.08)"
+                    : "inset 0 1px 0 rgba(255,255,255,0.72), 0 18px 52px rgba(15,23,32,0.045)",
                   transform: "translateZ(0)",
                 }}
               >
@@ -180,7 +182,7 @@ export function ServicesSection() {
                 {/* Hover accent dot */}
                 <div
                   className="absolute top-7 right-7 w-2 h-2 rounded-full opacity-0 scale-50 transition-all duration-300 ease-out group-hover:opacity-70 group-hover:scale-100"
-                  style={{ background: cardAccent, boxShadow: `0 0 18px ${cardAccent}66` }}
+                  style={{ background: cardAccent, boxShadow: `0 0 18px ${cardAccent}44` }}
                 />
 
                 {/* Title with large first letter */}
@@ -227,6 +229,7 @@ export function ServicesSection() {
                 height: 6,
                 background: activeIdx === i ? serviceAccents[i % serviceAccents.length] : r(0.1),
                 boxShadow: activeIdx === i ? `0 0 18px ${serviceAccents[i % serviceAccents.length]}55` : "none",
+                opacity: activeIdx === i ? 0.95 : 0.7,
               }}
             />
           ))}

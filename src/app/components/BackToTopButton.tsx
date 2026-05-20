@@ -58,8 +58,8 @@ export function BackToTopButton() {
         background: isDark ? "rgba(15,23,32,0.64)" : "rgba(230,232,235,0.72)",
         border: `1px solid ${isDark ? "rgba(230,232,235,0.14)" : "rgba(15,23,32,0.13)"}`,
         boxShadow: isDark
-          ? "0 14px 42px rgba(0,0,0,0.34), 0 0 30px rgba(0,180,216,0.1), 0 0 18px rgba(214,161,93,0.055)"
-          : "0 14px 38px rgba(15,23,32,0.11), 0 0 28px rgba(42,18,53,0.08), 0 0 16px rgba(214,161,93,0.06)",
+          ? "0 14px 42px rgba(0,0,0,0.34), 0 0 30px rgba(83,166,184,0.075), 0 0 18px rgba(199,164,106,0.04)"
+          : "0 14px 38px rgba(15,23,32,0.11), 0 0 28px rgba(32,19,42,0.065), 0 0 16px rgba(199,164,106,0.045)",
       }}
     >
       <span
@@ -67,8 +67,8 @@ export function BackToTopButton() {
         className="absolute inset-[5px] rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{
           background: isDark
-            ? "radial-gradient(circle, rgba(0,180,216,0.16), rgba(42,18,53,0.14), transparent 72%)"
-            : "radial-gradient(circle, rgba(0,119,182,0.13), rgba(42,18,53,0.08), transparent 72%)",
+            ? "radial-gradient(circle, rgba(83,166,184,0.12), rgba(32,19,42,0.15), transparent 72%)"
+            : "radial-gradient(circle, rgba(12,96,126,0.11), rgba(32,19,42,0.065), transparent 72%)",
         }}
       />
       <ArrowUp

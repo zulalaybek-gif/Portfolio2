@@ -11,11 +11,11 @@ export function ScrollProgressIndicator() {
       aria-hidden="true"
       style={{
         ["--scroll-progress-track" as string]: isDark ? "rgba(5, 9, 14, 0.96)" : "rgba(15, 23, 32, 0.58)",
-        ["--scroll-progress-track-edge" as string]: isDark ? "rgba(230, 232, 235, 0.1)" : "rgba(42, 18, 53, 0.2)",
-        ["--scroll-progress-fill" as string]: "#0077B6",
-        ["--scroll-progress-fill-2" as string]: "#00B4D8",
-        ["--scroll-progress-fill-3" as string]: "#B96A3D",
-        ["--scroll-progress-glow" as string]: isDark ? "rgba(0, 180, 216, 0.44)" : "rgba(0, 119, 182, 0.28)",
+        ["--scroll-progress-track-edge" as string]: isDark ? "rgba(230, 232, 235, 0.09)" : "rgba(32, 19, 42, 0.18)",
+        ["--scroll-progress-fill" as string]: "#0E5C78",
+        ["--scroll-progress-fill-2" as string]: "#5EAFC0",
+        ["--scroll-progress-fill-3" as string]: "#C7A46A",
+        ["--scroll-progress-glow" as string]: isDark ? "rgba(83, 166, 184, 0.32)" : "rgba(12, 96, 126, 0.22)",
       }}
     >
       <div className="scroll-progress-indicator__track">

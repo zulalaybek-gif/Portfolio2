@@ -40,8 +40,8 @@ export function Layout() {
       className="min-h-screen w-full flex items-center justify-center relative"
       style={{
         background: isDark
-          ? "radial-gradient(circle at 12% 18%, rgba(42,18,53,0.42), transparent 34%), radial-gradient(circle at 82% 12%, rgba(0,119,182,0.13), transparent 28%), radial-gradient(circle at 78% 78%, rgba(214,161,93,0.045), transparent 24%), radial-gradient(circle at 24% 86%, rgba(0,180,216,0.07), transparent 28%), linear-gradient(135deg, #05090E 0%, #0F1720 48%, #030609 100%)"
-          : "radial-gradient(circle at 10% 18%, rgba(42,18,53,0.17), transparent 32%), radial-gradient(circle at 84% 12%, rgba(0,119,182,0.14), transparent 27%), radial-gradient(circle at 72% 76%, rgba(214,161,93,0.13), transparent 24%), radial-gradient(circle at 24% 86%, rgba(0,180,216,0.07), transparent 29%), linear-gradient(135deg, #C9D3DE 0%, #E6E8EB 52%, #F2F0EA 100%)",
+          ? "radial-gradient(circle at 12% 18%, rgba(32,19,42,0.46), transparent 36%), radial-gradient(circle at 82% 12%, rgba(12,96,126,0.105), transparent 30%), radial-gradient(circle at 78% 78%, rgba(199,164,106,0.034), transparent 25%), radial-gradient(circle at 24% 86%, rgba(83,166,184,0.045), transparent 30%), linear-gradient(135deg, #05090E 0%, #0F1720 50%, #030609 100%)"
+          : "radial-gradient(circle at 10% 18%, rgba(32,19,42,0.135), transparent 34%), radial-gradient(circle at 84% 12%, rgba(12,96,126,0.105), transparent 29%), radial-gradient(circle at 72% 76%, rgba(199,164,106,0.088), transparent 25%), radial-gradient(circle at 24% 86%, rgba(83,166,184,0.048), transparent 31%), linear-gradient(135deg, #C9D3DE 0%, #E6E8EB 54%, #F2F0EA 100%)",
         padding: "clamp(32px, 5vw, 80px)",
         fontFamily: "'Inter', sans-serif",
       }}
@@ -54,7 +54,7 @@ export function Layout() {
           backgroundImage:
             isDark
               ? "linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px)"
-              : "linear-gradient(rgba(15,23,32,0.036) 1px, transparent 1px), linear-gradient(90deg, rgba(42,18,53,0.024) 1px, transparent 1px)",
+              : "linear-gradient(rgba(15,23,32,0.032) 1px, transparent 1px), linear-gradient(90deg, rgba(32,19,42,0.02) 1px, transparent 1px)",
           backgroundSize: "72px 72px",
           maskImage: "radial-gradient(circle at 50% 20%, black 0%, transparent 72%)",
           zIndex: 0,
@@ -65,8 +65,8 @@ export function Layout() {
         className="pointer-events-none fixed inset-x-0 top-0 h-[46vh]"
         style={{
           background: isDark
-            ? "linear-gradient(180deg, rgba(0,180,216,0.08), rgba(42,18,53,0.16) 46%, transparent 78%)"
-            : "linear-gradient(180deg, rgba(42,18,53,0.12), rgba(0,119,182,0.08) 44%, rgba(0,180,216,0.045) 66%, transparent 84%)",
+            ? "linear-gradient(180deg, rgba(83,166,184,0.052), rgba(32,19,42,0.18) 48%, transparent 80%)"
+            : "linear-gradient(180deg, rgba(32,19,42,0.09), rgba(12,96,126,0.062) 46%, rgba(83,166,184,0.034) 68%, transparent 84%)",
           filter: "blur(18px)",
           zIndex: 0,
         }}

@@ -68,10 +68,10 @@ interface Aurora {
 
 /* ── Palette ── */
 const COLORS = {
-  green: [0, 119, 182], ltGreen: [0, 180, 216],
-  gold: [214, 161, 93], silver: [230, 232, 235],
-  purple: [42, 18, 53], warm: [185, 106, 61],
-  teal: [0, 180, 216], white: [230, 232, 235],
+  green: [12, 96, 126], ltGreen: [83, 166, 184],
+  gold: [199, 164, 106], silver: [230, 232, 235],
+  purple: [32, 19, 42], warm: [157, 103, 75],
+  teal: [83, 166, 184], white: [230, 232, 235],
 };
 const COLOR_KEYS = Object.keys(COLORS) as (keyof typeof COLORS)[];
 const rgb = (k: keyof typeof COLORS) => COLORS[k].join(",");
@@ -92,16 +92,16 @@ const DAMPING = 0.975;
 type SectionTheme = { colors: [number[], number[], number[]] };
 
 const SECTION_THEMES: Record<string, SectionTheme> = {
-  hero:             { colors: [[42,18,53], [0,119,182], [0,180,216]] },
-  services:         { colors: [[0,119,182], [42,18,53], [0,180,216]] },
-  work:             { colors: [[42,18,53], [0,119,182], [214,161,93]]  },
-  cta:              { colors: [[42,18,53], [0,119,182], [214,161,93]] },
-  "projects-hero":  { colors: [[42,18,53], [0,119,182], [0,180,216]] },
-  "projects-index": { colors: [[15,23,32], [42,18,53], [0,119,182]]  },
-  "projects-reel":  { colors: [[0,119,182], [0,180,216], [185,106,61]] },
+  hero:             { colors: [[32,19,42], [12,96,126], [83,166,184]] },
+  services:         { colors: [[12,96,126], [32,19,42], [83,166,184]] },
+  work:             { colors: [[32,19,42], [12,96,126], [199,164,106]]  },
+  cta:              { colors: [[32,19,42], [12,96,126], [199,164,106]] },
+  "projects-hero":  { colors: [[32,19,42], [12,96,126], [83,166,184]] },
+  "projects-index": { colors: [[15,23,32], [32,19,42], [12,96,126]]  },
+  "projects-reel":  { colors: [[12,96,126], [83,166,184], [157,103,75]] },
 };
 
-const DEFAULT_THEME: SectionTheme = { colors: [[42,18,53], [0,119,182], [0,180,216]] };
+const DEFAULT_THEME: SectionTheme = { colors: [[32,19,42], [12,96,126], [83,166,184]] };
 
 export function ParticleOrbit() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
