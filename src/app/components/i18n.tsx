@@ -117,7 +117,7 @@ const translations = {
   "projects.heroLabel": { fr: "Portfolio / Index", en: "Portfolio / Index" },
   "projects.count": { fr: "Projets", en: "Projects" },
   "projects.title1": { fr: "PROJETS", en: "SELECTED" },
-  "projects.title2": { fr: "FOCUS", en: "WORKS" },
+  "projects.title2": { fr: "focus", en: "WORKS" },
   "projects.subtitle": {
     fr: "L\u00E0 o\u00F9 la vision rencontre le savoir-faire",
     en: "Where vision meets craft",
