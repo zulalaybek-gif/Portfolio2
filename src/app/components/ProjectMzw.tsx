@@ -16,16 +16,13 @@ import imgVinyle from "../../assets/mzw/04-vinyle.png";
 import imgTShirt from "../../assets/mzw/05-tshirt.png";
 import imgMockup1 from "../../assets/mzw/06-mockup.png";
 import imgMockup2 from "../../assets/mzw/07-mockup.png";
+import imgButterfly from "../../assets/mzw/11-papillon.png";
 import imgAlbumArt from "figma:asset/285aae2a2bd3a31891ce93006639e1f4cfc7f16b.png";
 import imgCover1 from "figma:asset/b2dc3411ce1d7da5eedb5f043de453cdcea29c1d.png";
 import imgCover2 from "figma:asset/26ae25ab6f07e30cafc892d0f17cb14a514a6034.png";
 import imgCover3 from "figma:asset/4c9333cbad89d2b7b025a8b2eeb4a232cada0a5a.png";
 import imgCover4 from "figma:asset/621f4ea03c85e1dd9558f377364da9bed12d680b.png";
 import imgCover5 from "figma:asset/fafde56448e896ef13ef6ce3abb1701a45e00563.png";
-
-/* Butterfly decorative elements */
-import imgButterflyDark from "figma:asset/05779787c3aa30f3c5bf6223cef95b15e8dc4c6c.png";
-import imgButterflyLight from "figma:asset/46e4854a99d69700fa6a55f340a876752fa36e42.png";
 
 /* Phone mockups — device frames from Figma */
 import imgPhoneSplash from "figma:asset/bcd888905a245dc8b177e96fd0999cc222dc74ea.png";
@@ -1096,14 +1093,13 @@ function SingleButterfly({ data, scrollPct, isDark }: { data: ButterflyData; scr
             style={{ transformOrigin: "center center", perspective: 200 }}
           >
             <img
-              src={isDark ? imgButterflyDark : imgButterflyLight}
+              src={imgButterfly}
               alt=""
               draggable={false}
               style={{
                 width: `${data.size}px`,
                 objectFit: "contain",
                 userSelect: "none",
-                mixBlendMode: isDark ? "screen" : "multiply",
               }}
             />
           </motion.div>
