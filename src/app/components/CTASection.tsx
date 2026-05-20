@@ -10,9 +10,8 @@ export function CTASection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
   const cardRef = useRef<HTMLDivElement>(null);
-  const accent = "#0077B6";
-  const accentBright = "#00B4D8";
-  const glowColor = isDark ? "0,180,216" : "0,119,182";
+  const glowColor = "38,23,50";
+  const cyanGlow = "0,180,216";
   const goldGlow = "255,209,102";
 
   return (
@@ -26,13 +25,14 @@ export function CTASection() {
         className="max-w-6xl mx-auto relative overflow-hidden rounded-[2.5rem] p-12 md:p-24"
         style={{
           background: isDark
-            ? `radial-gradient(circle at 18% 38%, rgba(${glowColor},0.18), transparent 36%), linear-gradient(145deg, rgba(0,119,182,0.09) 0%, rgba(15,23,32,0.985) 42%, rgba(5,9,14,0.99) 100%)`
-            : `radial-gradient(circle at 18% 38%, rgba(${glowColor},0.14), transparent 36%), linear-gradient(145deg, rgba(230,232,235,0.98) 0%, rgba(247,249,251,0.98) 52%, rgba(230,232,235,0.96) 100%)`,
+            ? `radial-gradient(circle at 18% 38%, rgba(${glowColor},0.36), transparent 36%), radial-gradient(circle at 74% 24%, rgba(${goldGlow},0.16), transparent 30%), radial-gradient(circle at 58% 82%, rgba(${cyanGlow},0.12), transparent 34%), linear-gradient(145deg, rgba(0,119,182,0.06) 0%, rgba(15,23,32,0.985) 42%, rgba(5,9,14,0.99) 100%)`
+            : `radial-gradient(circle at 18% 38%, rgba(${glowColor},0.13), transparent 34%), radial-gradient(circle at 74% 24%, rgba(${goldGlow},0.16), transparent 30%), radial-gradient(circle at 58% 82%, rgba(${cyanGlow},0.12), transparent 34%), linear-gradient(145deg, rgba(230,232,235,0.98) 0%, rgba(247,249,251,0.98) 52%, rgba(230,232,235,0.96) 100%)`,
           border: `1px solid ${p.ctaBorder}`,
           boxShadow: isDark
             ? `0 32px 105px rgba(0,0,0,0.44), inset 0 1px 0 rgba(230,232,235,0.07), 0 0 90px rgba(${glowColor},0.09)`
             : `0 32px 105px rgba(15,23,32,0.11), inset 0 1px 0 rgba(255,255,255,0.9), 0 0 80px rgba(${glowColor},0.075)`,
           ["--cta-glow-rgb" as string]: glowColor,
+          ["--cta-glow-secondary-rgb" as string]: cyanGlow,
         }}
       >
         <InteractiveCtaGlow cardRef={cardRef} isDark={isDark} />
@@ -49,7 +49,7 @@ export function CTASection() {
             bottom: 0,
             height: 1,
             transformOrigin: "center",
-            background: `linear-gradient(90deg, transparent, rgba(${glowColor},0.38), rgba(${goldGlow},0.22), transparent)`,
+            background: `linear-gradient(90deg, transparent, rgba(${glowColor},0.42), rgba(${goldGlow},0.32), rgba(${cyanGlow},0.28), transparent)`,
           }}
         />
 
@@ -83,8 +83,8 @@ export function CTASection() {
             className="group inline-flex items-center gap-3 px-10 py-4 rounded-full transition-all duration-500 hover:scale-[1.035] active:scale-[0.985]"
             style={{
               background: isDark
-                ? `linear-gradient(135deg, ${accent} 0%, ${accentBright} 100%)`
-                : "linear-gradient(135deg, #0F1720 0%, #0077B6 100%)",
+                ? "linear-gradient(135deg, #261732 0%, #0077B6 50%, #00B4D8 82%, #FFD166 100%)"
+                : "linear-gradient(135deg, #0F1720 0%, #261732 44%, #0077B6 86%, #FFD166 100%)",
               fontFamily: "'Inter', sans-serif",
               fontSize: "0.85rem",
               fontWeight: 600,
@@ -93,8 +93,8 @@ export function CTASection() {
               color: "#E6E8EB",
               textDecoration: "none",
               boxShadow: isDark
-                ? `0 16px 46px rgba(${glowColor},0.18), inset 0 1px 0 rgba(255,255,255,0.28)`
-                : `0 16px 46px rgba(${glowColor},0.18), inset 0 1px 0 rgba(255,255,255,0.18)`,
+                ? `0 16px 46px rgba(${cyanGlow},0.18), 0 0 34px rgba(${goldGlow},0.14), inset 0 1px 0 rgba(255,255,255,0.28)`
+                : `0 16px 46px rgba(${glowColor},0.16), 0 0 30px rgba(${goldGlow},0.12), inset 0 1px 0 rgba(255,255,255,0.18)`,
             }}
           >
             {t("cta.button")}

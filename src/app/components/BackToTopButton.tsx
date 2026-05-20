@@ -58,15 +58,17 @@ export function BackToTopButton() {
         background: isDark ? "rgba(15,23,32,0.64)" : "rgba(230,232,235,0.72)",
         border: `1px solid ${isDark ? "rgba(230,232,235,0.14)" : "rgba(15,23,32,0.13)"}`,
         boxShadow: isDark
-          ? "0 14px 42px rgba(0,0,0,0.34), 0 0 30px rgba(0,180,216,0.13)"
-          : "0 14px 38px rgba(15,23,32,0.11), 0 0 28px rgba(0,119,182,0.09)",
+          ? "0 14px 42px rgba(0,0,0,0.34), 0 0 30px rgba(0,180,216,0.1), 0 0 24px rgba(255,209,102,0.08)"
+          : "0 14px 38px rgba(15,23,32,0.11), 0 0 28px rgba(38,23,50,0.09), 0 0 20px rgba(255,209,102,0.1)",
       }}
     >
       <span
         aria-hidden="true"
         className="absolute inset-[5px] rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{
-          background: isDark ? "rgba(0,119,182,0.16)" : "rgba(0,119,182,0.12)",
+          background: isDark
+            ? "radial-gradient(circle, rgba(255,209,102,0.18), rgba(0,180,216,0.12), transparent 72%)"
+            : "radial-gradient(circle, rgba(255,209,102,0.2), rgba(38,23,50,0.1), transparent 72%)",
         }}
       />
       <ArrowUp

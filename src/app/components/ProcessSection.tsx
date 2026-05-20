@@ -49,7 +49,9 @@ function useInView(ref: RefObject<HTMLElement | null>, margin = "200px 0px") {
 export function ProcessSection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
-  const accent = "#0077B6";
+  const stepAccents = isDark
+    ? ["#FFD166", "#00B4D8", "#6F4A86", "#0077B6"]
+    : ["#B8872E", "#0077B6", "#261732", "#00B4D8"];
   const sectionRef = useRef<HTMLElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(lineRef);
@@ -110,6 +112,9 @@ export function ProcessSection() {
               const isStepVisible = reduceMotion || i < revealedCount;
               const isStepActive = reduceMotion || i === revealedCount - 1;
               const isLineVisible = reduceMotion || i + 1 < revealedCount;
+              const stepAccent = stepAccents[i % stepAccents.length];
+              const nextAccent = stepAccents[(i + 1) % stepAccents.length];
+              const badgeText = stepAccent === "#FFD166" || stepAccent === "#B8872E" ? "#0F1720" : "#E6E8EB";
 
               return (
                 <div
@@ -143,8 +148,8 @@ export function ProcessSection() {
                       className="absolute inset-y-0 left-0 rounded-full"
                       style={{
                         width: "100%",
-                        background: `linear-gradient(90deg, ${accent} 0%, ${accent}88 72%, transparent 100%)`,
-                        boxShadow: shouldGlowLine ? `0 0 24px ${accent}70` : "none",
+                        background: `linear-gradient(90deg, ${stepAccent} 0%, ${nextAccent}88 72%, transparent 100%)`,
+                        boxShadow: shouldGlowLine ? `0 0 24px ${stepAccent}70` : "none",
                         opacity: shouldGlowLine ? 1 : 0.78,
                         transform: isLineVisible ? "scaleX(1)" : "scaleX(0)",
                         transformOrigin: "left center",
@@ -157,7 +162,7 @@ export function ProcessSection() {
                         right: -6,
                         width: 28,
                         height: 28,
-                        background: `radial-gradient(circle, ${accent}55 0%, transparent 65%)`,
+                        background: `radial-gradient(circle, ${nextAccent}55 0%, transparent 65%)`,
                         filter: "blur(8px)",
                         opacity: isLineVisible ? 0.65 : 0,
                         transition: "opacity 0.7s ease",
@@ -177,7 +182,7 @@ export function ProcessSection() {
                     }}
                     transition={{ duration: isHovered ? 0.7 : 1.4, ease: [0.16, 1, 0.3, 1] }}
                     style={{
-                      background: `radial-gradient(circle, ${accent}58 0%, ${accent}24 36%, transparent 70%)`,
+                      background: `radial-gradient(circle, ${stepAccent}58 0%, ${stepAccent}24 36%, transparent 70%)`,
                       filter: "blur(10px)",
                     }}
                   />
@@ -200,12 +205,12 @@ export function ProcessSection() {
                     }}
                     style={{
                       background: isDark
-                        ? `radial-gradient(circle at 45% 35%, rgba(0,180,216,0.17) 0%, rgba(0,119,182,0.07) 58%, rgba(15,23,32,0.96) 100%)`
-                        : `radial-gradient(circle at 45% 35%, rgba(0,119,182,0.13) 0%, rgba(0,180,216,0.035) 58%, rgba(230,232,235,0.96) 100%)`,
-                      border: `1px solid ${isDark ? "rgba(0,180,216,0.24)" : "rgba(0,119,182,0.18)"}`,
+                        ? `radial-gradient(circle at 45% 35%, ${stepAccent}24 0%, rgba(38,23,50,0.12) 58%, rgba(15,23,32,0.96) 100%)`
+                        : `radial-gradient(circle at 45% 35%, ${stepAccent}1f 0%, rgba(255,209,102,0.07) 58%, rgba(230,232,235,0.96) 100%)`,
+                      border: `1px solid ${stepAccent}44`,
                       boxShadow: isDark
-                        ? `0 18px 55px rgba(0,0,0,0.3), inset 0 1px 0 rgba(230,232,235,0.05), 0 0 ${isHovered ? 52 : 28}px rgba(0,180,216,${isHovered ? 0.18 : 0.07})`
-                        : `0 18px 55px rgba(15,23,32,0.08), inset 0 1px 0 rgba(255,255,255,0.75), 0 0 ${isHovered ? 48 : 28}px rgba(0,119,182,${isHovered ? 0.16 : 0.06})`,
+                        ? `0 18px 55px rgba(0,0,0,0.3), inset 0 1px 0 rgba(230,232,235,0.05), 0 0 ${isHovered ? 52 : 28}px ${stepAccent}${isHovered ? "44" : "24"}`
+                        : `0 18px 55px rgba(15,23,32,0.08), inset 0 1px 0 rgba(255,255,255,0.75), 0 0 ${isHovered ? 48 : 28}px ${stepAccent}${isHovered ? "38" : "18"}`,
                       transform: "translateZ(0)",
                     }}
                   >
@@ -219,18 +224,18 @@ export function ProcessSection() {
                       }
                       transition={{ duration: isHovered ? 0.9 : 3.8, delay: isHovered ? 0 : 1.35 + i * 0.24, repeat: isHovered ? 0 : Infinity, ease: "easeInOut" }}
                     >
-                      <step.icon size={24} strokeWidth={1.8} style={{ color: accent }} />
+                      <step.icon size={24} strokeWidth={1.8} style={{ color: stepAccent }} />
                     </motion.div>
                   </motion.div>
                   {/* Step number badge */}
                   <span
                     className="absolute -top-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center"
                     style={{
-                      background: accent,
+                      background: stepAccent,
                       fontFamily: "'Space Grotesk', sans-serif",
                       fontSize: "0.55rem",
                       fontWeight: 700,
-                      color: "#E6E8EB",
+                      color: badgeText,
                       transform: isStepVisible ? `scale(${isHovered ? 1.12 : 1})` : "scale(0)",
                       transition: `transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) ${0.7 + i * 0.3}s`,
                     }}
@@ -241,7 +246,7 @@ export function ProcessSection() {
 
                 {/* Mobile connector */}
                 {i < steps.length - 1 && (
-                  <div className="lg:hidden w-[1px] h-8 mb-4 sm:hidden" style={{ background: `${accent}30` }} />
+                  <div className="lg:hidden w-[1px] h-8 mb-4 sm:hidden" style={{ background: `${stepAccent}44` }} />
                 )}
 
                 <h3
@@ -250,7 +255,7 @@ export function ProcessSection() {
                     fontFamily: "'Space Grotesk', sans-serif",
                     fontSize: "1.1rem",
                     fontWeight: 600,
-                    color: isHovered || isStepActive ? accent : p.text,
+                    color: isHovered || isStepActive ? stepAccent : p.text,
                     transition: "color 260ms ease, transform 260ms ease",
                     transform: isHovered || isStepActive ? "translateY(-2px)" : "translateY(0)",
                   }}

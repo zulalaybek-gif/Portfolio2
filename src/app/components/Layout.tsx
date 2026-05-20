@@ -40,8 +40,8 @@ export function Layout() {
       className="min-h-screen w-full flex items-center justify-center relative"
       style={{
         background: isDark
-          ? "radial-gradient(circle at 16% 18%, rgba(0,119,182,0.22), transparent 32%), radial-gradient(circle at 84% 9%, rgba(0,180,216,0.16), transparent 28%), linear-gradient(135deg, #05090E 0%, #0F1720 48%, #030609 100%)"
-          : "radial-gradient(circle at 16% 18%, rgba(0,119,182,0.18), transparent 32%), radial-gradient(circle at 84% 9%, rgba(0,180,216,0.15), transparent 28%), linear-gradient(135deg, #DCE2E8 0%, #E6E8EB 48%, #F5F7F9 100%)",
+          ? "radial-gradient(circle at 12% 18%, rgba(38,23,50,0.38), transparent 34%), radial-gradient(circle at 82% 12%, rgba(0,180,216,0.16), transparent 28%), radial-gradient(circle at 78% 78%, rgba(255,209,102,0.12), transparent 30%), linear-gradient(135deg, #05090E 0%, #0F1720 48%, #030609 100%)"
+          : "radial-gradient(circle at 12% 18%, rgba(38,23,50,0.16), transparent 34%), radial-gradient(circle at 82% 12%, rgba(0,180,216,0.14), transparent 28%), radial-gradient(circle at 78% 78%, rgba(255,209,102,0.2), transparent 30%), linear-gradient(135deg, #DCE2E8 0%, #E6E8EB 48%, #F5F7F9 100%)",
         padding: "clamp(32px, 5vw, 80px)",
         fontFamily: "'Inter', sans-serif",
       }}
@@ -62,7 +62,7 @@ export function Layout() {
         aria-hidden="true"
         className="pointer-events-none fixed inset-x-0 top-0 h-[46vh]"
         style={{
-          background: "linear-gradient(180deg, rgba(0,180,216,0.16), transparent 72%)",
+          background: "linear-gradient(180deg, rgba(0,180,216,0.12), rgba(38,23,50,0.12) 46%, transparent 78%)",
           filter: "blur(18px)",
           zIndex: 0,
         }}

@@ -17,9 +17,10 @@ export function ContactPage() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
   const [submitted, setSubmitted] = useState(false);
-  const accent = "#0077B6";
-  const accentBright = "#00B4D8";
-  const glowColor = isDark ? "0,180,216" : "0,119,182";
+  const accent = isDark ? "#FFD166" : "#261732";
+  const glowColor = "38,23,50";
+  const cyanGlow = "0,180,216";
+  const goldGlow = "255,209,102";
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -43,7 +44,7 @@ export function ContactPage() {
           height: "clamp(280px, 42vw, 620px)",
           right: "-12%",
           top: "-18%",
-          background: `radial-gradient(circle, rgba(${glowColor},0.24), rgba(255,209,102,0.09) 36%, transparent 68%)`,
+          background: `radial-gradient(circle, rgba(${glowColor},0.26), rgba(${goldGlow},0.16) 36%, rgba(${cyanGlow},0.12) 52%, transparent 70%)`,
           filter: "blur(20px)",
         }}
       />
@@ -133,12 +134,12 @@ export function ContactPage() {
           style={{
             color: p.text,
             background: isDark
-              ? "linear-gradient(145deg, rgba(230,232,235,0.06), rgba(0,119,182,0.028), rgba(230,232,235,0.018))"
-              : "linear-gradient(145deg, rgba(246,248,250,0.82), rgba(230,232,235,0.54))",
+              ? `radial-gradient(circle at 18% 18%, rgba(${glowColor},0.28), transparent 34%), radial-gradient(circle at 84% 20%, rgba(${goldGlow},0.1), transparent 28%), linear-gradient(145deg, rgba(230,232,235,0.06), rgba(0,119,182,0.024), rgba(230,232,235,0.018))`
+              : `radial-gradient(circle at 18% 18%, rgba(${glowColor},0.08), transparent 34%), radial-gradient(circle at 84% 20%, rgba(${goldGlow},0.13), transparent 28%), linear-gradient(145deg, rgba(246,248,250,0.86), rgba(230,232,235,0.58))`,
             border: `1px solid ${r(0.08)}`,
             boxShadow: isDark
-              ? "0 28px 90px rgba(0,0,0,0.32), inset 0 1px 0 rgba(230,232,235,0.06), 0 0 46px rgba(0,180,216,0.06)"
-              : "0 28px 90px rgba(15,23,32,0.11), inset 0 1px 0 rgba(255,255,255,0.9), 0 0 42px rgba(0,119,182,0.055)",
+              ? `0 28px 90px rgba(0,0,0,0.32), inset 0 1px 0 rgba(230,232,235,0.06), 0 0 46px rgba(${cyanGlow},0.06), 0 0 54px rgba(${goldGlow},0.055)`
+              : `0 28px 90px rgba(15,23,32,0.11), inset 0 1px 0 rgba(255,255,255,0.9), 0 0 42px rgba(${glowColor},0.055), 0 0 48px rgba(${goldGlow},0.075)`,
             backdropFilter: "blur(18px)",
           }}
         >
@@ -152,7 +153,7 @@ export function ContactPage() {
             >
               <div
                 className="w-14 h-14 rounded-full flex items-center justify-center mb-6"
-                style={{ background: accent, color: "#E6E8EB" }}
+                style={{ background: accent, color: isDark ? "#0F1720" : "#E6E8EB" }}
               >
                 <Check size={22} />
               </div>
@@ -208,15 +209,15 @@ export function ContactPage() {
                 className="group mt-3 inline-flex items-center justify-center gap-3 rounded-full px-8 py-4 transition-all duration-500 hover:scale-[1.018] active:scale-[0.985]"
                 style={{
                   background: isDark
-                    ? `linear-gradient(135deg, ${accent} 0%, ${accentBright} 100%)`
-                    : "linear-gradient(135deg, #0F1720 0%, #0077B6 100%)",
+                    ? "linear-gradient(135deg, #261732 0%, #0077B6 52%, #00B4D8 84%, #FFD166 100%)"
+                    : "linear-gradient(135deg, #0F1720 0%, #261732 46%, #0077B6 86%, #FFD166 100%)",
                   color: "#E6E8EB",
                   fontFamily: "'Inter', sans-serif",
                   fontSize: "0.84rem",
                   fontWeight: 650,
                   letterSpacing: "0.05em",
                   textTransform: "uppercase",
-                  boxShadow: `0 16px 46px rgba(${glowColor},0.18)`,
+                  boxShadow: `0 16px 46px rgba(${cyanGlow},0.16), 0 0 34px rgba(${goldGlow},0.13)`,
                 }}
               >
                 {t("contact.submit" as TranslationKey)}

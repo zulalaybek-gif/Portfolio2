@@ -127,7 +127,7 @@ function MagneticField() {
 /* ── Infinite marquee ── */
 function Marquee({ items, reverse = false }: { items: string[]; reverse?: boolean }) {
   const { r } = useTheme();
-  const accent = "#0077B6";
+  const dotAccents = ["#0077B6", "#00B4D8", "#FFD166", "#6F4A86"];
   const content = [...items, ...items, ...items, ...items];
 
   return (
@@ -141,7 +141,7 @@ function Marquee({ items, reverse = false }: { items: string[]; reverse?: boolea
             <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.75rem", fontWeight: 600, color: r(0.2), textTransform: "uppercase" as const, letterSpacing: "0.15em" }}>
               {item}
             </span>
-            <span className="w-1 h-1 rounded-full" style={{ background: accent, opacity: 0.4 }} />
+            <span className="w-1 h-1 rounded-full" style={{ background: dotAccents[i % dotAccents.length], opacity: 0.55 }} />
           </span>
         ))}
       </div>
@@ -153,8 +153,8 @@ export function HeroSection() {
   const navigate = useNavigate();
   const { t, lang } = useI18n();
   const { p, r, isDark } = useTheme();
-  const accent = "#0077B6";
   const ref = useRef<HTMLElement>(null);
+  const statAccents = isDark ? ["#FFD166", "#00B4D8", "#6F4A86"] : ["#B8872E", "#0077B6", "#261732"];
 
   const marqueeItems1 = lang === "fr"
     ? ["Design Graphique", "Direction Artistique", "Identité Visuelle", "Brand Content", "Motion Design", "Print & Édition", "Web Design", "Photographie"]
@@ -170,7 +170,7 @@ export function HeroSection() {
           height: "clamp(420px, 60vw, 980px)",
           right: "-22%",
           top: "-24%",
-          background: "radial-gradient(circle, rgba(0,180,216,0.22), rgba(0,119,182,0.11) 34%, transparent 66%)",
+          background: "radial-gradient(circle, rgba(38,23,50,0.34), rgba(0,180,216,0.17) 34%, transparent 68%)",
           filter: "blur(24px)",
           opacity: isDark ? 0.9 : 0.62,
           mixBlendMode: isDark ? "screen" : "multiply",
@@ -185,9 +185,9 @@ export function HeroSection() {
           bottom: "6%",
           width: "clamp(260px, 38vw, 680px)",
           height: "clamp(260px, 38vw, 680px)",
-          background: "radial-gradient(circle, rgba(255,209,102,0.12), rgba(0,119,182,0.08) 40%, transparent 68%)",
+          background: "radial-gradient(circle, rgba(255,209,102,0.23), rgba(38,23,50,0.16) 42%, transparent 70%)",
           filter: "blur(30px)",
-          opacity: isDark ? 0.62 : 0.32,
+          opacity: isDark ? 0.72 : 0.4,
           zIndex: 0,
         }}
       />
@@ -248,13 +248,15 @@ export function HeroSection() {
               className="group flex items-center gap-3 px-8 py-4 rounded-full transition-all duration-300 hover:scale-105"
               style={{
                 background: isDark
-                  ? "linear-gradient(135deg, #0077B6 0%, #00B4D8 100%)"
-                  : "linear-gradient(135deg, #0F1720 0%, #0077B6 100%)",
+                  ? "linear-gradient(135deg, #261732 0%, #0077B6 52%, #00B4D8 84%, #FFD166 100%)"
+                  : "linear-gradient(135deg, #0F1720 0%, #261732 46%, #0077B6 100%)",
                 fontFamily: "'Inter', sans-serif",
                 fontSize: "0.85rem",
                 fontWeight: 500,
                 color: "#E6E8EB",
-                boxShadow: isDark ? "0 18px 54px rgba(0,180,216,0.26)" : "0 18px 48px rgba(0,119,182,0.22)",
+                boxShadow: isDark
+                  ? "0 18px 54px rgba(0,180,216,0.2), 0 0 34px rgba(255,209,102,0.12)"
+                  : "0 18px 48px rgba(15,23,32,0.2), 0 0 30px rgba(38,23,50,0.1)",
               }}
               onClick={() => navigate("/contact")}
             >
@@ -286,7 +288,7 @@ export function HeroSection() {
             { value: "11+", labelKey: "hero.stat1" as const },
             { value: "3+", labelKey: "hero.stat2" as const },
             { value: "9", labelKey: "hero.stat3" as const },
-          ].map((stat) => (
+          ].map((stat, i) => (
             <div
               key={stat.labelKey}
               className="flex items-center gap-3 px-5 py-3 rounded-2xl backdrop-blur-sm"
@@ -300,7 +302,8 @@ export function HeroSection() {
                   fontFamily: "'Space Grotesk', sans-serif",
                   fontSize: "1.6rem",
                   fontWeight: 700,
-                  color: accent,
+                  color: statAccents[i % statAccents.length],
+                  textShadow: `0 0 24px ${statAccents[i % statAccents.length]}44`,
                 }}
               >
                 {stat.value}

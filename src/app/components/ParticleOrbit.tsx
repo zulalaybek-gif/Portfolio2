@@ -68,10 +68,10 @@ interface Aurora {
 
 /* ── Palette ── */
 const COLORS = {
-  green: [167, 173, 139], ltGreen: [126, 132, 105],
-  gold: [184, 168, 138], silver: [205, 199, 186],
-  purple: [54, 42, 68], warm: [180, 170, 145],
-  teal: [111, 124, 111], white: [245, 241, 232],
+  green: [0, 119, 182], ltGreen: [0, 180, 216],
+  gold: [255, 209, 102], silver: [230, 232, 235],
+  purple: [38, 23, 50], warm: [255, 209, 102],
+  teal: [0, 180, 216], white: [230, 232, 235],
 };
 const COLOR_KEYS = Object.keys(COLORS) as (keyof typeof COLORS)[];
 const rgb = (k: keyof typeof COLORS) => COLORS[k].join(",");
@@ -92,16 +92,16 @@ const DAMPING = 0.975;
 type SectionTheme = { colors: [number[], number[], number[]] };
 
 const SECTION_THEMES: Record<string, SectionTheme> = {
-  hero:             { colors: [[0,180,216], [0,119,182], [230,232,235]] },
-  services:         { colors: [[0,119,182], [0,180,216], [230,232,235]] },
-  work:             { colors: [[15,23,32], [0,180,216], [255,209,102]]  },
-  cta:              { colors: [[0,180,216], [0,119,182], [255,209,102]] },
-  "projects-hero":  { colors: [[0,119,182], [0,180,216], [230,232,235]] },
-  "projects-index": { colors: [[15,23,32], [0,119,182], [230,232,235]]  },
-  "projects-reel":  { colors: [[0,180,216], [255,209,102], [15,23,32]] },
+  hero:             { colors: [[38,23,50], [255,209,102], [0,180,216]] },
+  services:         { colors: [[0,119,182], [255,209,102], [38,23,50]] },
+  work:             { colors: [[38,23,50], [0,180,216], [255,209,102]]  },
+  cta:              { colors: [[255,209,102], [38,23,50], [0,180,216]] },
+  "projects-hero":  { colors: [[38,23,50], [0,119,182], [255,209,102]] },
+  "projects-index": { colors: [[15,23,32], [38,23,50], [0,180,216]]  },
+  "projects-reel":  { colors: [[0,180,216], [255,209,102], [38,23,50]] },
 };
 
-const DEFAULT_THEME: SectionTheme = { colors: [[0,180,216], [0,119,182], [230,232,235]] };
+const DEFAULT_THEME: SectionTheme = { colors: [[38,23,50], [0,119,182], [255,209,102]] };
 
 export function ParticleOrbit() {
   const canvasRef = useRef<HTMLCanvasElement>(null);

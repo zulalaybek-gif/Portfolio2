@@ -18,7 +18,9 @@ const services = [
 export function ServicesSection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
-  const accent = "#0077B6";
+  const serviceAccents = isDark
+    ? ["#0077B6", "#FFD166", "#6F4A86", "#00B4D8"]
+    : ["#0077B6", "#B8872E", "#261732", "#00B4D8"];
   const scrollRef = useRef<HTMLDivElement>(null);
   const programmaticScrollRef = useRef<number | null>(null);
   const scrollEndTimerRef = useRef<number | null>(null);
@@ -147,6 +149,7 @@ export function ServicesSection() {
             const title = t(service.titleKey as TranslationKey).replace("\n", " ");
             const firstLetter = title.charAt(0);
             const rest = title.slice(1);
+            const cardAccent = serviceAccents[i % serviceAccents.length];
 
             return (
               <div
@@ -177,7 +180,7 @@ export function ServicesSection() {
                 {/* Hover accent dot */}
                 <div
                   className="absolute top-7 right-7 w-2 h-2 rounded-full opacity-0 scale-50 transition-all duration-300 ease-out group-hover:opacity-70 group-hover:scale-100"
-                  style={{ background: accent, boxShadow: `0 0 18px ${accent}55` }}
+                  style={{ background: cardAccent, boxShadow: `0 0 18px ${cardAccent}66` }}
                 />
 
                 {/* Title with large first letter */}
@@ -193,7 +196,7 @@ export function ServicesSection() {
                       color: p.text,
                     }}
                   >
-                    <span style={{ color: accent }}>{firstLetter}</span>
+                    <span style={{ color: cardAccent }}>{firstLetter}</span>
                     {rest}
                   </h3>
                   <p
@@ -222,7 +225,8 @@ export function ServicesSection() {
               style={{
                 width: activeIdx === i ? 24 : 6,
                 height: 6,
-                background: activeIdx === i ? accent : r(0.1),
+                background: activeIdx === i ? serviceAccents[i % serviceAccents.length] : r(0.1),
+                boxShadow: activeIdx === i ? `0 0 18px ${serviceAccents[i % serviceAccents.length]}55` : "none",
               }}
             />
           ))}
