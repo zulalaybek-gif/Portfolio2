@@ -123,28 +123,8 @@
   background: linear-gradient(90deg, transparent, rgba(241, 241, 241, 0.075), rgba(75, 129, 151, 0.18), rgba(223, 244, 64, 0.12), transparent);
 }
 
-.home-flow > section:not(:first-child)::after {
-  content: "";
-  position: absolute;
-  left: clamp(1.5rem, 6vw, 5rem);
-  top: -2px;
-  width: 34px;
-  height: 4px;
-  border-radius: 999px;
-  pointer-events: none;
-  background: linear-gradient(90deg, #DFF440, #4B8197 72%, #C12144);
-  box-shadow: 0 0 28px rgba(223, 244, 64, 0.13), 0 0 18px rgba(75, 129, 151, 0.11);
-  opacity: 0.58;
-}
-
 [data-theme="light"] .home-flow > section:not(:first-child)::before {
   background: linear-gradient(90deg, transparent, rgba(35, 38, 36, 0.085), rgba(75, 129, 151, 0.12), rgba(223, 244, 64, 0.1), transparent);
-}
-
-[data-theme="light"] .home-flow > section:not(:first-child)::after {
-  background: linear-gradient(90deg, #232624, #4B8197 76%, #C12144);
-  box-shadow: 0 0 22px rgba(75, 129, 151, 0.13), 0 0 16px rgba(223, 244, 64, 0.09);
-  opacity: 0.68;
 }
 
 .brand-mark {
