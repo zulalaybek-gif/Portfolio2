@@ -8,13 +8,13 @@ import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { ProjectBackButton } from "./ProjectBackButton";
 
 /* -- Assets -- */
-import imgPhoto1 from "figma:asset/2756264f6abdd38df440bd337310e5af10009b21.png";
-import imgPhoto2 from "figma:asset/1157426f3f0af6733020c152f6b6f489fd171042.png";
-import imgPhoto3 from "figma:asset/9cc9df0f407c86cf7bb363ba177056ca5884a0d7.png";
-import imgPoster1 from "figma:asset/b7bf5c481864083c1b0ec51c9bbb5e17bf93665b.png";
-import imgPoster2 from "figma:asset/42789f20dbc1c74b38f641fcb5138e47f4fc6470.png";
-import imgPoster3 from "figma:asset/a511767aeddb866d5ca5a953cddd4032238cebc1.png";
-import imgMockup from "figma:asset/ad2c64276560bba68ae641b20d3e11238345b48d.png";
+import imgMockup from "../../assets/roma/01-roma-mockup.png";
+import imgPhoto1 from "../../assets/roma/02-roma-photo-institut.png";
+import imgPhoto2 from "../../assets/roma/03-roma-photo-saint-sulpice.png";
+import imgPhoto3 from "../../assets/roma/04-roma-photo-fontaine.png";
+import imgPoster1 from "../../assets/roma/05-roma-poster-saint-sulpice.png";
+import imgPoster2 from "../../assets/roma/06-roma-poster-institut.png";
+import imgPoster3 from "../../assets/roma/07-roma-poster-fontaine.png";
 
 /* -- Helpers -- */
 const ACCENT = "#B8A88A";

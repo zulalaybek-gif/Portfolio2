@@ -9,28 +9,29 @@ import { ProjectBackButton } from "./ProjectBackButton";
 
 /* -- Assets -- */
 import svgLogoWhite from "../../imports/svg-izx27lwoj7";
-import imgInk from "figma:asset/c82306997b813d54d937539bb775206a10b447a4.png";
-import imgMainPoster from "figma:asset/304162fbb650c3da41604692e94bf94f0bd8797c.png";
-import imgBrochure1 from "figma:asset/a52d20c25a98c4aae0114349b9f73daab3edcae5.png";
-import imgBrochure2 from "figma:asset/3978e4e54f2d3bfae17f60941f2d9d5bbd4b0e15.png";
-import imgKakemonos from "figma:asset/c9705bce7316d9db99c4e91ee1f215b41f7a75d1.png";
-import imgPoster from "figma:asset/dfd03f1c9733feb3ab02f5a1a45afb72c4459691.png";
-import imgSignaletique from "figma:asset/73056d67984b47a03e0bcfb0faad5d07c6559023.png";
-import imgPhotocall from "figma:asset/ffe54e86b56d3fa1077e76a94c154f437489a301.png";
-import imgDepliant1 from "figma:asset/c62830a069b22b8031e9409acaa963c0222601f5.png";
-import imgDepliant2 from "figma:asset/8553bfdd59642886c5b702dcab7f1d2087fb7ff4.png";
-import imgPhoto1 from "figma:asset/3d909879fcc1e93a34d818a3aa05bd0b466e1d00.png";
-import imgPhoto2 from "figma:asset/81d2bcac06c699e3e434bbd44e3d4d4f44a46849.png";
-import imgPhoto3 from "figma:asset/ddddae191688d5fcac52fe803131a7cfb943d1fd.png";
-import imgPhoto4 from "figma:asset/4d20a743d42c54b216655096d2d51c2b978d4d99.png";
-import imgPhoto5 from "figma:asset/9b199eab6ee72610e79cfbc66cd47940eb97a8fb.png";
-import imgPhoto6 from "figma:asset/5d82fca472b493204174082d1343ff5c08cf88a4.png";
-import imgPhoto7 from "figma:asset/d9ea1e57ffe752bc6ab6a9729fb0d6f1f0344181.png";
-import imgPhoto8 from "figma:asset/059b9598f52927b2af0bc5366e631b7ecfe58a95.png";
-import imgPhoto9 from "figma:asset/fec2a4f36620a48f8fa21e022fd899f18204354d.png";
-import imgPhoto10 from "figma:asset/61cf5c181d7df87510d2a1e7cf84ae47490bc8ca.png";
-import imgPhoto11 from "figma:asset/5ef7c100e60381ec9ea0150cd7374787de130d75.png";
-import imgPhoto12 from "figma:asset/f85e98152fa6749766c31a38c2ee4d7155672441.png";
+import imgInk from "../../assets/maker-week/01-affiche-principale.png";
+import imgMainPoster from "../../assets/maker-week/01-affiche-principale.png";
+import imgBrochure1 from "../../assets/maker-week/02-brochure-1.png";
+import imgBrochure2 from "../../assets/maker-week/03-brochure-2.png";
+import imgDepliant1 from "../../assets/maker-week/04-depliant-1.png";
+import imgDepliant2 from "../../assets/maker-week/05-depliant-2.png";
+import imgPoster from "../../assets/maker-week/06-poster.jpg";
+import imgKakemonos from "../../assets/maker-week/07-kakemonos.png";
+import imgSignaletique from "../../assets/maker-week/08-signalétique-ateliers.png";
+import imgPhotocall from "../../assets/maker-week/09-photocall.png";
+import imgPhoto10 from "../../assets/maker-week/10-galerie.jpg";
+import imgPhoto11 from "../../assets/maker-week/11-galerie.jpg";
+import imgPhoto1 from "../../assets/maker-week/12-galerie.jpg";
+import imgPhoto2 from "../../assets/maker-week/13-galerie.jpg";
+import imgPhoto9 from "../../assets/maker-week/14-galerie.jpg";
+import imgPhoto12 from "../../assets/maker-week/15-galerie.jpg";
+import imgPhoto3 from "../../assets/maker-week/16-galerie.jpg";
+import imgPhoto4 from "../../assets/maker-week/17-galerie.jpg";
+import imgPhoto5 from "../../assets/maker-week/18-galerie.jpg";
+import imgPhoto6 from "../../assets/maker-week/19-galerie.jpg";
+import imgPhoto7 from "../../assets/maker-week/20-galerie.jpg";
+import imgPhoto8 from "../../assets/maker-week/21-galerie.jpg";
+import imgPhoto13 from "../../assets/maker-week/22-galerie.jpg";
 
 /* -- Helpers -- */
 const ACCENT = "#0095C1";
@@ -550,6 +551,7 @@ function GallerySection() {
     imgPhoto2, imgPhoto9, imgPhoto12,
     imgPhoto3, imgPhoto4, imgPhoto5,
     imgPhoto6, imgPhoto7, imgPhoto8,
+    imgPhoto13,
   ];
 
   return (

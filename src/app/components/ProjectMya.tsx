@@ -10,15 +10,15 @@ import { ProjectBackButton } from "./ProjectBackButton";
 /* ── Assets — SVG logo ── */
 import svgPaths from "../../imports/svg-ksrs7ua06u";
 import svgConstruction from "../../imports/svg-o0d2fxhm66";
-import imgProcess from "figma:asset/5d661b1c474d5b87d6bcd469122e131c3b6cf99f.png";
-import img1 from "figma:asset/0f15294d608077e2a5b0f5bf49980413a14f016a.png";
-import img2 from "figma:asset/4e90d088e19a09211f2812ceab588c0ddbe4d43a.png";
-import img3 from "figma:asset/3b1009ade706da2f944ec91a322d158a20d45bee.png";
-import img4 from "figma:asset/b59a77b74a75408214c0228e04a552c2b5713988.png";
-import imgRing from "figma:asset/263862c56cc8639ac9f2d8b0d844a2611aa9b91c.png";
-import imgBox2 from "figma:asset/a79549540bc44bd8d69f665fb501b84a46df39cc.png";
-import imgBox1 from "figma:asset/160ca026bcb9ef25f319eb09574521fab9004042.png";
-import imgKeychain from "figma:asset/0be917f898469154ba6afdc898519d851c275d44.png";
+import imgProcess from "../../assets/mya/01-processus-creatif.png";
+import img1 from "../../assets/mya/02-applications.png";
+import img2 from "../../assets/mya/03-applications.png";
+import img3 from "../../assets/mya/04-applications.png";
+import img4 from "../../assets/mya/05-applications.png";
+import imgBox1 from "../../assets/mya/06-applications-boite-à-bijoux-1.jpg";
+import imgBox2 from "../../assets/mya/07-applications-boite-à-bijoux-2.png";
+import imgRing from "../../assets/mya/08-applications-bague-sans-fond.png";
+import imgKeychain from "../../assets/mya/09-applications-portes-clefs.jpg";
 
 /* ── Helpers ── */
 const ACCENT = "#D0B0D4";
