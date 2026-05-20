@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router";
 import { lazy, Suspense, createElement, useEffect, useState } from "react";
 import { Layout } from "./components/Layout";
 import { HomePage } from "./components/HomePage";
+import { ContactPage } from "./components/ContactPage";
 import { projectsIndexLoader, projectRouteLoaders } from "./projectRouteLoaders";
 
 /* ── Lazy-loaded project pages ── */
@@ -18,7 +19,6 @@ const ProjectNrtv = lazy(projectRouteLoaders["/projects/narratiiv"]);
 const ProjectSncf = lazy(projectRouteLoaders["/projects/sncf-connect"]);
 const ProjectHaiti = lazy(projectRouteLoaders["/projects/haiti"]);
 const ProjectRadioLibre = lazy(projectRouteLoaders["/projects/radio-libre"]);
-const ContactPage = lazy(() => import("./components/ContactPage").then((m) => ({ default: m.ContactPage })));
 
 function DelayedRouteFallback() {
   const [show, setShow] = useState(false);
@@ -121,5 +121,5 @@ export const router = createBrowserRouter([
       { path: "*", Component: NotFound },
     ],
   },
-  { path: "/contact", Component: withSuspense(ContactPage) },
+  { path: "/contact", Component: ContactPage },
 ]);
