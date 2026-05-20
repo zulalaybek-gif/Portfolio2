@@ -19,7 +19,7 @@ const translations = {
     en: "Bold images. Coherent identities. Experiences that leave a mark. Design is not decoration\u2009\u2014\u2009it\u2019s a language.",
   },
   "hero.cta1": { fr: "D\u00E9marrer un Projet", en: "Start a Project" },
-  "hero.cta2": { fr: "Voir mes Projets", en: "View My Work" },
+  "hero.cta2": { fr: "Découvrez mon univers", en: "Discover My World" },
   "hero.stat1": { fr: "Projets R\u00E9alis\u00E9s", en: "Projects Completed" },
   "hero.stat2": { fr: "Ann\u00E9es d\u2019Exp\u00E9rience", en: "Years of Experience" },
   "hero.stat3": { fr: "Domaines d\u2019Expertise", en: "Fields of Expertise" },
