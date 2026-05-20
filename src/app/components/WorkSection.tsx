@@ -69,7 +69,7 @@ export function WorkSection() {
   const navigate = useNavigate();
   const { t, lang } = useI18n();
   const { p, r, isDark } = useTheme();
-  const accent = isDark ? "#A7AD8B" : "#5B624D";
+  const accent = isDark ? "#00B4D8" : "#0077B6";
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
   return (

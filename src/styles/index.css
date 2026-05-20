@@ -113,9 +113,9 @@
   --contact-input-color: #ffffff;
   --contact-input-border: color-mix(in srgb, currentColor 10%, transparent);
   --contact-input-bg: color-mix(in srgb, currentColor 3%, transparent);
-  --contact-input-focus-border: color-mix(in srgb, #a7ad8b 46%, currentColor 18%);
+  --contact-input-focus-border: color-mix(in srgb, #00b4d8 52%, currentColor 18%);
   --contact-input-focus-bg: color-mix(in srgb, currentColor 4.5%, transparent);
-  --contact-input-focus-ring: color-mix(in srgb, #a7ad8b 10%, transparent);
+  --contact-input-focus-ring: color-mix(in srgb, #00b4d8 12%, transparent);
 }
 
 :root[data-theme="light"] {
@@ -123,9 +123,9 @@
   --contact-input-color: #1a1a1a;
   --contact-input-border: rgba(26, 26, 26, 0.12);
   --contact-input-bg: rgba(26, 26, 26, 0.025);
-  --contact-input-focus-border: rgba(91, 98, 77, 0.5);
-  --contact-input-focus-bg: rgba(91, 98, 77, 0.035);
-  --contact-input-focus-ring: rgba(91, 98, 77, 0.1);
+  --contact-input-focus-border: rgba(0, 119, 182, 0.5);
+  --contact-input-focus-bg: rgba(0, 180, 216, 0.04);
+  --contact-input-focus-ring: rgba(0, 119, 182, 0.12);
 }
 
 .contact-label {
@@ -236,8 +236,8 @@
   border-radius: 46% 54% 53% 47%;
   pointer-events: none;
   background:
-    radial-gradient(circle at 42% 40%, rgba(var(--cta-glow-rgb), 0.24), rgba(var(--cta-glow-rgb), 0.09) 36%, transparent 72%),
-    radial-gradient(circle at 60% 62%, rgba(255, 255, 255, 0.045), transparent 44%);
+    radial-gradient(circle at 42% 40%, rgba(var(--cta-glow-rgb), 0.28), rgba(var(--cta-glow-rgb), 0.1) 36%, transparent 72%),
+    radial-gradient(circle at 62% 62%, rgba(255, 209, 102, 0.08), transparent 44%);
   filter: blur(26px);
   mix-blend-mode: screen;
   will-change: transform;

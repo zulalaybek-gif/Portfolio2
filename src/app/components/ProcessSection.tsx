@@ -49,7 +49,7 @@ function useInView(ref: RefObject<HTMLElement | null>, margin = "200px 0px") {
 export function ProcessSection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
-  const accent = isDark ? "#A7AD8B" : "#5B624D";
+  const accent = isDark ? "#00B4D8" : "#0077B6";
   const sectionRef = useRef<HTMLElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(lineRef);
@@ -200,12 +200,12 @@ export function ProcessSection() {
                     }}
                     style={{
                       background: isDark
-                        ? `radial-gradient(circle at 45% 35%, rgba(167,173,139,0.16) 0%, rgba(167,173,139,0.05) 58%, rgba(12,12,10,0.96) 100%)`
-                        : `radial-gradient(circle at 45% 35%, rgba(91,98,77,0.12) 0%, rgba(91,98,77,0.032) 58%, rgba(250,247,239,0.96) 100%)`,
-                      border: `1px solid ${isDark ? "rgba(167,173,139,0.18)" : "rgba(91,98,77,0.16)"}`,
+                        ? `radial-gradient(circle at 45% 35%, rgba(0,180,216,0.17) 0%, rgba(0,119,182,0.07) 58%, rgba(15,23,32,0.96) 100%)`
+                        : `radial-gradient(circle at 45% 35%, rgba(0,119,182,0.13) 0%, rgba(0,180,216,0.035) 58%, rgba(230,232,235,0.96) 100%)`,
+                      border: `1px solid ${isDark ? "rgba(0,180,216,0.24)" : "rgba(0,119,182,0.18)"}`,
                       boxShadow: isDark
-                        ? `0 18px 55px rgba(0,0,0,0.28), inset 0 1px 0 rgba(245,241,232,0.05), 0 0 ${isHovered ? 52 : 28}px rgba(167,173,139,${isHovered ? 0.16 : 0.06})`
-                        : `0 18px 55px rgba(91,98,77,0.06), inset 0 1px 0 rgba(255,255,255,0.75), 0 0 ${isHovered ? 48 : 28}px rgba(91,98,77,${isHovered ? 0.16 : 0.06})`,
+                        ? `0 18px 55px rgba(0,0,0,0.3), inset 0 1px 0 rgba(230,232,235,0.05), 0 0 ${isHovered ? 52 : 28}px rgba(0,180,216,${isHovered ? 0.18 : 0.07})`
+                        : `0 18px 55px rgba(15,23,32,0.08), inset 0 1px 0 rgba(255,255,255,0.75), 0 0 ${isHovered ? 48 : 28}px rgba(0,119,182,${isHovered ? 0.16 : 0.06})`,
                       transform: "translateZ(0)",
                     }}
                   >
@@ -230,7 +230,7 @@ export function ProcessSection() {
                       fontFamily: "'Space Grotesk', sans-serif",
                       fontSize: "0.55rem",
                       fontWeight: 700,
-                      color: isDark ? "#0a0a0a" : "#fff",
+                      color: isDark ? "#0F1720" : "#E6E8EB",
                       transform: isStepVisible ? `scale(${isHovered ? 1.12 : 1})` : "scale(0)",
                       transition: `transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) ${0.7 + i * 0.3}s`,
                     }}

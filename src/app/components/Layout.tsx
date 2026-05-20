@@ -27,7 +27,7 @@ function RouteViewport() {
 }
 
 export function Layout() {
-  const { p } = useTheme();
+  const { p, isDark } = useTheme();
   const [showParticles] = useState(() => {
     if (typeof window === "undefined") return false;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -39,11 +39,34 @@ export function Layout() {
     <div
       className="min-h-screen w-full flex items-center justify-center relative"
       style={{
-        background: p.pageBg,
+        background: isDark
+          ? "radial-gradient(circle at 16% 18%, rgba(0,119,182,0.22), transparent 32%), radial-gradient(circle at 84% 9%, rgba(0,180,216,0.16), transparent 28%), linear-gradient(135deg, #05090E 0%, #0F1720 48%, #030609 100%)"
+          : "radial-gradient(circle at 16% 18%, rgba(0,119,182,0.18), transparent 32%), radial-gradient(circle at 84% 9%, rgba(0,180,216,0.15), transparent 28%), linear-gradient(135deg, #DCE2E8 0%, #E6E8EB 48%, #F5F7F9 100%)",
         padding: "clamp(32px, 5vw, 80px)",
         fontFamily: "'Inter', sans-serif",
       }}
     >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0"
+        style={{
+          opacity: isDark ? 0.5 : 0.38,
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px)",
+          backgroundSize: "72px 72px",
+          maskImage: "radial-gradient(circle at 50% 20%, black 0%, transparent 72%)",
+          zIndex: 0,
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-x-0 top-0 h-[46vh]"
+        style={{
+          background: "linear-gradient(180deg, rgba(0,180,216,0.16), transparent 72%)",
+          filter: "blur(18px)",
+          zIndex: 0,
+        }}
+      />
       {/* Background particles — behind everything */}
       {showParticles ? <ParticleOrbit /> : null}
 

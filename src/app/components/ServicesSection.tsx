@@ -18,7 +18,7 @@ const services = [
 export function ServicesSection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
-  const accent = isDark ? "#A7AD8B" : "#5B624D";
+  const accent = isDark ? "#00B4D8" : "#0077B6";
   const scrollRef = useRef<HTMLDivElement>(null);
   const programmaticScrollRef = useRef<number | null>(null);
   const scrollEndTimerRef = useRef<number | null>(null);
@@ -158,6 +158,7 @@ export function ServicesSection() {
                   scrollSnapAlign: "start",
                   background: p.cardBg,
                   border: `1px solid ${p.cardBorder}`,
+                  boxShadow: isDark ? "inset 0 1px 0 rgba(230,232,235,0.035)" : "inset 0 1px 0 rgba(255,255,255,0.72)",
                   transform: "translateZ(0)",
                 }}
               >

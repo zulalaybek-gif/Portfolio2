@@ -20,15 +20,15 @@ export function CompositeTitle({
 }: CompositeTitleProps) {
   const { p, isDark } = useTheme();
   const accentGradient = isDark
-    ? "linear-gradient(135deg, #A7AD8B 0%, #D4D2AF 42%, #747B61 100%)"
-    : "linear-gradient(135deg, #5B624D 0%, #8E9678 44%, #424837 100%)";
+    ? "linear-gradient(135deg, #00B4D8 0%, #E6E8EB 46%, #FFD166 100%)"
+    : "linear-gradient(135deg, #0077B6 0%, #00B4D8 48%, #0F1720 100%)";
 
   return (
     <Tag
       className={`composite-title composite-title--${size} composite-title--${align} ${className}`}
       style={{
         ["--composite-title-color" as string]: p.text,
-        ["--composite-accent" as string]: isDark ? "#A7AD8B" : "#5B624D",
+        ["--composite-accent" as string]: isDark ? "#00B4D8" : "#0077B6",
         ["--composite-accent-gradient" as string]: accentGradient,
       }}
     >

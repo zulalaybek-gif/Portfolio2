@@ -63,8 +63,8 @@ function MagneticField() {
       ctx.clearRect(0, 0, w, h);
 
       const m = mouse.current;
-      const baseAlpha = isDark ? 0.06 : 0.04;
-      const accentRGB = isDark ? "167,173,139" : "91,98,77";
+      const baseAlpha = isDark ? 0.075 : 0.045;
+      const accentRGB = isDark ? "0,180,216" : "0,119,182";
 
       for (const d of dots.current) {
         let fx = 0, fy = 0;
@@ -127,7 +127,7 @@ function MagneticField() {
 /* ── Infinite marquee ── */
 function Marquee({ items, reverse = false }: { items: string[]; reverse?: boolean }) {
   const { r, isDark } = useTheme();
-  const accent = isDark ? "#A7AD8B" : "#5B624D";
+  const accent = isDark ? "#00B4D8" : "#0077B6";
   const content = [...items, ...items, ...items, ...items];
 
   return (
@@ -153,7 +153,7 @@ export function HeroSection() {
   const navigate = useNavigate();
   const { t, lang } = useI18n();
   const { p, r, isDark } = useTheme();
-  const accent = isDark ? "#A7AD8B" : "#5B624D";
+  const accent = isDark ? "#00B4D8" : "#0077B6";
   const ref = useRef<HTMLElement>(null);
 
   const marqueeItems1 = lang === "fr"
@@ -162,6 +162,35 @@ export function HeroSection() {
 
   return (
     <section ref={ref} data-section="hero" className="relative w-full min-h-screen flex flex-col overflow-hidden">
+      <div
+        aria-hidden="true"
+        className="absolute pointer-events-none"
+        style={{
+          width: "clamp(420px, 60vw, 980px)",
+          height: "clamp(420px, 60vw, 980px)",
+          right: "-22%",
+          top: "-24%",
+          background: "radial-gradient(circle, rgba(0,180,216,0.22), rgba(0,119,182,0.11) 34%, transparent 66%)",
+          filter: "blur(24px)",
+          opacity: isDark ? 0.9 : 0.62,
+          mixBlendMode: isDark ? "screen" : "multiply",
+          zIndex: 0,
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="absolute pointer-events-none"
+        style={{
+          left: "-16%",
+          bottom: "6%",
+          width: "clamp(260px, 38vw, 680px)",
+          height: "clamp(260px, 38vw, 680px)",
+          background: "radial-gradient(circle, rgba(255,209,102,0.12), rgba(0,119,182,0.08) 40%, transparent 68%)",
+          filter: "blur(30px)",
+          opacity: isDark ? 0.62 : 0.32,
+          zIndex: 0,
+        }}
+      />
       {/* Magnetic dot field */}
       <div className="absolute inset-0 pointer-events-auto z-0">
         <MagneticField />
@@ -246,12 +275,13 @@ export function HeroSection() {
               className="group flex items-center gap-3 px-8 py-4 rounded-full transition-all duration-300 hover:scale-105"
               style={{
                 background: isDark
-                  ? "linear-gradient(135deg, #A7AD8B 0%, #747B61 100%)"
-                  : "linear-gradient(135deg, #70775E 0%, #4F553F 100%)",
+                  ? "linear-gradient(135deg, #00B4D8 0%, #E6E8EB 100%)"
+                  : "linear-gradient(135deg, #0F1720 0%, #0077B6 100%)",
                 fontFamily: "'Inter', sans-serif",
                 fontSize: "0.85rem",
                 fontWeight: 500,
-                color: isDark ? "#0a0a0a" : "#ffffff",
+                color: isDark ? "#0F1720" : "#E6E8EB",
+                boxShadow: isDark ? "0 18px 48px rgba(0,180,216,0.22)" : "0 18px 48px rgba(0,119,182,0.2)",
               }}
               onClick={() => navigate("/contact")}
             >

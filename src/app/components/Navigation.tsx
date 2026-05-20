@@ -275,7 +275,9 @@ export function Navigation() {
           <div
             className="fixed inset-0 z-50 flex flex-col md:hidden"
             style={{
-              background: isDark ? "rgba(8,8,8,0.97)" : "rgba(250,248,245,0.97)",
+              background: isDark
+                ? "radial-gradient(circle at 80% 10%, rgba(0,180,216,0.16), transparent 32%), rgba(5,9,14,0.97)"
+                : "radial-gradient(circle at 80% 10%, rgba(0,119,182,0.14), transparent 32%), rgba(230,232,235,0.97)",
               backdropFilter: "blur(20px)",
             }}
           >

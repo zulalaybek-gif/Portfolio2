@@ -92,16 +92,16 @@ const DAMPING = 0.975;
 type SectionTheme = { colors: [number[], number[], number[]] };
 
 const SECTION_THEMES: Record<string, SectionTheme> = {
-  hero:             { colors: [[167,173,139], [111,124,111], [126,132,105]] },
-  services:         { colors: [[184,168,138], [180,170,145], [205,199,186]] },
-  work:             { colors: [[54,42,68], [167,173,139], [184,168,138]]  },
-  cta:              { colors: [[111,124,111], [167,173,139], [126,132,105]] },
-  "projects-hero":  { colors: [[167,173,139], [184,168,138], [205,199,186]] },
-  "projects-index": { colors: [[54,42,68], [180,170,145], [184,168,138]]  },
-  "projects-reel":  { colors: [[184,168,138], [54,42,68], [111,124,111]] },
+  hero:             { colors: [[0,180,216], [0,119,182], [230,232,235]] },
+  services:         { colors: [[0,119,182], [0,180,216], [230,232,235]] },
+  work:             { colors: [[15,23,32], [0,180,216], [255,209,102]]  },
+  cta:              { colors: [[0,180,216], [0,119,182], [255,209,102]] },
+  "projects-hero":  { colors: [[0,119,182], [0,180,216], [230,232,235]] },
+  "projects-index": { colors: [[15,23,32], [0,119,182], [230,232,235]]  },
+  "projects-reel":  { colors: [[0,180,216], [255,209,102], [15,23,32]] },
 };
 
-const DEFAULT_THEME: SectionTheme = { colors: [[167,173,139], [54,42,68], [184,168,138]] };
+const DEFAULT_THEME: SectionTheme = { colors: [[0,180,216], [0,119,182], [230,232,235]] };
 
 export function ParticleOrbit() {
   const canvasRef = useRef<HTMLCanvasElement>(null);

@@ -10,10 +10,10 @@ export function CTASection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
   const cardRef = useRef<HTMLDivElement>(null);
-  const accent = isDark ? "#A7AD8B" : "#5B624D";
-  const accentBright = isDark ? "#C3C7A2" : "#70775E";
-  const glowColor = isDark ? "167,173,139" : "91,98,77";
-  const violetGlow = isDark ? "54,42,68" : "70,55,86";
+  const accent = isDark ? "#00B4D8" : "#0077B6";
+  const accentBright = isDark ? "#E6E8EB" : "#00B4D8";
+  const glowColor = isDark ? "0,180,216" : "0,119,182";
+  const goldGlow = "255,209,102";
 
   return (
     <section data-section="cta" data-section-alias="about" className="relative w-full px-6 md:px-12 py-20">
@@ -26,12 +26,12 @@ export function CTASection() {
         className="max-w-6xl mx-auto relative overflow-hidden rounded-[2.5rem] p-12 md:p-24"
         style={{
           background: isDark
-            ? `linear-gradient(145deg, rgba(${glowColor},0.09) 0%, rgba(15,15,13,0.98) 34%, rgba(8,8,7,0.99) 100%)`
-            : `linear-gradient(145deg, rgba(${glowColor},0.06) 0%, rgba(250,247,239,0.99) 38%, rgba(242,237,226,0.98) 100%)`,
+            ? `radial-gradient(circle at 18% 38%, rgba(${glowColor},0.18), transparent 36%), linear-gradient(145deg, rgba(0,119,182,0.09) 0%, rgba(15,23,32,0.985) 42%, rgba(5,9,14,0.99) 100%)`
+            : `radial-gradient(circle at 18% 38%, rgba(${glowColor},0.14), transparent 36%), linear-gradient(145deg, rgba(230,232,235,0.98) 0%, rgba(247,249,251,0.98) 52%, rgba(230,232,235,0.96) 100%)`,
           border: `1px solid ${p.ctaBorder}`,
           boxShadow: isDark
-            ? `0 28px 90px rgba(0,0,0,0.38), inset 0 1px 0 rgba(245,241,232,0.05), 0 0 80px rgba(${violetGlow},0.08)`
-            : `0 28px 90px rgba(42,35,24,0.08), inset 0 1px 0 rgba(255,255,255,0.85), 0 0 90px rgba(${violetGlow},0.045)`,
+            ? `0 32px 105px rgba(0,0,0,0.44), inset 0 1px 0 rgba(230,232,235,0.07), 0 0 90px rgba(${glowColor},0.09)`
+            : `0 32px 105px rgba(15,23,32,0.11), inset 0 1px 0 rgba(255,255,255,0.9), 0 0 80px rgba(${glowColor},0.075)`,
           ["--cta-glow-rgb" as string]: glowColor,
         }}
       >
@@ -49,7 +49,7 @@ export function CTASection() {
             bottom: 0,
             height: 1,
             transformOrigin: "center",
-            background: `linear-gradient(90deg, transparent, rgba(${glowColor},0.32), transparent)`,
+            background: `linear-gradient(90deg, transparent, rgba(${glowColor},0.38), rgba(${goldGlow},0.22), transparent)`,
           }}
         />
 
@@ -83,14 +83,14 @@ export function CTASection() {
             className="group inline-flex items-center gap-3 px-10 py-4 rounded-full transition-all duration-500 hover:scale-[1.035] active:scale-[0.985]"
             style={{
               background: isDark
-                ? `linear-gradient(135deg, ${accent} 0%, ${accentBright} 52%, #777E64 100%)`
-                : `linear-gradient(135deg, ${accent} 0%, ${accentBright} 100%)`,
+                ? `linear-gradient(135deg, ${accent} 0%, ${accentBright} 100%)`
+                : "linear-gradient(135deg, #0F1720 0%, #0077B6 100%)",
               fontFamily: "'Inter', sans-serif",
               fontSize: "0.85rem",
               fontWeight: 600,
               letterSpacing: "0.05em",
               textTransform: "uppercase",
-              color: isDark ? "#0a0a0a" : "#ffffff",
+              color: isDark ? "#0F1720" : "#E6E8EB",
               textDecoration: "none",
               boxShadow: isDark
                 ? `0 16px 46px rgba(${glowColor},0.18), inset 0 1px 0 rgba(255,255,255,0.28)`

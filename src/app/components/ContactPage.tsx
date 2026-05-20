@@ -17,9 +17,9 @@ export function ContactPage() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
   const [submitted, setSubmitted] = useState(false);
-  const accent = isDark ? "#A7AD8B" : "#5B624D";
-  const accentBright = isDark ? "#C3C7A2" : "#70775E";
-  const glowColor = isDark ? "167,173,139" : "91,98,77";
+  const accent = isDark ? "#00B4D8" : "#0077B6";
+  const accentBright = isDark ? "#E6E8EB" : "#00B4D8";
+  const glowColor = isDark ? "0,180,216" : "0,119,182";
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -36,14 +36,14 @@ export function ContactPage() {
         aria-hidden="true"
         className="absolute rounded-full pointer-events-none"
         initial={{ opacity: 0, scale: 0.96 }}
-        animate={{ opacity: isDark ? 0.22 : 0.32, scale: 1 }}
+        animate={{ opacity: isDark ? 0.28 : 0.24, scale: 1 }}
         transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
         style={{
           width: "clamp(280px, 42vw, 620px)",
           height: "clamp(280px, 42vw, 620px)",
           right: "-12%",
           top: "-18%",
-          background: `radial-gradient(circle, rgba(${glowColor},0.24), transparent 68%)`,
+          background: `radial-gradient(circle, rgba(${glowColor},0.24), rgba(255,209,102,0.09) 36%, transparent 68%)`,
           filter: "blur(20px)",
         }}
       />
@@ -131,14 +131,14 @@ export function ContactPage() {
           transition={{ duration: 0.9, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
           className="relative overflow-hidden rounded-[2rem] p-6 md:p-9"
           style={{
-            color: isDark ? "#ffffff" : "#1a1a1a",
+            color: p.text,
             background: isDark
-              ? "linear-gradient(145deg, rgba(245,241,232,0.052), rgba(245,241,232,0.016))"
-              : "linear-gradient(145deg, rgba(250,247,239,0.78), rgba(242,237,226,0.42))",
+              ? "linear-gradient(145deg, rgba(230,232,235,0.06), rgba(0,119,182,0.028), rgba(230,232,235,0.018))"
+              : "linear-gradient(145deg, rgba(246,248,250,0.82), rgba(230,232,235,0.54))",
             border: `1px solid ${r(0.08)}`,
             boxShadow: isDark
-              ? "0 28px 90px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.05)"
-              : "0 28px 90px rgba(42,35,24,0.08), inset 0 1px 0 rgba(255,255,255,0.9)",
+              ? "0 28px 90px rgba(0,0,0,0.32), inset 0 1px 0 rgba(230,232,235,0.06), 0 0 46px rgba(0,180,216,0.06)"
+              : "0 28px 90px rgba(15,23,32,0.11), inset 0 1px 0 rgba(255,255,255,0.9), 0 0 42px rgba(0,119,182,0.055)",
             backdropFilter: "blur(18px)",
           }}
         >
@@ -152,7 +152,7 @@ export function ContactPage() {
             >
               <div
                 className="w-14 h-14 rounded-full flex items-center justify-center mb-6"
-                style={{ background: accent, color: isDark ? "#0a0a0a" : "#fff" }}
+                style={{ background: accent, color: isDark ? "#0F1720" : "#E6E8EB" }}
               >
                 <Check size={22} />
               </div>
@@ -208,9 +208,9 @@ export function ContactPage() {
                 className="group mt-3 inline-flex items-center justify-center gap-3 rounded-full px-8 py-4 transition-all duration-500 hover:scale-[1.018] active:scale-[0.985]"
                 style={{
                   background: isDark
-                    ? `linear-gradient(135deg, ${accent} 0%, ${accentBright} 52%, #777E64 100%)`
-                    : `linear-gradient(135deg, ${accent} 0%, ${accentBright} 100%)`,
-                  color: isDark ? "#0a0a0a" : "#ffffff",
+                    ? `linear-gradient(135deg, ${accent} 0%, ${accentBright} 100%)`
+                    : "linear-gradient(135deg, #0F1720 0%, #0077B6 100%)",
+                  color: isDark ? "#0F1720" : "#E6E8EB",
                   fontFamily: "'Inter', sans-serif",
                   fontSize: "0.84rem",
                   fontWeight: 650,
