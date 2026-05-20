@@ -17,8 +17,8 @@ export function ContactPage() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
   const [submitted, setSubmitted] = useState(false);
-  const accent = isDark ? "#00B4D8" : "#0077B6";
-  const accentBright = isDark ? "#E6E8EB" : "#00B4D8";
+  const accent = "#0077B6";
+  const accentBright = "#00B4D8";
   const glowColor = isDark ? "0,180,216" : "0,119,182";
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -152,7 +152,7 @@ export function ContactPage() {
             >
               <div
                 className="w-14 h-14 rounded-full flex items-center justify-center mb-6"
-                style={{ background: accent, color: isDark ? "#0F1720" : "#E6E8EB" }}
+                style={{ background: accent, color: "#E6E8EB" }}
               >
                 <Check size={22} />
               </div>
@@ -210,7 +210,7 @@ export function ContactPage() {
                   background: isDark
                     ? `linear-gradient(135deg, ${accent} 0%, ${accentBright} 100%)`
                     : "linear-gradient(135deg, #0F1720 0%, #0077B6 100%)",
-                  color: isDark ? "#0F1720" : "#E6E8EB",
+                  color: "#E6E8EB",
                   fontFamily: "'Inter', sans-serif",
                   fontSize: "0.84rem",
                   fontWeight: 650,

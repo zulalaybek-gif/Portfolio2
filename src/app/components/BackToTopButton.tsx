@@ -66,7 +66,7 @@ export function BackToTopButton() {
         aria-hidden="true"
         className="absolute inset-[5px] rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{
-          background: isDark ? "rgba(0,180,216,0.1)" : "rgba(0,119,182,0.1)",
+          background: isDark ? "rgba(0,119,182,0.16)" : "rgba(0,119,182,0.12)",
         }}
       />
       <ArrowUp

@@ -10,8 +10,8 @@ export function CTASection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
   const cardRef = useRef<HTMLDivElement>(null);
-  const accent = isDark ? "#00B4D8" : "#0077B6";
-  const accentBright = isDark ? "#E6E8EB" : "#00B4D8";
+  const accent = "#0077B6";
+  const accentBright = "#00B4D8";
   const glowColor = isDark ? "0,180,216" : "0,119,182";
   const goldGlow = "255,209,102";
 
@@ -90,7 +90,7 @@ export function CTASection() {
               fontWeight: 600,
               letterSpacing: "0.05em",
               textTransform: "uppercase",
-              color: isDark ? "#0F1720" : "#E6E8EB",
+              color: "#E6E8EB",
               textDecoration: "none",
               boxShadow: isDark
                 ? `0 16px 46px rgba(${glowColor},0.18), inset 0 1px 0 rgba(255,255,255,0.28)`

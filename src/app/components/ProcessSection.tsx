@@ -49,7 +49,7 @@ function useInView(ref: RefObject<HTMLElement | null>, margin = "200px 0px") {
 export function ProcessSection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
-  const accent = isDark ? "#00B4D8" : "#0077B6";
+  const accent = "#0077B6";
   const sectionRef = useRef<HTMLElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(lineRef);
@@ -230,7 +230,7 @@ export function ProcessSection() {
                       fontFamily: "'Space Grotesk', sans-serif",
                       fontSize: "0.55rem",
                       fontWeight: 700,
-                      color: isDark ? "#0F1720" : "#E6E8EB",
+                      color: "#E6E8EB",
                       transform: isStepVisible ? `scale(${isHovered ? 1.12 : 1})` : "scale(0)",
                       transition: `transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) ${0.7 + i * 0.3}s`,
                     }}

@@ -126,8 +126,8 @@ function MagneticField() {
 
 /* ── Infinite marquee ── */
 function Marquee({ items, reverse = false }: { items: string[]; reverse?: boolean }) {
-  const { r, isDark } = useTheme();
-  const accent = isDark ? "#00B4D8" : "#0077B6";
+  const { r } = useTheme();
+  const accent = "#0077B6";
   const content = [...items, ...items, ...items, ...items];
 
   return (
@@ -153,7 +153,7 @@ export function HeroSection() {
   const navigate = useNavigate();
   const { t, lang } = useI18n();
   const { p, r, isDark } = useTheme();
-  const accent = isDark ? "#00B4D8" : "#0077B6";
+  const accent = "#0077B6";
   const ref = useRef<HTMLElement>(null);
 
   const marqueeItems1 = lang === "fr"
@@ -248,13 +248,13 @@ export function HeroSection() {
               className="group flex items-center gap-3 px-8 py-4 rounded-full transition-all duration-300 hover:scale-105"
               style={{
                 background: isDark
-                  ? "linear-gradient(135deg, #00B4D8 0%, #E6E8EB 100%)"
+                  ? "linear-gradient(135deg, #0077B6 0%, #00B4D8 100%)"
                   : "linear-gradient(135deg, #0F1720 0%, #0077B6 100%)",
                 fontFamily: "'Inter', sans-serif",
                 fontSize: "0.85rem",
                 fontWeight: 500,
-                color: isDark ? "#0F1720" : "#E6E8EB",
-                boxShadow: isDark ? "0 18px 48px rgba(0,180,216,0.22)" : "0 18px 48px rgba(0,119,182,0.2)",
+                color: "#E6E8EB",
+                boxShadow: isDark ? "0 18px 54px rgba(0,180,216,0.26)" : "0 18px 48px rgba(0,119,182,0.22)",
               }}
               onClick={() => navigate("/contact")}
             >

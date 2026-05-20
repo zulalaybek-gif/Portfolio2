@@ -19,20 +19,20 @@ const palettes = {
     // Cards
     cardBg: "linear-gradient(150deg, rgba(230,232,235,0.052) 0%, rgba(0,119,182,0.035) 48%, rgba(230,232,235,0.012) 100%)",
     cardBorder: "rgba(230,232,235,0.075)",
-    cardBorderHover: "rgba(0,180,216,0.28)",
+    cardBorderHover: "rgba(0,119,182,0.35)",
     // CTA section
     ctaBg: "radial-gradient(circle at 22% 42%, rgba(0,180,216,0.12), transparent 34%), linear-gradient(145deg, rgba(0,119,182,0.08) 0%, rgba(15,23,32,0.985) 42%, rgba(5,9,14,0.99) 100%)",
     ctaBorder: "rgba(230,232,235,0.075)",
     // Nav
     navPillBg: "rgba(230,232,235,0.065)",
     navPillBorder: "rgba(230,232,235,0.13)",
-    navActiveTxt: "#0F1720",
-    navActiveGrad: "linear-gradient(135deg, #00B4D8 0%, #E6E8EB 100%)",
+    navActiveTxt: "#E6E8EB",
+    navActiveGrad: "linear-gradient(135deg, #0077B6 0%, #00B4D8 100%)",
     // Footer
     footerBorder: "rgba(230,232,235,0.07)",
     // Badge
     badgeBg: "rgba(230,232,235,0.04)",
-    badgeBorder: "rgba(0,180,216,0.18)",
+    badgeBorder: "rgba(0,119,182,0.24)",
     // Modal
     modalBg: "linear-gradient(160deg, rgba(15,23,32,0.99), rgba(5,9,14,0.99))",
     modalOverlay: "rgba(5,9,14,0.92)",
