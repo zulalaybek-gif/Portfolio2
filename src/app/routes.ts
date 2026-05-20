@@ -118,8 +118,8 @@ export const router = createBrowserRouter([
       { path: "projects/sncf-connect", Component: withSuspense(ProjectSncf) },
       { path: "projects/haiti", Component: withSuspense(ProjectHaiti) },
       { path: "projects/radio-libre", Component: withSuspense(ProjectRadioLibre) },
-      { path: "contact", Component: withSuspense(ContactPage) },
       { path: "*", Component: NotFound },
     ],
   },
+  { path: "/contact", Component: withSuspense(ContactPage) },
 ]);
