@@ -16,8 +16,6 @@ import imgVinyle from "../../assets/mzw/04-vinyle.png";
 import imgTShirt from "../../assets/mzw/05-tshirt.png";
 import imgMockup1 from "../../assets/mzw/06-mockup.png";
 import imgMockup2 from "../../assets/mzw/07-mockup.png";
-import imgKids04 from "figma:asset/71b5b76ff5b2eb1226378b9686f91fa60ac7728e.png";
-import imgKids02 from "figma:asset/32874648f507631cb3878df6ebb484a294c92f4d.png";
 import imgAlbumArt from "figma:asset/285aae2a2bd3a31891ce93006639e1f4cfc7f16b.png";
 import imgCover1 from "figma:asset/b2dc3411ce1d7da5eedb5f043de453cdcea29c1d.png";
 import imgCover2 from "figma:asset/26ae25ab6f07e30cafc892d0f17cb14a514a6034.png";
@@ -597,24 +595,10 @@ function MerchSection() {
 
         {/* T-shirt mockup full width */}
         <FadeIn delay={0.15}>
-          <div className="rounded-2xl overflow-hidden mb-4" style={{ border: `1px solid ${r(0.04)}` }}>
+          <div className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
             <img src={imgTShirt} alt="T-Shirt No Sense Mockup" className="w-full object-cover" />
           </div>
         </FadeIn>
-
-        {/* Kids wearing merch */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FadeIn delay={0.2}>
-            <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-              <img src={imgKids02} alt="Merchandising MZW — portés 1" className="w-full object-cover" />
-            </div>
-          </FadeIn>
-          <FadeIn delay={0.25}>
-            <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-              <img src={imgKids04} alt="Merchandising MZW — portés 2" className="w-full object-cover" />
-            </div>
-          </FadeIn>
-        </div>
       </div>
     </section>
   );

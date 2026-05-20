@@ -456,8 +456,8 @@ const translations = {
   },
   "mzw.merch.label": { fr: "Merchandising", en: "Merchandising" },
   "mzw.merch.text": {
-    fr: "Les déclinaisons textiles prolongent l'univers visuel au-delà du support papier, avec des t-shirts portés qui ancrent l'identité dans le quotidien et renforcent le sentiment d'appartenance à la communauté MZW.",
-    en: "Textile variations extend the visual universe beyond paper, with worn t-shirts anchoring the identity in everyday life and reinforcing the sense of belonging to the MZW community.",
+    fr: "Les déclinaisons textiles prolongent l'univers visuel au-delà du support papier, avec une application sobre du signe MZW sur textile.",
+    en: "Textile variations extend the visual universe beyond paper, with a restrained application of the MZW mark on apparel.",
   },
   "mzw.vinyl.label": { fr: "Pochette vinyle", en: "Vinyl Sleeve" },
   "mzw.mobile.label": { fr: "Interface mobile", en: "Mobile Interface" },
