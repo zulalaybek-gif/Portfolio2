@@ -15,8 +15,8 @@ import img1 from "../../assets/mya/02-applications.png";
 import img2 from "../../assets/mya/03-applications.png";
 import img3 from "../../assets/mya/04-applications.png";
 import img4 from "../../assets/mya/05-applications.png";
-import imgBox1 from "../../assets/mya/06-applications-boite-à-bijoux-1.jpg";
-import imgBox2 from "../../assets/mya/07-applications-boite-à-bijoux-2.png";
+import imgBox1 from "../../assets/mya/06-applications-boite-a-bijoux-1.jpg";
+import imgBox2 from "../../assets/mya/07-applications-boite-a-bijoux-2.png";
 import imgRing from "../../assets/mya/08-applications-bague-sans-fond.png";
 import imgKeychain from "../../assets/mya/09-applications-portes-clefs.jpg";
 

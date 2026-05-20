@@ -17,7 +17,7 @@ import imgDepliant1 from "../../assets/maker-week/04-depliant-1.png";
 import imgDepliant2 from "../../assets/maker-week/05-depliant-2.png";
 import imgPoster from "../../assets/maker-week/06-poster.jpg";
 import imgKakemonos from "../../assets/maker-week/07-kakemonos.png";
-import imgSignaletique from "../../assets/maker-week/08-signalétique-ateliers.png";
+import imgSignaletique from "../../assets/maker-week/08-signaletique-ateliers.png";
 import imgPhotocall from "../../assets/maker-week/09-photocall.png";
 import imgPhoto10 from "../../assets/maker-week/10-galerie.jpg";
 import imgPhoto11 from "../../assets/maker-week/11-galerie.jpg";
