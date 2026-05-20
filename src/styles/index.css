@@ -246,7 +246,7 @@
   z-index: 2;
   margin-top: var(--composite-secondary-overlap);
   margin-left: var(--composite-secondary-offset);
-  padding: 0.04em 0.18em 0.22em;
+  padding: 0.04em 0.22em 0.22em 0.34em;
   font-family: "Reenie Beanie", "Brush Script MT", cursive;
   font-size: var(--composite-secondary-size);
   font-style: normal;
@@ -354,7 +354,7 @@
   --composite-primary-size: clamp(4rem, 12vw, 10rem);
   --composite-secondary-size: clamp(3.75rem, 9.4vw, 7.8rem);
   --composite-secondary-overlap: -0.22em;
-  --composite-secondary-offset: clamp(0.35rem, 1.2vw, 1rem);
+  --composite-secondary-offset: clamp(0rem, 0.7vw, 0.65rem);
   --composite-secondary-drop: 0.08em;
 }
 
