@@ -9,13 +9,15 @@ import { ProjectBackButton } from "./ProjectBackButton";
 /* -- Assets -- */
 import svgPaths from "../../imports/svg-8j0m9nldaw";
 import playerSvg from "../../imports/svg-c1cvk0n26k";
-import imgNoSenseA3 from "figma:asset/f0782cd8941d77b28e775c2412d7b0004e3fc4a7.png";
-import imgVinyle from "figma:asset/9770aceb814e4effa7b6e625ada52b430207efc8.png";
-import imgTShirt from "figma:asset/21fe877e1d876a50789d329e49632e24452c7158.png";
+import imgNoSenseA3 from "../../assets/mzw/01-affiche.png";
+import imgSupportPrint1 from "../../assets/mzw/02-support-print.jpg";
+import imgSupportPrint2 from "../../assets/mzw/03-support-print.jpg";
+import imgVinyle from "../../assets/mzw/04-vinyle.png";
+import imgTShirt from "../../assets/mzw/05-tshirt.png";
+import imgMockup1 from "../../assets/mzw/06-mockup.png";
+import imgMockup2 from "../../assets/mzw/07-mockup.png";
 import imgKids04 from "figma:asset/71b5b76ff5b2eb1226378b9686f91fa60ac7728e.png";
 import imgKids02 from "figma:asset/32874648f507631cb3878df6ebb484a294c92f4d.png";
-import imgMockupAffiche3 from "figma:asset/9a5009718ea630c0da86ed9381e0fee85993f407.png";
-import imgMockupAffiche2 from "figma:asset/822b3b7fed95cc1119d1476b8d3f20373f26d73b.png";
 import imgAlbumArt from "figma:asset/285aae2a2bd3a31891ce93006639e1f4cfc7f16b.png";
 import imgCover1 from "figma:asset/b2dc3411ce1d7da5eedb5f043de453cdcea29c1d.png";
 import imgCover2 from "figma:asset/26ae25ab6f07e30cafc892d0f17cb14a514a6034.png";
@@ -524,12 +526,12 @@ function PrintSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FadeIn delay={0.15}>
             <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-              <img src={imgMockupAffiche3} alt="Mockup affiche MZW 1" className="w-full object-cover" />
+              <img src={imgSupportPrint1} alt="Support print MZW 1" className="w-full object-cover" />
             </div>
           </FadeIn>
           <FadeIn delay={0.2}>
             <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-              <img src={imgMockupAffiche2} alt="Mockup affiche MZW 2" className="w-full object-cover" />
+              <img src={imgSupportPrint2} alt="Support print MZW 2" className="w-full object-cover" />
             </div>
           </FadeIn>
         </div>
@@ -1239,12 +1241,12 @@ function MockupsSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FadeIn delay={0.08}>
             <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-              <img src={imgMockupAffiche3} alt="Mise en situation 1" className="w-full object-cover" />
+              <img src={imgMockup1} alt="Mise en situation MZW 1" className="w-full object-cover" />
             </div>
           </FadeIn>
           <FadeIn delay={0.14}>
             <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-              <img src={imgMockupAffiche2} alt="Mise en situation 2" className="w-full object-cover" />
+              <img src={imgMockup2} alt="Mise en situation MZW 2" className="w-full object-cover" />
             </div>
           </FadeIn>
         </div>
