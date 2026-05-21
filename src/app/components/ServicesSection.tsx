@@ -162,17 +162,17 @@ export function ServicesSection() {
                   ["--service-accent" as string]: cardAccent,
                   ["--service-base-shadow" as string]: isDark
                     ? `inset 0 1px 0 rgba(244,245,247,0.035), inset 0 0 0 1px ${cardAccent}0D, inset 0 -22px 58px rgba(0,0,0,0.14)`
-                    : `inset 0 1px 0 rgba(255,255,255,0.9), inset 0 0 0 1px ${cardAccent}08, inset 0 -18px 46px rgba(13,27,42,0.028)`,
+                    : `inset 0 1px 0 rgba(255,255,255,0.9), inset 0 0 0 1px ${cardAccent}16, inset 0 -18px 46px rgba(13,27,42,0.028)`,
                   ["--service-hover-shadow" as string]: isDark
                     ? `inset 0 1px 0 rgba(244,245,247,0.07), inset 0 0 0 1px ${cardAccent}18, inset 0 -28px 68px ${cardAccent}0A, inset 0 26px 64px rgba(255,255,255,0.025)`
-                    : `inset 0 1px 0 rgba(255,255,255,0.96), inset 0 0 0 1px ${cardAccent}12, inset 0 -26px 64px ${cardAccent}08, inset 0 24px 62px rgba(255,255,255,0.82)`,
+                    : `inset 0 1px 0 rgba(255,255,255,0.96), inset 0 0 0 1px ${cardAccent}24, inset 0 -26px 64px ${cardAccent}08, inset 0 24px 62px rgba(255,255,255,0.82)`,
                   width: "clamp(285px, 31vw, 350px)",
                   minHeight: 335,
                   scrollSnapAlign: "start",
                   background: isDark
                     ? `linear-gradient(145deg, color-mix(in srgb, ${cardAccent} 7%, rgba(4,8,16,0.995)) 0%, rgba(7,13,24,0.985) 48%, color-mix(in srgb, ${cardAccent} 4%, rgba(2,6,13,0.998)) 100%)`
                     : `linear-gradient(145deg, rgba(255,255,255,0.98) 0%, color-mix(in srgb, ${cardAccent} 2%, rgba(250,252,255,0.96)) 58%, rgba(246,249,253,0.98) 100%)`,
-                  border: `1px solid ${isDark ? `${cardAccent}22` : `${cardAccent}18`}`,
+                  border: `1px solid ${isDark ? `${cardAccent}22` : `${cardAccent}32`}`,
                 }}
               >
                 <div
