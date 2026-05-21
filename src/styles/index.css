@@ -213,9 +213,12 @@
 }
 
 .service-card {
+  --service-card-radius: 1rem;
   isolation: isolate;
   box-sizing: border-box;
   contain: paint;
+  overflow: hidden;
+  clip-path: inset(0 round var(--service-card-radius));
   background-clip: padding-box;
   box-shadow: var(--service-base-shadow);
   transition:
@@ -239,6 +242,8 @@
 }
 
 .service-card__field {
+  inset: 1px;
+  border-radius: calc(var(--service-card-radius) - 1px);
   background:
     radial-gradient(ellipse at 106% -12%, color-mix(in srgb, var(--service-accent) 18%, transparent), transparent 48%),
     radial-gradient(ellipse at -16% 116%, color-mix(in srgb, var(--service-accent) 8%, transparent), transparent 52%),
@@ -273,8 +278,8 @@
 .service-card::after {
   content: "";
   position: absolute;
-  inset: 0;
-  border-radius: inherit;
+  inset: 1px;
+  border-radius: calc(var(--service-card-radius) - 1px);
   pointer-events: none;
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--service-accent) 12%, transparent), transparent 34%),
