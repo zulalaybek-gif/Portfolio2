@@ -8,6 +8,7 @@ type FormStep = "name" | "email" | "message" | "review" | "sending" | "success";
 type FormData = { name: string; email: string; message: string };
 
 const questionSteps: Array<Exclude<FormStep, "review" | "sending" | "success">> = ["name", "email", "message"];
+const MIN_MESSAGE_LENGTH = 40;
 
 const questions = {
   name: {
@@ -33,6 +34,10 @@ function rgbaFromHex(hex: string, alpha: number) {
   return `rgba(${r},${g},${b},${alpha})`;
 }
 
+function isValidEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value.trim());
+}
+
 export function ContactPage() {
   const navigate = useNavigate();
   const { isDark } = useTheme();
@@ -50,8 +55,20 @@ export function ContactPage() {
     : 2;
   const activeStep = questionSteps[activeIndex];
   const value = isReview ? "review" : activeStep ? formData[activeStep] : "";
-  const canContinue = isReview || value.trim().length > 0;
+  const canContinue =
+    isReview ||
+    (activeStep === "email"
+      ? isValidEmail(formData.email)
+      : activeStep === "message"
+        ? formData.message.trim().length >= MIN_MESSAGE_LENGTH
+        : value.trim().length > 0);
   const isLastQuestion = activeStep === "message";
+  const validationHint =
+    activeStep === "email" && formData.email.trim().length > 0 && !isValidEmail(formData.email)
+      ? "Entrez une adresse email valide."
+      : activeStep === "message" && formData.message.trim().length > 0 && formData.message.trim().length < MIN_MESSAGE_LENGTH
+        ? `${MIN_MESSAGE_LENGTH - formData.message.trim().length} caractères minimum restants.`
+        : "";
   const bg = isDark ? "#1c1e1b" : "#EAEAEA";
   const text = isDark ? "#F1F1F1" : "#232624";
   const accent = isDark ? "#DFF440" : "#4B8197";
@@ -269,6 +286,7 @@ export function ContactPage() {
                     onBlur={() => setIsFocused(false)}
                     onKeyDown={handleKeyDown}
                     onChange={(event) => setFormData((current) => ({ ...current, message: event.target.value }))}
+                    aria-invalid={activeStep === "message" && formData.message.trim().length > 0 && !canContinue}
                     className="w-full resize-none border-none bg-transparent outline-none"
                     style={inputStyle(textBright)}
                   />
@@ -284,6 +302,7 @@ export function ContactPage() {
                     onBlur={() => setIsFocused(false)}
                     onKeyDown={handleKeyDown}
                     onChange={(event) => setFormData((current) => ({ ...current, [activeStep]: event.target.value }))}
+                    aria-invalid={activeStep === "email" && formData.email.trim().length > 0 && !canContinue}
                     className="w-full border-none bg-transparent outline-none"
                     style={inputStyle(textBright)}
                   />
@@ -299,6 +318,19 @@ export function ContactPage() {
                     }}
                   />
                 </div>
+                <motion.p
+                  initial={false}
+                  animate={{ opacity: validationHint ? 1 : 0, y: validationHint ? 0 : -4 }}
+                  className="mt-4 min-h-[1.4rem]"
+                  style={{
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "0.78rem",
+                    lineHeight: 1.5,
+                    color: rgbaFromHex(text, 0.45),
+                  }}
+                >
+                  {validationHint}
+                </motion.p>
               </motion.div>
 
               <motion.button
@@ -538,6 +570,26 @@ function SuccessAtmosphere({ text, accent, isDark }: { text: string; accent: str
           transform: "translate(-50%, -50%)",
         }}
       />
+      <motion.div
+        className="absolute bottom-8 right-8 md:bottom-12 md:right-14"
+        initial={{ opacity: 0, y: 18, rotate: -8 }}
+        animate={{ opacity: isDark ? 0.78 : 0.86, y: 0, rotate: [-8, -6, -8] }}
+        transition={{ opacity: { duration: 1.2, delay: 0.35 }, y: { duration: 1.2, delay: 0.35, ease: [0.16, 1, 0.3, 1] }, rotate: { duration: 8, repeat: Infinity, ease: "easeInOut" } }}
+        style={{
+          fontFamily: "'Reenie Beanie', 'Brush Script MT', cursive",
+          fontSize: "clamp(3.5rem, 8vw, 7rem)",
+          lineHeight: 0.8,
+          letterSpacing: "-0.045em",
+          color: "transparent",
+          background: `linear-gradient(128deg, ${accent} 0%, ${secondary} 58%, ${tertiary} 110%)`,
+          backgroundClip: "text",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          textShadow: `0 18px 48px ${rgbaFromHex(accent, isDark ? 0.2 : 0.18)}`,
+        }}
+      >
+        merci
+      </motion.div>
 
       <motion.div
         className="absolute inset-x-[-10%] top-[14%] h-px"
