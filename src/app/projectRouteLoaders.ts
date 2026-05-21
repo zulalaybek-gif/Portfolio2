@@ -19,6 +19,7 @@ export const projectRouteLoaders = {
   "/projects/sncf-connect": () => import("./components/ProjectSncf").then((m) => ({ default: m.ProjectSncf })),
   "/projects/haiti": () => import("./components/ProjectHaiti").then((m) => ({ default: m.ProjectHaiti })),
   "/projects/radio-libre": () => import("./components/ProjectRadioLibre").then((m) => ({ default: m.ProjectRadioLibre })),
+  "/projects/parsemains": () => import("./components/ProjectParsemains").then((m) => ({ default: m.ProjectParsemains })),
 } satisfies Record<string, RouteLoader>;
 
 export function preloadProjectRoute(path: string) {

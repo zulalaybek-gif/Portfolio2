@@ -19,6 +19,7 @@ const ProjectNrtv = lazy(projectRouteLoaders["/projects/narratiiv"]);
 const ProjectSncf = lazy(projectRouteLoaders["/projects/sncf-connect"]);
 const ProjectHaiti = lazy(projectRouteLoaders["/projects/haiti"]);
 const ProjectRadioLibre = lazy(projectRouteLoaders["/projects/radio-libre"]);
+const ProjectParsemains = lazy(projectRouteLoaders["/projects/parsemains"]);
 
 function DelayedRouteFallback() {
   const [show, setShow] = useState(false);
@@ -118,6 +119,7 @@ export const router = createBrowserRouter([
       { path: "projects/sncf-connect", Component: withSuspense(ProjectSncf) },
       { path: "projects/haiti", Component: withSuspense(ProjectHaiti) },
       { path: "projects/radio-libre", Component: withSuspense(ProjectRadioLibre) },
+      { path: "projects/parsemains", Component: withSuspense(ProjectParsemains) },
       { path: "*", Component: NotFound },
     ],
   },

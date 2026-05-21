@@ -228,6 +228,10 @@ const translations = {
     fr: "Workshop de refonte d'identité visuelle pour le Collectif Haïti de France. Système graphique modulaire, iconographie et déclinaisons.",
     en: "Visual identity redesign workshop for Collectif Haïti de France. Modular graphic system, iconography and variations.",
   },
+  "proj.parsemains.desc": {
+    fr: "Page projet préparée. Les contenus, visuels et intentions seront ajoutés prochainement.",
+    en: "Project page prepared. Content, visuals and direction will be added soon.",
+  },
 
   // ── Project descriptions (by id) ──
   "proj.mya.desc": {
