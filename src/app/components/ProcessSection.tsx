@@ -14,6 +14,9 @@ const steps = [
 ];
 
 const CYAN_ACCENT = "#7FD6FF";
+const LIGHT_CYAN_ACCENT = "#39C9D6";
+const BLUE_ACCENT = "#2F6BFF";
+const BERRY_ACCENT = "#9B214F";
 
 function useInView(ref: RefObject<HTMLElement | null>, margin = "200px 0px") {
   const [inView, setInView] = useState(false);
@@ -53,8 +56,8 @@ export function ProcessSection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
   const stepAccents = isDark
-    ? [CYAN_ACCENT, "#5DA9FF", "#7B2D52", CYAN_ACCENT]
-    : ["#5DA9FF", "#0D1B2A", "#7B2D52", "#5DA9FF"];
+    ? [CYAN_ACCENT, "#5DA9FF", "#A34A6A", CYAN_ACCENT]
+    : [LIGHT_CYAN_ACCENT, BLUE_ACCENT, BERRY_ACCENT, "#5DA9FF"];
   const sectionRef = useRef<HTMLElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(lineRef);
@@ -118,7 +121,7 @@ export function ProcessSection() {
               const isLineVisible = reduceMotion || i + 1 < revealedCount;
               const stepAccent = stepAccents[i % stepAccents.length];
               const nextAccent = stepAccents[(i + 1) % stepAccents.length];
-              const badgeText = stepAccent === CYAN_ACCENT ? "#0D1B2A" : "#F4F5F7";
+              const badgeText = stepAccent === CYAN_ACCENT || stepAccent === LIGHT_CYAN_ACCENT ? "#0D1B2A" : "#F4F5F7";
 
               return (
                 <div
@@ -146,15 +149,15 @@ export function ProcessSection() {
                   >
                     <div
                       className="absolute inset-0 rounded-full"
-                      style={{ background: r(0.045) }}
+                      style={{ background: isDark ? "rgba(127,214,255,0.1)" : "rgba(13,27,42,0.085)" }}
                     />
                     <div
                       className="absolute inset-y-0 left-0 rounded-full"
                       style={{
                         width: "100%",
-                        background: `linear-gradient(90deg, ${stepAccent} 0%, ${nextAccent}88 72%, transparent 100%)`,
-                        boxShadow: shouldGlowLine ? `0 0 24px ${stepAccent}42` : "none",
-                        opacity: shouldGlowLine ? 1 : 0.78,
+                        background: `linear-gradient(90deg, ${stepAccent} 0%, color-mix(in srgb, ${stepAccent} 45%, ${nextAccent}) 52%, ${nextAccent} 100%)`,
+                        boxShadow: shouldGlowLine ? `0 0 18px ${stepAccent}30` : "none",
+                        opacity: shouldGlowLine ? 0.95 : 0.72,
                         transform: isLineVisible ? "scaleX(1)" : "scaleX(0)",
                         transformOrigin: "left center",
                         transition: "transform 1.05s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 260ms ease, opacity 260ms ease",
@@ -166,9 +169,9 @@ export function ProcessSection() {
                         right: -6,
                         width: 28,
                         height: 28,
-                        background: `radial-gradient(circle, ${nextAccent}55 0%, transparent 65%)`,
-                        filter: "blur(8px)",
-                        opacity: isLineVisible ? 0.65 : 0,
+                        background: `radial-gradient(circle, ${nextAccent}38 0%, transparent 68%)`,
+                        filter: "blur(10px)",
+                        opacity: isLineVisible ? 0.48 : 0,
                         transition: "opacity 0.7s ease",
                       }}
                     />
@@ -187,7 +190,7 @@ export function ProcessSection() {
                     transition={{ duration: isHovered ? 0.7 : 1.4, ease: [0.16, 1, 0.3, 1] }}
                     style={{
                       background: `radial-gradient(circle, ${stepAccent}40 0%, ${stepAccent}18 38%, transparent 72%)`,
-                      filter: "blur(10px)",
+                      filter: "blur(12px)",
                     }}
                   />
                   <motion.div
@@ -209,12 +212,12 @@ export function ProcessSection() {
                     }}
                     style={{
                       background: isDark
-                        ? `radial-gradient(circle at 45% 35%, ${stepAccent}1c 0%, rgba(93,169,255,0.14) 58%, rgba(13,27,42,0.96) 100%)`
-                        : `radial-gradient(circle at 45% 35%, ${stepAccent}18 0%, rgba(93,169,255,0.05) 58%, rgba(244,245,247,0.96) 100%)`,
-                      border: `1px solid ${stepAccent}44`,
+                        ? `radial-gradient(circle at 45% 35%, color-mix(in srgb, ${stepAccent} 16%, rgba(13,27,42,0.98)) 0%, rgba(13,27,42,0.96) 68%, rgba(5,11,20,0.98) 100%)`
+                        : `radial-gradient(circle at 45% 35%, color-mix(in srgb, ${stepAccent} 10%, rgba(255,255,255,0.98)) 0%, color-mix(in srgb, ${stepAccent} 4%, rgba(244,245,247,0.98)) 64%, rgba(244,245,247,0.98) 100%)`,
+                      border: `1px solid ${isDark ? `${stepAccent}44` : `${stepAccent}36`}`,
                       boxShadow: isDark
-                        ? `0 18px 55px rgba(0,0,0,0.3), inset 0 1px 0 rgba(244,245,247,0.05), 0 0 ${isHovered ? 48 : 26}px ${stepAccent}${isHovered ? "34" : "1f"}`
-                        : `0 18px 55px rgba(13,27,42,0.08), inset 0 1px 0 rgba(255,255,255,0.75), 0 0 ${isHovered ? 42 : 24}px ${stepAccent}${isHovered ? "2e" : "16"}`,
+                        ? `0 18px 55px rgba(0,0,0,0.3), inset 0 1px 0 rgba(244,245,247,0.05), 0 0 ${isHovered ? 42 : 22}px ${stepAccent}${isHovered ? "2f" : "1a"}`
+                        : `0 18px 46px rgba(13,27,42,0.065), inset 0 1px 0 rgba(255,255,255,0.86), 0 0 ${isHovered ? 34 : 18}px ${stepAccent}${isHovered ? "24" : "12"}`,
                       transform: "translateZ(0)",
                     }}
                   >
