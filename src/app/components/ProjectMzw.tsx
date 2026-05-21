@@ -865,8 +865,8 @@ interface ButterflyData {
 }
 
 const BUTTERFLIES: ButterflyData[] = [
-  { id: 0, size: 52, baseX: 86, baseY: 30, driftAmplitudeX: 3.5, driftAmplitudeY: 5, driftSpeed: 7, flapSpeed: 1.8, rotateBase: -6 },
-  { id: 1, size: 36, baseX: 90, baseY: 56, driftAmplitudeX: 2.5, driftAmplitudeY: 4, driftSpeed: 9, flapSpeed: 1.5, rotateBase: 8 },
+  { id: 0, size: 118, baseX: 79, baseY: 26, driftAmplitudeX: 2.6, driftAmplitudeY: 4.5, driftSpeed: 7, flapSpeed: 1.8, rotateBase: -6 },
+  { id: 1, size: 76, baseX: 9, baseY: 64, driftAmplitudeX: 2.2, driftAmplitudeY: 3.8, driftSpeed: 9, flapSpeed: 1.5, rotateBase: 8 },
 ];
 
 /* Sparkle particles emitted on click */
@@ -926,7 +926,7 @@ function ParticleBurst({ originX, originY, onDone }: { originX: number; originY:
   );
 }
 
-function SingleButterfly({ data, scrollPct, isDark }: { data: ButterflyData; scrollPct: number; isDark: boolean }) {
+function SingleButterfly({ data, isDark }: { data: ButterflyData; isDark: boolean }) {
   const [isHovered, setIsHovered] = useState(false);
   const [isTapped, setIsTapped] = useState(false);
   const [burst, setBurst] = useState<{ x: number; y: number } | null>(null);
@@ -957,12 +957,7 @@ function SingleButterfly({ data, scrollPct, isDark }: { data: ButterflyData; scr
     return () => clearInterval(interval);
   }, [isHovered]);
 
-  let opacityVal = 0;
-  const maxOpacity = isDark ? 0.8 : 0.65;
-  if (scrollPct < 0.04) opacityVal = maxOpacity * 0.55;
-  else if (scrollPct < 0.1) opacityVal = ((scrollPct - 0.04) / 0.06) * maxOpacity;
-  else if (scrollPct < 0.88) opacityVal = maxOpacity;
-  else if (scrollPct < 0.95) opacityVal = ((0.95 - scrollPct) / 0.07) * maxOpacity;
+  const opacityVal = isDark ? 0.96 : 0.84;
 
   const handleTap = () => {
     const rect = ref.current?.getBoundingClientRect();
@@ -1022,8 +1017,9 @@ function SingleButterfly({ data, scrollPct, isDark }: { data: ButterflyData; scr
           top: 0,
           left: 0,
           opacity: opacityVal,
+          pointerEvents: "auto",
         }}
-        initial={{ opacity: 0, scale: 0.4 }}
+        initial={{ opacity: 0, scale: 0.72 }}
         animate={{
           x: isTapped
             ? tapVariant.x
@@ -1066,11 +1062,11 @@ function SingleButterfly({ data, scrollPct, isDark }: { data: ButterflyData; scr
           style={{
             filter: isHovered
               ? isDark
-                ? `drop-shadow(0 0 16px rgba(${ACCENT_RGB},0.6)) drop-shadow(0 0 4px rgba(${ACCENT_RGB},0.3))`
-                : `drop-shadow(0 0 16px rgba(${ACCENT_RGB},0.4)) drop-shadow(0 0 4px rgba(${ACCENT_RGB},0.2))`
+                ? `drop-shadow(0 0 26px rgba(127,214,255,0.6)) drop-shadow(0 12px 28px rgba(0,0,0,0.38)) brightness(1.28) contrast(1.14)`
+                : `drop-shadow(0 0 24px rgba(93,169,255,0.34)) drop-shadow(0 12px 28px rgba(13,27,42,0.18)) brightness(0.78) contrast(1.28)`
               : isDark
-                ? `drop-shadow(0 3px 10px rgba(${ACCENT_RGB},0.25))`
-                : `drop-shadow(0 3px 10px rgba(${ACCENT_RGB},0.12))`,
+                ? `drop-shadow(0 0 18px rgba(127,214,255,0.32)) drop-shadow(0 10px 24px rgba(0,0,0,0.34)) brightness(1.16) contrast(1.1)`
+                : `drop-shadow(0 0 16px rgba(93,169,255,0.22)) drop-shadow(0 10px 24px rgba(13,27,42,0.16)) brightness(0.72) contrast(1.3)`,
             transition: "filter 0.3s ease",
           }}
         >
@@ -1093,7 +1089,7 @@ function SingleButterfly({ data, scrollPct, isDark }: { data: ButterflyData; scr
               draggable={false}
               style={{
                 width: `${data.size}px`,
-                mixBlendMode: isDark ? "screen" : "multiply",
+                mixBlendMode: "normal",
                 objectFit: "contain",
                 userSelect: "none",
               }}
@@ -1108,7 +1104,6 @@ function SingleButterfly({ data, scrollPct, isDark }: { data: ButterflyData; scr
 function FloatingButterfly() {
   const { isDark } = useTheme();
   const [isCompact, setIsCompact] = useState(false);
-  const [scrollPct, setScrollPct] = useState(0);
 
   useEffect(() => {
     const check = () => setIsCompact(window.innerWidth < 640);
@@ -1117,33 +1112,12 @@ function FloatingButterfly() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  useEffect(() => {
-    let raf = 0;
-    const onScroll = () => {
-      if (raf) return;
-      raf = window.requestAnimationFrame(() => {
-        raf = 0;
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        if (docHeight > 0) {
-          setScrollPct(scrollTop / docHeight);
-        }
-      });
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => {
-      if (raf) window.cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, []);
-
   if (isCompact) return null;
 
   return (
     <>
       {BUTTERFLIES.map((b) => (
-        <SingleButterfly key={b.id} data={b} scrollPct={scrollPct} isDark={isDark} />
+        <SingleButterfly key={b.id} data={b} isDark={isDark} />
       ))}
     </>
   );
