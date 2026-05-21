@@ -73,6 +73,13 @@ export function ContactPage() {
   const bg = isDark ? "#1c1e1b" : "#EAEAEA";
   const text = isDark ? "#F1F1F1" : "#232624";
   const accent = isDark ? "#DFF440" : "#4B8197";
+  const successBackground =
+    !isDark && step === "success"
+      ? `radial-gradient(circle at 18% 18%, ${rgbaFromHex("#4B8197", 0.22)}, transparent 34%),
+         radial-gradient(circle at 82% 22%, ${rgbaFromHex("#C12144", 0.18)}, transparent 30%),
+         radial-gradient(circle at 72% 82%, ${rgbaFromHex("#D39A7A", 0.22)}, transparent 34%),
+         linear-gradient(135deg, #F7F4EE 0%, #ECE9E2 48%, #F4EFE9 100%)`
+      : bg;
   const textSoft = rgbaFromHex(text, 0.6);
   const textBright = rgbaFromHex(text, 0.85);
 
@@ -156,7 +163,7 @@ export function ContactPage() {
         ["--text" as string]: text,
         ["--accent" as string]: accent,
         ["--text-bright" as string]: textBright,
-        background: bg,
+        background: successBackground,
         color: text,
       }}
     >
@@ -214,7 +221,7 @@ export function ContactPage() {
       <div className="relative z-10 w-full max-w-3xl">
         <AnimatePresence mode="wait">
           {step === "success" ? (
-            <SuccessState key="success" text={text} accent={accent} onHome={() => navigate("/")} />
+            <SuccessState key="success" text={text} accent={accent} isDark={isDark} onHome={() => navigate("/")} />
           ) : step === "sending" ? (
             <motion.div
               key="sending"
@@ -528,34 +535,58 @@ function ReviewState({
 
 function SuccessAtmosphere({ text, accent, isDark }: { text: string; accent: string; isDark: boolean }) {
   const secondary = isDark ? "#4B8197" : "#C12144";
-  const tertiary = isDark ? "#C12144" : "#D39A7A";
+  const tertiary = isDark ? "#C12144" : "#D8785F";
+  const gold = isDark ? "#DFF440" : "#E7B94B";
 
   return (
     <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden" aria-hidden="true">
+      {!isDark ? (
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(115deg, rgba(75,129,151,0.18) 0%, transparent 32%, rgba(193,33,68,0.1) 58%, rgba(216,120,95,0.16) 100%)",
+            mixBlendMode: "multiply",
+          }}
+        />
+      ) : null}
       <motion.div
         className="absolute rounded-full"
-        animate={{ scale: [1, 1.12, 1], opacity: isDark ? [0.5, 0.72, 0.5] : [0.42, 0.64, 0.42] }}
+        animate={{ scale: [1, 1.12, 1], opacity: isDark ? [0.5, 0.72, 0.5] : [0.68, 0.9, 0.68] }}
         transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
         style={{
           width: "clamp(420px, 48vw, 860px)",
           height: "clamp(420px, 48vw, 860px)",
-          left: "-14%",
-          top: "-18%",
-          background: `radial-gradient(circle, ${rgbaFromHex(secondary, isDark ? 0.22 : 0.2)}, ${rgbaFromHex(secondary, isDark ? 0.08 : 0.09)} 38%, transparent 68%)`,
+          left: isDark ? "-14%" : "-8%",
+          top: isDark ? "-18%" : "-12%",
+          background: `radial-gradient(circle, ${rgbaFromHex(secondary, isDark ? 0.22 : 0.34)}, ${rgbaFromHex(secondary, isDark ? 0.08 : 0.17)} 38%, transparent 68%)`,
+          filter: "blur(64px)",
+        }}
+      />
+      <motion.div
+        className="absolute rounded-full"
+        animate={{ scale: [1.08, 0.96, 1.08], opacity: isDark ? [0.48, 0.68, 0.48] : [0.58, 0.82, 0.58] }}
+        transition={{ duration: 13, repeat: Infinity, ease: "easeInOut" }}
+        style={{
+          width: "clamp(360px, 42vw, 720px)",
+          height: "clamp(360px, 42vw, 720px)",
+          right: isDark ? "-10%" : "-6%",
+          bottom: isDark ? "-18%" : "-12%",
+          background: `radial-gradient(circle, ${rgbaFromHex(tertiary, isDark ? 0.18 : 0.32)}, ${rgbaFromHex(accent, isDark ? 0.08 : 0.18)} 42%, transparent 70%)`,
           filter: "blur(70px)",
         }}
       />
       <motion.div
         className="absolute rounded-full"
-        animate={{ scale: [1.08, 0.96, 1.08], opacity: isDark ? [0.48, 0.68, 0.48] : [0.36, 0.58, 0.36] }}
-        transition={{ duration: 13, repeat: Infinity, ease: "easeInOut" }}
+        animate={{ x: ["-3%", "4%", "-3%"], y: ["2%", "-2%", "2%"], opacity: isDark ? [0.18, 0.26, 0.18] : [0.42, 0.62, 0.42] }}
+        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
         style={{
-          width: "clamp(360px, 42vw, 720px)",
-          height: "clamp(360px, 42vw, 720px)",
-          right: "-10%",
-          bottom: "-18%",
-          background: `radial-gradient(circle, ${rgbaFromHex(tertiary, isDark ? 0.18 : 0.16)}, ${rgbaFromHex(accent, isDark ? 0.08 : 0.1)} 42%, transparent 70%)`,
-          filter: "blur(78px)",
+          width: "clamp(300px, 34vw, 620px)",
+          height: "clamp(300px, 34vw, 620px)",
+          left: "44%",
+          top: "44%",
+          background: `radial-gradient(circle, ${rgbaFromHex(gold, isDark ? 0.12 : 0.28)}, transparent 68%)`,
+          filter: "blur(74px)",
         }}
       />
       <motion.div
@@ -565,15 +596,15 @@ function SuccessAtmosphere({ text, accent, isDark }: { text: string; accent: str
         style={{
           width: "clamp(520px, 56vw, 960px)",
           aspectRatio: "1 / 1",
-          border: `1px solid ${rgbaFromHex(accent, isDark ? 0.16 : 0.18)}`,
-          boxShadow: `0 0 90px ${rgbaFromHex(accent, isDark ? 0.11 : 0.12)}, inset 0 0 80px ${rgbaFromHex(secondary, isDark ? 0.05 : 0.06)}`,
+          border: `1px solid ${rgbaFromHex(accent, isDark ? 0.16 : 0.28)}`,
+          boxShadow: `0 0 110px ${rgbaFromHex(accent, isDark ? 0.11 : 0.22)}, inset 0 0 90px ${rgbaFromHex(secondary, isDark ? 0.05 : 0.11)}`,
           transform: "translate(-50%, -50%)",
         }}
       />
       <div className="absolute bottom-8 right-8 md:bottom-12 md:right-14" style={{ transform: "rotate(-7deg)" }}>
         <motion.div
           initial={{ width: 0, opacity: 0 }}
-          animate={{ width: "clamp(9rem, 19vw, 16rem)", opacity: isDark ? 0.82 : 0.9 }}
+          animate={{ width: "clamp(9rem, 19vw, 16rem)", opacity: isDark ? 0.82 : 1 }}
           transition={{ width: { duration: 1.75, delay: 0.45, ease: [0.16, 1, 0.3, 1] }, opacity: { duration: 0.35, delay: 0.35 } }}
           className="overflow-hidden whitespace-nowrap"
           style={{
@@ -586,7 +617,7 @@ function SuccessAtmosphere({ text, accent, isDark }: { text: string; accent: str
             backgroundClip: "text",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
-            textShadow: `0 18px 48px ${rgbaFromHex(accent, isDark ? 0.2 : 0.18)}`,
+            textShadow: `0 18px 48px ${rgbaFromHex(accent, isDark ? 0.2 : 0.3)}`,
           }}
         >
           merci
@@ -606,18 +637,18 @@ function SuccessAtmosphere({ text, accent, isDark }: { text: string; accent: str
 
       <motion.div
         className="absolute inset-x-[-10%] top-[14%] h-px"
-        animate={{ x: ["-4%", "4%", "-4%"], opacity: isDark ? [0.32, 0.58, 0.32] : [0.28, 0.5, 0.28] }}
+        animate={{ x: ["-4%", "4%", "-4%"], opacity: isDark ? [0.32, 0.58, 0.32] : [0.48, 0.76, 0.48] }}
         transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
         style={{
-          background: `linear-gradient(90deg, transparent, ${rgbaFromHex(accent, isDark ? 0.42 : 0.44)}, ${rgbaFromHex(secondary, isDark ? 0.28 : 0.34)}, transparent)`,
+          background: `linear-gradient(90deg, transparent, ${rgbaFromHex(accent, isDark ? 0.42 : 0.68)}, ${rgbaFromHex(secondary, isDark ? 0.28 : 0.58)}, transparent)`,
         }}
       />
       <motion.div
         className="absolute inset-x-[-20%] bottom-[18%] h-px"
-        animate={{ x: ["5%", "-5%", "5%"], opacity: isDark ? [0.28, 0.5, 0.28] : [0.24, 0.44, 0.24] }}
+        animate={{ x: ["5%", "-5%", "5%"], opacity: isDark ? [0.28, 0.5, 0.28] : [0.42, 0.68, 0.42] }}
         transition={{ duration: 13, repeat: Infinity, ease: "easeInOut" }}
         style={{
-          background: `linear-gradient(90deg, transparent, ${rgbaFromHex(tertiary, isDark ? 0.25 : 0.28)}, ${rgbaFromHex(accent, isDark ? 0.38 : 0.4)}, transparent)`,
+          background: `linear-gradient(90deg, transparent, ${rgbaFromHex(tertiary, isDark ? 0.25 : 0.56)}, ${rgbaFromHex(accent, isDark ? 0.38 : 0.62)}, transparent)`,
         }}
       />
 
@@ -631,16 +662,18 @@ function SuccessAtmosphere({ text, accent, isDark }: { text: string; accent: str
           backgroundSize: "64px 64px",
           maskImage: "radial-gradient(ellipse at center, black 0%, black 56%, transparent 82%)",
           WebkitMaskImage: "radial-gradient(ellipse at center, black 0%, black 56%, transparent 82%)",
-          opacity: isDark ? 0.55 : 0.48,
+          opacity: isDark ? 0.55 : 0.68,
         }}
       />
 
-      <AmbientMovingLines className="absolute inset-0 size-full" accent={accent} secondary={secondary} text={text} opacity={isDark ? 0.62 : 0.5} />
+      <AmbientMovingLines className="absolute inset-0 size-full" accent={accent} secondary={secondary} text={text} opacity={isDark ? 0.62 : 0.72} />
     </div>
   );
 }
 
-function SuccessState({ text, accent, onHome }: { text: string; accent: string; onHome: () => void }) {
+function SuccessState({ text, accent, isDark, onHome }: { text: string; accent: string; isDark: boolean; onHome: () => void }) {
+  const visualAccent = isDark ? accent : "#C12144";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 80 }}
@@ -654,14 +687,19 @@ function SuccessState({ text, accent, onHome }: { text: string; accent: string; 
           className="absolute inset-0 rounded-full"
           animate={{ scale: [1, 1.5], opacity: [1, 0] }}
           transition={{ duration: 1.2, repeat: Infinity, ease: "easeOut" }}
-          style={{ border: `1px solid ${accent}` }}
+          style={{ border: `1px solid ${visualAccent}` }}
         />
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: "spring", stiffness: 220, damping: 14, delay: 0.2 }}
+          style={{
+            filter: isDark
+              ? `drop-shadow(0 0 20px ${rgbaFromHex(accent, 0.28)})`
+              : `drop-shadow(0 18px 34px ${rgbaFromHex(visualAccent, 0.28)})`,
+          }}
         >
-          <CheckCircle2 size={64} color={accent} strokeWidth={1.7} />
+          <CheckCircle2 size={64} color={visualAccent} strokeWidth={1.7} />
         </motion.div>
       </div>
       <h1
@@ -682,15 +720,15 @@ function SuccessState({ text, accent, onHome }: { text: string; accent: string; 
           fontFamily: "'Inter', sans-serif",
           fontSize: "1.1rem",
           lineHeight: 1.8,
-          color: rgbaFromHex(text, 0.62),
+          color: rgbaFromHex(text, isDark ? 0.62 : 0.7),
         }}
       >
-        Je reviens vers vous très bientôt. Merci pour votre confiance.
+        Je reviens vers vous très bientôt. Votre message est entre de bonnes mains.
       </p>
       <motion.button
         type="button"
         onClick={onHome}
-        whileHover={{ scale: 1.05, borderColor: accent }}
+        whileHover={{ scale: 1.05, borderColor: visualAccent }}
         whileTap={{ scale: 0.95 }}
         className="mt-12 inline-flex items-center gap-3 rounded-full px-8 py-4"
         style={{
