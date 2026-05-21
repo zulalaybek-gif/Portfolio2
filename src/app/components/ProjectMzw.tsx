@@ -26,7 +26,6 @@ const ACCENT_RGB = "93,71,146";
 const DARK_BG = "#0f0817";
 
 const MZW_SWIRL_PATHS_URL = "/assets/mzw-swirl-paths.json";
-const MZW_FINAL_ANIMATION_URL = "/assets/mzw-12-animation.webp";
 
 /* Butterfly tap animation generators — each returns randomised values so no two clicks feel the same */
 const TAP_GENERATORS: Array<() => { x: number; y: number; scale: number; rotate: number; opacity: number; dur: number }> = [
@@ -1238,7 +1237,7 @@ function MockupsSection() {
    =================================== */
 function FinalSection() {
   const { t } = useI18n();
-  const { isDark, r } = useTheme();
+  const { r } = useTheme();
   const navigate = useNavigate();
 
   return (
@@ -1246,22 +1245,6 @@ function FinalSection() {
       <div className="max-w-5xl mx-auto flex flex-col items-center">
         <FadeIn className="mb-6">
           <SectionLabel>{t("mzw.final.label")}</SectionLabel>
-        </FadeIn>
-
-        {/* Closing animation */}
-        <FadeIn>
-          <div className="flex justify-center mb-10">
-            <div
-              className="w-[220px] md:w-[320px] rounded-2xl overflow-hidden"
-              style={{
-                boxShadow: isDark
-                  ? `0 30px 80px rgba(${ACCENT_RGB},0.2)`
-                  : `0 30px 80px rgba(${ACCENT_RGB},0.1)`,
-              }}
-            >
-              <img src={MZW_FINAL_ANIMATION_URL} alt="Animation finale MZW" className="w-full h-auto object-cover" />
-            </div>
-          </div>
         </FadeIn>
 
         <FadeIn>
