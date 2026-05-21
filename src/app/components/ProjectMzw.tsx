@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform, AnimatePresence } from "motion/react";
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useEffect, useState, useMemo } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useI18n, type TranslationKey } from "./i18n";
@@ -604,26 +604,57 @@ const WAVEFORM_UNPLAYED = [105, 89, 70, 62, 77, 121, 62, 62, 62, 30, 38, 14, 38,
 const WF_MAX = 121;
 
 function AnimatedWaveform() {
+  const playedBars = useMemo(
+    () =>
+      WAVEFORM_PLAYED.map((h) => {
+        const pct = (h / WF_MAX) * 100;
+        const variance = 15 + Math.random() * 20;
+        return {
+          base: pct,
+          high: Math.min(100, pct + variance),
+          low: Math.max(15, pct - variance * 0.6),
+          duration: 0.6 + Math.random() * 0.8,
+          delay: Math.random() * 0.5,
+        };
+      }),
+    []
+  );
+  const unplayedBars = useMemo(
+    () =>
+      WAVEFORM_UNPLAYED.map((h) => {
+        const pct = (h / WF_MAX) * 100;
+        const variance = 8 + Math.random() * 12;
+        return {
+          base: pct,
+          high: Math.min(100, pct + variance),
+          low: Math.max(10, pct - variance * 0.5),
+          duration: 0.8 + Math.random() * 0.6,
+          delay: Math.random() * 0.4,
+        };
+      }),
+    []
+  );
+
   return (
     <div className="flex items-center gap-[1.5px] w-full" style={{ height: "100%" }}>
-      {WAVEFORM_PLAYED.map((h, i) => {
-        const pct = (h / WF_MAX) * 100;
-        const v = 15 + Math.random() * 20;
-        return (
-          <motion.div key={`p-${i}`} className="flex-1 rounded-full" style={{ background: "#60488e", minWidth: 1.5, maxWidth: 4 }}
-            animate={{ height: [`${pct}%`, `${Math.min(100, pct + v)}%`, `${Math.max(15, pct - v * 0.6)}%`, `${pct}%`] }}
-            transition={{ duration: 0.6 + Math.random() * 0.8, delay: Math.random() * 0.5, repeat: Infinity, ease: "easeInOut" }} />
-        );
-      })}
-      {WAVEFORM_UNPLAYED.map((h, i) => {
-        const pct = (h / WF_MAX) * 100;
-        const v = 8 + Math.random() * 12;
-        return (
-          <motion.div key={`u-${i}`} className="flex-1 rounded-full" style={{ background: "rgba(255,255,255,0.65)", minWidth: 1.5, maxWidth: 4 }}
-            animate={{ height: [`${pct}%`, `${Math.min(100, pct + v)}%`, `${Math.max(10, pct - v * 0.5)}%`, `${pct}%`] }}
-            transition={{ duration: 0.8 + Math.random() * 0.6, delay: Math.random() * 0.4, repeat: Infinity, ease: "easeInOut" }} />
-        );
-      })}
+      {playedBars.map((bar, i) => (
+        <motion.div
+          key={`p-${i}`}
+          className="flex-1 rounded-full"
+          style={{ background: "#60488e", minWidth: 1.5, maxWidth: 4 }}
+          animate={{ height: [`${bar.base}%`, `${bar.high}%`, `${bar.low}%`, `${bar.base}%`] }}
+          transition={{ duration: bar.duration, delay: bar.delay, repeat: Infinity, ease: "easeInOut" }}
+        />
+      ))}
+      {unplayedBars.map((bar, i) => (
+        <motion.div
+          key={`u-${i}`}
+          className="flex-1 rounded-full"
+          style={{ background: "rgba(255,255,255,0.65)", minWidth: 1.5, maxWidth: 4 }}
+          animate={{ height: [`${bar.base}%`, `${bar.high}%`, `${bar.low}%`, `${bar.base}%`] }}
+          transition={{ duration: bar.duration, delay: bar.delay, repeat: Infinity, ease: "easeInOut" }}
+        />
+      ))}
     </div>
   );
 }
@@ -632,23 +663,35 @@ function AnimatedWaveform() {
 function DecorativeEqualizer({ isDark }: { isDark: boolean }) {
   const barCount = 180;
   const center = barCount / 2;
+  const bars = useMemo(
+    () =>
+      Array.from({ length: barCount }).map((_, i) => ({
+        color: EQ_COLORS[i % EQ_COLORS.length],
+        baseH: 15 + Math.random() * 25,
+        peakH: 35 + Math.random() * 50,
+        duration: 1.2 + Math.random() * 1.5,
+        delay: Math.random() * 1.2,
+        edgeOpacity: Math.max(0, 1 - (Math.abs(i - center) / center) * 1.15),
+      })),
+    []
+  );
+
   return (
     <div className="flex items-end justify-center gap-[1.5px] w-full" style={{ height: "55px" }}>
-      {Array.from({ length: barCount }).map((_, i) => {
-        const color = EQ_COLORS[i % EQ_COLORS.length];
-        const baseH = 15 + Math.random() * 25;
-        const peakH = 35 + Math.random() * 50;
-        const dur = 1.2 + Math.random() * 1.5;
-        const delay = Math.random() * 1.2;
-        const distFromCenter = Math.abs(i - center) / center;
-        const edgeOpacity = Math.max(0, 1 - distFromCenter * 1.15);
-        return (
-          <motion.div key={i} className="flex-1 rounded-full"
-            style={{ background: `linear-gradient(to top, ${color}${isDark ? "cc" : "99"}, ${color}${isDark ? "44" : "33"})`, minWidth: 0.8, maxWidth: 3, opacity: edgeOpacity }}
-            animate={{ height: [`${baseH}%`, `${peakH}%`, `${baseH + 6}%`, `${peakH - 10}%`, `${baseH}%`] }}
-            transition={{ duration: dur, delay, repeat: Infinity, ease: "easeInOut" }} />
-        );
-      })}
+      {bars.map((bar, i) => (
+        <motion.div
+          key={i}
+          className="flex-1 rounded-full"
+          style={{
+            background: `linear-gradient(to top, ${bar.color}${isDark ? "cc" : "99"}, ${bar.color}${isDark ? "44" : "33"})`,
+            minWidth: 0.8,
+            maxWidth: 3,
+            opacity: bar.edgeOpacity,
+          }}
+          animate={{ height: [`${bar.baseH}%`, `${bar.peakH}%`, `${bar.baseH + 6}%`, `${bar.peakH - 10}%`, `${bar.baseH}%`] }}
+          transition={{ duration: bar.duration, delay: bar.delay, repeat: Infinity, ease: "easeInOut" }}
+        />
+      ))}
     </div>
   );
 }
@@ -842,11 +885,6 @@ function SingleButterfly({ data, scrollPct, isDark }: { data: ButterflyData; scr
   const ref = useRef<HTMLDivElement>(null);
   const [hoverSparkles, setHoverSparkles] = useState<{ id: number; ox: number; oy: number }[]>([]);
   const sparkleCounter = useRef(0);
-  const [randomOffset] = useState(() => ({
-    x: (Math.random() - 0.5) * 60,
-    y: (Math.random() - 0.5) * 60,
-    rot: (Math.random() - 0.5) * 100,
-  }));
   const [tapVariant, setTapVariant] = useState(() => TAP_GENERATORS[0]());
 
   // Continuous sparkle emission on hover — dense, wider spread
