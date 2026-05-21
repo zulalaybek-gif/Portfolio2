@@ -116,7 +116,16 @@ export function ServicesSection() {
               />
             </div>
             <div className="flex items-center gap-6">
-              <p className="max-w-[230px] hidden md:block" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.78rem", lineHeight: 1.65, color: r(0.34) }}>
+              <p
+                className="max-w-[230px] hidden md:block"
+                style={{
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: "0.78rem",
+                  fontWeight: 500,
+                  lineHeight: 1.62,
+                  color: isDark ? r(0.48) : r(0.52),
+                }}
+              >
                 {t("services.subtitle" as TranslationKey)}
               </p>
               <div className="flex items-center gap-2">
