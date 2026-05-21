@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform, AnimatePresence } from "motion/react";
 import { useRef, useEffect, useState, useMemo } from "react";
+import { createPortal } from "react-dom";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useI18n, type TranslationKey } from "./i18n";
@@ -1103,7 +1104,12 @@ function SingleButterfly({ data, isDark }: { data: ButterflyData; isDark: boolea
 
 function FloatingButterfly() {
   const { isDark } = useTheme();
+  const [isMounted, setIsMounted] = useState(false);
   const [isCompact, setIsCompact] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     const check = () => setIsCompact(window.innerWidth < 640);
@@ -1112,14 +1118,15 @@ function FloatingButterfly() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  if (isCompact) return null;
+  if (!isMounted || isCompact) return null;
 
-  return (
+  return createPortal(
     <>
       {BUTTERFLIES.map((b) => (
         <SingleButterfly key={b.id} data={b} isDark={isDark} />
       ))}
-    </>
+    </>,
+    document.body
   );
 }
 
