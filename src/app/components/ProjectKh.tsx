@@ -24,12 +24,12 @@ import imgMew1 from "figma:asset/90261cfa51c4e22fef545a7e43cd2d9ceaf9b879.png";
 import UxWebHome from "../../imports/UxWebHome";
 
 /* -- Helpers -- */
-const ACCENT = "#FD6235";
-const ACCENT_RGB = "253,98,53";
+const ACCENT = "#7B2D52";
+const ACCENT_RGB = "123,45,82";
 const DARK_BG = "#07020b";
 
 const PALETTE = [
-  { hex: "#FD6235", name: "Flame Orange" },
+  { hex: "#7B2D52", name: "Flame Orange" },
   { hex: "#8823F7", name: "Electric Violet" },
   { hex: "#1DA4D0", name: "Cyan Blue" },
   { hex: "#26252D", name: "Dark Onyx" },
@@ -448,7 +448,7 @@ function LogoSection() {
         </FadeIn>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {/* Logo on orange */}
+          {/* Logo on accent */}
           <FadeIn delay={0.08}>
             <div
               className="flex items-center justify-center rounded-2xl p-10 md:p-12 transition-all duration-700 aspect-square"
@@ -517,7 +517,7 @@ function AppIconsSection() {
   const { isDark, r } = useTheme();
 
   const icons = [
-    { bg: "#FD6235", fillLogo: "white", label: "Orange" },
+    { bg: "#7B2D52", fillLogo: "white", label: "Orange" },
     { bg: "#8823F7", fillLogo: "white", label: "Violet" },
     { bg: "#ffffff", fillLogo: "#202020", label: "Light" },
     { bg: "linear-gradient(180deg, #FE9C39 0%, #F75895 100%)", fillLogo: "white", label: "Gradient" },
@@ -1179,18 +1179,18 @@ function FloatingMew() {
           exit={{ opacity: 0, scale: 0.5 }}
           className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap px-3 py-1.5 rounded-full z-50"
           style={{
-            background: "rgba(253,98,53,0.9)",
+            background: "rgba(123,45,82,0.9)",
             color: "#fff",
             fontFamily: "'Inter', sans-serif",
             fontSize: "0.7rem",
             fontWeight: 600,
-            boxShadow: "0 4px 16px rgba(253,98,53,0.3)",
+            boxShadow: "0 4px 16px rgba(123,45,82,0.3)",
           }}
         >
           {bubble}
           <div
             className="absolute left-1/2 -translate-x-1/2 -bottom-1 w-2 h-2 rotate-45"
-            style={{ background: "rgba(253,98,53,0.9)" }}
+            style={{ background: "rgba(123,45,82,0.9)" }}
           />
         </motion.div>
       )}
@@ -1223,7 +1223,7 @@ function FloatingMew() {
                 fontFamily: "'Inter', sans-serif",
                 fontSize: `${0.5 + i * 0.15}rem`,
                 fontWeight: 700,
-                color: "rgba(253,98,53,0.5)",
+                color: "rgba(123,45,82,0.5)",
               }}
             >
               z
@@ -1277,7 +1277,7 @@ function FloatingMew() {
           animate={{
             filter:
               state === "petted"
-                ? "drop-shadow(0 12px 32px rgba(253,98,53,0.5)) brightness(1.1)"
+                ? "drop-shadow(0 12px 32px rgba(123,45,82,0.5)) brightness(1.1)"
                 : state === "sleeping"
                 ? "drop-shadow(0 4px 12px rgba(0,0,0,0.1)) brightness(0.85) saturate(0.7)"
                 : state === "startled"
@@ -1297,7 +1297,7 @@ function FloatingMew() {
           transition={{ duration: 1.5, repeat: Infinity }}
           style={{
             borderRadius: "50%",
-            boxShadow: "0 0 40px 10px rgba(253,98,53,0.2), 0 0 80px 20px rgba(136,35,247,0.1)",
+            boxShadow: "0 0 40px 10px rgba(123,45,82,0.2), 0 0 80px 20px rgba(136,35,247,0.1)",
           }}
         />
       )}
@@ -1324,8 +1324,8 @@ function FloatingMew() {
               style={{
                 width: 3 + (i % 3),
                 height: 3 + (i % 3),
-                background: ["#FD6235", "#8823F7", "#1DA4D0", "#FE9C39", "#F75895", "#fff"][i],
-                boxShadow: `0 0 8px 2px ${["#FD6235", "#8823F7", "#1DA4D0", "#FE9C39", "#F75895", "#fff"][i]}44`,
+                background: ["#7B2D52", "#8823F7", "#1DA4D0", "#FE9C39", "#F75895", "#fff"][i],
+                boxShadow: `0 0 8px 2px ${["#7B2D52", "#8823F7", "#1DA4D0", "#FE9C39", "#F75895", "#fff"][i]}44`,
               }}
             />
           ))}

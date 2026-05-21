@@ -60,8 +60,8 @@ const PALETTE = [
   { hex: "#254d9b", name: "Deep Blue" },
   { hex: "#5d4792", name: "Royal Violet" },
   { hex: "#b3428a", name: "Magenta" },
-  { hex: "#cc7b63", name: "Warm Coral" },
-  { hex: "#e2c049", name: "Golden" },
+  { hex: "#5DA9FF", name: "Signal Cyan" },
+  { hex: "#D8C7D1", name: "Mist Lilac" },
 ];
 
 function SectionLabel({ children }: { children: string }) {
@@ -596,7 +596,7 @@ function MerchSection() {
    11. INTERFACE MOBILE — Immersive phone showcase with animated waveform
    =================================== */
 
-const EQ_COLORS = ["#254d9b", "#5d4792", "#b3428a", "#cc7b63", "#e2c049"];
+const EQ_COLORS = ["#254d9b", "#5d4792", "#b3428a", "#5DA9FF", "#D8C7D1"];
 
 const WAVEFORM_PLAYED = [62, 105, 89, 46, 62, 50, 121, 62, 62, 62, 42, 54, 22, 54, 113, 77, 54, 34, 77, 113, 77, 77, 89, 113, 70, 54, 77, 77, 62];
 const WAVEFORM_UNPLAYED = [105, 89, 70, 62, 77, 121, 62, 62, 62, 30, 38, 14, 38, 77, 54, 38, 22, 54, 77, 54, 54, 62, 77, 50, 38, 54, 54];
@@ -1188,7 +1188,7 @@ function DecorativeSwirl({ isDark }: { isDark: boolean }) {
               <stop offset="0%" stopColor="#254d9b" />
               <stop offset="30%" stopColor="#5d4792" />
               <stop offset="60%" stopColor="#b3428a" />
-              <stop offset="100%" stopColor="#e2c049" />
+              <stop offset="100%" stopColor="#D8C7D1" />
             </linearGradient>
           </defs>
           {paths.map((d, i) => (

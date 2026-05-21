@@ -28,9 +28,9 @@ export function AmbientMovingLines({
   height = "100%",
 }: AmbientMovingLinesProps) {
   const { isDark } = useTheme();
-  const lineAccent = accent ?? (isDark ? "#DFF440" : "#4B8197");
-  const lineSecondary = secondary ?? (isDark ? "#4B8197" : "#C12144");
-  const lineText = text ?? (isDark ? "#F1F1F1" : "#232624");
+  const lineAccent = accent ?? (isDark ? "#7FD6FF" : "#5DA9FF");
+  const lineSecondary = secondary ?? (isDark ? "#5DA9FF" : "#7B2D52");
+  const lineText = text ?? (isDark ? "#F4F5F7" : "#0D1B2A");
 
   return (
     <div

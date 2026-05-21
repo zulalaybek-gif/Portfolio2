@@ -5,14 +5,15 @@ import { ArrowUpRight } from "lucide-react";
 import { useI18n, type TranslationKey } from "./i18n";
 import { useTheme } from "./theme";
 import { CompositeTitle } from "./CompositeTitle";
+import { AmbientMovingLines } from "./AmbientMovingLines";
 
 export function CTASection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
   const cardRef = useRef<HTMLDivElement>(null);
-  const glowColor = "223,244,64";
-  const blueGlow = "75,129,151";
-  const cherryGlow = "193,33,68";
+  const glowColor = "127,214,255";
+  const blueGlow = "93,169,255";
+  const cherryGlow = "123,45,82";
   const cardGlow = blueGlow;
   const cardGlowSecondary = isDark ? cherryGlow : blueGlow;
 
@@ -27,17 +28,18 @@ export function CTASection() {
         className="max-w-6xl mx-auto relative overflow-hidden rounded-[2.5rem] p-12 md:p-24"
         style={{
           background: isDark
-            ? `radial-gradient(circle at 72% 22%, rgba(${blueGlow},0.12), transparent 28%), radial-gradient(circle at 55% 86%, rgba(${cherryGlow},0.045), transparent 34%), radial-gradient(circle at 18% 34%, rgba(241,241,241,0.035), transparent 32%), linear-gradient(145deg, rgba(18,18,18,0.992) 0%, rgba(8,9,9,0.996) 52%, rgba(14,15,14,0.994) 100%)`
-            : `radial-gradient(circle at 18% 38%, rgba(${blueGlow},0.12), transparent 36%), radial-gradient(circle at 58% 82%, rgba(${cherryGlow},0.035), transparent 36%), linear-gradient(145deg, rgba(241,241,241,0.985) 0%, rgba(247,247,245,0.96) 54%, rgba(235,236,233,0.985) 100%)`,
-          border: `1px solid ${isDark ? "rgba(241,241,241,0.075)" : p.ctaBorder}`,
+            ? `radial-gradient(circle at 72% 22%, rgba(${blueGlow},0.14), transparent 28%), radial-gradient(circle at 55% 86%, rgba(${cherryGlow},0.07), transparent 34%), radial-gradient(circle at 18% 34%, rgba(127,214,255,0.05), transparent 32%), linear-gradient(145deg, rgba(13,27,42,0.992) 0%, rgba(5,11,20,0.996) 58%, rgba(17,38,60,0.94) 100%)`
+            : `radial-gradient(circle at 18% 38%, rgba(${blueGlow},0.14), transparent 36%), radial-gradient(circle at 58% 82%, rgba(${cherryGlow},0.055), transparent 36%), linear-gradient(145deg, rgba(244,245,247,0.985) 0%, rgba(233,237,243,0.96) 54%, rgba(216,199,209,0.22) 100%)`,
+          border: `1px solid ${isDark ? "rgba(127,214,255,0.12)" : p.ctaBorder}`,
           boxShadow: isDark
-            ? `0 32px 105px rgba(0,0,0,0.58), inset 0 1px 0 rgba(241,241,241,0.06), inset 0 -1px 0 rgba(241,241,241,0.025), 0 0 72px rgba(${blueGlow},0.045)`
-            : `0 32px 105px rgba(35,38,36,0.14), inset 0 1px 0 rgba(255,255,255,0.86), 0 0 74px rgba(${blueGlow},0.045), 0 0 28px rgba(${cherryGlow},0.025)`,
+            ? `0 32px 105px rgba(0,0,0,0.58), inset 0 1px 0 rgba(244,245,247,0.06), inset 0 -1px 0 rgba(127,214,255,0.04), 0 0 72px rgba(${blueGlow},0.07)`
+            : `0 32px 105px rgba(13,27,42,0.14), inset 0 1px 0 rgba(255,255,255,0.86), 0 0 74px rgba(${blueGlow},0.045), 0 0 28px rgba(${cherryGlow},0.025)`,
           ["--cta-glow-rgb" as string]: cardGlow,
           ["--cta-glow-secondary-rgb" as string]: cardGlowSecondary,
         }}
       >
         <InteractiveCtaGlow cardRef={cardRef} isDark={isDark} />
+        <AmbientMovingLines className="absolute inset-x-0 top-0 z-0" height="100%" opacity={isDark ? 0.22 : 0.16} />
         <motion.div
           aria-hidden="true"
           className="absolute pointer-events-none"
@@ -52,7 +54,7 @@ export function CTASection() {
             height: 1,
             transformOrigin: "center",
             background: isDark
-              ? `linear-gradient(90deg, transparent, rgba(241,241,241,0.08), rgba(${blueGlow},0.18), rgba(${cherryGlow},0.08), transparent)`
+              ? `linear-gradient(90deg, transparent, rgba(244,245,247,0.08), rgba(${blueGlow},0.18), rgba(${cherryGlow},0.08), transparent)`
               : `linear-gradient(90deg, transparent, rgba(${blueGlow},0.22), rgba(${cherryGlow},0.12), transparent)`,
           }}
         />
@@ -87,14 +89,14 @@ export function CTASection() {
             className="group inline-flex items-center gap-3 px-10 py-4 rounded-full transition-all duration-500 hover:scale-[1.035] active:scale-[0.985]"
             style={{
               background: isDark
-                ? "linear-gradient(135deg, #DFF440 0%, #CFE83A 58%, #4B8197 145%)"
-                : "linear-gradient(135deg, #232624 0%, #4B8197 62%, #C12144 145%)",
+                ? "linear-gradient(135deg, #7FD6FF 0%, #5DA9FF 58%, #5DA9FF 145%)"
+                : "linear-gradient(135deg, #0D1B2A 0%, #5DA9FF 62%, #7B2D52 145%)",
               fontFamily: "'Inter', sans-serif",
               fontSize: "0.85rem",
               fontWeight: 600,
               letterSpacing: "0.05em",
               textTransform: "uppercase",
-              color: isDark ? "#232624" : "#F1F1F1",
+              color: isDark ? "#0D1B2A" : "#F4F5F7",
               textDecoration: "none",
               boxShadow: isDark
                 ? `0 16px 46px rgba(${glowColor},0.14), 0 0 26px rgba(${blueGlow},0.07), inset 0 1px 0 rgba(255,255,255,0.24)`

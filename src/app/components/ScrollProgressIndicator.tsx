@@ -10,12 +10,12 @@ export function ScrollProgressIndicator() {
       className="scroll-progress-indicator"
       aria-hidden="true"
       style={{
-        ["--scroll-progress-track" as string]: isDark ? "rgba(18, 20, 18, 0.96)" : "rgba(35, 38, 36, 0.52)",
-        ["--scroll-progress-track-edge" as string]: isDark ? "rgba(241, 241, 241, 0.09)" : "rgba(75, 129, 151, 0.18)",
-        ["--scroll-progress-fill" as string]: isDark ? "#B9F21D" : "#232624",
-        ["--scroll-progress-fill-2" as string]: "#4B8197",
-        ["--scroll-progress-fill-3" as string]: "#C12144",
-        ["--scroll-progress-glow" as string]: isDark ? "rgba(223, 244, 64, 0.3)" : "rgba(75, 129, 151, 0.2)",
+        ["--scroll-progress-track" as string]: isDark ? "rgba(5, 11, 20, 0.96)" : "rgba(13, 27, 42, 0.36)",
+        ["--scroll-progress-track-edge" as string]: isDark ? "rgba(127, 214, 255, 0.11)" : "rgba(93, 169, 255, 0.18)",
+        ["--scroll-progress-fill" as string]: isDark ? "#7FD6FF" : "#0D1B2A",
+        ["--scroll-progress-fill-2" as string]: "#5DA9FF",
+        ["--scroll-progress-fill-3" as string]: "#7B2D52",
+        ["--scroll-progress-glow" as string]: isDark ? "rgba(127, 214, 255, 0.3)" : "rgba(93, 169, 255, 0.2)",
       }}
     >
       <div className="scroll-progress-indicator__track">

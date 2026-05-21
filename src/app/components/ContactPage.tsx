@@ -70,15 +70,15 @@ export function ContactPage() {
       : activeStep === "message" && formData.message.trim().length > 0 && formData.message.trim().length < MIN_MESSAGE_LENGTH
         ? `${MIN_MESSAGE_LENGTH - formData.message.trim().length} caractères minimum restants.`
         : "";
-  const bg = isDark ? "#1c1e1b" : "#EAEAEA";
-  const text = isDark ? "#F1F1F1" : "#232624";
-  const accent = isDark ? "#DFF440" : "#4B8197";
+  const bg = isDark ? "#050B14" : "#E9EDF3";
+  const text = isDark ? "#F4F5F7" : "#0D1B2A";
+  const accent = isDark ? "#7FD6FF" : "#5DA9FF";
   const successBackground =
     !isDark && step === "success"
-      ? `radial-gradient(circle at 18% 18%, ${rgbaFromHex("#4B8197", 0.22)}, transparent 34%),
-         radial-gradient(circle at 82% 22%, ${rgbaFromHex("#C12144", 0.18)}, transparent 30%),
-         radial-gradient(circle at 72% 82%, ${rgbaFromHex("#D39A7A", 0.22)}, transparent 34%),
-         linear-gradient(135deg, #F7F4EE 0%, #ECE9E2 48%, #F4EFE9 100%)`
+      ? `radial-gradient(circle at 18% 18%, ${rgbaFromHex("#5DA9FF", 0.22)}, transparent 34%),
+         radial-gradient(circle at 82% 22%, ${rgbaFromHex("#7B2D52", 0.18)}, transparent 30%),
+         radial-gradient(circle at 72% 82%, ${rgbaFromHex("#D8C7D1", 0.24)}, transparent 34%),
+         linear-gradient(135deg, #F4F5F7 0%, #E9EDF3 52%, #F4F5F7 100%)`
       : bg;
   const textSoft = rgbaFromHex(text, 0.6);
   const textBright = rgbaFromHex(text, 0.85);
@@ -534,9 +534,9 @@ function ReviewState({
 }
 
 function SuccessAtmosphere({ text, accent, isDark }: { text: string; accent: string; isDark: boolean }) {
-  const secondary = isDark ? "#4B8197" : "#C12144";
-  const tertiary = isDark ? "#C12144" : "#D8785F";
-  const gold = isDark ? "#DFF440" : "#E7B94B";
+  const secondary = isDark ? "#5DA9FF" : "#7B2D52";
+  const tertiary = isDark ? "#7B2D52" : "#A34A6A";
+  const gold = isDark ? "#7FD6FF" : "#D8C7D1";
 
   return (
     <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden" aria-hidden="true">
@@ -545,7 +545,7 @@ function SuccessAtmosphere({ text, accent, isDark }: { text: string; accent: str
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(115deg, rgba(75,129,151,0.18) 0%, transparent 32%, rgba(193,33,68,0.1) 58%, rgba(216,120,95,0.16) 100%)",
+              "linear-gradient(115deg, rgba(93,169,255,0.18) 0%, transparent 32%, rgba(123,45,82,0.1) 58%, rgba(216,199,209,0.2) 100%)",
             mixBlendMode: "multiply",
           }}
         />
@@ -672,7 +672,7 @@ function SuccessAtmosphere({ text, accent, isDark }: { text: string; accent: str
 }
 
 function SuccessState({ text, accent, isDark, onHome }: { text: string; accent: string; isDark: boolean; onHome: () => void }) {
-  const visualAccent = isDark ? accent : "#C12144";
+  const visualAccent = isDark ? accent : "#7B2D52";
 
   return (
     <motion.div

@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useI18n, type TranslationKey } from "./i18n";
 import { useTheme } from "./theme";
 import { CompositeTitle } from "./CompositeTitle";
+import { AmbientMovingLines } from "./AmbientMovingLines";
 
 const services = [
   { titleKey: "services.s1.title" as const, descKey: "services.s1.desc" as const },
@@ -19,8 +20,8 @@ export function ServicesSection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
   const serviceAccents = isDark
-    ? ["#DFF440", "#4B8197", "#C12144", "#DFF440", "#4B8197", "#DFF440", "#C12144", "#4B8197"]
-    : ["#4B8197", "#232624", "#C12144", "#4B8197", "#4B8197", "#232624", "#C12144", "#4B8197"];
+    ? ["#7FD6FF", "#5DA9FF", "#7B2D52", "#D8C7D1", "#5DA9FF", "#7FD6FF", "#A34A6A", "#5DA9FF"]
+    : ["#2D5BFF", "#0D1B2A", "#7B2D52", "#5DA9FF", "#11263C", "#5DA9FF", "#A34A6A", "#2D5BFF"];
   const scrollRef = useRef<HTMLDivElement>(null);
   const programmaticScrollRef = useRef<number | null>(null);
   const scrollEndTimerRef = useRef<number | null>(null);
@@ -97,7 +98,8 @@ export function ServicesSection() {
 
   return (
     <section data-section="services" className="relative w-full px-6 md:px-12 py-24">
-      <div className="max-w-6xl mx-auto">
+      <AmbientMovingLines className="absolute inset-x-0 top-8 z-0" height="56%" opacity={isDark ? 0.16 : 0.12} />
+      <div className="relative z-10 max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-14">
           <span
@@ -162,8 +164,8 @@ export function ServicesSection() {
                   background: p.cardBg,
                   border: `1px solid ${p.cardBorder}`,
                   boxShadow: isDark
-                    ? "inset 0 1px 0 rgba(241,241,241,0.035), 0 20px 60px rgba(0,0,0,0.08)"
-                    : "inset 0 1px 0 rgba(255,255,255,0.72), 0 18px 52px rgba(35,38,36,0.045)",
+                    ? "inset 0 1px 0 rgba(244,245,247,0.035), 0 20px 60px rgba(0,0,0,0.08)"
+                    : "inset 0 1px 0 rgba(255,255,255,0.72), 0 18px 52px rgba(13,27,42,0.045)",
                   transform: "translateZ(0)",
                 }}
               >

@@ -31,10 +31,10 @@ export function ProjectParsemains() {
         style={{
           background: isDark
             ? `radial-gradient(circle at 20% 20%, rgba(${ACCENT_RGB},0.16), transparent 34%),
-               radial-gradient(circle at 78% 12%, rgba(223,244,64,0.08), transparent 28%),
+               radial-gradient(circle at 78% 12%, rgba(127,214,255,0.08), transparent 28%),
                linear-gradient(180deg, rgba(255,255,255,0.02), transparent 42%)`
             : `radial-gradient(circle at 20% 20%, rgba(${ACCENT_RGB},0.16), transparent 34%),
-               radial-gradient(circle at 78% 12%, rgba(193,33,68,0.06), transparent 30%),
+               radial-gradient(circle at 78% 12%, rgba(123,45,82,0.06), transparent 30%),
                linear-gradient(180deg, rgba(255,255,255,0.5), transparent 42%)`,
         }}
       />
@@ -103,7 +103,7 @@ export function ProjectParsemains() {
               fontWeight: 700,
               letterSpacing: "0.12em",
               textTransform: "uppercase",
-              color: isDark ? "#F1F1F1" : "#232624",
+              color: isDark ? "#F4F5F7" : "#0D1B2A",
               border: `1px solid ${r(0.14)}`,
               background: isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.5)",
             }}

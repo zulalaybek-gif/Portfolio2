@@ -402,8 +402,8 @@ const translations = {
   },
   "mw.palette.label": { fr: "Palette chromatique", en: "Color Palette" },
   "mw.palette.text": {
-    fr: "La palette articule des bleus électriques, des rouges saturés et des oranges lumineux. Le bleu ancre le projet dans un imaginaire technologique et digital, tandis que les tons chauds insufflent énergie, tension et visibilité. Ce contraste chromatique participe directement à la force du projet et à sa capacité d'identification.",
-    en: "The palette combines electric blues, saturated reds and luminous oranges. Blue anchors the project in a technological and digital imaginary, while warm tones bring energy, tension and visibility. This chromatic contrast directly contributes to the project's strength and identifiability.",
+    fr: "La palette articule des bleus électriques, des cyans diffus et des accents bordeaux. Le bleu ancre le projet dans un imaginaire technologique et digital, tandis que les contrastes froids insufflent énergie, tension et visibilité.",
+    en: "The palette combines electric blues, diffuse cyans and burgundy accents. Blue anchors the project in a technological and digital imaginary, while cool contrasts bring energy, tension and visibility.",
   },
   "mw.logo.label": { fr: "Logo", en: "Logo" },
   "mw.editorial.label": { fr: "Supports éditoriaux", en: "Editorial Materials" },
@@ -450,8 +450,8 @@ const translations = {
   },
   "mzw.palette.label": { fr: "Palette chromatique", en: "Color Palette" },
   "mzw.palette.text": {
-    fr: "La palette associe jaune, orange, rose, magenta, violet et bleu. Les tons chauds apportent énergie, tension et intensité, tandis que les tons froids installent une profondeur plus nocturne et électronique. Ce contraste coloré permet de construire un univers visuel vibrant, immersif et immédiatement identifiable.",
-    en: "The palette combines yellow, orange, pink, magenta, purple, and blue. Warm tones bring energy, tension, and intensity, while cool tones establish a more nocturnal and electronic depth. This color contrast builds a vibrant, immersive, and immediately identifiable visual universe.",
+    fr: "La palette associe bleu profond, cyan, rose froid, magenta et violet. Les contrastes lumineux apportent énergie, tension et intensité, tandis que les tons froids installent une profondeur plus nocturne et électronique.",
+    en: "The palette combines deep blue, cyan, cool pink, magenta and purple. Luminous contrasts bring energy, tension and intensity, while cool tones establish a more nocturnal and electronic depth.",
   },
   "mzw.print.label": { fr: "Supports print", en: "Print Materials" },
   "mzw.print.text": {
@@ -553,8 +553,8 @@ const translations = {
   },
   "kh.palette.label": { fr: "Palette chromatique", en: "Color Palette" },
   "kh.palette.text": {
-    fr: "La palette associe des oranges, des roses, des violets et des fonds noirs profonds. Les tons chauds servent de points d'accroche visuels tandis que les violets apportent profondeur et continuité. Les fonds sombres renforcent la lisibilité et permettent aux accents colorés d'exister avec plus d'intensité.",
-    en: "The palette combines oranges, pinks, purples, and deep black backgrounds. Warm tones serve as visual focal points while purples bring depth and continuity. Dark backgrounds enhance readability and allow colored accents to exist with greater intensity.",
+    fr: "La palette associe des roses froids, des violets, des bleus lumineux et des fonds noirs profonds. Les accents colorés servent de points d'accroche visuels tandis que les violets apportent profondeur et continuité.",
+    en: "The palette combines cool pinks, purples, luminous blues and deep black backgrounds. Colored accents serve as visual focal points while purples bring depth and continuity.",
   },
   "kh.typo.label": { fr: "Typographie", en: "Typography" },
   "kh.typo.desc": {

@@ -109,7 +109,7 @@ import imgLiv22 from "figma:asset/10d074b3321fab2674333afa712f752d683a14d0.png";
 /* ── Constants ── */
 const ACCENT = "#0092BD";
 const ACCENT_RGB = "0,146,189";
-const SECONDARY = "#F87C56";
+const SECONDARY = "#A34A6A";
 const SECONDARY_RGB = "248,124,86";
 
 
@@ -571,7 +571,7 @@ export function ProjectDc() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
             {[
               { hex: "#0092BD", name: lang === "fr" ? "Bleu principal" : "Primary Blue", cmyk: "C87 M26 J14 N0", pantone: "PANTONE 2183 C", rgb: "R0 V146 B189" },
-              { hex: "#F87C56", name: lang === "fr" ? "Orange secondaire" : "Secondary Orange", cmyk: "C0 M51 J63 N0", pantone: "PANTONE 2024 C", rgb: "R248 V124 B86" },
+              { hex: "#A34A6A", name: lang === "fr" ? "Bordeaux secondaire" : "Secondary Bordeaux", cmyk: "C0 M55 J35 N36", pantone: "PANTONE 205 C", rgb: "R163 V74 B106" },
               { hex: "#000000", name: "Noir", cmyk: "C30 M30 J30 N100", pantone: "", rgb: "R0 V0 B0" },
               { hex: "#EBEBEB", name: "Gris", cmyk: "C8 M8 J8 N0", pantone: "", rgb: "R235 V235 B235" },
             ].map((c) => (

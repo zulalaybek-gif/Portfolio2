@@ -69,9 +69,9 @@
   height: 62vh;
   pointer-events: none;
   background:
-    linear-gradient(102deg, transparent 0 38%, rgba(75, 129, 151, 0.2) 44%, rgba(223, 244, 64, 0.09) 51%, rgba(193, 33, 68, 0.08) 55%, transparent 66% 100%),
-    radial-gradient(ellipse at 48% 44%, rgba(75, 129, 151, 0.14), transparent 44%),
-    radial-gradient(ellipse at 58% 48%, rgba(223, 244, 64, 0.055), transparent 46%);
+    linear-gradient(102deg, transparent 0 38%, rgba(93, 169, 255, 0.2) 44%, rgba(127, 214, 255, 0.09) 51%, rgba(123, 45, 82, 0.08) 55%, transparent 66% 100%),
+    radial-gradient(ellipse at 48% 44%, rgba(93, 169, 255, 0.14), transparent 44%),
+    radial-gradient(ellipse at 58% 48%, rgba(127, 214, 255, 0.055), transparent 46%);
   filter: blur(22px);
   mix-blend-mode: screen;
   animation: ambient-rift-drift 16s ease-in-out infinite;
@@ -79,9 +79,9 @@
 
 [data-theme="light"] .ambient-rift {
   background:
-    linear-gradient(102deg, transparent 0 36%, rgba(75, 129, 151, 0.16) 43%, rgba(223, 244, 64, 0.1) 51%, rgba(193, 33, 68, 0.06) 58%, transparent 68% 100%),
-    radial-gradient(ellipse at 44% 44%, rgba(75, 129, 151, 0.12), transparent 45%),
-    radial-gradient(ellipse at 60% 50%, rgba(223, 244, 64, 0.06), transparent 44%);
+    linear-gradient(102deg, transparent 0 36%, rgba(93, 169, 255, 0.16) 43%, rgba(127, 214, 255, 0.1) 51%, rgba(123, 45, 82, 0.06) 58%, transparent 68% 100%),
+    radial-gradient(ellipse at 44% 44%, rgba(93, 169, 255, 0.12), transparent 45%),
+    radial-gradient(ellipse at 60% 50%, rgba(127, 214, 255, 0.06), transparent 44%);
   mix-blend-mode: multiply;
   filter: blur(20px) saturate(1.08);
 }
@@ -93,19 +93,19 @@
   pointer-events: none;
   background-image:
     radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.22) 0 1px, transparent 1.5px),
-    radial-gradient(circle at 70% 40%, rgba(75, 129, 151, 0.14) 0 1px, transparent 1.5px),
-    radial-gradient(circle at 45% 80%, rgba(223, 244, 64, 0.08) 0 1px, transparent 1.5px),
-    radial-gradient(circle at 82% 18%, rgba(193, 33, 68, 0.12) 0 1px, transparent 1.5px);
+    radial-gradient(circle at 70% 40%, rgba(93, 169, 255, 0.14) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 45% 80%, rgba(127, 214, 255, 0.08) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 82% 18%, rgba(123, 45, 82, 0.12) 0 1px, transparent 1.5px);
   background-size: 180px 180px, 240px 240px, 320px 320px, 280px 280px;
   mask-image: radial-gradient(circle at 50% 20%, black 0%, transparent 78%);
 }
 
 [data-theme="light"] .ambient-grain {
   background-image:
-    radial-gradient(circle at 20% 30%, rgba(35, 38, 36, 0.12) 0 1px, transparent 1.5px),
-    radial-gradient(circle at 70% 40%, rgba(75, 129, 151, 0.1) 0 1px, transparent 1.5px),
-    radial-gradient(circle at 45% 80%, rgba(223, 244, 64, 0.08) 0 1px, transparent 1.5px),
-    radial-gradient(circle at 82% 18%, rgba(193, 33, 68, 0.08) 0 1px, transparent 1.5px);
+    radial-gradient(circle at 20% 30%, rgba(13, 27, 42, 0.12) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 70% 40%, rgba(93, 169, 255, 0.1) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 45% 80%, rgba(127, 214, 255, 0.08) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 82% 18%, rgba(123, 45, 82, 0.08) 0 1px, transparent 1.5px);
 }
 
 .home-flow > section {
@@ -120,11 +120,11 @@
   top: 0;
   height: 1px;
   pointer-events: none;
-  background: linear-gradient(90deg, transparent, rgba(241, 241, 241, 0.075), rgba(75, 129, 151, 0.18), rgba(223, 244, 64, 0.12), transparent);
+  background: linear-gradient(90deg, transparent, rgba(241, 241, 241, 0.075), rgba(93, 169, 255, 0.18), rgba(127, 214, 255, 0.12), transparent);
 }
 
 [data-theme="light"] .home-flow > section:not(:first-child)::before {
-  background: linear-gradient(90deg, transparent, rgba(35, 38, 36, 0.085), rgba(75, 129, 151, 0.12), rgba(223, 244, 64, 0.1), transparent);
+  background: linear-gradient(90deg, transparent, rgba(13, 27, 42, 0.085), rgba(93, 169, 255, 0.12), rgba(127, 214, 255, 0.1), transparent);
 }
 
 .brand-mark {
@@ -137,8 +137,8 @@
   inset: -0.8rem -1rem;
   border-radius: 999px;
   background:
-    radial-gradient(circle at 38% 42%, rgba(223, 244, 64, 0.12), transparent 44%),
-    radial-gradient(circle, rgba(75, 129, 151, 0.18), rgba(35, 38, 36, 0.08) 54%, transparent 68%);
+    radial-gradient(circle at 38% 42%, rgba(127, 214, 255, 0.12), transparent 44%),
+    radial-gradient(circle, rgba(93, 169, 255, 0.18), rgba(13, 27, 42, 0.08) 54%, transparent 68%);
   opacity: 0;
   transform: scale(0.86);
   transition: opacity 320ms ease, transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -159,14 +159,14 @@
   bottom: 0.35rem;
   height: 1px;
   border-radius: 999px;
-  background: linear-gradient(90deg, transparent, rgba(75, 129, 151, 0.74), rgba(223, 244, 64, 0.45), transparent);
+  background: linear-gradient(90deg, transparent, rgba(93, 169, 255, 0.74), rgba(127, 214, 255, 0.45), transparent);
   opacity: 0;
   transform: scaleX(0.35);
   transition: opacity 260ms ease, transform 360ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 [data-theme="light"] .nav-link::after {
-  background: linear-gradient(90deg, transparent, rgba(35, 38, 36, 0.46), rgba(75, 129, 151, 0.68), rgba(193, 33, 68, 0.28), transparent);
+  background: linear-gradient(90deg, transparent, rgba(13, 27, 42, 0.46), rgba(93, 169, 255, 0.68), rgba(123, 45, 82, 0.28), transparent);
 }
 
 .nav-link:hover::after,
@@ -181,7 +181,7 @@
 
 .nav-orb,
 .nav-contact {
-  box-shadow: 0 0 0 rgba(75, 129, 151, 0);
+  box-shadow: 0 0 0 rgba(93, 169, 255, 0);
 }
 
 .nav-orb:hover,
@@ -189,7 +189,7 @@
 .nav-contact:hover,
 .nav-contact:focus-visible {
   transform: translate3d(0, -1px, 0);
-  box-shadow: 0 12px 28px rgba(75, 129, 151, 0.1), 0 0 14px rgba(223, 244, 64, 0.045);
+  box-shadow: 0 12px 28px rgba(93, 169, 255, 0.1), 0 0 14px rgba(127, 214, 255, 0.045);
 }
 
 .composite-title {
@@ -258,19 +258,19 @@
   --contact-input-color: #ffffff;
   --contact-input-border: color-mix(in srgb, currentColor 10%, transparent);
   --contact-input-bg: color-mix(in srgb, currentColor 3%, transparent);
-  --contact-input-focus-border: color-mix(in srgb, #4B8197 46%, #DFF440 24%, currentColor 18%);
+  --contact-input-focus-border: color-mix(in srgb, #5DA9FF 46%, #7FD6FF 24%, currentColor 18%);
   --contact-input-focus-bg: color-mix(in srgb, currentColor 4.5%, transparent);
-  --contact-input-focus-ring: color-mix(in srgb, #DFF440 10%, #4B8197 8%, transparent);
+  --contact-input-focus-ring: color-mix(in srgb, #7FD6FF 10%, #5DA9FF 8%, transparent);
 }
 
 :root[data-theme="light"] {
-  --contact-label-color: rgba(35, 38, 36, 0.5);
-  --contact-input-color: #232624;
-  --contact-input-border: rgba(35, 38, 36, 0.12);
-  --contact-input-bg: rgba(35, 38, 36, 0.025);
-  --contact-input-focus-border: rgba(75, 129, 151, 0.42);
-  --contact-input-focus-bg: rgba(75, 129, 151, 0.04);
-  --contact-input-focus-ring: rgba(75, 129, 151, 0.1);
+  --contact-label-color: rgba(13, 27, 42, 0.5);
+  --contact-input-color: #0D1B2A;
+  --contact-input-border: rgba(13, 27, 42, 0.12);
+  --contact-input-bg: rgba(13, 27, 42, 0.025);
+  --contact-input-focus-border: rgba(93, 169, 255, 0.42);
+  --contact-input-focus-bg: rgba(93, 169, 255, 0.04);
+  --contact-input-focus-ring: rgba(93, 169, 255, 0.1);
 }
 
 .contact-label {
@@ -303,7 +303,7 @@
 }
 
 .contact-input option {
-  color: #232624;
+  color: #0D1B2A;
 }
 
 .composite-title--hero {
@@ -382,7 +382,7 @@
   pointer-events: none;
   background:
     radial-gradient(circle at 42% 40%, rgba(var(--cta-glow-rgb), 0.28), rgba(var(--cta-glow-rgb), 0.1) 36%, transparent 72%),
-    radial-gradient(circle at 62% 62%, rgba(193, 33, 68, 0.07), transparent 44%),
+    radial-gradient(circle at 62% 62%, rgba(123, 45, 82, 0.07), transparent 44%),
     radial-gradient(circle at 72% 30%, rgba(var(--cta-glow-secondary-rgb), 0.12), transparent 42%);
   filter: blur(26px);
   mix-blend-mode: screen;

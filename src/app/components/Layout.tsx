@@ -5,6 +5,7 @@ import { Footer } from "./Footer";
 import { useTheme } from "./theme";
 import { ParticleOrbit } from "./ParticleOrbit";
 import { ParticleOverlay } from "./ParticleOverlay";
+import { AmbientMovingLines } from "./AmbientMovingLines";
 
 function RouteViewport() {
   const location = useLocation();
@@ -46,6 +47,7 @@ export function Layout() {
     >
       {/* Background particles — behind everything */}
       {showParticles ? <ParticleOrbit /> : null}
+      <AmbientMovingLines className="absolute inset-x-0 top-0 z-[1]" height="100vh" opacity={0.08} />
 
       <div
         className="w-full max-w-[1440px] relative"

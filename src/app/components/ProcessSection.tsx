@@ -4,6 +4,7 @@ import { Ear, Lightbulb, SlidersHorizontal, Rocket } from "lucide-react";
 import { useI18n, type TranslationKey } from "./i18n";
 import { useTheme } from "./theme";
 import { CompositeTitle } from "./CompositeTitle";
+import { AmbientMovingLines } from "./AmbientMovingLines";
 
 const steps = [
   { icon: Ear, titleKey: "process.step1.title" as const, descKey: "process.step1.desc" as const, num: "01" },
@@ -12,7 +13,7 @@ const steps = [
   { icon: Rocket, titleKey: "process.step4.title" as const, descKey: "process.step4.desc" as const, num: "04" },
 ];
 
-const APPLE_GREEN_DARK = "#B9F21D";
+const CYAN_ACCENT = "#7FD6FF";
 
 function useInView(ref: RefObject<HTMLElement | null>, margin = "200px 0px") {
   const [inView, setInView] = useState(false);
@@ -52,8 +53,8 @@ export function ProcessSection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
   const stepAccents = isDark
-    ? [APPLE_GREEN_DARK, "#4B8197", "#C12144", APPLE_GREEN_DARK]
-    : ["#4B8197", "#232624", "#C12144", "#4B8197"];
+    ? [CYAN_ACCENT, "#5DA9FF", "#7B2D52", CYAN_ACCENT]
+    : ["#5DA9FF", "#0D1B2A", "#7B2D52", "#5DA9FF"];
   const sectionRef = useRef<HTMLElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(lineRef);
@@ -83,7 +84,8 @@ export function ProcessSection() {
 
   return (
     <section ref={sectionRef} className="relative w-full px-6 md:px-12 py-24 md:py-0 lg:min-h-[380vh]">
-      <div className="max-w-6xl mx-auto lg:sticky lg:top-0 lg:min-h-screen lg:flex lg:flex-col lg:justify-center lg:py-10">
+      <AmbientMovingLines className="absolute inset-x-0 top-[18%] z-0" height="54%" opacity={isDark ? 0.15 : 0.1} />
+      <div className="relative z-10 max-w-6xl mx-auto lg:sticky lg:top-0 lg:min-h-screen lg:flex lg:flex-col lg:justify-center lg:py-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -116,7 +118,7 @@ export function ProcessSection() {
               const isLineVisible = reduceMotion || i + 1 < revealedCount;
               const stepAccent = stepAccents[i % stepAccents.length];
               const nextAccent = stepAccents[(i + 1) % stepAccents.length];
-              const badgeText = stepAccent === APPLE_GREEN_DARK ? "#232624" : "#F1F1F1";
+              const badgeText = stepAccent === CYAN_ACCENT ? "#0D1B2A" : "#F4F5F7";
 
               return (
                 <div
@@ -207,12 +209,12 @@ export function ProcessSection() {
                     }}
                     style={{
                       background: isDark
-                        ? `radial-gradient(circle at 45% 35%, ${stepAccent}1c 0%, rgba(75,129,151,0.14) 58%, rgba(35,38,36,0.96) 100%)`
-                        : `radial-gradient(circle at 45% 35%, ${stepAccent}18 0%, rgba(75,129,151,0.05) 58%, rgba(241,241,241,0.96) 100%)`,
+                        ? `radial-gradient(circle at 45% 35%, ${stepAccent}1c 0%, rgba(93,169,255,0.14) 58%, rgba(13,27,42,0.96) 100%)`
+                        : `radial-gradient(circle at 45% 35%, ${stepAccent}18 0%, rgba(93,169,255,0.05) 58%, rgba(244,245,247,0.96) 100%)`,
                       border: `1px solid ${stepAccent}44`,
                       boxShadow: isDark
-                        ? `0 18px 55px rgba(0,0,0,0.3), inset 0 1px 0 rgba(241,241,241,0.05), 0 0 ${isHovered ? 48 : 26}px ${stepAccent}${isHovered ? "34" : "1f"}`
-                        : `0 18px 55px rgba(35,38,36,0.08), inset 0 1px 0 rgba(255,255,255,0.75), 0 0 ${isHovered ? 42 : 24}px ${stepAccent}${isHovered ? "2e" : "16"}`,
+                        ? `0 18px 55px rgba(0,0,0,0.3), inset 0 1px 0 rgba(244,245,247,0.05), 0 0 ${isHovered ? 48 : 26}px ${stepAccent}${isHovered ? "34" : "1f"}`
+                        : `0 18px 55px rgba(13,27,42,0.08), inset 0 1px 0 rgba(255,255,255,0.75), 0 0 ${isHovered ? 42 : 24}px ${stepAccent}${isHovered ? "2e" : "16"}`,
                       transform: "translateZ(0)",
                     }}
                   >

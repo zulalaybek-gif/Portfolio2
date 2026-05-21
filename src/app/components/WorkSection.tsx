@@ -59,8 +59,8 @@ const projects = [
     desc: { fr: "Concept digital · Pokémon", en: "Digital Concept · Pokémon" },
     image: "https://images.unsplash.com/photo-1613771404738-65d22f979710?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb2tlbW9uJTIwY2FyZHMlMjBjb2xsZWN0aW9uJTIwY29sb3JmdWwlMjBkaWdpdGFsfGVufDF8fHx8MTc3MzYyOTgyN3ww&ixlib=rb-4.1.0&q=80&w=1080",
     year: "2026",
-    color: "#FD6235",
-    accent: "253,98,53",
+    color: "#7B2D52",
+    accent: "123,45,82",
     slug: "/projects/kittyhub",
   },
 ];

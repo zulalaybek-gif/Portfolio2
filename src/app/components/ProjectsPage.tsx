@@ -73,7 +73,7 @@ const projects = [
     tagKeys: ["tag.concept", "tag.appDesign"] as TranslationKey[],
     descKey: "proj.kh.desc" as TranslationKey,
     image: "https://images.unsplash.com/photo-1613771404738-65d22f979710?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb2tlbW9uJTIwY2FyZHMlMjBjb2xsZWN0aW9uJTIwY29sb3JmdWwlMjBkaWdpdGFsfGVufDF8fHx8MTc3MzYyOTgyN3ww&ixlib=rb-4.1.0&q=80&w=1080",
-    color: "#FD6235", accent: "253,98,53",
+    color: "#7B2D52", accent: "123,45,82",
     slug: "/projects/kittyhub",
   },
   {
@@ -144,7 +144,7 @@ const projects = [
     type: "project" as const,
     tagKeys: ["tag.identity", "tag.branding"] as TranslationKey[],
     descKey: "proj.parsemains.desc" as TranslationKey,
-    image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 900'%3E%3Cdefs%3E%3CradialGradient id='a' cx='24%25' cy='20%25' r='70%25'%3E%3Cstop offset='0%25' stop-color='%237FA0AE' stop-opacity='.9'/%3E%3Cstop offset='58%25' stop-color='%23232624'/%3E%3Cstop offset='100%25' stop-color='%231C1E1B'/%3E%3C/radialGradient%3E%3ClinearGradient id='b' x1='0' x2='1' y1='1' y2='0'%3E%3Cstop stop-color='%23C12144' stop-opacity='.32'/%3E%3Cstop offset='1' stop-color='%23DFF440' stop-opacity='.18'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='900' fill='url(%23a)'/%3E%3Ccircle cx='930' cy='180' r='330' fill='url(%23b)' opacity='.7'/%3E%3Cpath d='M150 705 C350 580 425 750 640 610 S950 520 1060 355' fill='none' stroke='%23F1F1F1' stroke-opacity='.18' stroke-width='3'/%3E%3Ctext x='92' y='790' fill='%23F1F1F1' fill-opacity='.72' font-family='Space Grotesk, Arial' font-size='94' font-weight='700' letter-spacing='-5'%3EParsemains%3C/text%3E%3C/svg%3E",
+    image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 900'%3E%3Cdefs%3E%3CradialGradient id='a' cx='24%25' cy='20%25' r='70%25'%3E%3Cstop offset='0%25' stop-color='%235DA9FF' stop-opacity='.9'/%3E%3Cstop offset='58%25' stop-color='%230D1B2A'/%3E%3Cstop offset='100%25' stop-color='%2311263C'/%3E%3C/radialGradient%3E%3ClinearGradient id='b' x1='0' x2='1' y1='1' y2='0'%3E%3Cstop stop-color='%237B2D52' stop-opacity='.32'/%3E%3Cstop offset='1' stop-color='%237FD6FF' stop-opacity='.18'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='900' fill='url(%23a)'/%3E%3Ccircle cx='930' cy='180' r='330' fill='url(%23b)' opacity='.7'/%3E%3Cpath d='M150 705 C350 580 425 750 640 610 S950 520 1060 355' fill='none' stroke='%23F4F5F7' stroke-opacity='.18' stroke-width='3'/%3E%3Ctext x='92' y='790' fill='%23F4F5F7' fill-opacity='.72' font-family='Space Grotesk, Arial' font-size='94' font-weight='700' letter-spacing='-5'%3EParsemains%3C/text%3E%3C/svg%3E",
     color: "#7FA0AE", accent: "127,160,174",
     slug: "/projects/parsemains",
   },
@@ -673,7 +673,7 @@ export function ProjectsPage() {
       <AmbientMovingLines className="absolute inset-x-0 top-0 z-0" height="140vh" opacity={0.22} />
       <div className="relative z-10">
         <ProjectsHero />
-        <ParticleDivider accent="223,244,64" direction={1} count={22} height={45} />
+        <ParticleDivider accent="127,214,255" direction={1} count={22} height={45} />
         <FeaturedProject onSelect={handleSelect} />
         <ProjectIndex activeCategory={activeCategory} setActiveCategory={setActiveCategory} onSelect={handleSelect} />
         <ParticleDivider accent="154,142,196" direction={-1} count={18} height={45} />
