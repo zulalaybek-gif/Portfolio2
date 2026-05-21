@@ -20,7 +20,7 @@ export function ToolsSection() {
       <div className="max-w-6xl mx-auto">
         <div className="mb-12">
           <span
-            className="inline-block uppercase tracking-widest mb-6"
+            className="section-eyebrow inline-block uppercase tracking-widest mb-6"
             style={{ fontSize: "0.65rem", fontFamily: "'Inter', sans-serif", color: r(0.35), letterSpacing: "0.15em" }}
           >
             — {t("tools.badge")}

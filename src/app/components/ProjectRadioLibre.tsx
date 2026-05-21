@@ -89,7 +89,7 @@ function SectionLabel({ children }: { children: string }) {
   const { r } = useTheme();
   return (
     <span
-      className="uppercase tracking-[0.3em] block"
+      className="section-eyebrow uppercase tracking-[0.3em] block"
       style={{
         fontFamily: "'Inter', sans-serif",
         fontSize: "0.6rem",

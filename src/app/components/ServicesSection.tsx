@@ -103,7 +103,7 @@ export function ServicesSection() {
         {/* Header */}
         <div className="mb-14">
           <span
-            className="inline-block uppercase tracking-widest mb-5"
+            className="section-eyebrow inline-block uppercase tracking-widest mb-5"
             style={{ fontSize: "0.65rem", fontFamily: "'Inter', sans-serif", color: r(0.35), letterSpacing: "0.15em" }}
           >
             — {t("services.badge")}

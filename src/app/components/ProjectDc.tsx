@@ -190,7 +190,7 @@ const PRINT_DOCS = [
 function SectionLabel({ children }: { children: string }) {
   const { r } = useTheme();
   return (
-    <span className="uppercase tracking-[0.3em] block" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.6rem", color: r(0.25) }}>
+    <span className="section-eyebrow uppercase tracking-[0.3em] block" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.6rem", color: r(0.25) }}>
       {children}
     </span>
   );

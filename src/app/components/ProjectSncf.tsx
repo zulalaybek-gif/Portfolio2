@@ -152,7 +152,7 @@ function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="uppercase tracking-[0.3em]"
+            className="section-eyebrow uppercase tracking-[0.3em]"
             style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", color: r(0.2) }}
           >
             {t("sncf.hero.label")}
@@ -420,7 +420,7 @@ function PresentationViewer() {
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <span
-              className="uppercase tracking-[0.3em]"
+              className="section-eyebrow uppercase tracking-[0.3em]"
               style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", color: r(0.2) }}
             >
               {t("sncf.prez.label")}
@@ -545,7 +545,7 @@ function OnboardingSection() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="uppercase tracking-[0.3em] block mb-4"
+          className="section-eyebrow uppercase tracking-[0.3em] block mb-4"
           style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", color: r(0.2) }}
         >
           {t("sncf.onboarding.label")}

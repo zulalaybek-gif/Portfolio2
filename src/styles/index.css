@@ -127,6 +127,15 @@
   background: linear-gradient(90deg, transparent, rgba(13, 27, 42, 0.085), rgba(93, 169, 255, 0.12), rgba(127, 214, 255, 0.1), transparent);
 }
 
+.section-eyebrow {
+  color: rgba(244, 245, 247, 0.52) !important;
+  font-weight: 600;
+}
+
+[data-theme="light"] .section-eyebrow {
+  color: rgba(13, 27, 42, 0.56) !important;
+}
+
 @media (max-width: 768px) {
   .site-shell {
     --site-shell-padding: 0.875rem;

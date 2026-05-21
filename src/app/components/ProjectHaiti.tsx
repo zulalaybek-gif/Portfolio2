@@ -85,7 +85,7 @@ function SectionLabel({ text }: { text: string }) {
   return (
     <FadeIn>
       <span
-        className="uppercase tracking-[0.3em] block mb-4"
+        className="section-eyebrow uppercase tracking-[0.3em] block mb-4"
         style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", color: r(0.2) }}
       >
         {text}
@@ -390,7 +390,7 @@ function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="uppercase tracking-[0.3em]"
+            className="section-eyebrow uppercase tracking-[0.3em]"
             style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", color: r(0.2) }}
           >
             {t("haiti.hero.label")}

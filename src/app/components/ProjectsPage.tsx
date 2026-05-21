@@ -168,7 +168,7 @@ function ProjectsHero() {
           transition={{ duration: 1, delay: 0.2 }}
           className="flex items-start justify-between mb-6"
         >
-          <span className="uppercase tracking-[0.3em]" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", color: r(0.2) }}>
+          <span className="section-eyebrow uppercase tracking-[0.3em]" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", color: r(0.2) }}>
             {t("projects.heroLabel")}
           </span>
           <span className="hidden md:block" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.75rem", color: r(0.15) }}>
@@ -335,7 +335,7 @@ function ProjectIndex({ activeCategory, setActiveCategory, onSelect }: {
     <section data-section="projects-index" className="px-6 md:px-12 py-12">
       <div className="max-w-6xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="flex items-center justify-between flex-wrap gap-6 mb-4">
-          <span className="uppercase tracking-[0.3em]" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", color: r(0.2) }}>
+          <span className="section-eyebrow uppercase tracking-[0.3em]" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", color: r(0.2) }}>
             {t("projects.indexLabel")}
           </span>
           <div className="flex items-center gap-1.5 flex-wrap">
@@ -471,7 +471,7 @@ function HorizontalReel({ onSelect }: { onSelect: (p: Project) => void }) {
       <div className="max-w-6xl mx-auto px-6 md:px-12">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="flex items-center justify-between mb-8">
           <div>
-            <span className="uppercase tracking-[0.3em] block mb-3" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", color: r(0.2) }}>
+            <span className="section-eyebrow uppercase tracking-[0.3em] block mb-3" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", color: r(0.2) }}>
               {t("projects.reelLabel")}
             </span>
             <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(1.3rem, 3vw, 1.8rem)", fontWeight: 600, letterSpacing: "-0.02em", color: pal.text }}>

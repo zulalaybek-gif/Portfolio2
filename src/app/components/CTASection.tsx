@@ -62,7 +62,7 @@ export function CTASection() {
         <div className="relative z-10 text-center max-w-3xl mx-auto">
           {/* Badge */}
           <span
-            className="inline-block uppercase tracking-widest mb-8"
+            className="section-eyebrow inline-block uppercase tracking-widest mb-8"
             style={{
               fontSize: "0.65rem",
               fontFamily: "'Inter', sans-serif",
