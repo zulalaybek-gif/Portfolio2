@@ -865,10 +865,8 @@ interface ButterflyData {
 }
 
 const BUTTERFLIES: ButterflyData[] = [
-  { id: 0, size: 86, baseX: 86, baseY: 28, driftAmplitudeX: 3.5, driftAmplitudeY: 5, driftSpeed: 7, flapSpeed: 1.8, rotateBase: -6 },
-  { id: 1, size: 58, baseX: 91, baseY: 57, driftAmplitudeX: 2.5, driftAmplitudeY: 4, driftSpeed: 9, flapSpeed: 1.5, rotateBase: 8 },
-  { id: 2, size: 48, baseX: 8, baseY: 38, driftAmplitudeX: 2.8, driftAmplitudeY: 4.5, driftSpeed: 8.5, flapSpeed: 1.7, rotateBase: 12 },
-  { id: 3, size: 38, baseX: 12, baseY: 68, driftAmplitudeX: 2, driftAmplitudeY: 3.5, driftSpeed: 10, flapSpeed: 1.4, rotateBase: -14 },
+  { id: 0, size: 52, baseX: 86, baseY: 30, driftAmplitudeX: 3.5, driftAmplitudeY: 5, driftSpeed: 7, flapSpeed: 1.8, rotateBase: -6 },
+  { id: 1, size: 36, baseX: 90, baseY: 56, driftAmplitudeX: 2.5, driftAmplitudeY: 4, driftSpeed: 9, flapSpeed: 1.5, rotateBase: 8 },
 ];
 
 /* Sparkle particles emitted on click */
@@ -959,14 +957,14 @@ function SingleButterfly({ data, scrollPct, isDark }: { data: ButterflyData; scr
     return () => clearInterval(interval);
   }, [isHovered]);
 
-  // More visible opacity
   let opacityVal = 0;
-  if (scrollPct < 0.03) opacityVal = 0;
-  else if (scrollPct < 0.08) opacityVal = ((scrollPct - 0.03) / 0.05) * (isDark ? 1 : 0.82);
-  else if (scrollPct < 0.9) opacityVal = isDark ? 1 : 0.82;
-  else if (scrollPct < 0.97) opacityVal = ((0.97 - scrollPct) / 0.07) * (isDark ? 1 : 0.82);
+  const maxOpacity = isDark ? 0.8 : 0.65;
+  if (scrollPct < 0.04) opacityVal = 0;
+  else if (scrollPct < 0.1) opacityVal = ((scrollPct - 0.04) / 0.06) * maxOpacity;
+  else if (scrollPct < 0.88) opacityVal = maxOpacity;
+  else if (scrollPct < 0.95) opacityVal = ((0.95 - scrollPct) / 0.07) * maxOpacity;
 
-  const handleTap = (e: React.MouseEvent) => {
+  const handleTap = () => {
     const rect = ref.current?.getBoundingClientRect();
     if (rect) {
       setBurst({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
@@ -1019,7 +1017,7 @@ function SingleButterfly({ data, scrollPct, isDark }: { data: ButterflyData; scr
       )}
       <motion.div
         ref={ref}
-        className="fixed z-[80] cursor-pointer"
+        className="fixed z-20 cursor-pointer"
         style={{
           top: 0,
           left: 0,
@@ -1068,11 +1066,11 @@ function SingleButterfly({ data, scrollPct, isDark }: { data: ButterflyData; scr
           style={{
             filter: isHovered
               ? isDark
-                ? `drop-shadow(0 0 24px rgba(${ACCENT_RGB},0.75)) drop-shadow(0 0 8px rgba(226,192,73,0.35)) brightness(1.38) contrast(1.18)`
-                : `drop-shadow(0 0 22px rgba(${ACCENT_RGB},0.45)) drop-shadow(0 0 6px rgba(179,66,138,0.25)) brightness(0.88) contrast(1.25)`
+                ? `drop-shadow(0 0 16px rgba(${ACCENT_RGB},0.6)) drop-shadow(0 0 4px rgba(${ACCENT_RGB},0.3))`
+                : `drop-shadow(0 0 16px rgba(${ACCENT_RGB},0.4)) drop-shadow(0 0 4px rgba(${ACCENT_RGB},0.2))`
               : isDark
-                ? `drop-shadow(0 6px 22px rgba(${ACCENT_RGB},0.48)) brightness(1.28) contrast(1.16)`
-                : `drop-shadow(0 5px 18px rgba(${ACCENT_RGB},0.24)) brightness(0.82) contrast(1.22)`,
+                ? `drop-shadow(0 3px 10px rgba(${ACCENT_RGB},0.25))`
+                : `drop-shadow(0 3px 10px rgba(${ACCENT_RGB},0.12))`,
             transition: "filter 0.3s ease",
           }}
         >
@@ -1095,6 +1093,7 @@ function SingleButterfly({ data, scrollPct, isDark }: { data: ButterflyData; scr
               draggable={false}
               style={{
                 width: `${data.size}px`,
+                mixBlendMode: isDark ? "screen" : "multiply",
                 objectFit: "contain",
                 userSelect: "none",
               }}
