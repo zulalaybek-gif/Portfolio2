@@ -959,7 +959,7 @@ function SingleButterfly({ data, scrollPct, isDark }: { data: ButterflyData; scr
 
   let opacityVal = 0;
   const maxOpacity = isDark ? 0.8 : 0.65;
-  if (scrollPct < 0.04) opacityVal = 0;
+  if (scrollPct < 0.04) opacityVal = maxOpacity * 0.55;
   else if (scrollPct < 0.1) opacityVal = ((scrollPct - 0.04) / 0.06) * maxOpacity;
   else if (scrollPct < 0.88) opacityVal = maxOpacity;
   else if (scrollPct < 0.95) opacityVal = ((0.95 - scrollPct) / 0.07) * maxOpacity;
@@ -1017,7 +1017,7 @@ function SingleButterfly({ data, scrollPct, isDark }: { data: ButterflyData; scr
       )}
       <motion.div
         ref={ref}
-        className="fixed z-20 cursor-pointer"
+        className="fixed z-[70] cursor-pointer"
         style={{
           top: 0,
           left: 0,
@@ -1107,11 +1107,11 @@ function SingleButterfly({ data, scrollPct, isDark }: { data: ButterflyData; scr
 
 function FloatingButterfly() {
   const { isDark } = useTheme();
-  const [isMobile, setIsMobile] = useState(false);
+  const [isCompact, setIsCompact] = useState(false);
   const [scrollPct, setScrollPct] = useState(0);
 
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
+    const check = () => setIsCompact(window.innerWidth < 640);
     check();
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
@@ -1138,7 +1138,7 @@ function FloatingButterfly() {
     };
   }, []);
 
-  if (isMobile) return null;
+  if (isCompact) return null;
 
   return (
     <>
