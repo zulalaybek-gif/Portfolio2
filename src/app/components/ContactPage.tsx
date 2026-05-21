@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, CheckCircle2, Send } from "lucide-react";
 import { KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { useTheme } from "./theme";
+import { AmbientMovingLines } from "./AmbientMovingLines";
 
 type FormStep = "name" | "email" | "message" | "review" | "sending" | "success";
 type FormData = { name: string; email: string; message: string };
@@ -528,7 +529,6 @@ function ReviewState({
 function SuccessAtmosphere({ text, accent, isDark }: { text: string; accent: string; isDark: boolean }) {
   const secondary = isDark ? "#4B8197" : "#C12144";
   const tertiary = isDark ? "#C12144" : "#D39A7A";
-  const ink = rgbaFromHex(text, isDark ? 0.17 : 0.11);
 
   return (
     <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden" aria-hidden="true">
@@ -570,26 +570,39 @@ function SuccessAtmosphere({ text, accent, isDark }: { text: string; accent: str
           transform: "translate(-50%, -50%)",
         }}
       />
-      <motion.div
-        className="absolute bottom-8 right-8 md:bottom-12 md:right-14"
-        initial={{ opacity: 0, y: 18, rotate: -8 }}
-        animate={{ opacity: isDark ? 0.78 : 0.86, y: 0, rotate: [-8, -6, -8] }}
-        transition={{ opacity: { duration: 1.2, delay: 0.35 }, y: { duration: 1.2, delay: 0.35, ease: [0.16, 1, 0.3, 1] }, rotate: { duration: 8, repeat: Infinity, ease: "easeInOut" } }}
-        style={{
-          fontFamily: "'Reenie Beanie', 'Brush Script MT', cursive",
-          fontSize: "clamp(3.5rem, 8vw, 7rem)",
-          lineHeight: 0.8,
-          letterSpacing: "-0.045em",
-          color: "transparent",
-          background: `linear-gradient(128deg, ${accent} 0%, ${secondary} 58%, ${tertiary} 110%)`,
-          backgroundClip: "text",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-          textShadow: `0 18px 48px ${rgbaFromHex(accent, isDark ? 0.2 : 0.18)}`,
-        }}
-      >
-        merci
-      </motion.div>
+      <div className="absolute bottom-8 right-8 md:bottom-12 md:right-14" style={{ transform: "rotate(-7deg)" }}>
+        <motion.div
+          initial={{ width: 0, opacity: 0 }}
+          animate={{ width: "clamp(9rem, 19vw, 16rem)", opacity: isDark ? 0.82 : 0.9 }}
+          transition={{ width: { duration: 1.75, delay: 0.45, ease: [0.16, 1, 0.3, 1] }, opacity: { duration: 0.35, delay: 0.35 } }}
+          className="overflow-hidden whitespace-nowrap"
+          style={{
+            fontFamily: "'Reenie Beanie', 'Brush Script MT', cursive",
+            fontSize: "clamp(3.5rem, 8vw, 7rem)",
+            lineHeight: 0.8,
+            letterSpacing: "-0.045em",
+            color: "transparent",
+            background: `linear-gradient(128deg, ${accent} 0%, ${secondary} 58%, ${tertiary} 110%)`,
+            backgroundClip: "text",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            textShadow: `0 18px 48px ${rgbaFromHex(accent, isDark ? 0.2 : 0.18)}`,
+          }}
+        >
+          merci
+        </motion.div>
+        <motion.span
+          className="absolute top-2 h-2 w-2 rounded-full"
+          style={{
+            right: "-0.25rem",
+            background: tertiary,
+            boxShadow: `0 0 18px ${rgbaFromHex(tertiary, 0.55)}`,
+          }}
+          initial={{ opacity: 0, scale: 0.4, x: "-9rem" }}
+          animate={{ opacity: [0, 1, 1, 0], scale: [0.4, 1, 1, 0.5], x: ["-9rem", "-5.4rem", "-2rem", "0rem"] }}
+          transition={{ duration: 1.75, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+        />
+      </div>
 
       <motion.div
         className="absolute inset-x-[-10%] top-[14%] h-px"
@@ -622,46 +635,7 @@ function SuccessAtmosphere({ text, accent, isDark }: { text: string; accent: str
         }}
       />
 
-      <motion.svg
-        className="absolute inset-0 size-full"
-        viewBox="0 0 1440 900"
-        preserveAspectRatio="none"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isDark ? 0.62 : 0.5 }}
-        transition={{ duration: 1.2 }}
-      >
-        <defs>
-          <linearGradient id="contact-success-stroke" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor={accent} stopOpacity={isDark ? 0.65 : 0.62} />
-            <stop offset="54%" stopColor={secondary} stopOpacity={isDark ? 0.38 : 0.44} />
-            <stop offset="100%" stopColor={text} stopOpacity="0" />
-          </linearGradient>
-        </defs>
-        {[0, 1, 2].map((item) => (
-          <motion.path
-            key={item}
-            d={`M ${-160 + item * 90} ${640 - item * 150} C ${260 + item * 80} ${270 - item * 40}, ${650 + item * 90} ${850 - item * 120}, ${1620 - item * 120} ${210 + item * 95}`}
-            fill="none"
-            stroke="url(#contact-success-stroke)"
-            strokeWidth={item === 1 ? 2 : 1.25}
-            strokeLinecap="round"
-            strokeDasharray="14 22"
-            initial={{ pathLength: 0, pathOffset: 0.2 }}
-            animate={{ pathLength: [0.2, 1, 0.2], pathOffset: [0.2, 0, 0.2] }}
-            transition={{ duration: 16 + item * 3, repeat: Infinity, ease: "easeInOut" }}
-          />
-        ))}
-        <motion.path
-          d="M 1180 -120 C 980 140, 1040 380, 760 520 C 520 640, 360 720, 260 980"
-          fill="none"
-          stroke={ink}
-          strokeWidth="1"
-          strokeLinecap="round"
-          strokeDasharray="2 18"
-          animate={{ pathOffset: [0, 1] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-        />
-      </motion.svg>
+      <AmbientMovingLines className="absolute inset-0 size-full" accent={accent} secondary={secondary} text={text} opacity={isDark ? 0.62 : 0.5} />
     </div>
   );
 }

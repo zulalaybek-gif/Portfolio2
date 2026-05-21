@@ -8,6 +8,7 @@ import { useTheme } from "./theme";
 import { useNavigate } from "react-router";
 import { preloadProjectRoute } from "../projectRouteLoaders";
 import { CompositeTitle } from "./CompositeTitle";
+import { AmbientMovingLines } from "./AmbientMovingLines";
 
 /* ─── Data ─── */
 type ViewMode = "standard" | "projects" | "workshops";
@@ -668,13 +669,16 @@ export function ProjectsPage() {
   };
 
   return (
-    <div className="relative w-full">
-      <ProjectsHero />
-      <ParticleDivider accent="223,244,64" direction={1} count={22} height={45} />
-      <FeaturedProject onSelect={handleSelect} />
-      <ProjectIndex activeCategory={activeCategory} setActiveCategory={setActiveCategory} onSelect={handleSelect} />
-      <ParticleDivider accent="154,142,196" direction={-1} count={18} height={45} />
-      <HorizontalReel onSelect={handleSelect} />
+    <div className="relative w-full overflow-hidden">
+      <AmbientMovingLines className="absolute inset-x-[-12%] top-0 h-[140vh] z-0" opacity={0.26} />
+      <div className="relative z-10">
+        <ProjectsHero />
+        <ParticleDivider accent="223,244,64" direction={1} count={22} height={45} />
+        <FeaturedProject onSelect={handleSelect} />
+        <ProjectIndex activeCategory={activeCategory} setActiveCategory={setActiveCategory} onSelect={handleSelect} />
+        <ParticleDivider accent="154,142,196" direction={-1} count={18} height={45} />
+        <HorizontalReel onSelect={handleSelect} />
+      </div>
       <AnimatePresence>
         {selectedProject && (
           <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} onNext={handleNext} onViewCase={handleViewCase} />
