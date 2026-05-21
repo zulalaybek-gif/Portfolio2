@@ -6,22 +6,22 @@ import { CompositeTitle } from "./CompositeTitle";
 import { AmbientMovingLines } from "./AmbientMovingLines";
 
 const services = [
-  { titleKey: "services.s1.title" as const, descKey: "services.s1.desc" as const },
-  { titleKey: "services.s2.title" as const, descKey: "services.s2.desc" as const },
-  { titleKey: "services.s3.title" as const, descKey: "services.s3.desc" as const },
-  { titleKey: "services.s4.title" as const, descKey: "services.s4.desc" as const },
-  { titleKey: "services.s5.title" as const, descKey: "services.s5.desc" as const },
-  { titleKey: "services.s6.title" as const, descKey: "services.s6.desc" as const },
-  { titleKey: "services.s7.title" as const, descKey: "services.s7.desc" as const },
-  { titleKey: "services.s8.title" as const, descKey: "services.s8.desc" as const },
+  { titleKey: "services.s1.title" as const, descKey: "services.s1.desc" as const, hoverKey: "services.s1.hover" as const },
+  { titleKey: "services.s2.title" as const, descKey: "services.s2.desc" as const, hoverKey: "services.s2.hover" as const },
+  { titleKey: "services.s3.title" as const, descKey: "services.s3.desc" as const, hoverKey: "services.s3.hover" as const },
+  { titleKey: "services.s4.title" as const, descKey: "services.s4.desc" as const, hoverKey: "services.s4.hover" as const },
+  { titleKey: "services.s5.title" as const, descKey: "services.s5.desc" as const, hoverKey: "services.s5.hover" as const },
+  { titleKey: "services.s6.title" as const, descKey: "services.s6.desc" as const, hoverKey: "services.s6.hover" as const },
+  { titleKey: "services.s7.title" as const, descKey: "services.s7.desc" as const, hoverKey: "services.s7.hover" as const },
+  { titleKey: "services.s8.title" as const, descKey: "services.s8.desc" as const, hoverKey: "services.s8.hover" as const },
 ];
 
 export function ServicesSection() {
   const { t } = useI18n();
   const { p, r, isDark } = useTheme();
   const serviceAccents = isDark
-    ? ["#7FD6FF", "#5DA9FF", "#7B2D52", "#D8C7D1", "#5DA9FF", "#7FD6FF", "#A34A6A", "#5DA9FF"]
-    : ["#2D5BFF", "#0D1B2A", "#7B2D52", "#5DA9FF", "#11263C", "#5DA9FF", "#A34A6A", "#2D5BFF"];
+    ? ["#63E6EE", "#4C638F", "#A83B6D", "#2D6CFF", "#63E6EE", "#4C638F", "#A83B6D", "#2D6CFF"]
+    : ["#39C9D6", "#2F6BFF", "#9B214F", "#2D5BFF", "#39C9D6", "#2F6BFF", "#9B214F", "#2D5BFF"];
   const scrollRef = useRef<HTMLDivElement>(null);
   const programmaticScrollRef = useRef<number | null>(null);
   const scrollEndTimerRef = useRef<number | null>(null);
@@ -116,7 +116,7 @@ export function ServicesSection() {
               />
             </div>
             <div className="flex items-center gap-6">
-              <p className="max-w-[280px] hidden md:block" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", lineHeight: 1.7, color: r(0.4) }}>
+              <p className="max-w-[230px] hidden md:block" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.78rem", lineHeight: 1.65, color: r(0.34) }}>
                 {t("services.subtitle" as TranslationKey)}
               </p>
               <div className="flex items-center gap-2">
@@ -156,63 +156,76 @@ export function ServicesSection() {
             return (
               <div
                 key={i}
-                className="shrink-0 relative rounded-2xl p-7 flex flex-col justify-between overflow-hidden group"
+                className="service-card shrink-0 relative rounded-2xl p-8 flex flex-col justify-between overflow-hidden group outline-none"
+                tabIndex={0}
                 style={{
-                  width: "clamp(260px, 30vw, 320px)",
-                  minHeight: 280,
+                  ["--service-accent" as string]: cardAccent,
+                  ["--service-base-shadow" as string]: isDark
+                    ? `inset 0 1px 0 rgba(244,245,247,0.035), inset 0 0 0 1px ${cardAccent}0D, 0 22px 70px rgba(0,0,0,0.16)`
+                    : `inset 0 1px 0 rgba(255,255,255,0.9), 0 18px 48px rgba(13,27,42,0.045), 0 18px 46px ${cardAccent}08`,
+                  ["--service-hover-shadow" as string]: isDark
+                    ? `inset 0 1px 0 rgba(244,245,247,0.07), inset 0 0 0 1px ${cardAccent}24, 0 38px 104px rgba(0,0,0,0.42), 0 0 54px ${cardAccent}18`
+                    : `inset 0 1px 0 rgba(255,255,255,0.96), inset 0 0 0 1px ${cardAccent}16, 0 26px 70px rgba(13,27,42,0.09), 0 22px 58px ${cardAccent}18`,
+                  width: "clamp(285px, 31vw, 350px)",
+                  minHeight: 335,
                   scrollSnapAlign: "start",
-                  background: p.cardBg,
-                  border: `1px solid ${p.cardBorder}`,
-                  boxShadow: isDark
-                    ? "inset 0 1px 0 rgba(244,245,247,0.035), 0 20px 60px rgba(0,0,0,0.08)"
-                    : "inset 0 1px 0 rgba(255,255,255,0.72), 0 18px 52px rgba(13,27,42,0.045)",
-                  transform: "translateZ(0)",
+                  background: isDark
+                    ? `linear-gradient(145deg, color-mix(in srgb, ${cardAccent} 7%, rgba(4,8,16,0.995)) 0%, rgba(7,13,24,0.985) 48%, color-mix(in srgb, ${cardAccent} 4%, rgba(2,6,13,0.998)) 100%)`
+                    : `linear-gradient(145deg, rgba(255,255,255,0.98) 0%, color-mix(in srgb, ${cardAccent} 2%, rgba(250,252,255,0.96)) 58%, rgba(246,249,253,0.98) 100%)`,
+                  border: `1px solid ${isDark ? `${cardAccent}22` : `${cardAccent}18`}`,
                 }}
               >
-                {/* Number */}
-                <span
-                  style={{
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: "0.65rem",
-                    color: r(0.15),
-                    letterSpacing: "0.05em",
-                  }}
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-
-                {/* Hover accent dot */}
                 <div
-                  className="absolute top-7 right-7 w-2 h-2 rounded-full opacity-0 scale-50 transition-all duration-300 ease-out group-hover:opacity-70 group-hover:scale-100"
-                  style={{ background: cardAccent, boxShadow: `0 0 18px ${cardAccent}44` }}
+                  aria-hidden="true"
+                  className="service-card__field absolute inset-0"
                 />
-
+                <div
+                  aria-hidden="true"
+                  className="service-card__aura service-card__aura--main absolute rounded-full opacity-0"
+                />
                 {/* Title with large first letter */}
-                <div className="mt-auto">
+                <div className="relative z-10 flex flex-1 flex-col justify-center transition-transform duration-700 ease-out group-hover:-translate-y-1.5 group-focus-visible:-translate-y-1.5">
                   <h3
-                    className="mb-4"
+                    className="mb-4 transition-transform duration-700 ease-out group-hover:translate-x-1 group-focus-visible:translate-x-1"
                     style={{
                       fontFamily: "'Space Grotesk', sans-serif",
-                      fontSize: "clamp(1.5rem, 2.5vw, 2rem)",
+                      fontSize: "clamp(1.65rem, 2.7vw, 2.15rem)",
                       fontWeight: 700,
                       lineHeight: 1.1,
                       letterSpacing: "-0.02em",
                       color: p.text,
+                      textShadow: isDark ? "0 14px 32px rgba(0,0,0,0.45)" : "none",
                     }}
                   >
                     <span style={{ color: cardAccent }}>{firstLetter}</span>
                     {rest}
                   </h3>
-                  <p
-                    style={{
-                      fontFamily: "'Inter', sans-serif",
-                      fontSize: "0.82rem",
-                      lineHeight: 1.6,
-                      color: r(0.35),
-                    }}
-                  >
-                    {t(service.descKey as TranslationKey)}
-                  </p>
+                  <span aria-hidden="true" className="service-card__title-rule mb-6" />
+                  <div className="relative min-h-[4.9rem]">
+                    <p
+                      className="absolute inset-0 transition-all duration-700 ease-out group-hover:-translate-y-4 group-hover:opacity-0 group-focus-visible:-translate-y-4 group-focus-visible:opacity-0"
+                      style={{
+                        fontFamily: "'Inter', sans-serif",
+                        fontSize: "0.82rem",
+                        lineHeight: 1.6,
+                        color: r(0.38),
+                      }}
+                    >
+                      {t(service.descKey as TranslationKey)}
+                    </p>
+                    <p
+                      className="absolute inset-0 translate-y-5 opacity-0 transition-all duration-700 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100"
+                      style={{
+                        fontFamily: "'Inter', sans-serif",
+                        fontSize: "0.82rem",
+                        lineHeight: 1.62,
+                        color: isDark ? r(0.68) : r(0.66),
+                        textShadow: isDark ? `0 0 20px ${cardAccent}20` : `0 8px 22px rgba(13,27,42,0.08)`,
+                      }}
+                    >
+                      {t(service.hoverKey as TranslationKey)}
+                    </p>
+                  </div>
                 </div>
               </div>
             );

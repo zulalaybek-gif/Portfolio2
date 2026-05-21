@@ -4,6 +4,7 @@ import { KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { useTheme } from "./theme";
 import { AmbientMovingLines } from "./AmbientMovingLines";
+import { useI18n } from "./i18n";
 
 type FormStep = "name" | "email" | "message" | "review" | "sending" | "success";
 type FormData = { name: string; email: string; message: string };
@@ -17,14 +18,90 @@ const questions = {
     placeholder: "Marie Dupont",
   },
   email: {
-    label: "Votre email ?",
+    label: "Où puis-je vous répondre ?",
     placeholder: "hello@example.com",
   },
   message: {
-    label: "Parlez-moi de votre projet...",
-    placeholder: "Je cherche à créer une identité visuelle pour...",
+    label: "Racontez ce que vous avez en tête.",
+    placeholder: "Une idée, un besoin, un début de brief...",
   },
 } as const;
+
+const contactCopy = {
+  fr: {
+    questions,
+    back: "Retour",
+    sending: "Votre message est en route",
+    next: "Continuer",
+    reviewButton: "Relire",
+    validationEmail: "Une adresse email valide permettra de vous répondre.",
+    validationRemaining: (count: number) => `${count} caractères encore, histoire d'avoir de quoi travailler ensemble.`,
+    stepLabel: "ÉTAPE",
+    reviewTitle: "Dernière vérification.",
+    reviewLabels: {
+      name: "Nom",
+      email: "Email",
+      message: "Message",
+    },
+    edit: "Ajuster",
+    submit: "Envoyer",
+    successTitle: "Message bien reçu.",
+    successDesc: "Merci, tout est bien arrivé. On prend le temps de lire ça avec attention, puis on revient vers vous vite, promis, pas dans trois saisons.",
+    home: "Retour à l'accueil",
+  },
+  en: {
+    questions: {
+      name: {
+        label: "What should we call you?",
+        placeholder: "Marie Dupont",
+      },
+      email: {
+        label: "Where can we reply?",
+        placeholder: "hello@example.com",
+      },
+      message: {
+        label: "Tell us what you have in mind.",
+        placeholder: "An idea, a need, the start of a brief...",
+      },
+    },
+    back: "Back",
+    sending: "Sending your message",
+    next: "Continue",
+    reviewButton: "Review",
+    validationEmail: "A valid email address will let us reply.",
+    validationRemaining: (count: number) => `${count} more characters, so we have something to work with together.`,
+    stepLabel: "STEP",
+    reviewTitle: "One last look.",
+    reviewLabels: {
+      name: "Name",
+      email: "Email",
+      message: "Message",
+    },
+    edit: "Adjust",
+    submit: "Send",
+    successTitle: "Message received.",
+    successDesc: "Thank you, everything arrived safely. We will read it properly and get back to you soon, promise, not in three seasons.",
+    home: "Back home",
+  },
+} as const;
+
+type ContactCopy = {
+  questions: Record<"name" | "email" | "message", { label: string; placeholder: string }>;
+  back: string;
+  sending: string;
+  next: string;
+  reviewButton: string;
+  validationEmail: string;
+  validationRemaining: (count: number) => string;
+  stepLabel: string;
+  reviewTitle: string;
+  reviewLabels: Record<"name" | "email" | "message", string>;
+  edit: string;
+  submit: string;
+  successTitle: string;
+  successDesc: string;
+  home: string;
+};
 
 function rgbaFromHex(hex: string, alpha: number) {
   const clean = hex.replace("#", "");
@@ -42,6 +119,8 @@ function isValidEmail(value: string) {
 export function ContactPage() {
   const navigate = useNavigate();
   const { isDark } = useTheme();
+  const { lang } = useI18n();
+  const copy = contactCopy[lang];
   const [step, setStep] = useState<FormStep>("name");
   const [formData, setFormData] = useState<FormData>({ name: "", email: "", message: "" });
   const [isFocused, setIsFocused] = useState(false);
@@ -66,9 +145,9 @@ export function ContactPage() {
   const isLastQuestion = activeStep === "message";
   const validationHint =
     activeStep === "email" && formData.email.trim().length > 0 && !isValidEmail(formData.email)
-      ? "Entrez une adresse email valide."
+      ? copy.validationEmail
       : activeStep === "message" && formData.message.trim().length > 0 && formData.message.trim().length < MIN_MESSAGE_LENGTH
-        ? `${MIN_MESSAGE_LENGTH - formData.message.trim().length} caractères minimum restants.`
+        ? copy.validationRemaining(MIN_MESSAGE_LENGTH - formData.message.trim().length)
         : "";
   const bg = isDark ? "#050B14" : "#E9EDF3";
   const text = isDark ? "#F4F5F7" : "#0D1B2A";
@@ -215,13 +294,13 @@ export function ContactPage() {
         }}
       >
         <ArrowLeft size={16} />
-        Retour
+        {copy.back}
       </motion.button>
 
       <div className="relative z-10 w-full max-w-3xl">
         <AnimatePresence mode="wait">
           {step === "success" ? (
-            <SuccessState key="success" text={text} accent={accent} isDark={isDark} onHome={() => navigate("/")} />
+            <SuccessState key="success" text={text} accent={accent} isDark={isDark} copy={copy} onHome={() => navigate("/")} />
           ) : step === "sending" ? (
             <motion.div
               key="sending"
@@ -238,7 +317,7 @@ export function ContactPage() {
                 style={{ color: accent }}
               />
               <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1rem", letterSpacing: "0.12em", textTransform: "uppercase" }}>
-                Envoi en cours
+                {copy.sending}
               </p>
             </motion.div>
           ) : step === "review" ? (
@@ -247,6 +326,7 @@ export function ContactPage() {
               formData={formData}
               text={text}
               accent={accent}
+              copy={copy}
               onEdit={setStep}
               onSubmit={goNext}
             />
@@ -258,7 +338,7 @@ export function ContactPage() {
               exit={{ opacity: 0, y: -40 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
-              <ProgressIndicator current={activeIndex + 1} progress={progress} text={text} accent={accent} />
+              <ProgressIndicator current={activeIndex + 1} progress={progress} text={text} accent={accent} label={copy.stepLabel} />
 
               <motion.h1
                 initial={{ opacity: 0, y: 30 }}
@@ -273,7 +353,7 @@ export function ContactPage() {
                   letterSpacing: "-0.05em",
                 }}
               >
-                {questions[activeStep].label}
+                {copy.questions[activeStep].label}
               </motion.h1>
 
               <motion.div
@@ -289,7 +369,7 @@ export function ContactPage() {
                     }}
                     rows={4}
                     value={formData.message}
-                    placeholder={questions.message.placeholder}
+                    placeholder={copy.questions.message.placeholder}
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => setIsFocused(false)}
                     onKeyDown={handleKeyDown}
@@ -305,7 +385,7 @@ export function ContactPage() {
                     }}
                     type={activeStep === "email" ? "email" : "text"}
                     value={formData[activeStep]}
-                    placeholder={questions[activeStep].placeholder}
+                    placeholder={copy.questions[activeStep].placeholder}
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => setIsFocused(false)}
                     onKeyDown={handleKeyDown}
@@ -363,7 +443,7 @@ export function ContactPage() {
                   textTransform: "uppercase",
                 }}
               >
-                {isLastQuestion ? "Relire" : "Continuer"}
+                {isLastQuestion ? copy.reviewButton : copy.next}
                 <ArrowRight size={18} />
               </motion.button>
             </motion.div>
@@ -374,7 +454,7 @@ export function ContactPage() {
   );
 }
 
-function ProgressIndicator({ current, progress, text, accent }: { current: number; progress: number; text: string; accent: string }) {
+function ProgressIndicator({ current, progress, text, accent, label }: { current: number; progress: number; text: string; accent: string; label: string }) {
   return (
     <div className="mb-12">
       <p
@@ -386,7 +466,7 @@ function ProgressIndicator({ current, progress, text, accent }: { current: numbe
           color: rgbaFromHex(text, 0.48),
         }}
       >
-        ÉTAPE {current} / 3
+        {label} {current} / 3
       </p>
       <div className="h-px w-full overflow-hidden" style={{ background: rgbaFromHex(text, 0.08) }}>
         <div
@@ -406,19 +486,21 @@ function ReviewState({
   formData,
   text,
   accent,
+  copy,
   onEdit,
   onSubmit,
 }: {
   formData: FormData;
   text: string;
   accent: string;
+  copy: ContactCopy;
   onEdit: (step: "name" | "email" | "message") => void;
   onSubmit: () => void;
 }) {
   const reviewItems: Array<{ key: "name" | "email" | "message"; label: string; value: string }> = [
-    { key: "name", label: "Nom", value: formData.name },
-    { key: "email", label: "Email", value: formData.email },
-    { key: "message", label: "Message", value: formData.message },
+    { key: "name", label: copy.reviewLabels.name, value: formData.name },
+    { key: "email", label: copy.reviewLabels.email, value: formData.email },
+    { key: "message", label: copy.reviewLabels.message, value: formData.message },
   ];
 
   return (
@@ -428,7 +510,7 @@ function ReviewState({
       exit={{ opacity: 0, y: -40 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
     >
-      <ProgressIndicator current={3} progress={100} text={text} accent={accent} />
+      <ProgressIndicator current={3} progress={100} text={text} accent={accent} label={copy.stepLabel} />
 
       <motion.h1
         initial={{ opacity: 0, y: 30 }}
@@ -444,7 +526,7 @@ function ReviewState({
           color: text,
         }}
       >
-        Relisez votre message.
+        {copy.reviewTitle}
       </motion.h1>
 
       <motion.div
@@ -486,7 +568,7 @@ function ReviewState({
                   fontSize: "0.72rem",
                 }}
               >
-                Modifier
+                {copy.edit}
               </button>
             </div>
             <p
@@ -526,7 +608,7 @@ function ReviewState({
           textTransform: "uppercase",
         }}
       >
-        Envoyer
+        {copy.submit}
         <Send size={18} />
       </motion.button>
     </motion.div>
@@ -671,7 +753,7 @@ function SuccessAtmosphere({ text, accent, isDark }: { text: string; accent: str
   );
 }
 
-function SuccessState({ text, accent, isDark, onHome }: { text: string; accent: string; isDark: boolean; onHome: () => void }) {
+function SuccessState({ text, accent, isDark, copy, onHome }: { text: string; accent: string; isDark: boolean; copy: ContactCopy; onHome: () => void }) {
   const visualAccent = isDark ? accent : "#7B2D52";
 
   return (
@@ -712,7 +794,7 @@ function SuccessState({ text, accent, isDark, onHome }: { text: string; accent: 
           color: text,
         }}
       >
-        Message envoyé.
+        {copy.successTitle}
       </h1>
       <p
         className="mx-auto max-w-xl"
@@ -723,7 +805,7 @@ function SuccessState({ text, accent, isDark, onHome }: { text: string; accent: 
           color: rgbaFromHex(text, isDark ? 0.62 : 0.7),
         }}
       >
-        Je reviens vers vous très bientôt. Votre message est entre de bonnes mains.
+        {copy.successDesc}
       </p>
       <motion.button
         type="button"
@@ -741,7 +823,7 @@ function SuccessState({ text, accent, isDark, onHome }: { text: string; accent: 
           textTransform: "uppercase",
         }}
       >
-        Retour à l'accueil
+        {copy.home}
         <ArrowRight size={18} />
       </motion.button>
     </motion.div>
