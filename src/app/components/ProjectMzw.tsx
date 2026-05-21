@@ -740,9 +740,18 @@ function MobileSection() {
       ? `drop-shadow(0 30px 60px rgba(0,0,0,0.65))${intense ? ` drop-shadow(0 0 50px rgba(${ACCENT_RGB},0.25))` : ""}`
       : `drop-shadow(0 25px 50px rgba(0,0,0,0.2))${intense ? ` drop-shadow(0 0 35px rgba(${ACCENT_RGB},0.12))` : ""}`;
 
+  const sceneBg = isDark
+    ? `radial-gradient(circle at 50% 48%, rgba(${ACCENT_RGB},0.2), transparent 36%),
+       radial-gradient(circle at 18% 68%, rgba(37,77,155,0.16), transparent 28%),
+       radial-gradient(circle at 82% 62%, rgba(226,192,73,0.08), transparent 24%),
+       linear-gradient(180deg, rgba(15,18,16,0.94), rgba(11,13,12,0.98))`
+    : `radial-gradient(circle at 50% 48%, rgba(${ACCENT_RGB},0.12), transparent 36%),
+       radial-gradient(circle at 18% 68%, rgba(37,77,155,0.08), transparent 28%),
+       linear-gradient(180deg, rgba(245,245,243,0.72), rgba(234,234,234,0.92))`;
+
   return (
-    <section className="px-6 md:px-16 py-20 overflow-hidden">
-      <div className="max-w-5xl mx-auto">
+    <section className="px-6 md:px-12 py-20 overflow-hidden">
+      <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start mb-16">
           <FadeIn>
             <SectionLabel>{t("mzw.mobile.label")}</SectionLabel>
@@ -752,23 +761,56 @@ function MobileSection() {
           </FadeIn>
         </div>
 
-        <div className="relative">
-          {/* Ambient glow */}
-          <div className="absolute pointer-events-none" style={{ width: "60%", height: "80%", top: "10%", left: "20%", background: `radial-gradient(ellipse at 50% 50%, rgba(${ACCENT_RGB},${isDark ? 0.1 : 0.05}) 0%, transparent 70%)`, filter: "blur(50px)" }} />
+        <div
+          className="relative overflow-hidden rounded-[2rem] md:rounded-[3rem] px-4 py-12 md:px-10 md:py-16"
+          style={{
+            minHeight: "clamp(620px, 76vw, 900px)",
+            background: sceneBg,
+            border: `1px solid ${r(isDark ? 0.08 : 0.1)}`,
+            boxShadow: isDark
+              ? "0 40px 120px rgba(0,0,0,0.42), inset 0 1px 0 rgba(255,255,255,0.05)"
+              : "0 34px 100px rgba(35,38,36,0.12), inset 0 1px 0 rgba(255,255,255,0.75)",
+          }}
+        >
+          <div className="absolute inset-x-0 bottom-0 h-[34%] pointer-events-none" style={{ background: "linear-gradient(180deg, transparent, rgba(0,0,0,0.24))" }} />
+          <div className="absolute inset-0 pointer-events-none opacity-[0.18]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)", backgroundSize: "72px 72px" }} />
+          <motion.img
+            src={imgButterfly}
+            alt=""
+            className="hidden md:block absolute z-10 pointer-events-none select-none"
+            style={{ width: "clamp(70px, 8vw, 120px)", right: "11%", top: "32%", filter: `drop-shadow(0 0 24px rgba(${ACCENT_RGB},0.45)) brightness(${isDark ? 1.35 : 0.9}) contrast(1.18)` }}
+            animate={{ y: [0, -12, 0], rotate: [-4, 5, -4], opacity: [0.7, 1, 0.7] }}
+            transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.img
+            src={imgButterfly}
+            alt=""
+            className="hidden md:block absolute z-10 pointer-events-none select-none"
+            style={{ width: "clamp(42px, 4vw, 68px)", right: "4%", bottom: "22%", filter: `drop-shadow(0 0 18px rgba(226,192,73,0.34)) brightness(${isDark ? 1.25 : 0.85}) contrast(1.2)`, transform: "rotate(22deg)" }}
+            animate={{ y: [0, 16, 0], x: [0, -8, 0], opacity: [0.52, 0.9, 0.52] }}
+            transition={{ duration: 7.2, repeat: Infinity, ease: "easeInOut" }}
+          />
 
-          <div className="relative flex items-end justify-center gap-3 md:gap-5" style={{ minHeight: "clamp(400px, 60vw, 680px)" }}>
-            {/* Left phone — Splash — symmetric with right */}
-            <FadeIn delay={0.1} className="relative z-10 self-start mt-4 md:mt-6">
-              <motion.div className="relative" initial={{ opacity: 0, x: -40, rotate: 0 }} whileInView={{ opacity: 1, x: 0, rotate: -3 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-                style={{ width: "clamp(140px, 22vw, 260px)", filter: phoneShadow(false) }}>
+          <div className="relative z-20 flex items-end justify-center min-h-[clamp(560px,70vw,820px)]">
+            {/* Left phone — smaller and slightly behind */}
+            <FadeIn delay={0.1} className="absolute left-[3%] md:left-[7%] bottom-[18%] z-10">
+              <motion.div
+                className="relative"
+                initial={{ opacity: 0, x: -70, rotate: -8, scale: 0.9 }}
+                whileInView={{ opacity: 1, x: 0, rotate: -4, scale: 1 }}
+                viewport={{ once: true }}
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 1.05, delay: 0.2, ease: "easeOut", y: { duration: 6, repeat: Infinity, ease: "easeInOut" } }}
+                style={{ width: "clamp(135px, 18vw, 255px)", filter: phoneShadow(false) }}
+              >
                 <img src={imgPlayerSplash} alt="MZW — écran d'accueil mobile" className="w-full h-auto object-contain" />
               </motion.div>
             </FadeIn>
 
-            {/* Center phone — Player with animated waveform overlay */}
-            <FadeIn delay={0.15} className="relative z-20">
-              <motion.div className="relative" initial={{ opacity: 0, y: 50, scale: 0.9 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true }} transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}>
-                <motion.div className="relative" style={{ width: "clamp(190px, 28vw, 320px)" }}
+            {/* Center phone — hero player */}
+            <FadeIn delay={0.15} className="relative z-30">
+              <motion.div className="relative" initial={{ opacity: 0, y: 70, scale: 0.92 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true }} transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}>
+                <motion.div className="relative" style={{ width: "clamp(290px, 39vw, 540px)" }}
                   animate={{ y: [0, -6, 0], filter: [phoneShadow(true), `drop-shadow(0 40px 80px rgba(0,0,0,${isDark ? 0.7 : 0.3})) drop-shadow(0 0 60px rgba(${ACCENT_RGB},${isDark ? 0.35 : 0.18}))`, phoneShadow(true)] }}
                   transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}>
                   <AnimatedPlayerMockup />
@@ -779,10 +821,17 @@ function MobileSection() {
               </motion.div>
             </FadeIn>
 
-            {/* Right phone — Library — symmetric with left */}
-            <FadeIn delay={0.25} className="relative z-5 self-start mt-4 md:mt-6">
-              <motion.div className="relative" initial={{ opacity: 0, x: 40, rotate: 0 }} whileInView={{ opacity: 1, x: 0, rotate: 3 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
-                style={{ width: "clamp(140px, 22vw, 260px)", filter: phoneShadow(false) }}>
+            {/* Right phone — smaller and slightly behind */}
+            <FadeIn delay={0.25} className="absolute right-[3%] md:right-[7%] bottom-[20%] z-10">
+              <motion.div
+                className="relative"
+                initial={{ opacity: 0, x: 70, rotate: 8, scale: 0.9 }}
+                whileInView={{ opacity: 1, x: 0, rotate: 4, scale: 1 }}
+                viewport={{ once: true }}
+                animate={{ y: [0, 10, 0] }}
+                transition={{ duration: 1.05, delay: 0.4, ease: "easeOut", y: { duration: 6.8, repeat: Infinity, ease: "easeInOut" } }}
+                style={{ width: "clamp(135px, 18vw, 255px)", filter: phoneShadow(false) }}
+              >
                 <img src={imgPlayerLibrary} alt="MZW — bibliothèque mobile" className="w-full h-auto object-contain" />
               </motion.div>
             </FadeIn>
@@ -817,8 +866,10 @@ interface ButterflyData {
 }
 
 const BUTTERFLIES: ButterflyData[] = [
-  { id: 0, size: 52, baseX: 86, baseY: 30, driftAmplitudeX: 3.5, driftAmplitudeY: 5, driftSpeed: 7, flapSpeed: 1.8, rotateBase: -6 },
-  { id: 1, size: 36, baseX: 90, baseY: 56, driftAmplitudeX: 2.5, driftAmplitudeY: 4, driftSpeed: 9, flapSpeed: 1.5, rotateBase: 8 },
+  { id: 0, size: 86, baseX: 86, baseY: 28, driftAmplitudeX: 3.5, driftAmplitudeY: 5, driftSpeed: 7, flapSpeed: 1.8, rotateBase: -6 },
+  { id: 1, size: 58, baseX: 91, baseY: 57, driftAmplitudeX: 2.5, driftAmplitudeY: 4, driftSpeed: 9, flapSpeed: 1.5, rotateBase: 8 },
+  { id: 2, size: 48, baseX: 8, baseY: 38, driftAmplitudeX: 2.8, driftAmplitudeY: 4.5, driftSpeed: 8.5, flapSpeed: 1.7, rotateBase: 12 },
+  { id: 3, size: 38, baseX: 12, baseY: 68, driftAmplitudeX: 2, driftAmplitudeY: 3.5, driftSpeed: 10, flapSpeed: 1.4, rotateBase: -14 },
 ];
 
 /* Sparkle particles emitted on click */
@@ -911,10 +962,10 @@ function SingleButterfly({ data, scrollPct, isDark }: { data: ButterflyData; scr
 
   // More visible opacity
   let opacityVal = 0;
-  if (scrollPct < 0.04) opacityVal = 0;
-  else if (scrollPct < 0.1) opacityVal = ((scrollPct - 0.04) / 0.06) * (isDark ? 0.8 : 0.65);
-  else if (scrollPct < 0.88) opacityVal = isDark ? 0.8 : 0.65;
-  else if (scrollPct < 0.95) opacityVal = ((0.95 - scrollPct) / 0.07) * (isDark ? 0.8 : 0.65);
+  if (scrollPct < 0.03) opacityVal = 0;
+  else if (scrollPct < 0.08) opacityVal = ((scrollPct - 0.03) / 0.05) * (isDark ? 1 : 0.82);
+  else if (scrollPct < 0.9) opacityVal = isDark ? 1 : 0.82;
+  else if (scrollPct < 0.97) opacityVal = ((0.97 - scrollPct) / 0.07) * (isDark ? 1 : 0.82);
 
   const handleTap = (e: React.MouseEvent) => {
     const rect = ref.current?.getBoundingClientRect();
@@ -969,7 +1020,7 @@ function SingleButterfly({ data, scrollPct, isDark }: { data: ButterflyData; scr
       )}
       <motion.div
         ref={ref}
-        className="fixed z-20 cursor-pointer"
+        className="fixed z-[80] cursor-pointer"
         style={{
           top: 0,
           left: 0,
@@ -1018,11 +1069,11 @@ function SingleButterfly({ data, scrollPct, isDark }: { data: ButterflyData; scr
           style={{
             filter: isHovered
               ? isDark
-                ? `drop-shadow(0 0 16px rgba(${ACCENT_RGB},0.6)) drop-shadow(0 0 4px rgba(${ACCENT_RGB},0.3))`
-                : `drop-shadow(0 0 16px rgba(${ACCENT_RGB},0.4)) drop-shadow(0 0 4px rgba(${ACCENT_RGB},0.2))`
+                ? `drop-shadow(0 0 24px rgba(${ACCENT_RGB},0.75)) drop-shadow(0 0 8px rgba(226,192,73,0.35)) brightness(1.38) contrast(1.18)`
+                : `drop-shadow(0 0 22px rgba(${ACCENT_RGB},0.45)) drop-shadow(0 0 6px rgba(179,66,138,0.25)) brightness(0.88) contrast(1.25)`
               : isDark
-                ? `drop-shadow(0 3px 10px rgba(${ACCENT_RGB},0.25))`
-                : `drop-shadow(0 3px 10px rgba(${ACCENT_RGB},0.12))`,
+                ? `drop-shadow(0 6px 22px rgba(${ACCENT_RGB},0.48)) brightness(1.28) contrast(1.16)`
+                : `drop-shadow(0 5px 18px rgba(${ACCENT_RGB},0.24)) brightness(0.82) contrast(1.22)`,
             transition: "filter 0.3s ease",
           }}
         >
