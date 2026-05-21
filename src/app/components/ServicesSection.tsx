@@ -161,11 +161,11 @@ export function ServicesSection() {
                 style={{
                   ["--service-accent" as string]: cardAccent,
                   ["--service-base-shadow" as string]: isDark
-                    ? `inset 0 1px 0 rgba(244,245,247,0.035), inset 0 0 0 1px ${cardAccent}0D, 0 14px 34px rgba(0,0,0,0.12)`
-                    : `inset 0 1px 0 rgba(255,255,255,0.9), inset 0 0 0 1px ${cardAccent}08, 0 10px 24px rgba(13,27,42,0.035)`,
+                    ? `inset 0 1px 0 rgba(244,245,247,0.035), inset 0 0 0 1px ${cardAccent}0D, inset 0 -22px 58px rgba(0,0,0,0.14)`
+                    : `inset 0 1px 0 rgba(255,255,255,0.9), inset 0 0 0 1px ${cardAccent}08, inset 0 -18px 46px rgba(13,27,42,0.028)`,
                   ["--service-hover-shadow" as string]: isDark
-                    ? `inset 0 1px 0 rgba(244,245,247,0.07), inset 0 0 0 1px ${cardAccent}18, inset 0 -26px 62px ${cardAccent}08, 0 18px 42px rgba(0,0,0,0.24)`
-                    : `inset 0 1px 0 rgba(255,255,255,0.96), inset 0 0 0 1px ${cardAccent}12, inset 0 -24px 58px ${cardAccent}07, 0 14px 30px rgba(13,27,42,0.055)`,
+                    ? `inset 0 1px 0 rgba(244,245,247,0.07), inset 0 0 0 1px ${cardAccent}18, inset 0 -28px 68px ${cardAccent}0A, inset 0 26px 64px rgba(255,255,255,0.025)`
+                    : `inset 0 1px 0 rgba(255,255,255,0.96), inset 0 0 0 1px ${cardAccent}12, inset 0 -26px 64px ${cardAccent}08, inset 0 24px 62px rgba(255,255,255,0.82)`,
                   width: "clamp(285px, 31vw, 350px)",
                   minHeight: 335,
                   scrollSnapAlign: "start",
