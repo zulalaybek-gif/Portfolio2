@@ -38,10 +38,10 @@ export function Layout() {
 
   return (
     <div
-      className="min-h-screen w-full flex items-center justify-center relative"
+      className="site-shell min-h-screen w-full flex items-center justify-center relative"
       style={{
         background: p.pageBg,
-        padding: "clamp(32px, 5vw, 80px)",
+        padding: "var(--site-shell-padding, clamp(32px, 5vw, 80px))",
         fontFamily: "'Inter', sans-serif",
       }}
     >
