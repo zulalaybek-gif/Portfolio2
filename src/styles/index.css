@@ -208,30 +208,35 @@
     transform: translate3d(0, 0, 0) scale(1);
   }
   50% {
-    transform: translate3d(-8px, 8px, 0) scale(1.045);
+    transform: translate3d(-5px, 5px, 0) scale(1.015);
   }
 }
 
 .service-card {
   isolation: isolate;
+  box-sizing: border-box;
+  contain: paint;
+  background-clip: padding-box;
   box-shadow: var(--service-base-shadow);
   transition:
-    transform 780ms cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 780ms ease,
+    transform 680ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 680ms ease,
     box-shadow 780ms ease,
     background 780ms ease;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 
 .service-card:hover,
 .service-card:focus-visible {
-  transform: translate3d(0, -7px, 0) scale(1.008);
-  border-color: color-mix(in srgb, var(--service-accent) 52%, rgba(244,245,247,0.035));
+  transform: translate3d(0, -5px, 0);
+  border-color: color-mix(in srgb, var(--service-accent) 34%, rgba(244,245,247,0.08));
   box-shadow: var(--service-hover-shadow);
 }
 
 [data-theme="light"] .service-card:hover,
 [data-theme="light"] .service-card:focus-visible {
-  border-color: color-mix(in srgb, var(--service-accent) 36%, rgba(255,255,255,0.72));
+  border-color: color-mix(in srgb, var(--service-accent) 24%, rgba(255,255,255,0.78));
 }
 
 .service-card__field {
@@ -298,62 +303,63 @@
 
 .service-card:hover .service-card__field,
 .service-card:focus-visible .service-card__field {
-  opacity: 0.94;
+  opacity: 0.72;
   animation: service-field-shift 6.4s ease-in-out infinite;
 }
 
 .service-card:hover::after,
 .service-card:focus-visible::after {
-  opacity: 0.42;
+  opacity: 0.3;
 }
 
 [data-theme="light"] .service-card:hover .service-card__field,
 [data-theme="light"] .service-card:focus-visible .service-card__field {
-  opacity: 0.86;
+  opacity: 0.66;
 }
 
 [data-theme="light"] .service-card:hover::after,
 [data-theme="light"] .service-card:focus-visible::after {
-  opacity: 0.56;
+  opacity: 0.38;
 }
 
 .service-card__aura {
   pointer-events: none;
   z-index: 0;
-  filter: blur(34px);
+  filter: blur(42px);
+  mix-blend-mode: screen;
   transition:
     opacity 900ms ease,
     transform 1100ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .service-card__aura--main {
-  right: -9rem;
-  top: -6.6rem;
-  width: 16rem;
-  height: 23rem;
+  right: -1.75rem;
+  top: -1.25rem;
+  width: 10.5rem;
+  height: 15rem;
   background:
-    radial-gradient(ellipse, color-mix(in srgb, var(--service-accent) 34%, transparent) 0%, color-mix(in srgb, var(--service-accent) 12%, transparent) 54%, transparent 80%);
+    radial-gradient(ellipse, color-mix(in srgb, var(--service-accent) 24%, transparent) 0%, color-mix(in srgb, var(--service-accent) 8%, transparent) 58%, transparent 82%);
 }
 
 [data-theme="light"] .service-card__aura--main {
-  right: -5.5rem;
+  right: -1.25rem;
   top: auto;
-  bottom: -7rem;
-  width: 15rem;
-  height: 12rem;
+  bottom: -1.5rem;
+  width: 10rem;
+  height: 8.5rem;
   background:
-    radial-gradient(ellipse, color-mix(in srgb, var(--service-accent) 24%, transparent) 0%, color-mix(in srgb, var(--service-accent) 10%, transparent) 52%, transparent 78%);
+    radial-gradient(ellipse, color-mix(in srgb, var(--service-accent) 18%, transparent) 0%, color-mix(in srgb, var(--service-accent) 7%, transparent) 56%, transparent 82%);
 }
 
 .service-card:hover .service-card__aura,
 .service-card:focus-visible .service-card__aura {
-  opacity: 0.82;
+  opacity: 0.46;
   animation: service-aura-drift 7.4s ease-in-out infinite;
 }
 
 [data-theme="light"] .service-card:hover .service-card__aura,
 [data-theme="light"] .service-card:focus-visible .service-card__aura {
-  opacity: 0.5;
+  opacity: 0.34;
 }
 
 .composite-title {

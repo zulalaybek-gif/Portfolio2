@@ -162,10 +162,10 @@ export function ServicesSection() {
                   ["--service-accent" as string]: cardAccent,
                   ["--service-base-shadow" as string]: isDark
                     ? `inset 0 1px 0 rgba(244,245,247,0.035), inset 0 0 0 1px ${cardAccent}0D, 0 22px 70px rgba(0,0,0,0.16)`
-                    : `inset 0 1px 0 rgba(255,255,255,0.9), 0 18px 48px rgba(13,27,42,0.045), 0 18px 46px ${cardAccent}08`,
+                    : `inset 0 1px 0 rgba(255,255,255,0.9), 0 18px 48px rgba(13,27,42,0.045), 0 14px 38px ${cardAccent}05`,
                   ["--service-hover-shadow" as string]: isDark
-                    ? `inset 0 1px 0 rgba(244,245,247,0.07), inset 0 0 0 1px ${cardAccent}24, 0 38px 104px rgba(0,0,0,0.42), 0 0 54px ${cardAccent}18`
-                    : `inset 0 1px 0 rgba(255,255,255,0.96), inset 0 0 0 1px ${cardAccent}16, 0 26px 70px rgba(13,27,42,0.09), 0 22px 58px ${cardAccent}18`,
+                    ? `inset 0 1px 0 rgba(244,245,247,0.07), inset 0 0 0 1px ${cardAccent}1A, 0 30px 74px rgba(0,0,0,0.34), 0 0 34px ${cardAccent}0D`
+                    : `inset 0 1px 0 rgba(255,255,255,0.96), inset 0 0 0 1px ${cardAccent}12, 0 22px 58px rgba(13,27,42,0.075), 0 16px 42px ${cardAccent}0C`,
                   width: "clamp(285px, 31vw, 350px)",
                   minHeight: 335,
                   scrollSnapAlign: "start",
