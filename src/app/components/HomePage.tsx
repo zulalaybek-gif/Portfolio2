@@ -7,8 +7,8 @@ import { AmbientMovingLines } from "./AmbientMovingLines";
 
 export function HomePage() {
   return (
-    <div className="home-flow relative overflow-hidden">
-      <AmbientMovingLines className="absolute inset-x-[-12%] top-0 h-[120vh] z-0" opacity={0.24} />
+    <div className="home-flow relative overflow-x-clip">
+      <AmbientMovingLines className="absolute inset-x-0 top-0 z-0" height="120vh" opacity={0.2} />
       <div className="relative z-10">
         <HeroSection />
         <ServicesSection />

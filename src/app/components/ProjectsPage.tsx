@@ -669,8 +669,8 @@ export function ProjectsPage() {
   };
 
   return (
-    <div className="relative w-full overflow-hidden">
-      <AmbientMovingLines className="absolute inset-x-[-12%] top-0 h-[140vh] z-0" opacity={0.26} />
+    <div className="relative w-full overflow-x-clip">
+      <AmbientMovingLines className="absolute inset-x-0 top-0 z-0" height="140vh" opacity={0.22} />
       <div className="relative z-10">
         <ProjectsHero />
         <ParticleDivider accent="223,244,64" direction={1} count={22} height={45} />

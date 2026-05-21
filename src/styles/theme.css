@@ -126,6 +126,7 @@
 
   body {
     @apply bg-background text-foreground;
+    overflow-x: clip;
   }
 
   /* Native scrollbar is hidden; the site uses its own bottom progress line. */
@@ -137,6 +138,7 @@
   html {
     scrollbar-width: none;
     font-size: var(--font-size);
+    overflow-x: clip;
   }
 
   /**
