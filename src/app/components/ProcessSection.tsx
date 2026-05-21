@@ -121,7 +121,6 @@ export function ProcessSection() {
               const isLineVisible = reduceMotion || i + 1 < revealedCount;
               const stepAccent = stepAccents[i % stepAccents.length];
               const nextAccent = stepAccents[(i + 1) % stepAccents.length];
-              const badgeText = stepAccent === CYAN_ACCENT || stepAccent === LIGHT_CYAN_ACCENT ? "#0D1B2A" : "#F4F5F7";
 
               return (
                 <div
@@ -179,7 +178,21 @@ export function ProcessSection() {
                 )}
 
                 {/* Node circle */}
-                <div className="relative z-10 mb-7">
+                <div className="relative z-10 mb-7 flex flex-col items-center">
+                  <span
+                    className="mb-3 block uppercase tracking-[0.26em]"
+                    style={{
+                      fontFamily: "'Space Grotesk', sans-serif",
+                      fontSize: "0.62rem",
+                      fontWeight: 700,
+                      color: stepAccent,
+                      opacity: isStepVisible ? (isHovered || isStepActive ? 0.92 : 0.72) : 0,
+                      transform: isStepVisible ? "translateY(0)" : "translateY(8px)",
+                      transition: `opacity 0.48s ease ${0.55 + i * 0.22}s, transform 0.48s cubic-bezier(0.16, 1, 0.3, 1) ${0.55 + i * 0.22}s`,
+                    }}
+                  >
+                    {step.num}
+                  </span>
                   <motion.div
                     aria-hidden="true"
                     className="absolute inset-[-1.15rem] rounded-full pointer-events-none"
@@ -234,21 +247,6 @@ export function ProcessSection() {
                       <step.icon size={24} strokeWidth={1.8} style={{ color: stepAccent }} />
                     </motion.div>
                   </motion.div>
-                  {/* Step number badge */}
-                  <span
-                    className="absolute -top-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center"
-                    style={{
-                      background: stepAccent,
-                      fontFamily: "'Space Grotesk', sans-serif",
-                      fontSize: "0.55rem",
-                      fontWeight: 700,
-                      color: badgeText,
-                      transform: isStepVisible ? `scale(${isHovered ? 1.12 : 1})` : "scale(0)",
-                      transition: `transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) ${0.7 + i * 0.3}s`,
-                    }}
-                  >
-                    {step.num}
-                  </span>
                 </div>
 
                 {/* Mobile connector */}
