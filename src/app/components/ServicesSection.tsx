@@ -149,9 +149,8 @@ export function ServicesSection() {
         >
           {services.map((service, i) => {
             const title = t(service.titleKey as TranslationKey).replace("\n", " ");
-            const firstLetter = title.charAt(0);
-            const rest = title.slice(1);
             const cardAccent = serviceAccents[i % serviceAccents.length];
+            const titleParts = title.match(/\S+|\s+/g) ?? [title];
 
             return (
               <div
@@ -186,7 +185,7 @@ export function ServicesSection() {
                 {/* Title with large first letter */}
                 <div className="relative z-10 flex flex-1 flex-col justify-center transition-transform duration-700 ease-out group-hover:-translate-y-1.5 group-focus-visible:-translate-y-1.5">
                   <h3
-                    className="mb-4 transition-transform duration-700 ease-out group-hover:translate-x-1 group-focus-visible:translate-x-1"
+                    className="mb-4 flex min-h-[2.2em] items-center transition-transform duration-700 ease-out group-hover:translate-x-1 group-focus-visible:translate-x-1"
                     style={{
                       fontFamily: "'Space Grotesk', sans-serif",
                       fontSize: "clamp(1.65rem, 2.7vw, 2.15rem)",
@@ -197,8 +196,22 @@ export function ServicesSection() {
                       textShadow: isDark ? "0 14px 32px rgba(0,0,0,0.45)" : "none",
                     }}
                   >
-                    <span style={{ color: cardAccent }}>{firstLetter}</span>
-                    {rest}
+                    <span>
+                      {titleParts.map((part, partIndex) => {
+                        if (/^\s+$/.test(part)) return <span key={`${part}-${partIndex}`}>{part}</span>;
+
+                        const firstLetter = part.charAt(0);
+                        const rest = part.slice(1);
+                        const shouldAccent = /\p{Lu}/u.test(firstLetter);
+
+                        return (
+                          <span key={`${part}-${partIndex}`}>
+                            {shouldAccent ? <span style={{ color: cardAccent }}>{firstLetter}</span> : firstLetter}
+                            {rest}
+                          </span>
+                        );
+                      })}
+                    </span>
                   </h3>
                   <span aria-hidden="true" className="service-card__title-rule mb-6" />
                   <div className="relative min-h-[4.9rem]">
