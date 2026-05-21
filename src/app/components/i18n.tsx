@@ -61,6 +61,10 @@ const translations = {
   "process.badge": { fr: "Processus", en: "Process" },
   "process.title1": { fr: "M\u00C9THODE.", en: "METHOD." },
   "process.title2": { fr: "cr\u00E9ative", en: "creative" },
+  "process.intro": {
+    fr: "Avant de poser une forme, une couleur ou un rythme, je cherche d’abord à comprendre ce que le projet veut réellement transmettre, pour transformer une intention floue en une expérience visuelle claire, sensible et vivante.",
+    en: "Before shaping a form, a color, or a rhythm, I first seek to understand what the project truly needs to convey, so a blurred intention can become a clear, sensitive, and living visual experience.",
+  },
   "process.step1.title": { fr: "\u00C9couter", en: "Listen" },
   "process.step1.desc": { fr: "Comprendre le projet, ses intentions, et ce qu'il doit vraiment transmettre.", en: "Understanding the project, its intentions, and what it truly needs to convey." },
   "process.step2.title": { fr: "Clarifier", en: "Clarify" },

@@ -112,6 +112,22 @@ export function ProcessSection() {
 
         {/* Steps with segmented connector lines */}
         <div className="relative" ref={lineRef}>
+          <motion.p
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "160px 0px" }}
+            transition={{ duration: 0.75, delay: 0.12 }}
+            className="mx-auto mb-12 max-w-3xl text-center md:mb-14"
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "clamp(1rem, 1.6vw, 1.18rem)",
+              lineHeight: 1.75,
+              color: r(isDark ? 0.72 : 0.76),
+              textWrap: "pretty",
+            }}
+          >
+            {t("process.intro")}
+          </motion.p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
             {steps.map((step, i) => {
               const isHovered = hoveredIdx === i;
