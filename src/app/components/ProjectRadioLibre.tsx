@@ -16,7 +16,7 @@ const PURPLE = "#bea9cb";
 const PEACH = "#ecb59f";
 const FIGMA_PROTO_URL =
   "https://www.figma.com/proto/zBnqqRfKhhwP8Enu3KGsPv/PARTIEL-ZUL%C3%82L?node-id=2321-333&viewport=423%2C40%2C0.29&t=d4kwxZm7bTkwkKXX-1&scaling=scale-down&content-scaling=fixed&page-id=2321%3A50";
-const FIGMA_PROTO_EMBED_URL = `https://www.figma.com/embed?embed_host=share&url=${encodeURIComponent(FIGMA_PROTO_URL)}`;
+const FIGMA_PROTO_EMBED_URL = `https://www.figma.com/embed?embed_host=share&hide-ui=1&url=${encodeURIComponent(FIGMA_PROTO_URL)}`;
 
 const PALETTE = [
   { hex: BLUE, name: "Bleu clair", rgb: "175,209,234" },
@@ -940,33 +940,49 @@ function PrototypeSection() {
         </FadeIn>
 
         <FadeIn delay={0.1}>
-          <div
-            className="rounded-3xl overflow-hidden p-3 md:p-5"
-            style={{
-              background: isDark
-                ? "linear-gradient(160deg, rgba(175,209,234,0.08) 0%, rgba(190,169,203,0.05) 52%, rgba(236,181,159,0.08) 100%)"
-                : "linear-gradient(160deg, rgba(175,209,234,0.16) 0%, rgba(190,169,203,0.1) 52%, rgba(236,181,159,0.15) 100%)",
-              border: `1px solid ${r(0.06)}`,
-              boxShadow: isDark ? "0 24px 80px rgba(0,0,0,0.22)" : "0 24px 80px rgba(29,29,27,0.08)",
-            }}
-          >
+          <div className="flex justify-center">
             <div
-              className="relative w-full overflow-hidden rounded-2xl"
+              className="relative w-full max-w-[390px] overflow-hidden rounded-[2.4rem] p-2"
               style={{
-                aspectRatio: "16 / 10",
-                background: isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.72)",
+                background: isDark ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.86)",
+                border: `1px solid ${r(0.08)}`,
+                boxShadow: isDark ? "0 30px 90px rgba(0,0,0,0.32)" : "0 30px 90px rgba(29,29,27,0.12)",
               }}
             >
-              <iframe
-                title="Prototype Radio Libre"
-                src={FIGMA_PROTO_EMBED_URL}
-                allowFullScreen
-                loading="lazy"
-                className="absolute inset-0 h-full w-full"
-                style={{ border: 0, background: "transparent" }}
+              <div
+                className="absolute left-1/2 top-3 z-10 h-5 w-24 -translate-x-1/2 rounded-full"
+                style={{ background: isDark ? "rgba(255,255,255,0.12)" : "rgba(29,29,27,0.08)" }}
               />
+              <div
+                className="relative overflow-hidden rounded-[1.9rem]"
+                style={{
+                  aspectRatio: "390 / 844",
+                  background: isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.7)",
+                }}
+              >
+                <iframe
+                  title="Prototype Radio Libre"
+                  src={FIGMA_PROTO_EMBED_URL}
+                  allowFullScreen
+                  loading="lazy"
+                  className="absolute h-[calc(100%+88px)] w-[calc(100%+88px)]"
+                  style={{
+                    border: 0,
+                    background: "transparent",
+                    left: -44,
+                    top: -44,
+                  }}
+                />
+              </div>
             </div>
           </div>
+          <div
+            className="mx-auto mt-8 h-[1px] max-w-sm"
+            style={{
+              background: `linear-gradient(90deg, transparent, ${BLUE}, ${PURPLE}, ${PEACH}, transparent)`,
+              opacity: isDark ? 0.45 : 0.6,
+            }}
+          />
         </FadeIn>
       </div>
     </section>
