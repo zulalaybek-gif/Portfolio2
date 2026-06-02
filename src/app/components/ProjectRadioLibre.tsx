@@ -701,12 +701,27 @@ function ElementsSection() {
    ═══════════════════════════════════════════ */
 const NUM_STRINGS = 28;
 const STRING_COLORS = [BLUE, PURPLE, PEACH];
+const STRING_NOTE_FREQUENCIES = [261.63, 329.63, 392, 493.88, 587.33, 739.99];
+const STRING_SOUND_THRESHOLD = 0.052;
+const STRING_SOUND_COOLDOWN = 160;
 
 function SoundStringsCanvas() {
   const { isDark } = useTheme();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const isAnimationActive = useAnimationActive(canvasRef);
   const mouseRef = useRef({ x: 0.5, y: 0.5, active: false });
+  const pointerRef = useRef({ x: 0.5, y: 0.5, t: 0 });
+  const lastTriggerRef = useRef<number[]>(Array(NUM_STRINGS).fill(0));
+  const nearStringRef = useRef<boolean[]>(Array(NUM_STRINGS).fill(false));
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const audioGraphRef = useRef<{
+    master: GainNode;
+    ambience: GainNode;
+    delay: DelayNode;
+    feedback: GainNode;
+  } | null>(null);
+  const [soundEnabled, setSoundEnabled] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
   const stringsRef = useRef<Array<{ phase: number; freq: number; amp: number; damping: number; color: string; baseY: number }>>(
     Array.from({ length: NUM_STRINGS }, (_, i) => ({
       phase: Math.random() * Math.PI * 2,
@@ -719,6 +734,111 @@ function SoundStringsCanvas() {
   );
   const rafRef = useRef(0);
   const timeRef = useRef(0);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => {
+      setReducedMotion(media.matches);
+      if (media.matches) setSoundEnabled(false);
+    };
+    update();
+    media.addEventListener?.("change", update);
+    return () => media.removeEventListener?.("change", update);
+  }, []);
+
+  const getAudioContext = useCallback(() => {
+    if (typeof window === "undefined") return null;
+    const AudioCtor = window.AudioContext || (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+    if (!AudioCtor) return null;
+
+    if (!audioContextRef.current) {
+      const context = new AudioCtor();
+      const master = context.createGain();
+      const ambience = context.createGain();
+      const delay = context.createDelay(0.6);
+      const feedback = context.createGain();
+      const tone = context.createBiquadFilter();
+
+      master.gain.value = 0.18;
+      ambience.gain.value = 0.18;
+      delay.delayTime.value = 0.18;
+      feedback.gain.value = 0.28;
+      tone.type = "lowpass";
+      tone.frequency.value = 3600;
+
+      delay.connect(feedback);
+      feedback.connect(delay);
+      delay.connect(ambience);
+      ambience.connect(tone);
+      tone.connect(context.destination);
+      master.connect(context.destination);
+      master.connect(delay);
+
+      audioContextRef.current = context;
+      audioGraphRef.current = { master, ambience, delay, feedback };
+    }
+
+    return audioContextRef.current;
+  }, []);
+
+  const unlockAudio = useCallback(async () => {
+    const context = getAudioContext();
+    if (context?.state === "suspended") {
+      await context.resume();
+    }
+  }, [getAudioContext]);
+
+  const playStringNote = useCallback(
+    (index: number, proximity: number, velocity: number) => {
+      if (!soundEnabled || reducedMotion) return;
+      const context = getAudioContext();
+      const graph = audioGraphRef.current;
+      if (!context || !graph) return;
+      if (context.state === "suspended") void context.resume();
+
+      const now = context.currentTime;
+      const closeness = Math.max(0, Math.min(1, 1 - proximity / STRING_SOUND_THRESHOLD));
+      const movement = Math.max(0, Math.min(1, velocity / 1.8));
+      const frequency = STRING_NOTE_FREQUENCIES[index % STRING_NOTE_FREQUENCIES.length] * (index >= STRING_NOTE_FREQUENCIES.length ? 2 : 1);
+      const panValue = Math.max(-0.55, Math.min(0.55, (mouseRef.current.x - 0.5) * 1.1));
+
+      const fundamental = context.createOscillator();
+      const shimmer = context.createOscillator();
+      const gain = context.createGain();
+      const filter = context.createBiquadFilter();
+      const panner = context.createStereoPanner();
+
+      fundamental.type = "sine";
+      shimmer.type = "triangle";
+      fundamental.frequency.setValueAtTime(frequency, now);
+      shimmer.frequency.setValueAtTime(frequency * 2.01, now);
+
+      filter.type = "lowpass";
+      filter.frequency.setValueAtTime(2400 + closeness * 1800 + movement * 900, now);
+      filter.Q.setValueAtTime(0.5, now);
+      panner.pan.setValueAtTime(panValue, now);
+
+      const peak = 0.014 + closeness * 0.036 + movement * 0.016;
+      const attack = 0.018 - movement * 0.006;
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(peak, now + attack);
+      gain.gain.exponentialRampToValueAtTime(peak * 0.28, now + attack + 0.12);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.74);
+
+      fundamental.connect(gain);
+      shimmer.connect(gain);
+      gain.connect(filter);
+      filter.connect(panner);
+      panner.connect(graph.master);
+
+      fundamental.start(now);
+      shimmer.start(now + 0.006);
+      fundamental.stop(now + 0.82);
+      shimmer.stop(now + 0.62);
+    },
+    [getAudioContext, reducedMotion, soundEnabled]
+  );
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -834,25 +954,93 @@ function SoundStringsCanvas() {
     };
   }, [isDark, isAnimationActive]);
 
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    mouseRef.current.x = (e.clientX - rect.left) / rect.width;
-    mouseRef.current.y = (e.clientY - rect.top) / rect.height;
-    mouseRef.current.active = true;
+  const handlePointerMove = useCallback(
+    (e: React.PointerEvent<HTMLCanvasElement>) => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      const y = (e.clientY - rect.top) / rect.height;
+      const now = performance.now();
+      const previous = pointerRef.current;
+      const dt = Math.max(16, now - previous.t);
+      const velocity = Math.hypot(x - previous.x, y - previous.y) / dt * 1000;
+
+      pointerRef.current = { x, y, t: now };
+      mouseRef.current.x = x;
+      mouseRef.current.y = y;
+      mouseRef.current.active = true;
+
+      const strings = stringsRef.current;
+      for (let i = 0; i < strings.length; i++) {
+        const proximity = Math.abs(y - strings[i].baseY);
+        const near = proximity < STRING_SOUND_THRESHOLD;
+        const canPlay = now - lastTriggerRef.current[i] > STRING_SOUND_COOLDOWN;
+
+        if (near && canPlay && (!nearStringRef.current[i] || velocity > 0.16)) {
+          lastTriggerRef.current[i] = now;
+          playStringNote(i, proximity, velocity);
+        }
+
+        nearStringRef.current[i] = near;
+      }
+    },
+    [playStringNote]
+  );
+
+  const handlePointerDown = useCallback(
+    (e: React.PointerEvent<HTMLCanvasElement>) => {
+      if (!reducedMotion) {
+        setSoundEnabled(true);
+        void unlockAudio();
+      }
+      handlePointerMove(e);
+    },
+    [handlePointerMove, reducedMotion, unlockAudio]
+  );
+
+  const handlePointerLeave = useCallback(() => {
+    mouseRef.current.active = false;
+    nearStringRef.current = Array(NUM_STRINGS).fill(false);
   }, []);
 
-  const handleMouseLeave = useCallback(() => {
-    mouseRef.current.active = false;
-  }, []);
+  const toggleSound = useCallback(() => {
+    setSoundEnabled((enabled) => {
+      const next = !enabled;
+      if (next) void unlockAudio();
+      return next;
+    });
+  }, [unlockAudio]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className="w-full rounded-3xl cursor-crosshair"
-      style={{ height: "clamp(280px, 40vw, 480px)", display: "block" }}
-    />
+    <div className="relative">
+      <button
+        type="button"
+        onClick={toggleSound}
+        className="absolute right-4 top-4 z-10 rounded-full px-3 py-1.5 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+        style={{
+          background: isDark ? "rgba(255,255,255,0.07)" : "rgba(255,255,255,0.7)",
+          border: `1px solid ${isDark ? "rgba(255,255,255,0.12)" : "rgba(29,29,27,0.08)"}`,
+          color: isDark ? "rgba(255,255,255,0.62)" : "rgba(29,29,27,0.48)",
+          fontFamily: "'Inter', sans-serif",
+          fontSize: "0.62rem",
+          letterSpacing: "0.08em",
+          textTransform: "uppercase",
+          backdropFilter: "blur(12px)",
+        }}
+        aria-pressed={soundEnabled}
+        aria-label={soundEnabled ? "Couper le son des cordes" : "Activer le son des cordes"}
+      >
+        {soundEnabled ? "Son activé" : "Son coupé"}
+      </button>
+      <canvas
+        ref={canvasRef}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerLeave={handlePointerLeave}
+        onPointerCancel={handlePointerLeave}
+        className="w-full rounded-3xl cursor-crosshair touch-none"
+        style={{ height: "clamp(280px, 40vw, 480px)", display: "block" }}
+      />
+    </div>
   );
 }
 
