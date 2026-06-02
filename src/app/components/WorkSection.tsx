@@ -60,8 +60,8 @@ const projects = [
     desc: { fr: "Concept digital · Pokémon", en: "Digital Concept · Pokémon" },
     image: imgKittyHubPreview,
     year: "2026",
-    color: "#FE9C39",
-    accent: "254,156,57",
+    color: "#FD6235",
+    accent: "253,98,53",
     slug: "/projects/kittyhub",
   },
 ];

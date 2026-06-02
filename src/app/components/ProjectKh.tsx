@@ -5,7 +5,6 @@ import { useNavigate } from "react-router";
 import { useI18n, type TranslationKey } from "./i18n";
 import { useTheme } from "./theme";
 import { ProjectBackButton } from "./ProjectBackButton";
-import { useAnimationActive } from "./useAnimationActive";
 
 /* -- Assets -- */
 import svgPaths from "../../imports/svg-h5iq7vbtzp";
@@ -22,18 +21,17 @@ import imgBentoMockup from "../../assets/kittyhub/10-mockup-bento.jpg";
 import imgSituation from "../../assets/kittyhub/11-mise-en-situation.png";
 import imgMockup1 from "../../assets/kittyhub/12-MOCKUP-1.png";
 import imgMockup2 from "../../assets/kittyhub/13-MOCKUP-2.png";
-import UxWebHome from "../../imports/UxWebHome";
 
 /* -- Helpers -- */
-const ACCENT = "#FE9C39";
-const ACCENT_RGB = "254,156,57";
+const ACCENT = "#FD6235";
+const ACCENT_RGB = "253,98,53";
 const DARK_BG = "#07020b";
 const IPAD_PROTO_URL = "https://www.figma.com/proto/Yd1jdAY0vItJeAIf4tmsGa/kittyhub?page-id=547%3A2998&node-id=2000-8068&viewport=733%2C-7356%2C0.07&t=MdzZHiu2I41bwGOu-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=2000%3A8068&show-proto-sidebar=1";
 const WEB_PROTO_URL = "https://www.figma.com/proto/Yd1jdAY0vItJeAIf4tmsGa/kittyhub?page-id=547%3A2998&node-id=2000-9278&viewport=733%2C-7356%2C0.07&t=MdzZHiu2I41bwGOu-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=2000%3A8068&show-proto-sidebar=1";
+const WEB_PROTO_EMBED_URL = `https://www.figma.com/embed?embed_host=share&url=${encodeURIComponent(WEB_PROTO_URL)}`;
 
 const PALETTE = [
-  { hex: "#FE9C39", name: "Flame Orange" },
-  { hex: "#F75895", name: "Digital Pink" },
+  { hex: "#FD6235", name: "Flame Orange" },
   { hex: "#8823F7", name: "Electric Violet" },
   { hex: "#1DA4D0", name: "Cyan Blue" },
   { hex: "#26252D", name: "Dark Onyx" },
@@ -301,7 +299,7 @@ function PaletteSection() {
           </FadeIn>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {PALETTE.map((color, i) => (
             <FadeIn key={color.hex} delay={0.12 + i * 0.06}>
               <div className="flex flex-col items-center gap-3">
@@ -521,10 +519,10 @@ function AppIconsSection() {
   const { isDark, r } = useTheme();
 
   const icons = [
-    { bg: "#FE9C39", fillLogo: "white", label: "Orange" },
+    { bg: "#FD6235", fillLogo: "white", label: "Orange" },
     { bg: "#8823F7", fillLogo: "white", label: "Violet" },
     { bg: "#ffffff", fillLogo: "#202020", label: "Light" },
-    { bg: "linear-gradient(180deg, #FE9C39 0%, #F75895 100%)", fillLogo: "white", label: "Gradient" },
+    { bg: "linear-gradient(180deg, #FD6235 0%, #8823F7 100%)", fillLogo: "white", label: "Gradient" },
   ];
 
   return (
@@ -731,32 +729,6 @@ function IPadPrototypeSection() {
 function WebInterfaceSection() {
   const { r, isDark } = useTheme();
   const { lang } = useI18n();
-  const containerRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(0.7);
-  const [contentHeight, setContentHeight] = useState(0);
-
-  useEffect(() => {
-    const measure = () => {
-      if (containerRef.current) {
-        const w = containerRef.current.clientWidth;
-        setScale(w / 1440);
-      }
-      if (contentRef.current) {
-        setContentHeight(contentRef.current.scrollHeight);
-      }
-    };
-    measure();
-    // Re-measure after images load
-    const timer = setTimeout(measure, 1000);
-    const timer2 = setTimeout(measure, 3000);
-    window.addEventListener("resize", measure);
-    return () => {
-      window.removeEventListener("resize", measure);
-      clearTimeout(timer);
-      clearTimeout(timer2);
-    };
-  }, []);
 
   return (
     <section className="px-6 md:px-16 py-16">
@@ -767,13 +739,13 @@ function WebInterfaceSection() {
 
         <FadeIn delay={0.1}>
           <div
-            ref={containerRef}
             className="rounded-2xl overflow-hidden"
             style={{
               border: `1px solid ${r(0.06)}`,
               boxShadow: isDark
                 ? "0 30px 80px rgba(0,0,0,0.4), 0 0 1px rgba(255,255,255,0.05)"
                 : "0 30px 80px rgba(0,0,0,0.1), 0 0 1px rgba(0,0,0,0.1)",
+              background: isDark ? "#0d0a11" : "#f8f7fa",
             }}
           >
             {/* Browser bar */}
@@ -803,51 +775,15 @@ function WebInterfaceSection() {
               </div>
             </div>
 
-            {/* Scrollable scaled content */}
-            <div
-              className="relative overflow-y-auto overflow-x-hidden"
-              style={{
-                maxHeight: "70vh",
-                scrollbarWidth: "thin",
-                scrollbarColor: isDark ? "rgba(255,255,255,0.1) transparent" : "rgba(0,0,0,0.1) transparent",
-              }}
-            >
-              <div style={{ width: 1440 * scale, height: contentHeight ? contentHeight * scale : "auto", overflow: "hidden" }}>
-                <div
-                  ref={contentRef}
-                  style={{
-                    width: 1440,
-                    transformOrigin: "top left",
-                    transform: `scale(${scale})`,
-                  }}
-                >
-                  {/* Override the wrapper's size-full / absolute layout issue */}
-                  <div style={{ width: 1440, position: "relative" }}>
-                    <UxWebHome />
-                  </div>
-                </div>
-              </div>
+            <div className="relative aspect-[16/10] min-h-[420px] md:min-h-[560px]">
+              <iframe
+                title={lang === "fr" ? "Prototype web KittyHub" : "KittyHub web prototype"}
+                src={WEB_PROTO_EMBED_URL}
+                allowFullScreen
+                className="absolute inset-0 h-full w-full border-0"
+                loading="lazy"
+              />
             </div>
-          </div>
-        </FadeIn>
-
-        <FadeIn delay={0.16}>
-          <div className="mt-6 flex justify-center">
-            <a
-              href={WEB_PROTO_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-2 px-5 py-2.5 rounded-full transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
-              style={{
-                fontFamily: "'Inter', sans-serif",
-                fontSize: "0.78rem",
-                border: `1px solid ${r(0.1)}`,
-                color: r(0.4),
-              }}
-            >
-              {lang === "fr" ? "Voir le prototype web" : "View web prototype"}
-              <ExternalLink size={13} className="transition-transform group-hover:translate-x-0.5" />
-            </a>
           </div>
         </FadeIn>
       </div>
@@ -969,7 +905,7 @@ function FinalSection() {
             <div
               className="w-[180px] h-[180px] md:w-[240px] md:h-[240px] rounded-[36px] overflow-hidden flex items-center justify-center"
               style={{
-                background: "linear-gradient(180deg, #FE9C39 0%, #F75895 100%)",
+                background: "linear-gradient(180deg, #FD6235 0%, #8823F7 100%)",
                 boxShadow: isDark
                   ? `0 30px 80px rgba(${ACCENT_RGB},0.2)`
                   : `0 30px 80px rgba(${ACCENT_RGB},0.1)`,
@@ -1021,7 +957,7 @@ function FinalSection() {
 /* ===================================
    FLOATING MEW — Interactive cursor companion
    =================================== */
-type MewState = "idle" | "curious" | "petted" | "sleeping" | "startled";
+type MewState = "idle" | "curious" | "petted";
 
 const MEW_MESSAGES = [
   "Mew~!",
@@ -1035,38 +971,28 @@ const MEW_MESSAGES = [
 
 function FloatingMew() {
   const mewRef = useRef<HTMLDivElement>(null);
-  const isAnimationActive = useAnimationActive(mewRef);
   const [state, setState] = useState<MewState>("idle");
   const [bubble, setBubble] = useState<string | null>(null);
   const [hearts, setHearts] = useState<number[]>([]);
-  const [zzz, setZzz] = useState(false);
   const [petCount, setPetCount] = useState(0);
   const lastInteraction = useRef(Date.now());
   const heartId = useRef(0);
 
-  // Sleep timer — Mew falls asleep after a short quiet moment.
   useEffect(() => {
     const check = setInterval(() => {
       const elapsed = Date.now() - lastInteraction.current;
-      if (elapsed > 9000 && (state === "idle" || state === "curious")) {
-        setState("sleeping");
-        setZzz(true);
+      if (elapsed > 2600 && state === "curious") {
+        setState("idle");
       }
-    }, 2000);
+    }, 900);
     return () => clearInterval(check);
   }, [state]);
 
   // Hover = petting
   const onEnter = useCallback(() => {
     lastInteraction.current = Date.now();
-    if (state === "sleeping") {
-      setState("startled");
-      setZzz(false);
-      setTimeout(() => setState("petted"), 500);
-    } else {
-      setState("petted");
-    }
-  }, [state]);
+    setState("petted");
+  }, []);
 
   const onLeave = useCallback(() => {
     if (state === "petted") setState("curious");
@@ -1076,7 +1002,6 @@ function FloatingMew() {
   // Click = speech bubble + hearts
   const onClick = useCallback(() => {
     lastInteraction.current = Date.now();
-    setZzz(false);
     setState("petted");
     const msg = MEW_MESSAGES[Math.floor(Math.random() * MEW_MESSAGES.length)];
     setBubble(msg);
@@ -1089,33 +1014,23 @@ function FloatingMew() {
     setTimeout(() => setState("curious"), 1100);
   }, []);
 
-  const mewPose = !isAnimationActive
-    ? { y: 0, rotate: 0, scale: 1 }
-    : state === "sleeping"
-      ? { y: [2, 5, 2], rotate: [8, 10, 8], scale: 0.95 }
-      : state === "startled"
-        ? { y: [0, -26, 0], rotate: [-12, 10, -4], scale: [1, 1.18, 1] }
-        : state === "petted"
-          ? { y: [0, -9, 0], rotate: [-5, 6, -2], scale: [1, 1.08, 1.03] }
-          : state === "curious"
-            ? { y: [0, -13, -4, 0], rotate: [-4, 5, 2, -4], scale: [1, 1.03, 1] }
-            : { y: [0, -10, 0], rotate: [-3, 3, -3], scale: [1, 1.02, 1] };
+  const mewPose = state === "petted"
+      ? { y: [0, -9, 0], rotate: [-5, 6, -2], scale: [1, 1.08, 1.03] }
+      : state === "curious"
+        ? { y: [0, -13, -4, 0], rotate: [-4, 5, 2, -4], scale: [1, 1.03, 1] }
+        : { y: [0, -10, 0], rotate: [-3, 3, -3], scale: [1, 1.02, 1] };
 
-  const mewTransition = state === "startled"
-    ? { duration: 0.72, ease: [0.16, 1, 0.3, 1] }
-    : state === "petted"
+  const mewTransition = state === "petted"
       ? { duration: 1.1, repeat: Infinity, repeatType: "mirror" as const, ease: "easeInOut" }
-      : state === "sleeping"
-        ? { duration: 3.2, repeat: Infinity, ease: "easeInOut" }
-        : { duration: state === "curious" ? 2.8 : 4.4, repeat: Infinity, ease: "easeInOut" };
+      : { duration: state === "curious" ? 2.8 : 4.4, repeat: Infinity, ease: "easeInOut" };
 
   return (
     <motion.div
       ref={mewRef}
-      initial={{ opacity: 0, y: 60, scale: 0.3 }}
+      initial={{ opacity: 0, y: -10, scale: 0.82 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 1.4, delay: 1.5, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed bottom-6 right-6 z-40 cursor-pointer hidden md:block"
+      transition={{ duration: 0.82, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
+      className="fixed right-6 top-24 z-40 cursor-pointer hidden md:block"
       style={{ willChange: "transform" }}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
@@ -1129,18 +1044,18 @@ function FloatingMew() {
           exit={{ opacity: 0, scale: 0.5 }}
           className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap px-3 py-1.5 rounded-full z-50"
           style={{
-            background: "rgba(254,156,57,0.92)",
+            background: "rgba(253,98,53,0.92)",
             color: "#fff",
             fontFamily: "'Inter', sans-serif",
             fontSize: "0.7rem",
             fontWeight: 600,
-            boxShadow: "0 4px 16px rgba(254,156,57,0.32)",
+            boxShadow: "0 4px 16px rgba(253,98,53,0.32)",
           }}
         >
           {bubble}
           <div
             className="absolute left-1/2 -translate-x-1/2 -bottom-1 w-2 h-2 rotate-45"
-            style={{ background: "rgba(254,156,57,0.92)" }}
+            style={{ background: "rgba(253,98,53,0.92)" }}
           />
         </motion.div>
       )}
@@ -1158,29 +1073,6 @@ function FloatingMew() {
           {["💖", "🧡", "💜"][i % 3]}
         </motion.span>
       ))}
-
-      {/* Zzz when sleeping */}
-      {zzz && (
-        <div className="absolute -top-6 right-0">
-          {[0, 1, 2].map((i) => (
-            <motion.span
-              key={i}
-              className="absolute"
-              initial={{ opacity: 0, y: 0, x: i * 8 }}
-              animate={{ opacity: [0, 0.8, 0], y: [-5 - i * 12, -20 - i * 16], x: i * 10 }}
-              transition={{ duration: 2, repeat: Infinity, delay: i * 0.6, ease: "easeOut" }}
-              style={{
-                fontFamily: "'Inter', sans-serif",
-                fontSize: `${0.5 + i * 0.15}rem`,
-                fontWeight: 700,
-                color: "rgba(254,156,57,0.5)",
-              }}
-            >
-              z
-            </motion.span>
-          ))}
-        </div>
-      )}
 
       {/* Pet counter badge */}
       {petCount > 0 && (
@@ -1216,11 +1108,7 @@ function FloatingMew() {
           animate={{
             filter:
               state === "petted"
-                ? "drop-shadow(0 12px 32px rgba(254,156,57,0.5)) brightness(1.1)"
-                : state === "sleeping"
-                ? "drop-shadow(0 4px 12px rgba(0,0,0,0.1)) brightness(0.85) saturate(0.7)"
-                : state === "startled"
-                ? "drop-shadow(0 16px 40px rgba(136,35,247,0.4)) brightness(1.2)"
+                ? "drop-shadow(0 12px 32px rgba(253,98,53,0.5)) brightness(1.1)"
                 : "drop-shadow(0 8px 24px rgba(0,0,0,0.15))",
           }}
           transition={{ duration: 0.5 }}
@@ -1236,7 +1124,7 @@ function FloatingMew() {
           transition={{ duration: 1.5, repeat: Infinity }}
           style={{
             borderRadius: "50%",
-            boxShadow: "0 0 40px 10px rgba(254,156,57,0.2), 0 0 80px 20px rgba(136,35,247,0.1)",
+            boxShadow: "0 0 40px 10px rgba(253,98,53,0.2), 0 0 80px 20px rgba(136,35,247,0.1)",
           }}
         />
       )}
@@ -1263,8 +1151,8 @@ function FloatingMew() {
               style={{
                 width: 3 + (i % 3),
                 height: 3 + (i % 3),
-                background: ["#FE9C39", "#F75895", "#8823F7", "#1DA4D0", "#26252D", "#fff"][i],
-                boxShadow: `0 0 8px 2px ${["#FE9C39", "#F75895", "#8823F7", "#1DA4D0", "#26252D", "#fff"][i]}44`,
+                background: ["#FD6235", "#8823F7", "#1DA4D0", "#26252D", "#FD6235", "#fff"][i],
+                boxShadow: `0 0 8px 2px ${["#FD6235", "#8823F7", "#1DA4D0", "#26252D", "#FD6235", "#fff"][i]}44`,
               }}
             />
           ))}

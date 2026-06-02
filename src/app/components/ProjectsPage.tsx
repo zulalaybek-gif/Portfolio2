@@ -74,7 +74,7 @@ const projects = [
     tagKeys: ["tag.concept", "tag.appDesign"] as TranslationKey[],
     descKey: "proj.kh.desc" as TranslationKey,
     image: imgKittyHubPreview,
-    color: "#FE9C39", accent: "254,156,57",
+    color: "#FD6235", accent: "253,98,53",
     slug: "/projects/kittyhub",
   },
   {
