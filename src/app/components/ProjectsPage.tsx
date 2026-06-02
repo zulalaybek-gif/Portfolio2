@@ -10,6 +10,8 @@ import { preloadProjectRoute } from "../projectRouteLoaders";
 import { CompositeTitle } from "./CompositeTitle";
 import { AmbientMovingLines } from "./AmbientMovingLines";
 import imgKittyHubPreview from "../../assets/kittyhub/10-mockup-bento.jpg";
+import imgSnatshPreview from "../../assets/snatsh/06-mockup.png";
+import imgArtePreview from "../../assets/arte-en-scène/04-mockup.png";
 
 /* ─── Data ─── */
 type ViewMode = "standard" | "projects" | "workshops";
@@ -82,7 +84,7 @@ const projects = [
     type: "project" as const,
     tagKeys: ["tag.audiovisual", "tag.editorial"] as TranslationKey[],
     descKey: "proj.sn.desc" as TranslationKey,
-    image: "https://images.unsplash.com/photo-1666858443985-fead1d59b4f7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhdWRpb3Zpc3VhbCUyMHByb2R1Y3Rpb24lMjBhZ2VuY3klMjBjYW1lcmElMjBkYXJrfGVufDF8fHx8MTc3MzY4NjU0MHww&ixlib=rb-4.1.0&q=80&w=1080",
+    image: imgSnatshPreview,
     color: "#c0c1a4", accent: "192,193,164",
     slug: "/projects/snatsh",
   },
@@ -91,7 +93,7 @@ const projects = [
     type: "project" as const,
     tagKeys: ["tag.poster", "tag.livePerformance"] as TranslationKey[],
     descKey: "proj.arte.desc" as TranslationKey,
-    image: "https://images.unsplash.com/photo-1656888092480-3e3372cf1d45?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0aGVhdGVyJTIwc3RhZ2UlMjBkcmFtYXRpYyUyMGxpZ2h0aW5nJTIwcHVycGxlJTIwcGlua3xlbnwxfHx8fDE3NzM3MDQ5MzV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: imgArtePreview,
     color: "#dd6486", accent: "221,100,134",
     slug: "/projects/arte",
   },

@@ -8,14 +8,14 @@ import { ColorGlow } from "./ColorGlow";
 import { ProjectBackButton } from "./ProjectBackButton";
 
 /* -- Assets -- */
-import imgMockup2 from "figma:asset/643f467219777cb9c1e2a683ccd9ff139b50a7f0.png";
-import imgMockup1 from "figma:asset/8ec711aa2a8e96750f83190b6bf872e0f39d0fee.png";
-import imgPoster1A from "figma:asset/ce6df195729363b7e2b288eb8b06561b2ea06a2b.png";
-import imgPoster1B from "figma:asset/21b17a4e5a9573e3fb15228ac14cd4b0ad0ea201.png";
-import imgPoster1C from "figma:asset/e70634b16c3ab37c89e4e306e1d0098ba9108599.png";
-import imgPoster2A from "figma:asset/3756986884ba0261fe4f428c15a36edc77f1d9ee.png";
-import imgPoster2B from "figma:asset/c7f4397444e13ee0d6d1a983e24a5b9044257dca.png";
-import imgPoster2C from "figma:asset/1bf4ba6d2595ba3f7cedc009ddab8bcd1ef49e82.png";
+import imgPoster1A from "../../assets/arte-en-scène/01-plan-de-travail-1.png";
+import imgPoster1B from "../../assets/arte-en-scène/02-plan-de-travail-2.png";
+import imgPoster1C from "../../assets/arte-en-scène/03-plan-de-travail-3.png";
+import imgMockup1 from "../../assets/arte-en-scène/04-mockup.png";
+import imgPoster2A from "../../assets/arte-en-scène/05-plan-de-travail-A.png";
+import imgPoster2B from "../../assets/arte-en-scène/06-plan-de-travail-B.png";
+import imgPoster2C from "../../assets/arte-en-scène/07-plan-de-travail-C.png";
+import imgMockup2 from "../../assets/arte-en-scène/08-mockup.png";
 
 /* -- Color constants -- */
 // Proposition 1 — Pink / Magenta

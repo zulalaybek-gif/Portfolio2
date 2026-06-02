@@ -8,6 +8,7 @@ import { useTheme } from "./theme";
 import { preloadProjectRoute } from "../projectRouteLoaders";
 import { CompositeTitle } from "./CompositeTitle";
 import imgKittyHubPreview from "../../assets/kittyhub/10-mockup-bento.jpg";
+import imgSnatshPreview from "../../assets/snatsh/06-mockup.png";
 
 const projects = [
   {
@@ -22,7 +23,7 @@ const projects = [
   {
     title: "SNATSH",
     desc: { fr: "Identité visuelle · Production audiovisuelle", en: "Visual Identity · Audiovisual" },
-    image: "https://images.unsplash.com/photo-1666858443985-fead1d59b4f7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhdWRpb3Zpc3VhbCUyMHByb2R1Y3Rpb24lMjBhZ2VuY3klMjBjYW1lcmElMjBkYXJrfGVufDF8fHx8MTc3MzY4NjU0MHww&ixlib=rb-4.1.0&q=80&w=1080",
+    image: imgSnatshPreview,
     year: "2026",
     color: "#c0c1a4",
     accent: "192,193,164",
