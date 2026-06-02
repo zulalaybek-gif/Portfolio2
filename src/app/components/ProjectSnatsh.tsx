@@ -643,22 +643,25 @@ function InteractiveBook() {
 
   const variants = {
     enter: (dir: number) => ({
-      rotateY: dir > 0 ? 45 : -45,
+      rotateY: dir === 0 ? 0 : dir > 0 ? 16 : -16,
       opacity: 0,
-      scale: 0.92,
-      x: dir > 0 ? 80 : -80,
+      scale: 0.985,
+      x: dir === 0 ? 0 : dir > 0 ? 28 : -28,
+      filter: "blur(6px)",
     }),
     center: {
       rotateY: 0,
       opacity: 1,
       scale: 1,
       x: 0,
+      filter: "blur(0px)",
     },
     exit: (dir: number) => ({
-      rotateY: dir > 0 ? -45 : 45,
+      rotateY: dir === 0 ? 0 : dir > 0 ? -12 : 12,
       opacity: 0,
-      scale: 0.92,
-      x: dir > 0 ? -80 : 80,
+      scale: 0.985,
+      x: dir === 0 ? 0 : dir > 0 ? -24 : 24,
+      filter: "blur(5px)",
     }),
   };
 
@@ -688,7 +691,7 @@ function InteractiveBook() {
           >
             {/* Page display */}
             <div className="relative w-full aspect-[16/10] md:aspect-[16/9] overflow-hidden flex items-center justify-center p-4 md:p-8">
-              <AnimatePresence custom={direction} mode="wait">
+              <AnimatePresence custom={direction} initial={false}>
                 <motion.div
                   key={current}
                   custom={direction}
@@ -697,10 +700,11 @@ function InteractiveBook() {
                   animate="center"
                   exit="exit"
                   transition={{
-                    duration: 0.5,
-                    ease: [0.4, 0, 0.2, 1],
+                    duration: 0.85,
+                    ease: [0.16, 1, 0.3, 1],
+                    opacity: { duration: 0.45, ease: "easeOut" },
                   }}
-                  className="w-full h-full flex items-center justify-center"
+                  className="absolute inset-4 md:inset-8 flex items-center justify-center"
                   style={{ transformStyle: "preserve-3d" }}
                 >
                   <img
