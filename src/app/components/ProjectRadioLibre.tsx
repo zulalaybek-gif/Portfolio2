@@ -942,9 +942,9 @@ function PrototypeSection() {
         <FadeIn delay={0.1}>
           <div className="flex justify-center">
             <div
-              className="relative w-full max-w-[360px] overflow-hidden rounded-[2.25rem]"
+              className="relative w-full max-w-[340px] overflow-hidden rounded-[2rem]"
               style={{
-                aspectRatio: "430 / 860",
+                aspectRatio: "390 / 844",
                 background: isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.72)",
                 border: `1px solid ${r(0.08)}`,
                 boxShadow: isDark ? "0 30px 90px rgba(0,0,0,0.28)" : "0 30px 90px rgba(29,29,27,0.1)",
@@ -959,7 +959,7 @@ function PrototypeSection() {
                 style={{
                   border: 0,
                   background: "transparent",
-                  transform: "translate(-50%, -50%) scale(1.62)",
+                  transform: "translate(-50%, -48%) scale(1.42)",
                   transformOrigin: "center center",
                 }}
               />
