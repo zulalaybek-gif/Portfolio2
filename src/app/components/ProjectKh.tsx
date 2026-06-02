@@ -1036,114 +1036,25 @@ const MEW_MESSAGES = [
 function FloatingMew() {
   const mewRef = useRef<HTMLDivElement>(null);
   const isAnimationActive = useAnimationActive(mewRef);
-  const [pos, setPos] = useState({ x: 0, y: 0 });
   const [state, setState] = useState<MewState>("idle");
   const [bubble, setBubble] = useState<string | null>(null);
   const [hearts, setHearts] = useState<number[]>([]);
   const [zzz, setZzz] = useState(false);
   const [petCount, setPetCount] = useState(0);
-  const mouse = useRef({ x: 0, y: 0 });
-  const prevMouse = useRef({ x: 0, y: 0 });
-  const smoothPos = useRef({ x: 0, y: 0 });
-  const rafId = useRef(0);
-  const idleTimer = useRef<ReturnType<typeof setTimeout>>();
   const lastInteraction = useRef(Date.now());
   const heartId = useRef(0);
 
-  const baseX = typeof window !== "undefined" ? window.innerWidth - 90 : 900;
-  const baseY = typeof window !== "undefined" ? window.innerHeight - 90 : 700;
-
-  // Track mouse
-  useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      prevMouse.current = { ...mouse.current };
-      mouse.current = { x: e.clientX, y: e.clientY };
-      lastInteraction.current = Date.now();
-    };
-    window.addEventListener("mousemove", onMove);
-    return () => window.removeEventListener("mousemove", onMove);
-  }, []);
-
-  // Sleep timer — Mew falls asleep after 8s of no interaction
+  // Sleep timer — Mew falls asleep after a short quiet moment.
   useEffect(() => {
     const check = setInterval(() => {
       const elapsed = Date.now() - lastInteraction.current;
-      if (elapsed > 8000 && state === "idle") {
+      if (elapsed > 9000 && (state === "idle" || state === "curious")) {
         setState("sleeping");
         setZzz(true);
       }
     }, 2000);
     return () => clearInterval(check);
   }, [state]);
-
-  // Main animation loop
-  useEffect(() => {
-    if (!isAnimationActive) return;
-    let time = 0;
-    const loop = () => {
-      time += 0.016;
-
-      const dx = mouse.current.x - baseX;
-      const dy = mouse.current.y - baseY;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-
-      // Cursor speed
-      const vx = mouse.current.x - prevMouse.current.x;
-      const vy = mouse.current.y - prevMouse.current.y;
-      const speed = Math.sqrt(vx * vx + vy * vy);
-
-      // Wake up if cursor approaches while sleeping
-      if (state === "sleeping" && dist < 250 && speed > 2) {
-        setState("startled");
-        setZzz(false);
-        lastInteraction.current = Date.now();
-        setTimeout(() => setState("curious"), 600);
-      }
-
-      // Become curious if cursor is near
-      if (state === "idle" && dist < 300 && speed > 1) {
-        setState("curious");
-      }
-      // Return to idle if cursor goes far
-      if (state === "curious" && dist > 400) {
-        setState("idle");
-      }
-
-      let bobX: number, bobY: number, attractX = 0, attractY = 0;
-
-      if (state === "sleeping") {
-        // Slow breathing bob
-        bobX = Math.sin(time * 0.3) * 2;
-        bobY = Math.cos(time * 0.4) * 3;
-      } else if (state === "startled") {
-        // Jump!
-        bobX = (Math.random() - 0.5) * 10;
-        bobY = -20 + Math.sin(time * 8) * 5;
-      } else if (state === "curious" || state === "petted") {
-        // Active following
-        bobX = Math.sin(time * 1.2) * 4;
-        bobY = Math.cos(time * 1.6) * 5;
-        const influence = Math.max(0, 1 - dist / 350);
-        attractX = dx * influence * 0.2;
-        attractY = dy * influence * 0.2;
-      } else {
-        // Idle float with a figure-8 pattern
-        bobX = Math.sin(time * 0.6) * 8 + Math.sin(time * 1.1) * 3;
-        bobY = Math.cos(time * 0.8) * 6 + Math.sin(time * 0.5) * 4;
-      }
-
-      const targetX = bobX + attractX;
-      const targetY = bobY + attractY;
-      const lerpSpeed = state === "startled" ? 0.15 : 0.05;
-      smoothPos.current.x += (targetX - smoothPos.current.x) * lerpSpeed;
-      smoothPos.current.y += (targetY - smoothPos.current.y) * lerpSpeed;
-
-      setPos({ x: smoothPos.current.x, y: smoothPos.current.y });
-      rafId.current = requestAnimationFrame(loop);
-    };
-    rafId.current = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(rafId.current);
-  }, [baseX, baseY, isAnimationActive, state]);
 
   // Hover = petting
   const onEnter = useCallback(() => {
@@ -1159,12 +1070,14 @@ function FloatingMew() {
 
   const onLeave = useCallback(() => {
     if (state === "petted") setState("curious");
-    setTimeout(() => setState("idle"), 1500);
+    setTimeout(() => setState("idle"), 900);
   }, [state]);
 
   // Click = speech bubble + hearts
   const onClick = useCallback(() => {
     lastInteraction.current = Date.now();
+    setZzz(false);
+    setState("petted");
     const msg = MEW_MESSAGES[Math.floor(Math.random() * MEW_MESSAGES.length)];
     setBubble(msg);
     setPetCount((c) => c + 1);
@@ -1173,14 +1086,28 @@ function FloatingMew() {
     setHearts((h) => [...h, ...newHearts]);
     setTimeout(() => setBubble(null), 1800);
     setTimeout(() => setHearts((h) => h.filter((id) => !newHearts.includes(id))), 2000);
+    setTimeout(() => setState("curious"), 1100);
   }, []);
 
-  // Tilt based on cursor direction
-  const tiltX = state === "sleeping" ? 15 : pos.x * 0.06;
-  const scaleVal =
-    state === "startled" ? 1.25 :
-    state === "petted" ? 1.1 :
-    state === "sleeping" ? 0.95 : 1;
+  const mewPose = !isAnimationActive
+    ? { y: 0, rotate: 0, scale: 1 }
+    : state === "sleeping"
+      ? { y: [2, 5, 2], rotate: [8, 10, 8], scale: 0.95 }
+      : state === "startled"
+        ? { y: [0, -26, 0], rotate: [-12, 10, -4], scale: [1, 1.18, 1] }
+        : state === "petted"
+          ? { y: [0, -9, 0], rotate: [-5, 6, -2], scale: [1, 1.08, 1.03] }
+          : state === "curious"
+            ? { y: [0, -13, -4, 0], rotate: [-4, 5, 2, -4], scale: [1, 1.03, 1] }
+            : { y: [0, -10, 0], rotate: [-3, 3, -3], scale: [1, 1.02, 1] };
+
+  const mewTransition = state === "startled"
+    ? { duration: 0.72, ease: [0.16, 1, 0.3, 1] }
+    : state === "petted"
+      ? { duration: 1.1, repeat: Infinity, repeatType: "mirror" as const, ease: "easeInOut" }
+      : state === "sleeping"
+        ? { duration: 3.2, repeat: Infinity, ease: "easeInOut" }
+        : { duration: state === "curious" ? 2.8 : 4.4, repeat: Infinity, ease: "easeInOut" };
 
   return (
     <motion.div
@@ -1277,20 +1204,9 @@ function FloatingMew() {
 
       {/* Mew image */}
       <motion.div
-        animate={{
-          scale: scaleVal,
-          rotate: tiltX,
-          y: pos.y,
-          x: pos.x,
-        }}
-        transition={{
-          scale: { type: "spring", stiffness: 400, damping: 20 },
-          rotate: state === "startled"
-            ? { duration: 0.15, repeat: 3, repeatType: "mirror" as const }
-            : { type: "spring", stiffness: 100, damping: 15 },
-          x: { type: "tween", duration: 0.1 },
-          y: { type: "tween", duration: 0.1 },
-        }}
+        animate={mewPose}
+        transition={mewTransition}
+        style={{ transformOrigin: "50% 78%" }}
       >
         <motion.img
           src={imgMew}
