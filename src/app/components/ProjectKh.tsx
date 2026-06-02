@@ -25,12 +25,15 @@ import imgMockup2 from "../../assets/kittyhub/13-MOCKUP-2.png";
 import UxWebHome from "../../imports/UxWebHome";
 
 /* -- Helpers -- */
-const ACCENT = "#7B2D52";
-const ACCENT_RGB = "123,45,82";
+const ACCENT = "#FE9C39";
+const ACCENT_RGB = "254,156,57";
 const DARK_BG = "#07020b";
+const IPAD_PROTO_URL = "https://www.figma.com/proto/Yd1jdAY0vItJeAIf4tmsGa/kittyhub?page-id=547%3A2998&node-id=2000-8068&viewport=733%2C-7356%2C0.07&t=MdzZHiu2I41bwGOu-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=2000%3A8068&show-proto-sidebar=1";
+const WEB_PROTO_URL = "https://www.figma.com/proto/Yd1jdAY0vItJeAIf4tmsGa/kittyhub?page-id=547%3A2998&node-id=2000-9278&viewport=733%2C-7356%2C0.07&t=MdzZHiu2I41bwGOu-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=2000%3A8068&show-proto-sidebar=1";
 
 const PALETTE = [
-  { hex: "#7B2D52", name: "Flame Orange" },
+  { hex: "#FE9C39", name: "Flame Orange" },
+  { hex: "#F75895", name: "Digital Pink" },
   { hex: "#8823F7", name: "Electric Violet" },
   { hex: "#1DA4D0", name: "Cyan Blue" },
   { hex: "#26252D", name: "Dark Onyx" },
@@ -298,7 +301,7 @@ function PaletteSection() {
           </FadeIn>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           {PALETTE.map((color, i) => (
             <FadeIn key={color.hex} delay={0.12 + i * 0.06}>
               <div className="flex flex-col items-center gap-3">
@@ -518,7 +521,7 @@ function AppIconsSection() {
   const { isDark, r } = useTheme();
 
   const icons = [
-    { bg: "#7B2D52", fillLogo: "white", label: "Orange" },
+    { bg: "#FE9C39", fillLogo: "white", label: "Orange" },
     { bg: "#8823F7", fillLogo: "white", label: "Violet" },
     { bg: "#ffffff", fillLogo: "#202020", label: "Light" },
     { bg: "linear-gradient(180deg, #FE9C39 0%, #F75895 100%)", fillLogo: "white", label: "Gradient" },
@@ -651,7 +654,6 @@ function IPadPrototypeSection() {
   const { t } = useI18n();
   const { r, isDark } = useTheme();
   const body = useBodyStyle();
-  const PROTO_URL = "https://www.figma.com/proto/Yd1jdAY0vItJeAIf4tmsGa/kittyhub?node-id=2000-8068&t=4RXKqzfBe3l905YG-1";
 
   return (
     <section className="px-6 md:px-16 py-16">
@@ -702,7 +704,7 @@ function IPadPrototypeSection() {
         <FadeIn delay={0.2}>
           <div className="mt-6 flex justify-center">
             <a
-              href={PROTO_URL}
+              href={IPAD_PROTO_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-2 px-5 py-2.5 rounded-full transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
@@ -828,6 +830,26 @@ function WebInterfaceSection() {
             </div>
           </div>
         </FadeIn>
+
+        <FadeIn delay={0.16}>
+          <div className="mt-6 flex justify-center">
+            <a
+              href={WEB_PROTO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-2 px-5 py-2.5 rounded-full transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
+              style={{
+                fontFamily: "'Inter', sans-serif",
+                fontSize: "0.78rem",
+                border: `1px solid ${r(0.1)}`,
+                color: r(0.4),
+              }}
+            >
+              {lang === "fr" ? "Voir le prototype web" : "View web prototype"}
+              <ExternalLink size={13} className="transition-transform group-hover:translate-x-0.5" />
+            </a>
+          </div>
+        </FadeIn>
       </div>
     </section>
   );
@@ -849,7 +871,7 @@ function TeamSection() {
 
         <FadeIn delay={0.1}>
           <div className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-            <img src={isDark ? imgTeamWhite : imgTeamBlack} alt="KittyHub team" className="w-full object-cover" />
+            <img src={isDark ? imgTeamBlack : imgTeamWhite} alt="KittyHub team" className="w-full object-cover" />
           </div>
         </FadeIn>
       </div>
@@ -1180,18 +1202,18 @@ function FloatingMew() {
           exit={{ opacity: 0, scale: 0.5 }}
           className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap px-3 py-1.5 rounded-full z-50"
           style={{
-            background: "rgba(123,45,82,0.9)",
+            background: "rgba(254,156,57,0.92)",
             color: "#fff",
             fontFamily: "'Inter', sans-serif",
             fontSize: "0.7rem",
             fontWeight: 600,
-            boxShadow: "0 4px 16px rgba(123,45,82,0.3)",
+            boxShadow: "0 4px 16px rgba(254,156,57,0.32)",
           }}
         >
           {bubble}
           <div
             className="absolute left-1/2 -translate-x-1/2 -bottom-1 w-2 h-2 rotate-45"
-            style={{ background: "rgba(123,45,82,0.9)" }}
+            style={{ background: "rgba(254,156,57,0.92)" }}
           />
         </motion.div>
       )}
@@ -1224,7 +1246,7 @@ function FloatingMew() {
                 fontFamily: "'Inter', sans-serif",
                 fontSize: `${0.5 + i * 0.15}rem`,
                 fontWeight: 700,
-                color: "rgba(123,45,82,0.5)",
+                color: "rgba(254,156,57,0.5)",
               }}
             >
               z
@@ -1278,7 +1300,7 @@ function FloatingMew() {
           animate={{
             filter:
               state === "petted"
-                ? "drop-shadow(0 12px 32px rgba(123,45,82,0.5)) brightness(1.1)"
+                ? "drop-shadow(0 12px 32px rgba(254,156,57,0.5)) brightness(1.1)"
                 : state === "sleeping"
                 ? "drop-shadow(0 4px 12px rgba(0,0,0,0.1)) brightness(0.85) saturate(0.7)"
                 : state === "startled"
@@ -1298,7 +1320,7 @@ function FloatingMew() {
           transition={{ duration: 1.5, repeat: Infinity }}
           style={{
             borderRadius: "50%",
-            boxShadow: "0 0 40px 10px rgba(123,45,82,0.2), 0 0 80px 20px rgba(136,35,247,0.1)",
+            boxShadow: "0 0 40px 10px rgba(254,156,57,0.2), 0 0 80px 20px rgba(136,35,247,0.1)",
           }}
         />
       )}
@@ -1325,8 +1347,8 @@ function FloatingMew() {
               style={{
                 width: 3 + (i % 3),
                 height: 3 + (i % 3),
-                background: ["#7B2D52", "#8823F7", "#1DA4D0", "#FE9C39", "#F75895", "#fff"][i],
-                boxShadow: `0 0 8px 2px ${["#7B2D52", "#8823F7", "#1DA4D0", "#FE9C39", "#F75895", "#fff"][i]}44`,
+                background: ["#FE9C39", "#F75895", "#8823F7", "#1DA4D0", "#26252D", "#fff"][i],
+                boxShadow: `0 0 8px 2px ${["#FE9C39", "#F75895", "#8823F7", "#1DA4D0", "#26252D", "#fff"][i]}44`,
               }}
             />
           ))}
