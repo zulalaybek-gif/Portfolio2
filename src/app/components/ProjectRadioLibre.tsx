@@ -9,14 +9,12 @@ import { useAnimationActive } from "./useAnimationActive";
 /* ── SVG element files (graphic elements provided by user) ── */
 import elemDarkRaw from "../../imports/Fichier_2-2.svg?raw";
 import elemLightRaw from "../../imports/Fichier_1-2.svg?raw";
+import imgRadioLibreMobile from "../../assets/radio-libre/Mobile app.png";
 
 /* ── Palette ── */
 const BLUE = "#afd1ea";
 const PURPLE = "#bea9cb";
 const PEACH = "#ecb59f";
-const FIGMA_PROTO_URL =
-  "https://www.figma.com/proto/zBnqqRfKhhwP8Enu3KGsPv/PARTIEL-ZUL%C3%82L?node-id=2321-333&viewport=423%2C40%2C0.29&t=d4kwxZm7bTkwkKXX-1&scaling=scale-down&content-scaling=fixed&page-id=2321%3A50";
-const FIGMA_PROTO_EMBED_URL = `https://www.figma.com/embed?embed_host=share&hide-ui=1&url=${encodeURIComponent(FIGMA_PROTO_URL)}`;
 
 const PALETTE = [
   { hex: BLUE, name: "Bleu clair", rgb: "175,209,234" },
@@ -942,27 +940,38 @@ function PrototypeSection() {
         <FadeIn delay={0.1}>
           <div className="flex justify-center">
             <div
-              className="relative w-full max-w-[300px] overflow-hidden rounded-[1.85rem]"
+              className="relative w-full max-w-[310px] rounded-[2.35rem] p-[10px]"
               style={{
                 aspectRatio: "390 / 844",
-                background: isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.72)",
-                border: `1px solid ${r(0.08)}`,
-                boxShadow: isDark ? "0 30px 90px rgba(0,0,0,0.28)" : "0 30px 90px rgba(29,29,27,0.1)",
+                background: isDark
+                  ? "linear-gradient(145deg, rgba(255,255,255,0.16), rgba(255,255,255,0.04) 38%, rgba(0,0,0,0.34))"
+                  : "linear-gradient(145deg, rgba(29,29,27,0.88), rgba(29,29,27,0.98))",
+                boxShadow: isDark ? "0 30px 90px rgba(0,0,0,0.34)" : "0 30px 90px rgba(29,29,27,0.14)",
               }}
             >
-              <iframe
-                title="Prototype Radio Libre"
-                src={FIGMA_PROTO_EMBED_URL}
-                allowFullScreen
-                loading="lazy"
-                className="absolute left-1/2 top-1/2 h-full w-full"
+              <div
+                className="absolute left-1/2 top-[18px] z-10 h-[22px] w-[98px] -translate-x-1/2 rounded-full"
                 style={{
-                  border: 0,
-                  background: "transparent",
-                  transform: "translate(-50%, -48.2%) scale(1.36)",
-                  transformOrigin: "center center",
+                  background: "rgba(0,0,0,0.92)",
+                  boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.08)",
                 }}
               />
+              <div
+                className="h-full w-full overflow-y-auto overflow-x-hidden rounded-[1.85rem]"
+                style={{
+                  background: "#eef3f3",
+                  scrollbarWidth: "none",
+                  WebkitOverflowScrolling: "touch",
+                }}
+              >
+                <img
+                  src={imgRadioLibreMobile}
+                  alt="Prototype mobile Radio Libre"
+                  className="block w-full"
+                  loading="lazy"
+                  draggable={false}
+                />
+              </div>
             </div>
           </div>
           <div
