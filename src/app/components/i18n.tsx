@@ -24,6 +24,22 @@ const translations = {
   "hero.stat2": { fr: "Années à créer", en: "Years creating" },
   "hero.stat3": { fr: "Terrains de jeu", en: "Creative playgrounds" },
 
+  // ── Personal intro ──
+  "personalIntro.badge": { fr: "\u00C0 propos", en: "About" },
+  "personalIntro.title": {
+    fr: "Une direction artistique entre précision, intuition et caractère.",
+    en: "An art direction between precision, intuition, and character.",
+  },
+  "personalIntro.p1": {
+    fr: "Entre stratégie digitale, direction artistique et design graphique, mon travail s’est construit autour d’une recherche d’équilibre : donner de la force à une idée sans l’écraser, créer une esthétique marquante sans perdre en clarté, et transformer une intention en univers visuel cohérent.",
+    en: "Between digital strategy, art direction, and graphic design, my work has been shaped by a search for balance: giving strength to an idea without overpowering it, creating a distinctive aesthetic without losing clarity, and transforming an intention into a coherent visual world.",
+  },
+  "personalIntro.p2": {
+    fr: "Diplômée d’un Master Expert en stratégie digitale, avec une spécialisation en direction artistique, je développe depuis plusieurs années des identités visuelles, supports éditoriaux et compositions graphiques pensés pour transmettre une présence, une atmosphère et un récit.",
+    en: "With a Master Expert degree in digital strategy and a specialization in art direction, I have spent the past several years developing visual identities, editorial materials, and graphic compositions designed to convey a presence, an atmosphere, and a narrative.",
+  },
+  "personalIntro.signature": { fr: "Zulâl", en: "Zulâl" },
+
   // ── Services ──
   "services.badge": { fr: "Services", en: "Services" },
   "services.title1": { fr: "SAVOIR.", en: "KNOW." },

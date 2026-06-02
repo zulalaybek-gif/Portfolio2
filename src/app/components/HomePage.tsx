@@ -1,4 +1,5 @@
 import { HeroSection } from "./HeroSection";
+import { PersonalIntroSection } from "./PersonalIntroSection";
 import { ServicesSection } from "./ServicesSection";
 import { ProcessSection } from "./ProcessSection";
 import { ToolsSection } from "./ToolsSection";
@@ -11,6 +12,7 @@ export function HomePage() {
       <AmbientMovingLines className="absolute inset-x-0 top-0 z-0" height="120vh" opacity={0.2} />
       <div className="relative z-10">
         <HeroSection />
+        <PersonalIntroSection />
         <ServicesSection />
         <ProcessSection />
         <ToolsSection />

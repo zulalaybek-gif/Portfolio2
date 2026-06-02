@@ -50,9 +50,7 @@ function figmaAssetResolver() {
 }
 
 function sharpImageOptimizer() {
-  const rasterExtensions = new Set(['.jpg', '.jpeg', '.png', '.webp'])
-  const minBytes = 16 * 1024
-  const minSavingRatio = 0.02
+  const rasterExtensions = new Set(['.gif', '.jpg', '.jpeg', '.png', '.webp'])
   const maxWidth = 2560
   const maxHeight = 2560
   const cache = new Map<string, Promise<{ source: Buffer; fileName: string }>>()
@@ -71,16 +69,11 @@ function sharpImageOptimizer() {
   async function optimize(filePath: string) {
     const input = await fs.promises.readFile(filePath)
     const parsed = path.parse(filePath)
-    const originalFileName = `${parsed.name}${parsed.ext}`
-
-    if (input.length < minBytes) {
-      return { source: input, fileName: originalFileName }
-    }
-
-    const image = sharp(input, { failOn: 'none' }).rotate()
+    const ext = parsed.ext.toLowerCase()
+    const image = sharp(input, { failOn: 'none', animated: ext === '.gif' }).rotate()
     const metadata = await image.metadata()
     if (!metadata.width || !metadata.height) {
-      return { source: input, fileName: originalFileName }
+      return { source: input, fileName: `${parsed.name}${parsed.ext}` }
     }
 
     let pipeline = image.clone()
@@ -101,11 +94,6 @@ function sharpImageOptimizer() {
         smartSubsample: true,
       })
       .toBuffer()
-
-    const savingRatio = 1 - webp.length / input.length
-    if (savingRatio < minSavingRatio) {
-      return { source: input, fileName: originalFileName }
-    }
 
     return { source: webp, fileName: `${parsed.name}.webp` }
   }
