@@ -14,6 +14,9 @@ import elemLightRaw from "../../imports/Fichier_1-2.svg?raw";
 const BLUE = "#afd1ea";
 const PURPLE = "#bea9cb";
 const PEACH = "#ecb59f";
+const FIGMA_PROTO_URL =
+  "https://www.figma.com/proto/zBnqqRfKhhwP8Enu3KGsPv/PARTIEL-ZUL%C3%82L?node-id=2321-333&viewport=423%2C40%2C0.29&t=d4kwxZm7bTkwkKXX-1&scaling=scale-down&content-scaling=fixed&page-id=2321%3A50";
+const FIGMA_PROTO_EMBED_URL = `https://www.figma.com/embed?embed_host=share&url=${encodeURIComponent(FIGMA_PROTO_URL)}`;
 
 const PALETTE = [
   { hex: BLUE, name: "Bleu clair", rgb: "175,209,234" },
@@ -907,7 +910,71 @@ function SoundStringsSection() {
 }
 
 /* ═══════════════════════════════════════════
-   7. CLOSING SECTION
+   7. PROTOTYPE
+   ═══════════════════════════════════════════ */
+function PrototypeSection() {
+  const { isDark, r, p } = useTheme();
+  const body = useBodyStyle();
+
+  return (
+    <section className="px-6 md:px-12 py-20">
+      <div className="max-w-5xl mx-auto">
+        <FadeIn>
+          <SectionLabel>Prototype</SectionLabel>
+          <h2
+            className="mt-5 mb-4"
+            style={{
+              fontFamily: "'Space Grotesk', sans-serif",
+              fontSize: "clamp(1.6rem, 4vw, 2.4rem)",
+              fontWeight: 700,
+              lineHeight: 1.2,
+              letterSpacing: "-0.02em",
+              color: p.text,
+            }}
+          >
+            Un aperçu interactif de l'interface.
+          </h2>
+          <p style={{ ...body, maxWidth: "600px", marginBottom: "2.5rem" }}>
+            Le prototype permet de parcourir l'expérience digitale imaginée pour Radio Libre, dans la continuité de son identité visuelle et de son univers sonore.
+          </p>
+        </FadeIn>
+
+        <FadeIn delay={0.1}>
+          <div
+            className="rounded-3xl overflow-hidden p-3 md:p-5"
+            style={{
+              background: isDark
+                ? "linear-gradient(160deg, rgba(175,209,234,0.08) 0%, rgba(190,169,203,0.05) 52%, rgba(236,181,159,0.08) 100%)"
+                : "linear-gradient(160deg, rgba(175,209,234,0.16) 0%, rgba(190,169,203,0.1) 52%, rgba(236,181,159,0.15) 100%)",
+              border: `1px solid ${r(0.06)}`,
+              boxShadow: isDark ? "0 24px 80px rgba(0,0,0,0.22)" : "0 24px 80px rgba(29,29,27,0.08)",
+            }}
+          >
+            <div
+              className="relative w-full overflow-hidden rounded-2xl"
+              style={{
+                aspectRatio: "16 / 10",
+                background: isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.72)",
+              }}
+            >
+              <iframe
+                title="Prototype Radio Libre"
+                src={FIGMA_PROTO_EMBED_URL}
+                allowFullScreen
+                loading="lazy"
+                className="absolute inset-0 h-full w-full"
+                style={{ border: 0, background: "transparent" }}
+              />
+            </div>
+          </div>
+        </FadeIn>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════
+   8. CLOSING SECTION
    ═══════════════════════════════════════════ */
 function ClosingSection() {
   const { isDark, r } = useTheme();
@@ -963,6 +1030,7 @@ export function ProjectRadioLibre() {
       <PaletteTypoSection />
       <ElementsSection />
       <SoundStringsSection />
+      <PrototypeSection />
       <ClosingSection />
     </div>
   );
