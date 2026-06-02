@@ -959,7 +959,7 @@ function PrototypeSection() {
                 style={{
                   border: 0,
                   background: "transparent",
-                  transform: "translate(-50%, -48%) scale(1.42)",
+                  transform: "translate(-50%, -48.4%) scale(1.49)",
                   transformOrigin: "center center",
                 }}
               />
