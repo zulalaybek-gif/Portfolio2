@@ -704,6 +704,7 @@ const STRING_COLORS = [BLUE, PURPLE, PEACH];
 const STRING_NOTE_FREQUENCIES = [261.63, 329.63, 392, 493.88, 587.33, 739.99];
 const STRING_SOUND_THRESHOLD = 0.052;
 const STRING_SOUND_COOLDOWN = 160;
+const INTRO_SOUND_INDEXES = [0, 2, 4];
 
 function SoundStringsCanvas() {
   const { isDark } = useTheme();
@@ -720,6 +721,7 @@ function SoundStringsCanvas() {
     delay: DelayNode;
     feedback: GainNode;
   } | null>(null);
+  const soundEnabledRef = useRef(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const stringsRef = useRef<Array<{ phase: number; freq: number; amp: number; damping: number; color: string; baseY: number }>>(
@@ -736,11 +738,18 @@ function SoundStringsCanvas() {
   const timeRef = useRef(0);
 
   useEffect(() => {
+    soundEnabledRef.current = soundEnabled;
+  }, [soundEnabled]);
+
+  useEffect(() => {
     if (typeof window === "undefined") return;
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
     const update = () => {
       setReducedMotion(media.matches);
-      if (media.matches) setSoundEnabled(false);
+      if (media.matches) {
+        soundEnabledRef.current = false;
+        setSoundEnabled(false);
+      }
     };
     update();
     media.addEventListener?.("change", update);
@@ -760,8 +769,8 @@ function SoundStringsCanvas() {
       const feedback = context.createGain();
       const tone = context.createBiquadFilter();
 
-      master.gain.value = 0.18;
-      ambience.gain.value = 0.18;
+      master.gain.value = 0.34;
+      ambience.gain.value = 0.2;
       delay.delayTime.value = 0.18;
       feedback.gain.value = 0.28;
       tone.type = "lowpass";
@@ -791,7 +800,7 @@ function SoundStringsCanvas() {
 
   const playStringNote = useCallback(
     (index: number, proximity: number, velocity: number) => {
-      if (!soundEnabled || reducedMotion) return;
+      if (!soundEnabledRef.current || reducedMotion) return;
       const context = getAudioContext();
       const graph = audioGraphRef.current;
       if (!context || !graph) return;
@@ -819,7 +828,7 @@ function SoundStringsCanvas() {
       filter.Q.setValueAtTime(0.5, now);
       panner.pan.setValueAtTime(panValue, now);
 
-      const peak = 0.014 + closeness * 0.036 + movement * 0.016;
+      const peak = 0.026 + closeness * 0.052 + movement * 0.022;
       const attack = 0.018 - movement * 0.006;
       gain.gain.setValueAtTime(0.0001, now);
       gain.gain.exponentialRampToValueAtTime(peak, now + attack);
@@ -837,8 +846,18 @@ function SoundStringsCanvas() {
       fundamental.stop(now + 0.82);
       shimmer.stop(now + 0.62);
     },
-    [getAudioContext, reducedMotion, soundEnabled]
+    [getAudioContext, reducedMotion]
   );
+
+  const enableSound = useCallback(async () => {
+    if (reducedMotion) return;
+    soundEnabledRef.current = true;
+    setSoundEnabled(true);
+    await unlockAudio();
+    INTRO_SOUND_INDEXES.forEach((index, i) => {
+      window.setTimeout(() => playStringNote(index, 0.01, 0.45), i * 85);
+    });
+  }, [playStringNote, reducedMotion, unlockAudio]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -989,12 +1008,15 @@ function SoundStringsCanvas() {
   const handlePointerDown = useCallback(
     (e: React.PointerEvent<HTMLCanvasElement>) => {
       if (!reducedMotion) {
-        setSoundEnabled(true);
-        void unlockAudio();
+        if (!soundEnabledRef.current) {
+          void enableSound();
+        } else {
+          void unlockAudio();
+        }
       }
       handlePointerMove(e);
     },
-    [handlePointerMove, reducedMotion, unlockAudio]
+    [enableSound, handlePointerMove, reducedMotion, unlockAudio]
   );
 
   const handlePointerLeave = useCallback(() => {
@@ -1003,12 +1025,14 @@ function SoundStringsCanvas() {
   }, []);
 
   const toggleSound = useCallback(() => {
-    setSoundEnabled((enabled) => {
-      const next = !enabled;
-      if (next) void unlockAudio();
-      return next;
-    });
-  }, [unlockAudio]);
+    if (soundEnabledRef.current) {
+      soundEnabledRef.current = false;
+      setSoundEnabled(false);
+      return;
+    }
+
+    void enableSound();
+  }, [enableSound]);
 
   return (
     <div className="relative">
@@ -1031,6 +1055,29 @@ function SoundStringsCanvas() {
       >
         {soundEnabled ? "Son activé" : "Son coupé"}
       </button>
+      {!soundEnabled && !reducedMotion && (
+        <button
+          type="button"
+          onClick={enableSound}
+          className="absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-1 rounded-full px-5 py-3 text-center transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+          style={{
+            background: isDark ? "rgba(8,12,20,0.72)" : "rgba(255,255,255,0.78)",
+            border: `1px solid ${isDark ? "rgba(255,255,255,0.14)" : "rgba(29,29,27,0.08)"}`,
+            boxShadow: isDark ? "0 18px 50px rgba(0,0,0,0.28)" : "0 18px 50px rgba(29,29,27,0.1)",
+            color: isDark ? "rgba(255,255,255,0.78)" : "rgba(29,29,27,0.68)",
+            fontFamily: "'Inter', sans-serif",
+            backdropFilter: "blur(16px)",
+          }}
+          aria-label="Activer le son des cordes"
+        >
+          <span style={{ fontSize: "0.68rem", letterSpacing: "0.12em", textTransform: "uppercase" }}>
+            Activer le son
+          </span>
+          <span style={{ fontSize: "0.62rem", color: isDark ? "rgba(255,255,255,0.42)" : "rgba(29,29,27,0.42)" }}>
+            Effleurez les cordes
+          </span>
+        </button>
+      )}
       <canvas
         ref={canvasRef}
         onPointerDown={handlePointerDown}
