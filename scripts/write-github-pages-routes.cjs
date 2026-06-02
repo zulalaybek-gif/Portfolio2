@@ -20,6 +20,7 @@ const routes = [
   { path: "/projects/sncf-connect", title: "SNCF Connect - Zulal Aybek" },
   { path: "/projects/haiti", title: "Haiti - Zulal Aybek" },
   { path: "/projects/radio-libre", title: "Radio Libre - Zulal Aybek" },
+  { path: "/projects/parsemains", title: "Parsemains - Zulal Aybek" },
 ];
 
 function escapeHtml(value) {
