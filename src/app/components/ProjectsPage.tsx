@@ -9,6 +9,7 @@ import { useNavigate } from "react-router";
 import { preloadProjectRoute } from "../projectRouteLoaders";
 import { CompositeTitle } from "./CompositeTitle";
 import { AmbientMovingLines } from "./AmbientMovingLines";
+import imgKittyHubPreview from "../../assets/kittyhub/10-mockup-bento.jpg";
 
 /* ─── Data ─── */
 type ViewMode = "standard" | "projects" | "workshops";
@@ -72,7 +73,7 @@ const projects = [
     type: "project" as const,
     tagKeys: ["tag.concept", "tag.appDesign"] as TranslationKey[],
     descKey: "proj.kh.desc" as TranslationKey,
-    image: "https://images.unsplash.com/photo-1613771404738-65d22f979710?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb2tlbW9uJTIwY2FyZHMlMjBjb2xsZWN0aW9uJTIwY29sb3JmdWwlMjBkaWdpdGFsfGVufDF8fHx8MTc3MzYyOTgyN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+    image: imgKittyHubPreview,
     color: "#7B2D52", accent: "123,45,82",
     slug: "/projects/kittyhub",
   },

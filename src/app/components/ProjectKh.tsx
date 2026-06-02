@@ -9,18 +9,19 @@ import { useAnimationActive } from "./useAnimationActive";
 
 /* -- Assets -- */
 import svgPaths from "../../imports/svg-h5iq7vbtzp";
-import imgImage7 from "figma:asset/dc815145ec18436ffcdef8fc925526f0415460c9.png";
-import imgRectangle135 from "figma:asset/0cf88e0796a9b73a0aded9e4b82e91d0a13143b9.png";
-import imgRectangle136 from "figma:asset/9035adb0baa59f06f42b394fba1a470cf0d2c765.png";
-import imgBusStopBillboardMockUp1 from "figma:asset/f61ed03540e2e1f3928225bbb2fd7075fdfc91a8.png";
-import imgPosterFrameMockup1 from "figma:asset/278b602829db42fbcb7cfc26ac93d2819c94481b.png";
-import imgPosterFrameMockup2 from "figma:asset/34722d014e8744a1fda2275c4feedfcddbe2e879.png";
-import imgMockupDeuxEcransBento1 from "figma:asset/317236e86546e144e954d1914b65374177cc75bd.png";
-import imgIpadScreen from "figma:asset/1429bba0cecc4b516855c6777b24ea2af4ffc633.png";
-import imgCaptureDecran2 from "figma:asset/e0141b060fe6b96869dc5bbd5ac374f1789983bd.png";
-import imgImg from "figma:asset/b236a6bf8c9ad71423f0c67013a6f2ca22b49dbd.png";
-import imgUnit from "figma:asset/3f415cd75e8a755a032ae16a3406c41dcc2d667a.png";
-import imgMew1 from "figma:asset/90261cfa51c4e22fef545a7e43cd2d9ceaf9b879.png";
+import imgMew from "../../assets/kittyhub/01-mew.png";
+import imgPictoOrbit from "../../assets/kittyhub/02-picto.png";
+import imgPictoCrystal from "../../assets/kittyhub/03-picto.png";
+import imgCards from "../../assets/kittyhub/04-cards.png";
+import imgInterfaceMobile1 from "../../assets/kittyhub/05-interface-mobile.png";
+import imgInterfaceMobile2 from "../../assets/kittyhub/06-interface-mobile.png";
+import imgIpadApplication from "../../assets/kittyhub/07-application-ipad.png";
+import imgTeamWhite from "../../assets/kittyhub/08-equipe-version-blanc.png";
+import imgTeamBlack from "../../assets/kittyhub/09-equipe-version-noir.png";
+import imgBentoMockup from "../../assets/kittyhub/10-mockup-bento.jpg";
+import imgSituation from "../../assets/kittyhub/11-mise-en-situation.png";
+import imgMockup1 from "../../assets/kittyhub/12-MOCKUP-1.png";
+import imgMockup2 from "../../assets/kittyhub/13-MOCKUP-2.png";
 import UxWebHome from "../../imports/UxWebHome";
 
 /* -- Helpers -- */
@@ -584,12 +585,12 @@ function CardsSection() {
         <div className="grid grid-cols-2 gap-3 mb-4 max-w-[180px] mr-auto">
           <FadeIn delay={0.15}>
             <div className="rounded-lg overflow-hidden p-3" style={{ border: `1px solid ${r(0.04)}` }}>
-              <img src={imgImg} alt="KittyHub visual element" className="w-full object-contain" />
+              <img src={imgPictoOrbit} alt="KittyHub visual element" className="w-full object-contain" />
             </div>
           </FadeIn>
           <FadeIn delay={0.2}>
             <div className="rounded-lg overflow-hidden p-3" style={{ border: `1px solid ${r(0.04)}` }}>
-              <img src={imgUnit} alt="KittyHub unit element" className="w-full object-contain" />
+              <img src={imgPictoCrystal} alt="KittyHub unit element" className="w-full object-contain" />
             </div>
           </FadeIn>
         </div>
@@ -597,7 +598,7 @@ function CardsSection() {
         {/* Full-width cards image */}
         <FadeIn delay={0.25}>
           <div className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-            <img src={imgImage7} alt="KittyHub cards system" className="w-full object-cover" />
+            <img src={imgCards} alt="KittyHub cards system" className="w-full object-cover" />
           </div>
         </FadeIn>
       </div>
@@ -629,12 +630,12 @@ function InterfaceSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FadeIn delay={0.15}>
             <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-              <img src={imgRectangle135} alt="KittyHub UI screen 1" className="w-full object-cover" />
+              <img src={imgInterfaceMobile1} alt="KittyHub UI screen 1" className="w-full object-cover" />
             </div>
           </FadeIn>
           <FadeIn delay={0.2}>
             <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-              <img src={imgRectangle136} alt="KittyHub UI screen 2" className="w-full object-cover" />
+              <img src={imgInterfaceMobile2} alt="KittyHub UI screen 2" className="w-full object-cover" />
             </div>
           </FadeIn>
         </div>
@@ -688,7 +689,7 @@ function IPadPrototypeSection() {
                 }}
               >
                 <img
-                  src={imgIpadScreen}
+                  src={imgIpadApplication}
                   alt="KittyHub iPad application"
                   className="w-full h-full object-cover"
                 />
@@ -837,7 +838,7 @@ function WebInterfaceSection() {
    =================================== */
 function TeamSection() {
   const { t } = useI18n();
-  const { r } = useTheme();
+  const { r, isDark } = useTheme();
 
   return (
     <section className="px-6 md:px-16 py-16">
@@ -848,7 +849,7 @@ function TeamSection() {
 
         <FadeIn delay={0.1}>
           <div className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-            <img src={imgCaptureDecran2} alt="KittyHub team" className="w-full object-cover" />
+            <img src={isDark ? imgTeamWhite : imgTeamBlack} alt="KittyHub team" className="w-full object-cover" />
           </div>
         </FadeIn>
       </div>
@@ -872,7 +873,7 @@ function BentoSection() {
 
         <FadeIn delay={0.1}>
           <div className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-            <img src={imgMockupDeuxEcransBento1} alt="KittyHub Bento UI mockup" className="w-full object-cover" />
+            <img src={imgBentoMockup} alt="KittyHub Bento UI mockup" className="w-full object-cover" />
           </div>
         </FadeIn>
       </div>
@@ -904,18 +905,18 @@ function MockupsSection() {
         <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-4">
           <FadeIn delay={0.15}>
             <div className="rounded-xl overflow-hidden h-full" style={{ border: `1px solid ${r(0.04)}` }}>
-              <img src={imgBusStopBillboardMockUp1} alt="KittyHub bus stop mockup" className="w-full h-full object-cover" />
+              <img src={imgSituation} alt="KittyHub bus stop mockup" className="w-full h-full object-cover" />
             </div>
           </FadeIn>
           <div className="flex flex-col gap-4">
             <FadeIn delay={0.2}>
               <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-                <img src={imgPosterFrameMockup1} alt="KittyHub poster frame 1" className="w-full object-cover" />
+                <img src={imgMockup1} alt="KittyHub poster frame 1" className="w-full object-cover" />
               </div>
             </FadeIn>
             <FadeIn delay={0.25}>
               <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-                <img src={imgPosterFrameMockup2} alt="KittyHub poster frame 2" className="w-full object-cover" />
+                <img src={imgMockup2} alt="KittyHub poster frame 2" className="w-full object-cover" />
               </div>
             </FadeIn>
           </div>
@@ -1270,7 +1271,7 @@ function FloatingMew() {
         }}
       >
         <motion.img
-          src={imgMew1}
+          src={imgMew}
           alt=""
           className="w-[120px] select-none"
           draggable={false}
