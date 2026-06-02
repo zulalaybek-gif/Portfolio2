@@ -9,12 +9,12 @@ import { ProjectBackButton } from "./ProjectBackButton";
 
 /* -- Assets -- */
 import svgPaths from "../../imports/svg-u09fl664kx";
-import imgPage1 from "figma:asset/190803e9cd681acad1c199af0309663ae8cf15ae.png";
-import imgPage2 from "figma:asset/5ae464074b37b6de60a115b877a67cb8e2a9e214.png";
-import imgPage3 from "figma:asset/52717e8a23f929a1949e2ee2349edd13cd5a5a76.png";
-import imgPage4 from "figma:asset/20f0b57bd50474d3d41c20ee7c515dec39d20eb5.png";
-import imgPage5 from "figma:asset/4f0d4106c0c1898dd0ef08dcae06dff23fe89ab5.png";
-import imgMockup from "figma:asset/0022665ae415c3df7012aeae57e0da8c29841f97.png";
+import imgPage1 from "../../assets/snatsh/01-brochure.png";
+import imgPage2 from "../../assets/snatsh/02-brochure.png";
+import imgPage3 from "../../assets/snatsh/03-brochure.png";
+import imgPage4 from "../../assets/snatsh/04-brochure.png";
+import imgPage5 from "../../assets/snatsh/05-brochure.png";
+import imgMockup from "../../assets/snatsh/06-mockup.png";
 
 /* -- Helpers -- */
 const ACCENT = "#c0c1a4";
