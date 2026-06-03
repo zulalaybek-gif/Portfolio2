@@ -1,5 +1,4 @@
 import { motion } from "motion/react";
-import { useState } from "react";
 import { useNavigate } from "react-router";
 import { ProjectBackButton } from "./ProjectBackButton";
 import { useI18n } from "./i18n";
@@ -24,9 +23,6 @@ import imgMotionB from "../../assets/parsemains/16.habillage-video-3.png";
 import imgMotionC from "../../assets/parsemains/17.habillage-video-4.png";
 import imgWebsite from "../../assets/parsemains/18.refonte-de-site-web.png";
 import imgMobile from "../../assets/parsemains/19.refonte-de-site-mobile.png";
-import imgBookmarkA from "../../assets/parsemains/20.marque-page-1.jpg";
-import imgBookmarkB from "../../assets/parsemains/21-marque-page-2.jpg";
-import imgBookmarkC from "../../assets/parsemains/22.marque-page-3.jpg";
 import imgBookmarks from "../../assets/parsemains/23.marque-page-1-2-3.png";
 import imgPosters from "../../assets/parsemains/24-mockup-affiches.png";
 import imgPackaging from "../../assets/parsemains/25.mockup-packaging.png";
@@ -488,53 +484,33 @@ function PictogramsSection() {
 }
 
 function PrintSection() {
-  const { r } = useTheme();
-  const [activeBookmark, setActiveBookmark] = useState(imgBookmarkA);
-  const bookmarkOptions = [
-    { src: imgBookmarkA, color: ORANGE },
-    { src: imgBookmarkB, color: MAGENTA },
-    { src: imgBookmarkC, color: BLUE },
-  ];
   return (
     <section className="px-6 md:px-12 py-20">
       <div className="max-w-6xl mx-auto">
         <FadeIn>
           <SectionLabel>Supports imprimes</SectionLabel>
-          <SectionTitle>Objets, affiches & marque-pages</SectionTitle>
+          <SectionTitle>Objets, depliant & marque-pages</SectionTitle>
         </FadeIn>
+
         <div className="grid lg:grid-cols-2 gap-6">
           <ImageCard src={imgBrochure} alt="Mise en situation du depliant Parsemains" className="aspect-[16/10]" />
-          <ImageCard src={imgPosters} alt="Mockup affiches Parsemains" className="aspect-[16/10]" />
-          <div className="lg:col-span-2 grid lg:grid-cols-[1.1fr_0.9fr] gap-6 items-stretch">
-            <ImageCard src={imgBookmarks} alt="Trois marque-pages Parsemains" className="aspect-[16/10]" imgClassName="w-full h-full object-contain" pad />
-            <FadeIn>
-              <div className="rounded-3xl p-5 md:p-6 h-full" style={{ background: `linear-gradient(135deg, ${ORANGE}16, ${BLUE}10)`, border: `1px solid ${r(0.06)}` }}>
-                <p className="mb-5" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.82rem", lineHeight: 1.7, color: r(0.38) }}>
-                  Les marque-pages reprennent le meme systeme graphique avec des variations colorees. Survolez les pastilles pour isoler chaque version.
-                </p>
-                <div className="relative rounded-2xl overflow-hidden aspect-square bg-white">
-                  <motion.img key={activeBookmark} src={activeBookmark} alt="Variation de marque-page Parsemains" className="absolute inset-0 h-full w-full object-cover" initial={{ scale: 1.04, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.35 }} />
-                </div>
-                <div className="flex gap-3 mt-5">
-                  {bookmarkOptions.map((option) => (
-                    <button
-                      key={option.src}
-                      type="button"
-                      onMouseEnter={() => setActiveBookmark(option.src)}
-                      onFocus={() => setActiveBookmark(option.src)}
-                      onClick={() => setActiveBookmark(option.src)}
-                      className="h-9 w-9 rounded-full transition-transform hover:scale-110 focus:outline-none"
-                      style={{ background: option.color, boxShadow: activeBookmark === option.src ? `0 0 0 3px ${option.color}44` : "none" }}
-                      aria-label="Afficher une variation de marque-page"
-                    />
-                  ))}
-                </div>
-              </div>
-            </FadeIn>
-          </div>
+          <ImageCard src={imgBookmarks} alt="Trois marque-pages Parsemains" className="aspect-[16/10]" imgClassName="w-full h-full object-contain" pad />
           <ImageCard src={imgBookmarkMockup} alt="Mise en situation marque-page Parsemains" className="aspect-[16/10]" />
-          <ImageCard src={imgPackaging} alt="Mockup packaging Parsemains" className="aspect-[16/10]" />
         </div>
+
+        <FadeIn>
+          <div className="mt-14">
+            <SectionLabel>Affiches</SectionLabel>
+            <ImageCard src={imgPosters} alt="Mockup affiches Parsemains" className="aspect-[16/8]" />
+          </div>
+        </FadeIn>
+
+        <FadeIn>
+          <div className="mt-14">
+            <SectionLabel>Packaging</SectionLabel>
+            <ImageCard src={imgPackaging} alt="Mockup packaging Parsemains" className="aspect-[16/8]" />
+          </div>
+        </FadeIn>
       </div>
     </section>
   );
