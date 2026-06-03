@@ -27,12 +27,14 @@ import imgBookmarks from "../../assets/parsemains/23.marque-page-1-2-3.png";
 import imgPosters from "../../assets/parsemains/24-mockup-affiches.png";
 import imgPackaging from "../../assets/parsemains/25.mockup-packaging.png";
 import shapeSun from "../../assets/parsemains/A.soleil.svg";
-import shapeWaveA from "../../assets/parsemains/C.vagues-1.svg";
-import shapeWaveB from "../../assets/parsemains/D.vagues-2.svg";
-import shapeWaveC from "../../assets/parsemains/E.vagues-3.svg";
 import extraIconA from "../../assets/parsemains/F.picto.svg";
 import extraIconB from "../../assets/parsemains/G.picto.svg";
 import extraIconC from "../../assets/parsemains/H.picto.svg";
+import shapeWaveJ from "../../assets/parsemains/J.vagues.svg";
+
+const shapeWaveA = shapeWaveJ;
+const shapeWaveB = shapeWaveJ;
+const shapeWaveC = shapeWaveJ;
 
 const ORANGE = "#F08100";
 const ORANGE_SOFT = "#F4A64A";
@@ -170,18 +172,32 @@ function DecorativeLayer() {
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden">
       <motion.img
-        src={shapeWaveA}
+        src={shapeWaveJ}
         alt=""
-        className="absolute -right-[18%] top-[5%] w-[58rem] opacity-[0.13]"
+        className="absolute right-0 top-10 w-[42rem] max-w-[88vw] opacity-[0.42]"
         animate={{ y: [0, 18, 0], rotate: [0, 1.5, 0] }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.img
-        src={shapeWaveB}
+        src={shapeWaveA}
         alt=""
-        className="absolute left-[8%] bottom-[5%] w-[34rem] opacity-[0.08]"
+        className="absolute left-4 bottom-6 w-[28rem] max-w-[78vw] opacity-[0.26]"
         animate={{ x: [0, -16, 0] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.img
+        src={shapeSun}
+        alt=""
+        className="absolute right-[10%] bottom-[18%] w-20 opacity-[0.34] md:w-28"
+        animate={{ rotate: [0, 8, 0], scale: [1, 1.05, 1] }}
+        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.img
+        src={extraIconA}
+        alt=""
+        className="absolute right-[18%] top-[24%] hidden w-20 opacity-[0.18] md:block"
+        animate={{ y: [0, -10, 0], rotate: [0, -2, 0] }}
+        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
       />
     </div>
   );
@@ -220,7 +236,7 @@ function HeroSection() {
   const { r, isDark } = useTheme();
 
   return (
-    <section className="relative min-h-[78vh] overflow-hidden px-6 md:px-12 pt-28 pb-20">
+    <section className="relative min-h-[78vh] overflow-hidden px-6 md:px-12 pt-28 pb-16 md:pb-20">
       <ProjectBackButton
         onClick={() => navigate("/projects")}
         style={{
@@ -272,7 +288,7 @@ function HeroSection() {
 function IntroSection() {
   const { r } = useTheme();
   return (
-    <section className="px-6 md:px-12 py-16">
+    <section className="px-6 md:px-12 py-14 md:py-16">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-16">
         <FadeIn>
           <SectionLabel>Direction visuelle</SectionLabel>
@@ -298,17 +314,45 @@ function IntroSection() {
 }
 
 function LogoSection() {
-  const { isDark } = useTheme();
+  const { r, isDark } = useTheme();
   return (
-    <section className="px-6 md:px-12 py-20">
+    <section className="relative overflow-hidden px-6 md:px-12 py-16 md:py-[4.5rem]">
       <div className="max-w-6xl mx-auto">
         <FadeIn>
           <SectionLabel>Logo</SectionLabel>
           <SectionTitle>Logo principal</SectionTitle>
         </FadeIn>
         <FadeIn>
-          <div className="min-h-[4.5rem] flex items-center justify-start py-4 md:py-5">
-            <img src={logoMain} alt="Logo principal Parsemains" className="w-full max-w-[6rem] md:max-w-[8rem]" style={{ filter: isDark ? "invert(1)" : "none" }} />
+          <div
+            className="relative overflow-hidden rounded-[2rem] px-6 py-10 md:px-12 md:py-14"
+            style={{
+              background: isDark ? `linear-gradient(135deg, ${r(0.03)}, rgba(240,129,0,0.08))` : `linear-gradient(135deg, #fff, ${PAPER})`,
+              border: `1px solid ${r(0.06)}`,
+            }}
+          >
+            <img src={shapeWaveJ} alt="" className="absolute right-5 top-4 w-[32rem] max-w-[86vw] opacity-[0.36]" />
+            <img src={shapeWaveA} alt="" className="absolute left-4 bottom-0 w-[24rem] max-w-[70vw] opacity-[0.22]" />
+            <motion.img
+              src={shapeSun}
+              alt=""
+              className="absolute right-8 bottom-8 w-16 opacity-[0.32] md:w-20"
+              animate={{ rotate: [0, 8, 0], scale: [1, 1.04, 1] }}
+              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <div className="relative z-10 flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
+              <div className="flex min-h-[5rem] items-center">
+                <img src={logoMain} alt="Logo principal Parsemains" className="w-full max-w-[6rem] md:max-w-[8rem]" style={{ filter: isDark ? "invert(1)" : "none" }} />
+              </div>
+              <div className="flex items-end gap-3 md:gap-4">
+                {[ORANGE, "#FFFFFF", BLACK].map((color) => (
+                  <span
+                    key={color}
+                    className="block h-12 w-12 rounded-2xl md:h-16 md:w-16"
+                    style={{ background: color, border: color === "#FFFFFF" ? `1px solid ${r(0.14)}` : "none" }}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
         </FadeIn>
       </div>
@@ -323,7 +367,7 @@ function LogoVariationsSection() {
     { src: logoAltB, label: "Version orange", filter: "none" },
   ];
   return (
-    <section className="px-6 md:px-12 py-16">
+    <section className="px-6 md:px-12 py-14 md:py-16">
       <div className="max-w-6xl mx-auto">
         <FadeIn>
           <SectionLabel>Declinaisons</SectionLabel>
@@ -381,14 +425,17 @@ function UniverseSection() {
     },
   ];
   return (
-    <section className="px-6 md:px-12 py-20">
-      <div className="max-w-6xl mx-auto">
+    <section className="relative overflow-hidden px-6 md:px-12 py-[4.5rem] md:py-24">
+      <img src={shapeWaveB} alt="" className="pointer-events-none absolute right-8 top-10 w-[36rem] max-w-[80vw] opacity-[0.18]" />
+      <img src={shapeSun} alt="" className="pointer-events-none absolute left-6 top-28 w-16 opacity-[0.22] md:left-12 md:w-20" />
+      <img src={extraIconC} alt="" className="pointer-events-none absolute right-10 bottom-12 hidden w-24 opacity-[0.16] md:block" />
+      <div className="relative z-10 max-w-6xl mx-auto">
         <FadeIn>
           <SectionLabel>Univers graphique</SectionLabel>
           <SectionTitle>Couleurs, typographies & signes</SectionTitle>
         </FadeIn>
 
-        <div className="grid lg:grid-cols-2 gap-6">
+        <div className="grid lg:grid-cols-2 gap-5 md:gap-6">
           {typoSamples.map((typo, index) => (
             <FadeIn key={typo.name} delay={index * 0.08}>
               <div className="rounded-3xl p-6 md:p-7 h-full" style={{ background: isDark ? r(0.04) : "#fff", border: `1px solid ${r(0.06)}` }}>
@@ -424,7 +471,12 @@ function UniverseSection() {
         </div>
 
         <FadeIn>
-          <div className="mt-8 rounded-3xl p-6 md:p-8" style={{ background: isDark ? r(0.04) : "#fff", border: `1px solid ${r(0.06)}` }}>
+          <div
+            className="relative mt-8 overflow-hidden rounded-[2rem] p-6 md:p-8"
+            style={{ background: isDark ? r(0.035) : "#fff", border: `1px solid ${r(0.06)}` }}
+          >
+            <img src={shapeWaveJ} alt="" className="absolute right-4 top-0 w-[34rem] max-w-[82vw] opacity-[0.19]" />
+            <div className="relative z-10">
             <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.25rem", fontWeight: 700, color: r(0.74) }}>Couleurs principales</h3>
             <div className="mt-5 grid grid-cols-3 gap-4 md:gap-5">
               {primaryColors.map((color) => (
@@ -448,14 +500,16 @@ function UniverseSection() {
                 </div>
               ))}
             </div>
+            </div>
           </div>
         </FadeIn>
 
         <FadeIn>
-          <div className="mt-10">
+          <div className="relative mt-12 overflow-hidden">
+            <img src={shapeWaveC} alt="" className="pointer-events-none absolute right-0 top-0 hidden w-[28rem] opacity-[0.16] md:block" />
             <SectionLabel>Systeme de titrage</SectionLabel>
-            <div className="grid lg:grid-cols-[0.82fr_1.18fr] gap-8 items-start">
-              <div>
+            <div className="relative z-10 grid lg:grid-cols-[0.82fr_1.18fr] gap-8 items-start">
+              <div className="max-w-2xl">
                 <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(1.4rem, 3vw, 2.15rem)", fontWeight: 700, color: r(0.78) }}>
                   Un format label pour porter l'engagement.
                 </h3>
@@ -492,16 +546,17 @@ function PictogramsSection() {
     { src: iconSift, label: "Tamiser le papier" },
   ];
   return (
-    <section className="px-6 md:px-12 py-16">
+    <section className="px-6 md:px-12 py-12 md:py-16">
       <div className="max-w-6xl mx-auto">
         <FadeIn>
           <SectionLabel>Pictogrammes</SectionLabel>
           <SectionTitle>Un vocabulaire simple et identifiable</SectionTitle>
         </FadeIn>
         <FadeIn>
-          <div className="relative overflow-hidden rounded-3xl px-6 py-12 md:px-12 md:py-16" style={{ background: ORANGE }}>
-            <img src={shapeWaveA} alt="" className="absolute -left-24 -top-28 w-[34rem] opacity-[0.22] brightness-0 invert" />
-            <img src={shapeWaveB} alt="" className="absolute -right-24 -bottom-32 w-[36rem] opacity-[0.18] brightness-0 invert" />
+          <div className="relative overflow-hidden rounded-[2rem] px-6 py-12 md:px-12 md:py-16" style={{ background: ORANGE }}>
+            <img src={shapeWaveJ} alt="" className="absolute left-4 top-0 w-[42rem] max-w-[90vw] opacity-[0.34] brightness-0 invert" />
+            <img src={shapeWaveB} alt="" className="absolute right-4 bottom-0 w-[36rem] max-w-[88vw] opacity-[0.27] brightness-0 invert" />
+            <img src={extraIconB} alt="" className="absolute right-8 top-8 hidden w-20 opacity-[0.18] brightness-0 invert md:block" />
             <div className="relative z-10 grid md:grid-cols-3 gap-10 md:gap-12 items-end">
               {icons.map((icon, index) => (
                 <motion.div
@@ -532,14 +587,14 @@ function PictogramsSection() {
 
 function PrintSection() {
   return (
-    <section className="px-6 md:px-12 py-20">
+    <section className="px-6 md:px-12 py-16 md:py-20">
       <div className="max-w-6xl mx-auto">
         <FadeIn>
           <SectionLabel>Supports imprimes</SectionLabel>
           <SectionTitle>Objets, depliant & marque-pages</SectionTitle>
         </FadeIn>
 
-        <div className="grid lg:grid-cols-2 gap-6">
+        <div className="grid lg:grid-cols-2 gap-5 md:gap-6">
           <ImageCard src={imgBrochure} alt="Mise en situation du depliant Parsemains" className="aspect-[16/10]" />
           <ImageCard src={imgBookmarks} alt="Trois marque-pages Parsemains" className="aspect-[16/10]" imgClassName="w-full h-full object-contain" pad />
           <ImageCard src={imgBookmarkMockup} alt="Mise en situation marque-page Parsemains" className="aspect-[16/10]" />
@@ -565,8 +620,16 @@ function PrintSection() {
 function SocialSection() {
   const { r, isDark } = useTheme();
   return (
-    <section className="px-6 md:px-12 py-20">
-      <div className="max-w-6xl mx-auto">
+    <section className="relative overflow-hidden px-6 md:px-12 py-[4.5rem] md:py-24">
+      <img src={shapeWaveA} alt="" className="pointer-events-none absolute left-6 top-20 w-[32rem] max-w-[80vw] opacity-[0.18]" />
+      <motion.img
+        src={shapeSun}
+        alt=""
+        className="pointer-events-none absolute right-10 top-28 w-16 opacity-[0.28] md:w-20"
+        animate={{ rotate: [0, -9, 0], y: [0, 8, 0] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <div className="relative z-10 max-w-6xl mx-auto">
         <FadeIn>
           <SectionLabel>Reseaux sociaux</SectionLabel>
           <SectionTitle>Un systeme editorial reconnaissable</SectionTitle>
@@ -576,7 +639,7 @@ function SocialSection() {
           <div>
             <SectionLabel>Instagram</SectionLabel>
             <motion.div
-              className="relative overflow-hidden rounded-3xl px-5 py-8 md:px-10 md:py-12"
+              className="relative overflow-hidden rounded-[2rem] px-4 py-8 md:px-8 md:py-10"
               style={{
                 background: "#fff",
                 border: `1px solid ${r(0.06)}`,
@@ -585,10 +648,10 @@ function SocialSection() {
               whileHover={{ y: -5 }}
               transition={{ type: "spring", stiffness: 240, damping: 24 }}
             >
-              <img src={shapeWaveA} alt="" className="absolute -right-20 -top-28 w-[34rem] opacity-[0.34]" />
-              <img src={shapeWaveB} alt="" className="absolute -right-28 bottom-2 w-[24rem] opacity-[0.18]" />
-              <img src={extraIconA} alt="" className="absolute right-[9%] top-[12%] w-16 opacity-[0.14]" />
-              <img src={imgSocialProfile} alt="Composition Instagram Parsemains" className="relative z-10 mx-auto block w-full max-w-[880px] h-auto" loading="lazy" />
+              <img src={shapeWaveJ} alt="" className="absolute right-6 top-0 w-[34rem] max-w-[84vw] opacity-[0.34]" />
+              <img src={shapeWaveB} alt="" className="absolute right-0 bottom-0 w-[24rem] max-w-[70vw] opacity-[0.22]" />
+              <img src={extraIconA} alt="" className="absolute right-[8%] top-[9%] w-16 opacity-[0.2]" />
+              <img src={imgSocialProfile} alt="Composition Instagram Parsemains" className="relative z-10 mx-auto block w-full max-w-[760px] h-auto" loading="lazy" />
             </motion.div>
           </div>
         </FadeIn>
@@ -623,7 +686,7 @@ function SocialSection() {
 function MotionSection() {
   const { r, isDark } = useTheme();
   return (
-    <section className="px-6 md:px-12 py-20">
+    <section className="px-6 md:px-12 py-16 md:py-20">
       <div className="max-w-6xl mx-auto">
         <FadeIn>
           <SectionLabel>Habillage video</SectionLabel>
@@ -654,7 +717,7 @@ function MotionSection() {
 function WebsiteSection() {
   const { r, isDark } = useTheme();
   return (
-    <section className="px-6 md:px-12 py-20">
+    <section className="px-6 md:px-12 py-16 md:py-20">
       <div className="max-w-6xl mx-auto">
         <FadeIn>
           <SectionLabel>Experience numerique</SectionLabel>
@@ -668,7 +731,7 @@ function WebsiteSection() {
               boxShadow: isDark ? "0 28px 80px rgba(0,0,0,0.24)" : "0 28px 80px rgba(0,0,0,0.08)",
             }}
           >
-            <img src={shapeWaveA} alt="" className="absolute -right-24 -top-28 w-[34rem] opacity-[0.18]" />
+            <img src={shapeWaveJ} alt="" className="absolute right-6 top-0 w-[34rem] max-w-[82vw] opacity-[0.2]" />
             <div className="relative z-10 grid lg:grid-cols-[1.35fr_0.65fr] gap-8 md:gap-12 items-center">
               <motion.img
                 src={imgWebsite}
@@ -697,7 +760,7 @@ function WebsiteSection() {
 function VideoSection() {
   const { r, isDark } = useTheme();
   return (
-    <section className="px-6 md:px-12 py-20">
+    <section className="px-6 md:px-12 py-16 md:py-20">
       <div className="max-w-6xl mx-auto grid lg:grid-cols-[0.8fr_1.2fr] gap-10 items-center">
         <FadeIn>
           <SectionLabel>Video de presentation</SectionLabel>
@@ -708,7 +771,7 @@ function VideoSection() {
         </FadeIn>
         <FadeIn>
           <div className="relative flex justify-center">
-            <img src={shapeSun} alt="" className="absolute -right-8 top-8 w-[17rem] opacity-[0.08]" />
+            <img src={shapeSun} alt="" className="absolute right-4 top-6 w-24 opacity-[0.22]" />
             <div
               className="relative w-full max-w-[270px] rounded-[2.8rem] bg-black p-2.5"
               style={{ boxShadow: isDark ? "0 32px 90px rgba(0,0,0,0.38)" : "0 32px 90px rgba(0,0,0,0.16)" }}
@@ -728,7 +791,7 @@ function VideoSection() {
 function ClosingSection() {
   const { r } = useTheme();
   return (
-    <section className="px-6 md:px-12 py-20">
+    <section className="px-6 md:px-12 py-16 md:py-20">
       <FadeIn>
         <div className="max-w-3xl mx-auto text-center">
           <div className="w-16 h-[1px] mx-auto mb-8" style={{ background: `linear-gradient(90deg, transparent, ${ORANGE}, transparent)` }} />
@@ -744,7 +807,6 @@ function ClosingSection() {
 export function ProjectParsemains() {
   return (
     <main className="relative min-h-screen overflow-hidden">
-      <PageDecor />
       <div className="relative z-10">
         <HeroSection />
         <IntroSection />
