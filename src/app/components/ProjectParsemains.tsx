@@ -9,9 +9,12 @@ import titleSystemA from "../../assets/parsemains/04.systeme-de-titrage.svg";
 import titleSystemB from "../../assets/parsemains/05.systeme-de-titrage.svg";
 import imgBrochure from "../../assets/parsemains/06.depliant.jpg";
 import imgBookmarkMockup from "../../assets/parsemains/07.marque-page.png";
-import iconRecover from "../../assets/parsemains/08.picto-recuperer-le-papier.svg";
-import iconDry from "../../assets/parsemains/09.picto-secher-le-papier.svg";
-import iconSift from "../../assets/parsemains/10.picto-tamiser-le-papier.svg";
+import iconRecoverLight from "../../assets/parsemains/X.picto-recuperer-orange.svg";
+import iconRecoverDark from "../../assets/parsemains/X.picto-recuperer-blanc.svg";
+import iconDryLight from "../../assets/parsemains/Y.picto-sechage-orange.svg";
+import iconDryDark from "../../assets/parsemains/Y.picto-sechage-blanc.svg";
+import iconSiftLight from "../../assets/parsemains/Z.picto-tamiser-orange.svg";
+import iconSiftDark from "../../assets/parsemains/Z.picto-tamiser-blanc.svg";
 import imgSocialProfile from "../../assets/parsemains/11.reseaux-sociaux.png";
 import imgLinkedin from "../../assets/parsemains/12.linkedin.png";
 import imgLinkedinPosts from "../../assets/parsemains/13.linkedin-publications.png";
@@ -369,6 +372,12 @@ function PaletteSection() {
 
 function GraphicSystemSection() {
   const { r, isDark } = useTheme();
+  const pictograms = [
+    { src: isDark ? iconRecoverDark : iconRecoverLight, label: "Récupérer le papier" },
+    { src: isDark ? iconDryDark : iconDryLight, label: "Sécher le papier" },
+    { src: isDark ? iconSiftDark : iconSiftLight, label: "Tamiser le papier" },
+  ];
+
   return (
     <section className="px-6 md:px-12 py-12 md:py-16">
       <div className="max-w-6xl mx-auto">
@@ -384,11 +393,7 @@ function GraphicSystemSection() {
         <FadeIn>
           <div className="mt-8 border-y py-7 md:py-9" style={{ borderColor: r(0.08) }}>
             <div className="grid grid-cols-3 items-end gap-4 md:gap-8">
-              {[
-                { src: iconRecover, label: "Récupérer le papier" },
-                { src: iconDry, label: "Sécher le papier" },
-                { src: iconSift, label: "Tamiser le papier" },
-              ].map((icon, index) => (
+              {pictograms.map((icon, index) => (
                 <motion.div
                   key={icon.label}
                   className="flex flex-col items-center gap-4"
@@ -400,7 +405,6 @@ function GraphicSystemSection() {
                     src={icon.src}
                     alt={icon.label}
                     className="h-16 w-full object-contain md:h-24"
-                    style={{ filter: isDark ? "brightness(0) invert(1)" : "none" }}
                     loading="lazy"
                   />
                   <span className="text-center" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(0.78rem, 1.5vw, 1rem)", fontWeight: 600, color: r(0.64) }}>
