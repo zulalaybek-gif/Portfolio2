@@ -251,7 +251,7 @@ function HeroSection() {
             transition={{ duration: 0.9, delay: 0.08, ease: "easeOut" }}
             className="mb-9 max-w-xl"
           >
-            <img src={logoMain} alt="Parsemains" className="w-full max-w-[33rem]" style={{ filter: isDark ? "invert(1)" : "none" }} />
+            <img src={logoMain} alt="Parsemains" className="w-full max-w-[13rem] md:max-w-[17rem]" style={{ filter: isDark ? "invert(1)" : "none" }} />
           </motion.div>
 
           <motion.p
