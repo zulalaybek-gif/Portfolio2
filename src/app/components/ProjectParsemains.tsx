@@ -279,15 +279,6 @@ function HeroSection() {
           >
             Parsemains est un projet de refonte d'identite visuelle pense autour du papier, du territoire et de la transmission. L'objectif etait de construire un univers plus contemporain, expressif et memorable, tout en conservant l'ancrage artisanal et local de la marque.
           </motion.p>
-          <motion.p
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.28 }}
-            className="mt-5 max-w-xl"
-            style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.92rem", lineHeight: 1.75, color: r(0.36) }}
-          >
-            Projet realise en equipe dans le cadre d'un workshop. J'ai participe a la construction de la direction artistique, aux recherches graphiques et a la formalisation de l'univers visuel de la marque.
-          </motion.p>
         </div>
       </div>
     </section>
@@ -297,25 +288,22 @@ function HeroSection() {
 function IntroSection() {
   const { r } = useTheme();
   return (
-    <section className="px-6 md:px-12 py-14 md:py-16">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-16">
+    <section className="px-6 md:px-12 py-14 md:py-[4.5rem]">
+      <div className="max-w-6xl mx-auto grid gap-8 md:grid-cols-[0.72fr_1.28fr] md:items-start">
         <FadeIn>
-          <SectionLabel>Direction visuelle</SectionLabel>
-          <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(1.35rem, 2.6vw, 2rem)", fontWeight: 650, color: ORANGE }}>
-            Une identite plus contemporaine, expressive et memorisable.
+          <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(1.6rem, 3vw, 2.35rem)", fontWeight: 700, letterSpacing: "-0.035em", color: r(0.78) }}>
+            Contexte du workshop
           </h2>
-          <p className="mt-5" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.38) }}>
-            Le projet s'appuie sur un storytelling fort : celui de papiers recuperes localement, transformes et perpetues a travers une identite visuelle chaleureuse, elegante et legerement decalee.
-          </p>
         </FadeIn>
-        <FadeIn delay={0.1}>
-          <SectionLabel>Enjeu du projet</SectionLabel>
-          <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(1.35rem, 2.6vw, 2rem)", fontWeight: 650, color: r(0.75) }}>
-            Raconter l'histoire de la marque sans devenir trop institutionnel.
-          </h2>
-          <p className="mt-5" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.38) }}>
-            L'enjeu etait de donner a Parsemains une identite reconnaissable, capable de raconter son histoire sans devenir trop institutionnelle. Le workshop nous a permis de construire une direction artistique plus affirmee, entre elegance, matiere, reemploi et spontaneite.
-          </p>
+        <FadeIn delay={0.08}>
+          <div className="grid gap-5 md:grid-cols-2">
+            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.38) }}>
+              Projet realise en equipe dans le cadre d'un workshop. J'ai participe a la construction de la direction artistique, aux recherches graphiques et a la formalisation de l'univers visuel de la marque.
+            </p>
+            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.38) }}>
+              Le projet s'appuie sur un storytelling fort : celui de papiers recuperes localement, transformes et perpetues a travers une identite visuelle chaleureuse, elegante et legerement decalee.
+            </p>
+          </div>
         </FadeIn>
       </div>
     </section>
@@ -325,42 +313,39 @@ function IntroSection() {
 function LogoSection() {
   const { r, isDark } = useTheme();
   return (
-    <section className="relative overflow-hidden px-6 md:px-12 py-16 md:py-[4.5rem]">
+    <section className="relative overflow-hidden px-6 md:px-12 py-14 md:py-20">
       <div className="max-w-6xl mx-auto">
         <FadeIn>
-          <SectionLabel>Logo</SectionLabel>
           <SectionTitle>Logo principal</SectionTitle>
         </FadeIn>
         <FadeIn>
           <div
-            className="relative overflow-hidden rounded-[2rem] px-6 py-10 md:px-12 md:py-14"
+            className="relative overflow-hidden rounded-[2rem] px-6 py-12 md:px-12 md:py-16"
             style={{
-              background: isDark ? `linear-gradient(135deg, ${r(0.03)}, rgba(240,129,0,0.08))` : `linear-gradient(135deg, #fff, ${PAPER})`,
+              background: isDark ? `linear-gradient(135deg, ${r(0.03)}, rgba(240,129,0,0.07))` : `linear-gradient(135deg, #fff, ${PAPER})`,
               border: `1px solid ${r(0.06)}`,
             }}
           >
-            <img src={shapeWaveJ} alt="" className="absolute right-5 top-4 w-[32rem] max-w-[86vw] opacity-[0.36]" />
-            <img src={shapeWaveA} alt="" className="absolute left-4 bottom-0 w-[24rem] max-w-[70vw] opacity-[0.22]" />
+            <motion.img
+              src={shapeWaveJ}
+              alt=""
+              className="absolute right-6 top-4 w-[34rem] max-w-[86vw] opacity-[0.3]"
+              animate={{ y: [0, 10, 0], x: [0, -8, 0] }}
+              transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <div className="absolute left-8 top-8 h-8 w-[1px]" style={{ background: ORANGE }} />
+            <div className="absolute left-8 top-8 h-[1px] w-12" style={{ background: ORANGE }} />
+            <div className="absolute right-10 bottom-10 h-10 w-[1px]" style={{ background: r(0.14) }} />
+            <div className="absolute right-10 bottom-10 h-[1px] w-14" style={{ background: r(0.14) }} />
             <motion.img
               src={shapeSun}
               alt=""
-              className="absolute right-8 bottom-8 w-16 opacity-[0.32] md:w-20"
+              className="absolute right-10 top-12 w-14 opacity-[0.26] md:w-16"
               animate={{ rotate: [0, 8, 0], scale: [1, 1.04, 1] }}
               transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
             />
-            <div className="relative z-10 flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
-              <div className="flex min-h-[5rem] items-center">
-                <img src={logoMain} alt="Logo principal Parsemains" className="w-full max-w-[6rem] md:max-w-[8rem]" style={{ filter: isDark ? "invert(1)" : "none" }} />
-              </div>
-              <div className="flex items-end gap-3 md:gap-4">
-                {[ORANGE, "#FFFFFF", BLACK].map((color) => (
-                  <span
-                    key={color}
-                    className="block h-12 w-12 rounded-2xl md:h-16 md:w-16"
-                    style={{ background: color, border: color === "#FFFFFF" ? `1px solid ${r(0.14)}` : "none" }}
-                  />
-                ))}
-              </div>
+            <div className="relative z-10 flex min-h-[8rem] items-center justify-center md:min-h-[10rem]">
+              <img src={logoMain} alt="Logo principal Parsemains" className="w-full max-w-[8rem] md:max-w-[11rem]" style={{ filter: isDark ? "invert(1)" : "none" }} />
             </div>
           </div>
         </FadeIn>
@@ -396,6 +381,193 @@ function LogoVariationsSection() {
             </FadeIn>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+function TitleSystemSection() {
+  const { r, isDark } = useTheme();
+  return (
+    <section className="relative overflow-hidden px-6 md:px-12 py-14 md:py-20">
+      <div className="max-w-6xl mx-auto">
+        <FadeIn>
+          <SectionTitle>Système de titrage</SectionTitle>
+        </FadeIn>
+        <FadeIn>
+          <div className="relative overflow-hidden rounded-[2rem] px-5 py-8 md:px-10 md:py-12" style={{ background: isDark ? r(0.035) : "#fff", border: `1px solid ${r(0.06)}` }}>
+            <motion.img
+              src={shapeWaveJ}
+              alt=""
+              className="absolute right-4 top-0 w-[34rem] max-w-[82vw] opacity-[0.2]"
+              animate={{ x: [0, -10, 0], y: [0, 8, 0] }}
+              transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <div className="relative z-10 grid gap-8 lg:grid-cols-[1fr_0.72fr] lg:items-center">
+              <div className="grid gap-6">
+                {[titleSystemA, titleSystemB].map((src) => (
+                  <motion.img
+                    key={src}
+                    src={src}
+                    alt="Systeme de titrage Parsemains"
+                    className="w-full max-h-[13rem] object-contain"
+                    style={{ filter: isDark ? "brightness(0) invert(1)" : "none" }}
+                    loading="lazy"
+                    whileHover={{ y: -4 }}
+                    transition={{ type: "spring", stiffness: 220, damping: 24 }}
+                  />
+                ))}
+              </div>
+              <p className="max-w-md" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", lineHeight: 1.75, color: r(0.38) }}>
+                Le systeme graphique reprend des elements lies au papier, a l'edition et a la fabrication : labels, traits de coupe, compositions de titrage et reperes visuels.
+              </p>
+            </div>
+          </div>
+        </FadeIn>
+      </div>
+    </section>
+  );
+}
+
+function TypographySection() {
+  const { r, isDark } = useTheme();
+  return (
+    <section className="px-6 md:px-12 py-12 md:py-16">
+      <div className="max-w-6xl mx-auto">
+        <FadeIn>
+          <SectionTitle>Typographies</SectionTitle>
+        </FadeIn>
+        <div className="grid gap-5 md:grid-cols-2">
+          {[
+            ["Titrage", "DAZZLE UNICASE", "Typographie forte et genereuse pour les labels, titres et mots-signaux.", "'Dazzle Unicase', 'Space Grotesk', sans-serif", 800],
+            ["Texte courant", "Avenir", "Typographie plus sobre pour equilibrer caractere et lisibilite.", "'Avenir', 'Inter', sans-serif", 400],
+          ].map(([label, name, text, family, weight]) => (
+            <FadeIn key={name as string}>
+              <div className="border-y py-6 md:py-8" style={{ borderColor: r(0.07) }}>
+                <span className="uppercase tracking-[0.18em]" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.58rem", color: r(0.24) }}>
+                  {label}
+                </span>
+                <h3 className="mt-4" style={{ fontFamily: family as string, fontSize: "clamp(1.7rem, 4vw, 3.2rem)", fontWeight: weight as number, color: isDark ? r(0.86) : r(0.78), letterSpacing: name === "DAZZLE UNICASE" ? "-0.04em" : "0" }}>
+                  {name}
+                </h3>
+                <p className="mt-3 max-w-md" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.84rem", lineHeight: 1.7, color: r(0.34) }}>
+                  {text}
+                </p>
+              </div>
+            </FadeIn>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PaletteSection() {
+  const { r } = useTheme();
+  const primaryColors = [
+    { name: "Orange", value: ORANGE },
+    { name: "Blanc", value: "#FFFFFF" },
+    { name: "Noir", value: BLACK },
+  ];
+  const secondaryColors = [
+    { name: "Peche", value: ORANGE_SOFT },
+    { name: "Sable", value: PEACH },
+    { name: "Magenta", value: MAGENTA },
+    { name: "Violet", value: PURPLE },
+    { name: "Bleu", value: BLUE },
+  ];
+
+  return (
+    <section className="relative overflow-hidden px-6 md:px-12 py-12 md:py-16">
+      <div className="max-w-6xl mx-auto">
+        <FadeIn>
+          <SectionTitle>Palette chromatique</SectionTitle>
+          <p className="max-w-2xl" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", lineHeight: 1.75, color: r(0.36) }}>
+            Orange pour l'energie et la vitalite, blanc pour la simplicite, noir pour le contraste, avec des touches secondaires plus vivantes et florales.
+          </p>
+        </FadeIn>
+        <FadeIn>
+          <div className="mt-8 grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+            <div>
+              <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.9rem", fontWeight: 700, color: r(0.68) }}>Couleurs principales</h3>
+              <div className="mt-4 grid grid-cols-3 gap-3">
+                {primaryColors.map((color) => (
+                  <div key={color.name}>
+                    <div className="h-16 rounded-2xl md:h-20" style={{ background: color.value, border: color.value === "#FFFFFF" ? `1px solid ${r(0.14)}` : "none" }} />
+                    <span className="mt-2 block" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.68rem", color: r(0.34) }}>{color.name}</span>
+                    <span className="block" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.62rem", fontWeight: 700, color: r(0.48) }}>{color.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.9rem", fontWeight: 700, color: r(0.68) }}>Couleurs secondaires</h3>
+              <div className="mt-4 grid grid-cols-5 gap-3">
+                {secondaryColors.map((color) => (
+                  <div key={color.name}>
+                    <div className="h-14 rounded-2xl md:h-20" style={{ background: color.value }} />
+                    <span className="mt-2 block" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.64rem", color: r(0.34) }}>{color.name}</span>
+                    <span className="block" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.58rem", fontWeight: 700, color: r(0.48) }}>{color.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </FadeIn>
+      </div>
+    </section>
+  );
+}
+
+function GraphicSystemSection() {
+  const { r, isDark } = useTheme();
+  const items = [
+    ["Formes circulaires", "Unite, cycle de vie et diffusion."],
+    ["Lignes topographiques", "Territoire, volumes et ancrage local."],
+    ["References symboliques", "Protection, transmission et singularite."],
+  ];
+  return (
+    <section className="relative overflow-hidden px-6 md:px-12 py-14 md:py-20">
+      <div className="max-w-6xl mx-auto">
+        <FadeIn>
+          <SectionTitle>Système graphique</SectionTitle>
+        </FadeIn>
+        <FadeIn>
+          <div className="relative overflow-hidden rounded-[2rem] px-6 py-10 md:px-10 md:py-12" style={{ background: ORANGE }}>
+            <motion.img
+              src={shapeWaveJ}
+              alt=""
+              className="absolute right-2 top-0 w-[42rem] max-w-[90vw] opacity-[0.32] brightness-0 invert"
+              animate={{ x: [0, -10, 0], y: [0, 8, 0] }}
+              transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <div className="relative z-10 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+              <div>
+                <p className="max-w-lg" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", lineHeight: 1.75, color: "rgba(255,255,255,0.84)" }}>
+                  Les pictogrammes ajoutent une touche plus decalee et humoristique a l'identite. Ils cassent les codes trop doux ou trop floraux, tout en rendant l'univers plus accessible.
+                </p>
+                <div className="mt-7 grid gap-3">
+                  {items.map(([title, text]) => (
+                    <div key={title} className="flex gap-3 border-t pt-3" style={{ borderColor: "rgba(255,255,255,0.22)" }}>
+                      <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-white" />
+                      <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.78rem", lineHeight: 1.6, color: "rgba(255,255,255,0.78)" }}>
+                        <strong style={{ color: "#fff" }}>{title}</strong> — {text}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="grid grid-cols-3 items-end gap-5">
+                {[iconRecover, iconDry, iconSift].map((src) => (
+                  <img key={src} src={src} alt="" className="h-32 w-full object-contain md:h-44" style={{ filter: "brightness(0) invert(1)" }} loading="lazy" />
+                ))}
+              </div>
+            </div>
+            <img src={extraIconA} alt="" className="absolute left-8 top-8 hidden w-14 opacity-[0.2] brightness-0 invert md:block" />
+            <img src={extraIconB} alt="" className="absolute right-8 bottom-8 hidden w-16 opacity-[0.16] brightness-0 invert md:block" />
+            <img src={extraIconC} alt="" className="absolute left-1/2 top-8 hidden w-14 opacity-[0.14] brightness-0 invert md:block" />
+          </div>
+        </FadeIn>
       </div>
     </section>
   );
@@ -622,30 +794,36 @@ function PictogramsSection() {
 }
 
 function PrintSection() {
+  const printItems = [
+    { src: imgBrochure, alt: "Mise en situation du depliant Parsemains" },
+    { src: imgBookmarks, alt: "Trois marque-pages Parsemains", contain: true },
+    { src: imgBookmarkMockup, alt: "Mise en situation marque-page Parsemains" },
+    { src: imgPosters, alt: "Mockup affiches Parsemains" },
+    { src: imgPackaging, alt: "Mockup packaging Parsemains" },
+  ];
   return (
-    <section className="px-6 md:px-12 py-16 md:py-20">
+    <section className="px-6 md:px-12 py-14 md:py-20">
       <div className="max-w-6xl mx-auto">
         <FadeIn>
-          <SectionLabel>Supports imprimes</SectionLabel>
-          <SectionTitle>Objets, depliant & marque-pages</SectionTitle>
+          <SectionTitle>Supports imprimés</SectionTitle>
         </FadeIn>
-
-        <div className="grid lg:grid-cols-2 gap-5 md:gap-6">
-          <ImageCard src={imgBrochure} alt="Mise en situation du depliant Parsemains" className="aspect-[16/10]" />
-          <ImageCard src={imgBookmarks} alt="Trois marque-pages Parsemains" className="aspect-[16/10]" imgClassName="w-full h-full object-contain" pad />
-          <ImageCard src={imgBookmarkMockup} alt="Mise en situation marque-page Parsemains" className="aspect-[16/10]" />
-        </div>
-
         <FadeIn>
-          <div className="mt-14 grid lg:grid-cols-2 gap-6">
-            <div>
-              <SectionLabel>Affiches</SectionLabel>
-              <ImageCard src={imgPosters} alt="Mockup affiches Parsemains" className="aspect-[16/10]" />
-            </div>
-            <div>
-              <SectionLabel>Packaging</SectionLabel>
-              <ImageCard src={imgPackaging} alt="Mockup packaging Parsemains" className="aspect-[16/10]" />
-            </div>
+          <div className="-mx-6 flex gap-5 overflow-x-auto px-6 pb-4 md:-mx-12 md:px-12" style={{ scrollbarWidth: "thin" }}>
+            {printItems.map((item, index) => (
+              <motion.div
+                key={item.src}
+                className="relative h-[18rem] w-[78vw] max-w-[28rem] shrink-0 overflow-hidden rounded-3xl md:h-[24rem] md:w-[34rem]"
+                style={{
+                  background: index === 1 ? PAPER : "#fff",
+                  border: "1px solid rgba(0,0,0,0.06)",
+                  boxShadow: "0 24px 70px rgba(0,0,0,0.08)",
+                }}
+                whileHover={{ y: -5 }}
+                transition={{ type: "spring", stiffness: 240, damping: 24 }}
+              >
+                <img src={item.src} alt={item.alt} className={`h-full w-full ${item.contain ? "object-contain p-6" : "object-cover"}`} loading="lazy" />
+              </motion.div>
+            ))}
           </div>
         </FadeIn>
       </div>
@@ -655,8 +833,13 @@ function PrintSection() {
 
 function SocialSection() {
   const { r, isDark } = useTheme();
+  const socialItems = [
+    { src: imgSocialProfile, alt: "Composition Instagram Parsemains", wide: true },
+    { src: imgLinkedin, alt: "Publication LinkedIn Parsemains" },
+    { src: imgLinkedinPosts, alt: "Publications LinkedIn Parsemains" },
+  ];
   return (
-    <section className="relative overflow-hidden px-6 md:px-12 py-[4.5rem] md:py-24">
+    <section className="relative overflow-hidden px-6 md:px-12 py-14 md:py-20">
       <img src={shapeWaveA} alt="" className="pointer-events-none absolute left-6 top-20 w-[32rem] max-w-[80vw] opacity-[0.18]" />
       <motion.img
         src={shapeSun}
@@ -667,48 +850,22 @@ function SocialSection() {
       />
       <div className="relative z-10 max-w-6xl mx-auto">
         <FadeIn>
-          <SectionLabel>Reseaux sociaux</SectionLabel>
-          <SectionTitle>Un systeme editorial reconnaissable</SectionTitle>
+          <SectionTitle>Déclinaisons social media</SectionTitle>
           <p className="max-w-3xl" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.38) }}>
             L'identite a ete pensee pour plusieurs supports : logo principal, declinaisons social media, systemes de titrage, pictogrammes, visuels Instagram et LinkedIn.
           </p>
         </FadeIn>
 
         <FadeIn>
-          <div>
-            <SectionLabel>Instagram</SectionLabel>
-            <motion.div
-              className="relative overflow-hidden rounded-[2rem] px-4 py-8 md:px-8 md:py-10"
-              style={{
-                background: "#fff",
-                border: `1px solid ${r(0.06)}`,
-                boxShadow: isDark ? "0 28px 80px rgba(0,0,0,0.24)" : "0 28px 80px rgba(0,0,0,0.08)",
-              }}
-              whileHover={{ y: -5 }}
-              transition={{ type: "spring", stiffness: 240, damping: 24 }}
-            >
-              <img src={shapeWaveJ} alt="" className="absolute right-6 top-0 w-[34rem] max-w-[84vw] opacity-[0.34]" />
-              <img src={shapeWaveB} alt="" className="absolute right-0 bottom-0 w-[24rem] max-w-[70vw] opacity-[0.22]" />
-              <img src={extraIconA} alt="" className="absolute right-[8%] top-[9%] w-16 opacity-[0.2]" />
-              <img src={imgSocialProfile} alt="Composition Instagram Parsemains" className="relative z-10 mx-auto block w-full max-w-[760px] h-auto" loading="lazy" />
-            </motion.div>
-          </div>
-        </FadeIn>
-
-        <FadeIn>
-          <div className="mt-14">
-            <SectionLabel>LinkedIn</SectionLabel>
-            <div className="grid lg:grid-cols-2 gap-6">
-              {[{ src: imgLinkedin, alt: "Publication LinkedIn Parsemains" }, { src: imgLinkedinPosts, alt: "Publications LinkedIn Parsemains" }].map((item) => (
+          <div className="relative mt-8 overflow-hidden rounded-[2rem] px-4 py-6 md:px-6" style={{ background: "#fff", border: `1px solid ${r(0.06)}`, boxShadow: isDark ? "0 28px 80px rgba(0,0,0,0.24)" : "0 28px 80px rgba(0,0,0,0.08)" }}>
+            <img src={shapeWaveJ} alt="" className="absolute right-6 top-0 w-[30rem] max-w-[80vw] opacity-[0.28]" />
+            <div className="relative z-10 flex gap-5 overflow-x-auto pb-3" style={{ scrollbarWidth: "thin" }}>
+              {socialItems.map((item) => (
                 <motion.div
                   key={item.src}
-                  className="overflow-hidden rounded-3xl p-5 md:p-7 aspect-[16/10] flex items-center justify-center"
-                  style={{
-                    background: "#fff",
-                    border: `1px solid ${r(0.06)}`,
-                    boxShadow: isDark ? "0 28px 80px rgba(0,0,0,0.24)" : "0 28px 80px rgba(0,0,0,0.08)",
-                  }}
-                  whileHover={{ y: -5 }}
+                  className={`flex h-[20rem] shrink-0 items-center justify-center overflow-hidden rounded-2xl p-4 md:h-[24rem] ${item.wide ? "w-[22rem] md:w-[30rem]" : "w-[20rem] md:w-[26rem]"}`}
+                  style={{ background: "#fff", border: `1px solid ${r(0.06)}` }}
+                  whileHover={{ y: -4 }}
                   transition={{ type: "spring", stiffness: 240, damping: 24 }}
                 >
                   <img src={item.src} alt={item.alt} className="max-h-full w-full object-contain" loading="lazy" />
@@ -830,12 +987,15 @@ function VideoSection() {
 function ClosingSection() {
   const { r } = useTheme();
   return (
-    <section className="px-6 md:px-12 py-16 md:py-20">
+    <section className="px-6 md:px-12 py-14 md:py-20">
       <FadeIn>
-        <div className="max-w-3xl mx-auto text-center">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="mb-5 text-center" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(1.6rem, 3vw, 2.35rem)", fontWeight: 700, letterSpacing: "-0.035em", color: r(0.78) }}>
+            Enjeu du projet
+          </h2>
           <div className="w-16 h-[1px] mx-auto mb-8" style={{ background: `linear-gradient(90deg, transparent, ${ORANGE}, transparent)` }} />
           <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", lineHeight: 1.8, color: r(0.32) }}>
-            Les reseaux sociaux alternent entre contenus graphiques, anecdotes, storytelling, mises en situation produits et publications plus informatives.
+            L'enjeu etait de donner a Parsemains une identite reconnaissable, capable de raconter son histoire sans devenir trop institutionnelle : une direction artistique plus affirmee, entre elegance, matiere, reemploi et spontaneite.
           </p>
         </div>
       </FadeIn>
@@ -850,14 +1010,12 @@ export function ProjectParsemains() {
         <HeroSection />
         <IntroSection />
         <LogoSection />
-        <LogoVariationsSection />
-        <UniverseSection />
-        <PictogramsSection />
+        <TitleSystemSection />
+        <TypographySection />
+        <PaletteSection />
+        <GraphicSystemSection />
         <PrintSection />
         <SocialSection />
-        <MotionSection />
-        <WebsiteSection />
-        <VideoSection />
         <ClosingSection />
       </div>
     </main>
