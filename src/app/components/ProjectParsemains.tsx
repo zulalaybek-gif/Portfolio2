@@ -307,8 +307,8 @@ function LogoSection() {
           <SectionTitle>Logo principal</SectionTitle>
         </FadeIn>
         <FadeIn>
-          <div className="min-h-[8rem] flex items-center justify-start py-7 md:py-9">
-            <img src={logoMain} alt="Logo principal Parsemains" className="w-full max-w-[15rem] md:max-w-[20rem]" style={{ filter: isDark ? "invert(1)" : "none" }} />
+          <div className="min-h-[6rem] flex items-center justify-start py-5 md:py-7">
+            <img src={logoMain} alt="Logo principal Parsemains" className="w-full max-w-[10rem] md:max-w-[14rem]" style={{ filter: isDark ? "invert(1)" : "none" }} />
           </div>
         </FadeIn>
       </div>
@@ -463,9 +463,19 @@ function UniverseSection() {
                   La typographie des titres est composee comme un label graphique : les mots se condensent, s'assemblent et deviennent des blocs d'affirmation, capables de rendre visible l'engagement de Parsemains.
                 </p>
               </div>
-              <div className="grid gap-5">
-                <ImageCard src={titleSystemA} alt="Systeme de titrage Parsemains" className="aspect-[16/7]" imgClassName="w-full h-full object-contain" pad />
-                <ImageCard src={titleSystemB} alt="Variation du systeme de titrage Parsemains" className="aspect-[16/7]" imgClassName="w-full h-full object-contain" pad />
+              <div className="grid gap-10">
+                {[titleSystemA, titleSystemB].map((src) => (
+                  <motion.img
+                    key={src}
+                    src={src}
+                    alt="Systeme de titrage Parsemains"
+                    className="w-full max-h-[16rem] object-contain"
+                    style={{ filter: isDark ? "brightness(0) invert(1)" : "none" }}
+                    loading="lazy"
+                    whileHover={{ y: -4 }}
+                    transition={{ type: "spring", stiffness: 220, damping: 24 }}
+                  />
+                ))}
               </div>
             </div>
           </div>
@@ -657,30 +667,22 @@ function WebsiteSection() {
           >
             <img src={shapeWaveA} alt="" className="absolute -right-24 -top-28 w-[34rem] opacity-[0.18]" />
             <div className="relative z-10 grid lg:grid-cols-[1.35fr_0.65fr] gap-8 md:gap-12 items-center">
-              <motion.div
-                className="relative mx-auto w-full max-w-[690px] rounded-[1.15rem] bg-black p-2 shadow-2xl"
-                style={{ transform: "rotate(-4deg)" }}
-                whileHover={{ rotate: -2, y: -4 }}
+              <motion.img
+                src={imgWebsite}
+                alt="Refonte desktop du site Parsemains"
+                className="mx-auto w-full max-w-[760px] object-contain"
+                loading="lazy"
+                whileHover={{ y: -5 }}
                 transition={{ type: "spring", stiffness: 180, damping: 22 }}
-              >
-                <div className="absolute left-1/2 top-2 z-10 h-3 w-20 -translate-x-1/2 rounded-b-xl bg-black" />
-                <div className="aspect-[16/10] overflow-hidden rounded-xl bg-white flex items-center justify-center">
-                  <img src={imgWebsite} alt="Refonte desktop du site Parsemains" className="max-h-full w-full object-contain" loading="lazy" />
-                </div>
-                <div className="mx-auto h-4 w-[82%] rounded-b-xl bg-gradient-to-b from-zinc-300 to-zinc-100" />
-              </motion.div>
-
-              <motion.div
-                className="relative mx-auto w-full max-w-[250px] rounded-[2.4rem] bg-black p-2 shadow-2xl"
-                style={{ transform: "rotate(6deg)" }}
-                whileHover={{ rotate: 3, y: -4 }}
+              />
+              <motion.img
+                src={imgMobile}
+                alt="Refonte mobile du site Parsemains"
+                className="mx-auto w-full max-w-[270px] object-contain"
+                loading="lazy"
+                whileHover={{ y: -5 }}
                 transition={{ type: "spring", stiffness: 180, damping: 22 }}
-              >
-                <div className="absolute left-1/2 top-4 z-10 h-5 w-20 -translate-x-1/2 rounded-full bg-black" />
-                <div className="aspect-[390/760] overflow-hidden rounded-[1.9rem] bg-white flex items-center justify-center">
-                  <img src={imgMobile} alt="Refonte mobile du site Parsemains" className="max-h-full w-full object-contain" loading="lazy" />
-                </div>
-              </motion.div>
+              />
             </div>
           </div>
         </FadeIn>
