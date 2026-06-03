@@ -24,6 +24,7 @@ import imgMonoDark from "../../assets/collectif-haiti-de-france/24.monochrome.pn
 import imgPrototypeHome from "../../assets/collectif-haiti-de-france/25.homepage.png";
 import imgOldLogo from "../../assets/collectif-haiti-de-france/27.ancien-logo.JPG";
 import imgOldWebsite from "../../assets/collectif-haiti-de-france/28.ancien-site-web.png";
+import videoHaiti from "../../assets/collectif-haiti-de-france/29.Collectif Haïti France.mp4";
 
 /* ── Story SVGs ── */
 import svgStoryGreen from "../../imports/svg-5ll5yqgwlz";
@@ -1186,7 +1187,6 @@ function ApplicationsIdentitySection() {
   const { r, isDark } = useTheme();
   const figmaUrl = "https://www.figma.com/proto/IEQpcT3LJXFg0Vh5X66Gim/Collectif-Ha%C3%AFti-de-France?page-id=4%3A2&type=design&node-id=230-188&viewport=-382%2C393%2C0.08&t=yBIhMimf8JMiraKN-1&scaling=scale-down-width&starting-point-node-id=230%3A188&mode=design";
   const mobileFigmaUrl = "https://www.figma.com/proto/IEQpcT3LJXFg0Vh5X66Gim/Collectif-Ha%C3%AFti-de-France?node-id=290-824&viewport=-8910%2C1454%2C0.33&t=fpQcaYpiYTek55uE-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=320%3A1200&show-proto-sidebar=1&page-id=4%3A2";
-  const youtubeUrl = "https://www.youtube.com/watch?v=y1wARMgXyCE";
 
   const cardStyle = {
     background: isDark ? r(0.04) : "#f8f8f8",
@@ -1299,24 +1299,19 @@ function ApplicationsIdentitySection() {
           </FadeIn>
 
           <FadeIn delay={0.16}>
-            <motion.a
-              href={youtubeUrl}
-              target="_blank"
-              rel="noreferrer"
+            <motion.div
               className="group block rounded-3xl overflow-hidden h-full cursor-pointer"
               style={cardStyle}
               whileHover={{ y: -6 }}
               transition={{ type: "spring", stiffness: 260, damping: 24 }}
             >
               <div className="relative w-full aspect-video" style={{ background: isDark ? r(0.02) : "#fff" }}>
-                <iframe
-                  title="Vidéo Collectif Haïti de France"
-                  src="https://www.youtube-nocookie.com/embed/y1wARMgXyCE"
-                  className="absolute inset-0 h-full w-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                  loading="lazy"
-                  style={{ border: 0 }}
+                <video
+                  src={videoHaiti}
+                  className="absolute inset-0 h-full w-full object-cover"
+                  controls
+                  preload="metadata"
+                  playsInline
                 />
               </div>
               <div className="p-6">
@@ -1324,9 +1319,9 @@ function ApplicationsIdentitySection() {
                 <p className="mt-2 mb-5" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.82rem", lineHeight: 1.7, color: r(0.34) }}>
                   Un support animé où le système d'icônes devient un langage de transition et de reconnaissance.
                 </p>
-                <Button label="Ouvrir la vidéo" />
+                <Button label="Ouvrir la vidéo" href={videoHaiti} />
               </div>
-            </motion.a>
+            </motion.div>
           </FadeIn>
         </div>
       </div>
