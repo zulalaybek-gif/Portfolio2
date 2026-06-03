@@ -27,7 +27,7 @@ const ACCENT = "#FD6235";
 const ACCENT_RGB = "253,98,53";
 const DARK_BG = "#07020b";
 const IPAD_PROTO_URL = "https://www.figma.com/proto/Yd1jdAY0vItJeAIf4tmsGa/kittyhub?page-id=547%3A2998&node-id=2000-8068&viewport=733%2C-7356%2C0.07&t=MdzZHiu2I41bwGOu-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=2000%3A8068&show-proto-sidebar=1";
-const WEB_PROTO_URL = "https://www.figma.com/proto/Yd1jdAY0vItJeAIf4tmsGa/kittyhub?page-id=547%3A2998&node-id=2000-9278&viewport=733%2C-7356%2C0.07&t=MdzZHiu2I41bwGOu-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=2000%3A8068&show-proto-sidebar=1";
+const WEB_PROTO_URL = "https://www.figma.com/proto/Yd1jdAY0vItJeAIf4tmsGa/kittyhub?node-id=3911-2622&viewport=212%2C-3898%2C0.11&t=xZg4qGYtJkw0EDwB-1&scaling=scale-down-width&content-scaling=fixed&starting-point-node-id=890%3A271&page-id=860%3A2";
 const WEB_PROTO_EMBED_URL = `https://www.figma.com/embed?embed_host=share&url=${encodeURIComponent(WEB_PROTO_URL)}`;
 
 const PALETTE = [

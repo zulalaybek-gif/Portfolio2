@@ -1185,6 +1185,7 @@ function MockupSituationSection() {
 function ApplicationsIdentitySection() {
   const { r, isDark } = useTheme();
   const figmaUrl = "https://www.figma.com/proto/IEQpcT3LJXFg0Vh5X66Gim/Collectif-Ha%C3%AFti-de-France?page-id=4%3A2&type=design&node-id=230-188&viewport=-382%2C393%2C0.08&t=yBIhMimf8JMiraKN-1&scaling=scale-down-width&starting-point-node-id=230%3A188&mode=design";
+  const mobileFigmaUrl = "https://www.figma.com/proto/IEQpcT3LJXFg0Vh5X66Gim/Collectif-Ha%C3%AFti-de-France?node-id=290-824&viewport=-8910%2C1454%2C0.33&t=fpQcaYpiYTek55uE-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=320%3A1200&show-proto-sidebar=1&page-id=4%3A2";
   const youtubeUrl = "https://www.youtube.com/watch?v=y1wARMgXyCE";
 
   const cardStyle = {
@@ -1193,21 +1194,45 @@ function ApplicationsIdentitySection() {
     boxShadow: isDark ? "0 28px 80px rgba(0,0,0,0.24)" : "0 28px 80px rgba(0,0,0,0.07)",
   };
 
-  const Button = ({ label }: { label: string }) => (
-    <span
+  const Button = ({ label, href }: { label: string; href?: string }) => {
+    const content = (
+      <>
+        {label}
+        <ArrowUpRight size={14} />
+      </>
+    );
+
+    const style = {
+      background: NAVY,
+      color: "#fff",
+      fontFamily: "'Inter', sans-serif",
+      fontSize: "0.72rem",
+      fontWeight: 600,
+    };
+
+    if (href) {
+      return (
+        <a
+          href={href}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-2 rounded-full px-4 py-2"
+          style={style}
+        >
+          {content}
+        </a>
+      );
+    }
+
+    return (
+      <span
       className="inline-flex items-center gap-2 rounded-full px-4 py-2"
-      style={{
-        background: NAVY,
-        color: "#fff",
-        fontFamily: "'Inter', sans-serif",
-        fontSize: "0.72rem",
-        fontWeight: 600,
-      }}
+      style={style}
     >
-      {label}
-      <ArrowUpRight size={14} />
-    </span>
-  );
+        {content}
+      </span>
+    );
+  };
 
   return (
     <section id="section-applications" className="px-6 md:px-12 py-20">
@@ -1222,10 +1247,7 @@ function ApplicationsIdentitySection() {
 
         <div className="grid lg:grid-cols-3 gap-6">
           <FadeIn>
-            <motion.a
-              href={figmaUrl}
-              target="_blank"
-              rel="noreferrer"
+            <motion.div
               className="group block rounded-3xl overflow-hidden h-full cursor-pointer"
               style={cardStyle}
               whileHover={{ y: -6 }}
@@ -1247,9 +1269,12 @@ function ApplicationsIdentitySection() {
                 <p className="mt-2 mb-5" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.82rem", lineHeight: 1.7, color: r(0.34) }}>
                   Une refonte structurée autour des axes d'action, avec des couleurs qui guident la lecture.
                 </p>
-                <Button label="Voir le prototype" />
+                <div className="flex flex-wrap gap-2">
+                  <Button label="Version web" href={figmaUrl} />
+                  <Button label="Version mobile" href={mobileFigmaUrl} />
+                </div>
               </div>
-            </motion.a>
+            </motion.div>
           </FadeIn>
 
           <FadeIn delay={0.08}>
