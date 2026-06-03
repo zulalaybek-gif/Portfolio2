@@ -193,23 +193,23 @@ function PageDecor() {
       <motion.img
         src={shapeSun}
         alt=""
-        className="absolute -right-24 top-[18rem] w-[24rem] opacity-[0.07]"
+        className="absolute -right-24 top-[18rem] w-[24rem] opacity-[0.14]"
         animate={{ rotate: [0, 10, 0], scale: [1, 1.035, 1] }}
         transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.img
         src={shapeSun}
         alt=""
-        className="absolute -left-32 top-[190rem] w-[22rem] opacity-[0.06]"
+        className="absolute -left-32 top-[190rem] w-[22rem] opacity-[0.12]"
         animate={{ rotate: [0, -8, 0], y: [0, 18, 0] }}
         transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
       />
-      <img src={shapeWaveA} alt="" className="absolute -right-[20%] top-[74rem] w-[56rem] opacity-[0.08]" />
-      <img src={shapeWaveB} alt="" className="absolute -left-[16%] top-[132rem] w-[48rem] opacity-[0.07]" />
-      <img src={shapeWaveC} alt="" className="absolute right-[-18%] bottom-[34rem] w-[58rem] opacity-[0.08]" />
-      <img src={extraIconA} alt="" className="absolute left-[7%] top-[116rem] w-24 opacity-[0.06]" />
-      <img src={extraIconB} alt="" className="absolute right-[8%] top-[214rem] w-28 opacity-[0.055]" />
-      <img src={extraIconC} alt="" className="absolute left-[10%] bottom-[72rem] w-24 opacity-[0.055]" />
+      <img src={shapeWaveA} alt="" className="absolute -right-[20%] top-[74rem] w-[56rem] opacity-[0.18]" />
+      <img src={shapeWaveB} alt="" className="absolute -left-[16%] top-[132rem] w-[48rem] opacity-[0.15]" />
+      <img src={shapeWaveC} alt="" className="absolute right-[-18%] bottom-[34rem] w-[58rem] opacity-[0.18]" />
+      <img src={extraIconA} alt="" className="absolute left-[7%] top-[116rem] w-28 opacity-[0.13]" />
+      <img src={extraIconB} alt="" className="absolute right-[8%] top-[214rem] w-32 opacity-[0.12]" />
+      <img src={extraIconC} alt="" className="absolute left-[10%] bottom-[72rem] w-28 opacity-[0.12]" />
     </div>
   );
 }
@@ -576,7 +576,7 @@ function SocialSection() {
           <div>
             <SectionLabel>Instagram</SectionLabel>
             <motion.div
-              className="overflow-hidden rounded-3xl p-5 md:p-8"
+              className="relative overflow-hidden rounded-3xl px-5 py-8 md:px-10 md:py-12"
               style={{
                 background: "#fff",
                 border: `1px solid ${r(0.06)}`,
@@ -585,7 +585,10 @@ function SocialSection() {
               whileHover={{ y: -5 }}
               transition={{ type: "spring", stiffness: 240, damping: 24 }}
             >
-              <img src={imgSocialProfile} alt="Composition Instagram Parsemains" className="block w-full h-auto" loading="lazy" />
+              <img src={shapeWaveA} alt="" className="absolute -right-20 -top-28 w-[34rem] opacity-[0.34]" />
+              <img src={shapeWaveB} alt="" className="absolute -right-28 bottom-2 w-[24rem] opacity-[0.18]" />
+              <img src={extraIconA} alt="" className="absolute right-[9%] top-[12%] w-16 opacity-[0.14]" />
+              <img src={imgSocialProfile} alt="Composition Instagram Parsemains" className="relative z-10 mx-auto block w-full max-w-[880px] h-auto" loading="lazy" />
             </motion.div>
           </div>
         </FadeIn>
