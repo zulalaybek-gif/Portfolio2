@@ -258,7 +258,7 @@ function HeroSection() {
             className="section-eyebrow uppercase tracking-[0.28em] block mb-7"
             style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", color: r(0.28) }}
           >
-            Branding — Papier ensemencé
+            Workshop — Refonte d'identite visuelle & direction artistique
           </motion.span>
 
           <motion.div
@@ -277,7 +277,16 @@ function HeroSection() {
             className="max-w-xl"
             style={{ fontFamily: "'Inter', sans-serif", fontSize: "clamp(1rem, 1.7vw, 1.25rem)", lineHeight: 1.8, color: r(0.45) }}
           >
-            Repenser l'identite d'une marque francaise specialisee dans le papier ensemence, avec un univers plus graphique, plus audacieux et plus memorisable que les codes ecologiques traditionnels.
+            Parsemains est un projet de refonte d'identite visuelle pense autour du papier, du territoire et de la transmission. L'objectif etait de construire un univers plus contemporain, expressif et memorable, tout en conservant l'ancrage artisanal et local de la marque.
+          </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.28 }}
+            className="mt-5 max-w-xl"
+            style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.92rem", lineHeight: 1.75, color: r(0.36) }}
+          >
+            Projet realise en equipe dans le cadre d'un workshop. J'ai participe a la construction de la direction artistique, aux recherches graphiques et a la formalisation de l'univers visuel de la marque.
           </motion.p>
         </div>
       </div>
@@ -293,19 +302,19 @@ function IntroSection() {
         <FadeIn>
           <SectionLabel>Direction visuelle</SectionLabel>
           <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(1.35rem, 2.6vw, 2rem)", fontWeight: 650, color: ORANGE }}>
-            Une ecologie plus expressive, circulaire et contemporaine.
+            Une identite plus contemporaine, expressive et memorisable.
           </h2>
           <p className="mt-5" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.38) }}>
-            L'identite s'appuie sur la circularite, l'empreinte, l'energie et la fabrication locale. Les formes organiques et les contrastes colores installent une presence vivante, sans tomber dans une esthetique attendue de l'ecoresponsabilite.
+            Le projet s'appuie sur un storytelling fort : celui de papiers recuperes localement, transformes et perpetues a travers une identite visuelle chaleureuse, elegante et legerement decalee.
           </p>
         </FadeIn>
         <FadeIn delay={0.1}>
           <SectionLabel>Enjeu du projet</SectionLabel>
           <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(1.35rem, 2.6vw, 2rem)", fontWeight: 650, color: r(0.75) }}>
-            Faire exister une marque engagee sans l'enfermer dans les codes verts.
+            Raconter l'histoire de la marque sans devenir trop institutionnel.
           </h2>
           <p className="mt-5" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.38) }}>
-            Le travail ne se limite pas au logo : il construit un systeme complet, capable de vivre sur les supports imprimes, les reseaux sociaux, les interfaces web et les contenus video.
+            L'enjeu etait de donner a Parsemains une identite reconnaissable, capable de raconter son histoire sans devenir trop institutionnelle. Le workshop nous a permis de construire une direction artistique plus affirmee, entre elegance, matiere, reemploi et spontaneite.
           </p>
         </FadeIn>
       </div>
@@ -433,6 +442,9 @@ function UniverseSection() {
         <FadeIn>
           <SectionLabel>Univers graphique</SectionLabel>
           <SectionTitle>Couleurs, typographies & signes</SectionTitle>
+          <p className="max-w-3xl" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.38) }}>
+            L'identite repose sur une typographie forte et genereuse, associee a une typographie plus sobre pour equilibrer caractere et lisibilite.
+          </p>
         </FadeIn>
 
         <div className="grid lg:grid-cols-2 gap-5 md:gap-6">
@@ -478,6 +490,9 @@ function UniverseSection() {
             <img src={shapeWaveJ} alt="" className="absolute right-4 top-0 w-[34rem] max-w-[82vw] opacity-[0.19]" />
             <div className="relative z-10">
             <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.25rem", fontWeight: 700, color: r(0.74) }}>Couleurs principales</h3>
+            <p className="mt-3 max-w-3xl" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.84rem", lineHeight: 1.75, color: r(0.34) }}>
+              La palette principale s'articule autour d'un orange monochrome, choisi pour son energie, sa chaleur et sa vitalite, accompagne de blanc pour la simplicite et de noir pour le contraste.
+            </p>
             <div className="mt-5 grid grid-cols-3 gap-4 md:gap-5">
               {primaryColors.map((color) => (
                 <div key={color.name}>
@@ -491,6 +506,9 @@ function UniverseSection() {
             </div>
 
             <h3 className="mt-10" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.25rem", fontWeight: 700, color: r(0.74) }}>Couleurs secondaires</h3>
+            <p className="mt-3 max-w-3xl" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.84rem", lineHeight: 1.75, color: r(0.34) }}>
+              Les touches colorees secondaires apportent un aspect plus vivant et plus floral a l'univers de marque.
+            </p>
             <div className="mt-5 grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-5">
               {secondaryColors.map((color) => (
                 <div key={color.name}>
@@ -514,7 +532,7 @@ function UniverseSection() {
                   Un format label pour porter l'engagement.
                 </h3>
                 <p className="mt-4" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.92rem", lineHeight: 1.8, color: r(0.38) }}>
-                  La typographie des titres est composee comme un label graphique : les mots se condensent, s'assemblent et deviennent des blocs d'affirmation, capables de rendre visible l'engagement de Parsemains.
+                  Le systeme graphique reprend des elements lies au papier, a l'edition et a la fabrication : labels, traits de coupe, compositions de titrage et reperes visuels. Ces elements creent une identite structuree, tout en rappelant l'univers artisanal du projet.
                 </p>
               </div>
               <div className="grid gap-10">
@@ -532,6 +550,21 @@ function UniverseSection() {
                 ))}
               </div>
             </div>
+          </div>
+        </FadeIn>
+
+        <FadeIn>
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
+            {[
+              ["Formes circulaires", "Les formes circulaires evoquent l'unite, le cycle de vie et la diffusion."],
+              ["Lignes topographiques", "Les lignes inspirees des cartes topographiques rappellent le territoire, les volumes et l'ancrage local."],
+              ["References symboliques", "Les references aux runes et a la mythologie nordique apportent une dimension de protection, de transmission et de singularite."],
+            ].map(([title, text]) => (
+              <div key={title} className="rounded-3xl p-5 md:p-6" style={{ background: isDark ? r(0.035) : "rgba(255,255,255,0.82)", border: `1px solid ${r(0.06)}` }}>
+                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.95rem", fontWeight: 700, color: r(0.72) }}>{title}</h3>
+                <p className="mt-3" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.78rem", lineHeight: 1.7, color: r(0.34) }}>{text}</p>
+              </div>
+            ))}
           </div>
         </FadeIn>
       </div>
@@ -557,6 +590,9 @@ function PictogramsSection() {
             <img src={shapeWaveJ} alt="" className="absolute left-4 top-0 w-[42rem] max-w-[90vw] opacity-[0.34] brightness-0 invert" />
             <img src={shapeWaveB} alt="" className="absolute right-4 bottom-0 w-[36rem] max-w-[88vw] opacity-[0.27] brightness-0 invert" />
             <img src={extraIconB} alt="" className="absolute right-8 top-8 hidden w-20 opacity-[0.18] brightness-0 invert md:block" />
+            <p className="relative z-10 mb-10 max-w-2xl" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", lineHeight: 1.75, color: "rgba(255,255,255,0.82)" }}>
+              Les pictogrammes ajoutent une touche plus decalee et humoristique a l'identite. Ils cassent les codes trop doux ou trop floraux, tout en rendant l'univers plus accessible, vivant et memorable.
+            </p>
             <div className="relative z-10 grid md:grid-cols-3 gap-10 md:gap-12 items-end">
               {icons.map((icon, index) => (
                 <motion.div
@@ -633,6 +669,9 @@ function SocialSection() {
         <FadeIn>
           <SectionLabel>Reseaux sociaux</SectionLabel>
           <SectionTitle>Un systeme editorial reconnaissable</SectionTitle>
+          <p className="max-w-3xl" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.38) }}>
+            L'identite a ete pensee pour plusieurs supports : logo principal, declinaisons social media, systemes de titrage, pictogrammes, visuels Instagram et LinkedIn.
+          </p>
         </FadeIn>
 
         <FadeIn>
@@ -690,7 +729,7 @@ function MotionSection() {
       <div className="max-w-6xl mx-auto">
         <FadeIn>
           <SectionLabel>Habillage video</SectionLabel>
-          <SectionTitle>Habillage video</SectionTitle>
+          <SectionTitle>Identite en mouvement</SectionTitle>
         </FadeIn>
         <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-6 items-start">
           <FadeIn>
@@ -796,7 +835,7 @@ function ClosingSection() {
         <div className="max-w-3xl mx-auto text-center">
           <div className="w-16 h-[1px] mx-auto mb-8" style={{ background: `linear-gradient(90deg, transparent, ${ORANGE}, transparent)` }} />
           <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", lineHeight: 1.8, color: r(0.32) }}>
-            Parsemains affirme une identite responsable sans se limiter aux signes attendus de l'ecologie : une marque graphique, vivante et capable de pousser sur tous les supports.
+            Les reseaux sociaux alternent entre contenus graphiques, anecdotes, storytelling, mises en situation produits et publications plus informatives.
           </p>
         </div>
       </FadeIn>
