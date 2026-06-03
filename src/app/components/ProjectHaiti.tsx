@@ -1239,45 +1239,41 @@ function StoriesSection() {
     {
       label: "Thématiques",
       color: NAVY,
-      type: "thematic" as const,
       items: [
-        { bgColor: GREEN, image: imgStoryGreen, title: ["Agriculture", "responsable"], iconSvg: (<><path d={svgStoryGreen.p1929f80} fill={GREEN} /><path d={svgStoryGreen.p14b19b00} fill={GREEN} /></>), iconViewBox: "0 0 267.079 266", iconColor: GREEN, highlightColor: "#a4bd5a" },
-        { bgColor: PURPLE, image: imgStoryPurple, title: ["Contribution", "à la modernisation", "du système éducatif"], iconSvg: (<><path d={svgStoryPurple.p2f083c00} fill={PURPLE} /><path d={svgStoryPurple.p36e8f2f0} fill={PURPLE} /><path d={svgStoryPurple.pc11c700} fill={PURPLE} /></>), iconViewBox: "0 0 267.652 266", iconColor: PURPLE, highlightColor: PURPLE },
-        { bgColor: "#c2504c", image: imgStoryRed, title: ["Atelier", "répondre", "aux défis", "de la coopération", "avec Haïti"], iconSvg: (<><path d={svgStoryRed.p148a2f00} fill="#c2504c" /><path d={svgStoryRed.p3a415300} fill="#c2504c" /><path d={svgStoryRed.p12f54b80} fill="#c2504c" /><path d={svgStoryRed.p1068c500} fill="#c2504c" /><path d={svgStoryRed.p3d774000} fill="#c2504c" /></>), iconViewBox: "0 0 267 266", iconColor: "#c2504c", highlightColor: "#c2504c" },
-        { bgColor: "#5ac0cb", image: imgStoryCyan, title: ["Environnement", "& changement", "climatique"], iconSvg: (<><path d={svgStoryCyan.p36e42b80} fill="#5ac0cb" /><path d={svgStoryCyan.p3881cdf0} fill="#5ac0cb" /><path d={svgStoryCyan.p2d014500} fill="#5ac0cb" /><path d={svgStoryCyan.p2747d380} fill="#5ac0cb" /><path d={svgStoryCyan.p1aa00f40} fill="#5ac0cb" /><path d={svgStoryCyan.p5ab7200} fill="#5ac0cb" /></>), iconViewBox: "0 0 267.163 266", iconColor: "#5ac0cb", highlightColor: "#4ea0a8" },
+        { image: imgStoryGreen, alt: "Story thématique agriculture responsable" },
+        { image: imgStoryPurple, alt: "Story thématique éducation" },
+        { image: imgStoryRed, alt: "Story thématique coopération" },
+        { image: imgStoryCyan, alt: "Story thématique environnement" },
       ],
     },
     {
       label: "Articles",
       color: RED,
-      type: "article" as const,
       items: [
-        { color: "#c2504c", overlay: "rgba(89,20,17,0.24)", banner: "#c2504c", image: imgStory2Red, title: "Projet reconstruction l'habitat dans le sud CHF/AMG" },
-        { color: "#a595c7", overlay: "rgba(71,62,88,0.34)", banner: "#a595c7", image: imgStory2Purple, title: "Une assemblée générale ordinaire conviviale et riche d'échanges constructifs" },
-        { color: "#5ac0cb", overlay: "rgba(66,149,158,0.34)", banner: "#4ea0a8", image: imgStory2Cyan, title: "Eau potable pour Chambellan — une initiative pour s'inspirer" },
-        { color: "#bcd176", overlay: "rgba(145,168,76,0.34)", banner: "#a4bd5a", image: imgStory2Green, title: "Un programme de formation gratuite" },
+        { image: imgStory2Red, alt: "Story article rouge" },
+        { image: imgStory2Purple, alt: "Story article violet" },
+        { image: imgStory2Cyan, alt: "Story article cyan" },
+        { image: imgStory2Green, alt: "Story article vert" },
       ],
     },
     {
       label: "Les 5 actus",
       color: CYAN,
-      type: "thematic" as const,
       items: [
-        { bgColor: PURPLE, image: imgStory3Purple, title: ["Contribution", "à la modernisation", "du système éducatif"], iconSvg: (<><path d={svgStoryPurple.p2f083c00} fill={PURPLE} /><path d={svgStoryPurple.p36e8f2f0} fill={PURPLE} /><path d={svgStoryPurple.pc11c700} fill={PURPLE} /></>), iconViewBox: "0 0 267.652 266", iconColor: PURPLE, highlightColor: PURPLE },
-        { bgColor: "#c2504c", image: imgStory3Red, title: ["Atelier", "répondre", "aux défis", "de la coopération", "avec Haïti"], iconSvg: (<><path d={svgStoryRed.p148a2f00} fill="#c2504c" /><path d={svgStoryRed.p3a415300} fill="#c2504c" /><path d={svgStoryRed.p12f54b80} fill="#c2504c" /><path d={svgStoryRed.p1068c500} fill="#c2504c" /><path d={svgStoryRed.p3d774000} fill="#c2504c" /></>), iconViewBox: "0 0 267 266", iconColor: "#c2504c", highlightColor: "#c2504c" },
-        { bgColor: "#5ac0cb", image: imgStory3Cyan, title: ["Environnement", "& changement", "climatique"], iconSvg: (<><path d={svgStoryCyan.p36e42b80} fill="#5ac0cb" /><path d={svgStoryCyan.p3881cdf0} fill="#5ac0cb" /><path d={svgStoryCyan.p2d014500} fill="#5ac0cb" /><path d={svgStoryCyan.p2747d380} fill="#5ac0cb" /><path d={svgStoryCyan.p1aa00f40} fill="#5ac0cb" /><path d={svgStoryCyan.p5ab7200} fill="#5ac0cb" /></>), iconViewBox: "0 0 267.163 266", iconColor: "#5ac0cb", highlightColor: "#4ea0a8" },
-        { bgColor: GREEN, image: imgStory3Green, title: ["Agriculture", "responsable"], iconSvg: (<><path d={svgStoryGreen.p1929f80} fill={GREEN} /><path d={svgStoryGreen.p14b19b00} fill={GREEN} /></>), iconViewBox: "0 0 267.079 266", iconColor: GREEN, highlightColor: "#a4bd5a" },
+        { image: imgStory3Purple, alt: "Story actualité violet" },
+        { image: imgStory3Red, alt: "Story actualité rouge" },
+        { image: imgStory3Cyan, alt: "Story actualité cyan" },
+        { image: imgStory3Green, alt: "Story actualité vert" },
       ],
     },
     {
       label: "Chiffres clés",
       color: GREEN,
-      type: "facts" as const,
       items: [
-        { bgColor: "#edeaf4", textColor: "#8271a5", accentColor: PURPLE, image: imgStory4Purple, headline: "Le GARR* dit avoir recensé 56 884 migrants haïtiens rapatriés au cours du mois de juillet 2023.", sub: "*Groupe d'appui aux rapatriés et réfugiés" },
-        { bgColor: "#ffe8e7", textColor: "#d74e49", accentColor: "#eb5c57", image: imgStory4Red, headline: "85% des maîtres de l'enseignement primaire sont non qualifiés", sub: "" },
-        { bgColor: "#e3f5f8", textColor: "#42959e", accentColor: "#5ac0cb", image: imgStory4Cyan, headline: "Partenariat avec le Groupe Médialternatif et le Collectif Haïti de France.", sub: "Le Groupe Médialternatif vise à créer et contribuer à dynamiser des espaces de communication et d'information." },
-        { bgColor: "#f7fbe9", textColor: "#91a84c", accentColor: "#b7d168", image: imgStory4Green, headline: "Le projet Manman Bèf", sub: "A ce jour, Manman Bèf c'est près de 500 investisseurs solidaires, 700 familles bénéficiaires et 1827 vaches en gardiennage!" },
+        { image: imgStory4Purple, alt: "Story chiffre clé violet" },
+        { image: imgStory4Red, alt: "Story chiffre clé rouge" },
+        { image: imgStory4Cyan, alt: "Story chiffre clé cyan" },
+        { image: imgStory4Green, alt: "Story chiffre clé vert" },
       ],
     },
   ];
@@ -1325,7 +1321,7 @@ function StoriesSection() {
           ))}
         </div>
 
-        {/* Stories grid — animated swap */}
+        {/* Stories grid — image assets only */}
         <motion.div
           key={activeFamily}
           initial={{ opacity: 0, y: 20 }}
@@ -1333,49 +1329,19 @@ function StoriesSection() {
           transition={{ duration: 0.4 }}
           className="grid grid-cols-2 md:grid-cols-4 gap-4"
         >
-          {current.type === "thematic" && (current.items as any[]).map((s: any, i: number) => (
-            <StoryCard key={`s-${activeFamily}-${i}`} {...s} delay={i * 0.08} />
-          ))}
-
-          {current.type === "article" && (current.items as any[]).map((s: any, i: number) => (
-            <div key={`a-${i}`} className="rounded-2xl overflow-hidden relative" style={{ background: s.color, aspectRatio: "9/16", transition: "transform 0.3s ease" }} onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.03) translateY(-5px)"; }} onMouseLeave={e => { e.currentTarget.style.transform = ""; }}>
-              <img src={s.image} alt={s.title} className="absolute inset-0 w-full h-full object-cover" style={{ mixBlendMode: "luminosity", opacity: 0.7 }} />
-              <div className="absolute inset-0" style={{ background: s.overlay }} />
-              <div className="absolute left-[8%] right-[8%] top-[42%] -translate-y-1/2 flex flex-col items-center">
-                <div className="px-3 py-2" style={{ background: s.banner }}>
-                  <span className="text-center block" style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: "clamp(0.55rem, 1.3vw, 0.75rem)", color: "white", textTransform: "uppercase", lineHeight: 1.4 }}>{s.title}</span>
-                </div>
-              </div>
-              <div className="absolute bottom-[15%] left-0 right-0 flex items-center justify-center gap-2">
-                <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "clamp(0.5rem, 1.2vw, 0.7rem)", color: "white" }}>Lire notre article</span>
-                <span style={{ color: "white", fontSize: "0.7rem" }}>→</span>
-              </div>
-            </div>
-          ))}
-
-          {current.type === "facts" && (current.items as any[]).map((s: any, i: number) => (
+          {current.items.map((s, i) => (
             <motion.div
-              key={`f-${i}`}
-              className="rounded-2xl overflow-hidden relative flex flex-col"
-              style={{ background: s.bgColor, aspectRatio: "9/16" }}
+              key={`${activeFamily}-${i}`}
+              className="rounded-2xl overflow-hidden"
+              style={{
+                background: isDark ? r(0.04) : "#f8f8f8",
+                border: `1px solid ${r(0.06)}`,
+                aspectRatio: "9/16",
+              }}
               whileHover={{ scale: 1.03, y: -5 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
-              {/* Badge #1 */}
-              <div className="relative mx-[8%] mt-[8%] mb-[4%]">
-                <div className="rounded-sm px-3 py-1.5 inline-block" style={{ background: s.accentColor, boxShadow: "0 1px 6px rgba(0,0,0,0.1)" }}>
-                  <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "clamp(1rem, 3vw, 1.6rem)", color: "white", textTransform: "uppercase" }}>#1</span>
-                </div>
-              </div>
-              {/* Headline */}
-              <div className="px-[8%] flex-1">
-                <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: "clamp(0.6rem, 1.4vw, 0.82rem)", color: s.textColor, lineHeight: 1.4 }}>{s.headline}</p>
-                {s.sub && <p className="mt-1" style={{ fontFamily: "'Inter', sans-serif", fontSize: "clamp(0.45rem, 1vw, 0.6rem)", color: s.textColor, opacity: 0.7, lineHeight: 1.4 }}>{s.sub}</p>}
-              </div>
-              {/* Photo bottom */}
-              <div className="mx-[8%] mb-[8%] rounded-lg overflow-hidden" style={{ aspectRatio: "4/3" }}>
-                <img src={s.image} alt={s.headline} className="w-full h-full object-cover" />
-              </div>
+              <img src={s.image} alt={s.alt} className="h-full w-full object-contain" loading="lazy" />
             </motion.div>
           ))}
         </motion.div>
