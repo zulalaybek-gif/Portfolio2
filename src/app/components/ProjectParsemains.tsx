@@ -32,7 +32,6 @@ import imgPosters from "../../assets/parsemains/24-mockup-affiches.png";
 import imgPackaging from "../../assets/parsemains/25.mockup-packaging.png";
 import shapeWaveA from "../../assets/parsemains/C.vagues-1.svg";
 import shapeWaveB from "../../assets/parsemains/D.vagues-2.svg";
-import shapeWaveC from "../../assets/parsemains/E.vagues-3.svg";
 import extraIconA from "../../assets/parsemains/F.picto.svg";
 import extraIconB from "../../assets/parsemains/G.picto.svg";
 import extraIconC from "../../assets/parsemains/H.picto.svg";
@@ -274,7 +273,7 @@ function IntroSection() {
 }
 
 function LogoSection() {
-  const { r, isDark } = useTheme();
+  const { isDark } = useTheme();
   return (
     <section className="px-6 md:px-12 py-20">
       <div className="max-w-6xl mx-auto">
@@ -283,12 +282,8 @@ function LogoSection() {
           <SectionTitle>Logo principal</SectionTitle>
         </FadeIn>
         <FadeIn>
-          <div
-            className="rounded-3xl min-h-[22rem] flex items-center justify-center px-8 md:px-16 py-16 relative overflow-hidden"
-            style={{ background: isDark ? r(0.04) : PAPER, border: `1px solid ${r(0.06)}` }}
-          >
-            <img src={shapeWaveC} alt="" className="absolute -right-20 -top-24 w-[38rem] opacity-20" />
-            <img src={logoMain} alt="Logo principal Parsemains" className="relative z-10 w-full max-w-[42rem]" style={{ filter: isDark ? "invert(1)" : "none" }} />
+          <div className="min-h-[12rem] flex items-center justify-start py-10 md:py-14">
+            <img src={logoMain} alt="Logo principal Parsemains" className="w-full max-w-[24rem] md:max-w-[31rem]" style={{ filter: isDark ? "invert(1)" : "none" }} />
           </div>
         </FadeIn>
       </div>
@@ -299,8 +294,8 @@ function LogoSection() {
 function LogoVariationsSection() {
   const { r, isDark } = useTheme();
   const variations = [
-    { src: logoAltA, bg: ORANGE, invert: false },
-    { src: logoAltB, bg: BLACK, invert: true },
+    { src: logoAltA, label: "Version noire", filter: isDark ? "invert(1)" : "none" },
+    { src: logoAltB, label: "Version orange", filter: "none" },
   ];
   return (
     <section className="px-6 md:px-12 py-16">
@@ -311,14 +306,14 @@ function LogoVariationsSection() {
         </FadeIn>
         <div className="grid md:grid-cols-2 gap-5">
           {variations.map((item, index) => (
-            <FadeIn key={item.bg} delay={index * 0.08}>
+            <FadeIn key={item.label} delay={index * 0.08}>
               <motion.div
-                className="rounded-3xl min-h-[18rem] flex items-center justify-center p-10"
-                style={{ background: item.bg, border: `1px solid ${r(0.06)}` }}
+                className="min-h-[15rem] md:min-h-[18rem] flex items-center justify-center px-8 py-10"
+                style={{ borderTop: `1px solid ${r(0.06)}`, borderBottom: `1px solid ${r(0.06)}` }}
                 whileHover={{ y: -5 }}
                 transition={{ type: "spring", stiffness: 240, damping: 24 }}
               >
-                <img src={item.src} alt="Declinaison du logo Parsemains" className="w-full max-w-[30rem]" style={{ filter: item.invert ? "invert(1)" : "none" }} />
+                <img src={item.src} alt={item.label} className="h-auto max-h-[13rem] md:max-h-[15rem] w-auto max-w-full" style={{ filter: item.filter }} />
               </motion.div>
             </FadeIn>
           ))}
