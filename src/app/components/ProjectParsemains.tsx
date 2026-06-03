@@ -325,15 +325,35 @@ function LogoVariationsSection() {
 
 function UniverseSection() {
   const { r, isDark } = useTheme();
-  const colors = [
+  const primaryColors = [
     { name: "Orange", value: ORANGE },
     { name: "Blanc", value: "#FFFFFF" },
     { name: "Noir", value: BLACK },
+  ];
+  const secondaryColors = [
     { name: "Peche", value: ORANGE_SOFT },
     { name: "Sable", value: PEACH },
     { name: "Magenta", value: MAGENTA },
     { name: "Violet", value: PURPLE },
     { name: "Bleu", value: BLUE },
+  ];
+  const typoSamples = [
+    {
+      label: "Titrage",
+      name: "DAZZLE UNICASE",
+      family: "'Dazzle Unicase', 'Space Grotesk', sans-serif",
+      weight: 800,
+      usage: "Titres, mots-signaux et compositions graphiques de marque.",
+      weights: ["Bold", "Display", "Label"],
+    },
+    {
+      label: "Texte courant",
+      name: "Avenir",
+      family: "'Avenir', 'Inter', sans-serif",
+      weight: 400,
+      usage: "Paragraphes, informations pratiques et contenus editoriaux.",
+      weights: ["Book", "Roman", "Medium"],
+    },
   ];
   return (
     <section className="px-6 md:px-12 py-20">
@@ -342,39 +362,89 @@ function UniverseSection() {
           <SectionLabel>Univers graphique</SectionLabel>
           <SectionTitle>Couleurs, typographies & signes</SectionTitle>
         </FadeIn>
-        <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-8">
-          <FadeIn>
-            <div className="rounded-3xl p-6 md:p-8 h-full" style={{ background: isDark ? r(0.04) : "#fff", border: `1px solid ${r(0.06)}` }}>
-              <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.1rem", fontWeight: 650, color: r(0.72) }}>Palette</h3>
-              <div className="grid grid-cols-4 gap-3 mt-6">
-                {colors.map((color) => (
-                  <div key={color.name}>
-                    <div className="aspect-square rounded-2xl" style={{ background: color.value, border: color.value === "#FFFFFF" ? `1px solid ${r(0.12)}` : "none" }} />
-                    <span className="block mt-2" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", color: r(0.28) }}>{color.name}</span>
-                  </div>
-                ))}
+
+        <div className="grid lg:grid-cols-2 gap-6">
+          {typoSamples.map((typo, index) => (
+            <FadeIn key={typo.name} delay={index * 0.08}>
+              <div className="rounded-3xl p-6 md:p-7 h-full" style={{ background: isDark ? r(0.04) : "#fff", border: `1px solid ${r(0.06)}` }}>
+                <span className="uppercase tracking-[0.18em]" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.58rem", color: r(0.24) }}>
+                  {typo.label}
+                </span>
+                <h3 className="mt-4" style={{ fontFamily: typo.family, fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: typo.weight, color: r(0.76), letterSpacing: typo.name === "DAZZLE UNICASE" ? "-0.04em" : "0" }}>
+                  {typo.name}
+                </h3>
+                <p className="mt-3" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.82rem", lineHeight: 1.7, color: r(0.34) }}>
+                  {typo.usage}
+                </p>
+                <div className="mt-5 flex gap-1 flex-wrap">
+                  {"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((letter) => (
+                    <span key={letter} style={{ fontFamily: typo.family, fontSize: "0.72rem", fontWeight: typo.weight, color: r(0.28) }}>{letter}</span>
+                  ))}
+                </div>
+                <div className="mt-1 flex gap-1 flex-wrap">
+                  {"0123456789!&?".split("").map((letter, letterIndex) => (
+                    <span key={`${letter}-${letterIndex}`} style={{ fontFamily: typo.family, fontSize: "0.72rem", fontWeight: typo.weight, color: r(0.2) }}>{letter}</span>
+                  ))}
+                </div>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {typo.weights.map((weight) => (
+                    <span key={weight} className="rounded-full px-3 py-1" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.58rem", color: r(0.32), border: `1px solid ${r(0.08)}` }}>
+                      {weight}
+                    </span>
+                  ))}
+                </div>
               </div>
-              <div className="mt-8 grid gap-4">
-                <div>
-                  <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.68rem", color: r(0.25) }}>Titrage</span>
-                  <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.3rem", fontWeight: 700, color: r(0.75) }}>DAZZLE UNICASE</p>
+            </FadeIn>
+          ))}
+        </div>
+
+        <FadeIn>
+          <div className="mt-8 rounded-3xl p-6 md:p-8" style={{ background: isDark ? r(0.04) : "#fff", border: `1px solid ${r(0.06)}` }}>
+            <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.25rem", fontWeight: 700, color: r(0.74) }}>Couleurs principales</h3>
+            <div className="mt-5 grid grid-cols-3 gap-4 md:gap-5">
+              {primaryColors.map((color) => (
+                <div key={color.name}>
+                  <div className="aspect-[1.35/1] rounded-2xl" style={{ background: color.value, border: color.value === "#FFFFFF" ? `1px solid ${r(0.14)}` : "none" }} />
+                  <div className="mt-3 flex items-baseline justify-between gap-3">
+                    <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.74rem", color: r(0.34) }}>{color.name}</span>
+                    <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.68rem", fontWeight: 700, color: r(0.5) }}>{color.value}</span>
+                  </div>
                 </div>
-                <div>
-                  <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.68rem", color: r(0.25) }}>Texte courant</span>
-                  <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "1.05rem", color: r(0.65) }}>Avenir</p>
+              ))}
+            </div>
+
+            <h3 className="mt-10" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.25rem", fontWeight: 700, color: r(0.74) }}>Couleurs secondaires</h3>
+            <div className="mt-5 grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-5">
+              {secondaryColors.map((color) => (
+                <div key={color.name}>
+                  <div className="aspect-square rounded-2xl" style={{ background: color.value }} />
+                  <span className="block mt-3" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.74rem", color: r(0.34) }}>{color.name}</span>
+                  <span className="block mt-1" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.68rem", fontWeight: 700, color: r(0.5) }}>{color.value}</span>
                 </div>
+              ))}
+            </div>
+          </div>
+        </FadeIn>
+
+        <FadeIn>
+          <div className="mt-10">
+            <SectionLabel>Systeme de titrage</SectionLabel>
+            <div className="grid lg:grid-cols-[0.82fr_1.18fr] gap-8 items-start">
+              <div>
+                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(1.4rem, 3vw, 2.15rem)", fontWeight: 700, color: r(0.78) }}>
+                  Un format label pour porter l'engagement.
+                </h3>
+                <p className="mt-4" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.92rem", lineHeight: 1.8, color: r(0.38) }}>
+                  La typographie des titres est composee comme un label graphique : les mots se condensent, s'assemblent et deviennent des blocs d'affirmation, capables de rendre visible l'engagement de Parsemains.
+                </p>
+              </div>
+              <div className="grid gap-5">
+                <ImageCard src={titleSystemA} alt="Systeme de titrage Parsemains" className="aspect-[16/7]" imgClassName="w-full h-full object-contain" pad />
+                <ImageCard src={titleSystemB} alt="Variation du systeme de titrage Parsemains" className="aspect-[16/7]" imgClassName="w-full h-full object-contain" pad />
               </div>
             </div>
-          </FadeIn>
-          <div className="grid gap-5">
-            <FadeIn delay={0.08}>
-              <ImageCard src={titleSystemA} alt="Systeme de titrage Parsemains" className="aspect-[16/8]" imgClassName="w-full h-full object-contain" pad />
-            </FadeIn>
-            <FadeIn delay={0.14}>
-              <ImageCard src={titleSystemB} alt="Variation du systeme de titrage Parsemains" className="aspect-[16/8]" imgClassName="w-full h-full object-contain" pad />
-            </FadeIn>
           </div>
-        </div>
+        </FadeIn>
       </div>
     </section>
   );
