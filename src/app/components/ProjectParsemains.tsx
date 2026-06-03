@@ -278,8 +278,8 @@ function LogoSection() {
           <SectionTitle>Logo principal</SectionTitle>
         </FadeIn>
         <FadeIn>
-          <div className="min-h-[12rem] flex items-center justify-start py-10 md:py-14">
-            <img src={logoMain} alt="Logo principal Parsemains" className="w-full max-w-[24rem] md:max-w-[31rem]" style={{ filter: isDark ? "invert(1)" : "none" }} />
+          <div className="min-h-[8rem] flex items-center justify-start py-7 md:py-9">
+            <img src={logoMain} alt="Logo principal Parsemains" className="w-full max-w-[15rem] md:max-w-[20rem]" style={{ filter: isDark ? "invert(1)" : "none" }} />
           </div>
         </FadeIn>
       </div>
@@ -499,16 +499,15 @@ function PrintSection() {
         </div>
 
         <FadeIn>
-          <div className="mt-14">
-            <SectionLabel>Affiches</SectionLabel>
-            <ImageCard src={imgPosters} alt="Mockup affiches Parsemains" className="aspect-[16/8]" />
-          </div>
-        </FadeIn>
-
-        <FadeIn>
-          <div className="mt-14">
-            <SectionLabel>Packaging</SectionLabel>
-            <ImageCard src={imgPackaging} alt="Mockup packaging Parsemains" className="aspect-[16/8]" />
+          <div className="mt-14 grid lg:grid-cols-2 gap-6">
+            <div>
+              <SectionLabel>Affiches</SectionLabel>
+              <ImageCard src={imgPosters} alt="Mockup affiches Parsemains" className="aspect-[16/10]" />
+            </div>
+            <div>
+              <SectionLabel>Packaging</SectionLabel>
+              <ImageCard src={imgPackaging} alt="Mockup packaging Parsemains" className="aspect-[16/10]" />
+            </div>
           </div>
         </FadeIn>
       </div>
@@ -517,7 +516,7 @@ function PrintSection() {
 }
 
 function SocialSection() {
-  const { r } = useTheme();
+  const { r, isDark } = useTheme();
   return (
     <section className="px-6 md:px-12 py-20">
       <div className="max-w-6xl mx-auto">
@@ -525,16 +524,47 @@ function SocialSection() {
           <SectionLabel>Reseaux sociaux</SectionLabel>
           <SectionTitle>Un systeme editorial reconnaissable</SectionTitle>
         </FadeIn>
-        <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-6 items-start">
-          <ImageCard src={imgSocialProfile} alt="Profil reseaux sociaux Parsemains" className="aspect-[4/5]" imgClassName="w-full h-full object-contain" pad />
-          <div className="grid gap-6">
-            <ImageCard src={imgLinkedin} alt="Publication LinkedIn Parsemains" className="aspect-[16/9]" imgClassName="w-full h-full object-contain" pad />
-            <ImageCard src={imgLinkedinPosts} alt="Publications LinkedIn Parsemains" className="aspect-[16/10]" imgClassName="w-full h-full object-contain" pad />
-            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", lineHeight: 1.8, color: r(0.38) }}>
-              Les supports sociaux conservent le contraste fort du branding tout en mettant en scene les gestes de fabrication et les engagements de la marque.
-            </p>
+
+        <FadeIn>
+          <div>
+            <SectionLabel>Instagram</SectionLabel>
+            <motion.div
+              className="overflow-hidden rounded-3xl p-5 md:p-8"
+              style={{
+                background: "#fff",
+                border: `1px solid ${r(0.06)}`,
+                boxShadow: isDark ? "0 28px 80px rgba(0,0,0,0.24)" : "0 28px 80px rgba(0,0,0,0.08)",
+              }}
+              whileHover={{ y: -5 }}
+              transition={{ type: "spring", stiffness: 240, damping: 24 }}
+            >
+              <img src={imgSocialProfile} alt="Composition Instagram Parsemains" className="block w-full h-auto" loading="lazy" />
+            </motion.div>
           </div>
-        </div>
+        </FadeIn>
+
+        <FadeIn>
+          <div className="mt-14">
+            <SectionLabel>LinkedIn</SectionLabel>
+            <div className="grid lg:grid-cols-2 gap-6">
+              {[{ src: imgLinkedin, alt: "Publication LinkedIn Parsemains" }, { src: imgLinkedinPosts, alt: "Publications LinkedIn Parsemains" }].map((item) => (
+                <motion.div
+                  key={item.src}
+                  className="overflow-hidden rounded-3xl p-5 md:p-7 aspect-[16/10] flex items-center justify-center"
+                  style={{
+                    background: "#fff",
+                    border: `1px solid ${r(0.06)}`,
+                    boxShadow: isDark ? "0 28px 80px rgba(0,0,0,0.24)" : "0 28px 80px rgba(0,0,0,0.08)",
+                  }}
+                  whileHover={{ y: -5 }}
+                  transition={{ type: "spring", stiffness: 240, damping: 24 }}
+                >
+                  <img src={item.src} alt={item.alt} className="max-h-full w-full object-contain" loading="lazy" />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </FadeIn>
       </div>
     </section>
   );
@@ -547,21 +577,21 @@ function MotionSection() {
       <div className="max-w-6xl mx-auto">
         <FadeIn>
           <SectionLabel>Habillage video</SectionLabel>
-          <SectionTitle>Une identite en mouvement</SectionTitle>
+          <SectionTitle>Habillage video</SectionTitle>
         </FadeIn>
-        <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-6 items-start">
+        <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-6 items-start">
           <FadeIn>
             <div
               className="rounded-3xl p-5 md:p-7"
-              style={{ background: isDark ? r(0.04) : PAPER, border: `1px solid ${r(0.06)}` }}
+              style={{ background: "#fff", border: `1px solid ${r(0.06)}`, boxShadow: isDark ? "0 28px 80px rgba(0,0,0,0.24)" : "0 28px 80px rgba(0,0,0,0.08)" }}
             >
-              <img src={imgMotionHero} alt="Habillage video principal Parsemains" className="mx-auto max-h-[680px] w-auto max-w-full object-contain" loading="lazy" />
+              <img src={imgMotionHero} alt="Habillage video principal Parsemains" className="mx-auto max-h-[500px] w-auto max-w-full object-contain" loading="lazy" />
             </div>
           </FadeIn>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="rounded-3xl p-4 md:p-5 grid grid-cols-3 gap-4" style={{ background: "#fff", border: `1px solid ${r(0.06)}`, boxShadow: isDark ? "0 28px 80px rgba(0,0,0,0.24)" : "0 28px 80px rgba(0,0,0,0.08)" }}>
             {[imgMotionA, imgMotionB, imgMotionC].map((src, index) => (
               <FadeIn key={src} delay={index * 0.06}>
-                <ImageCard src={src} alt="Variation d'habillage video Parsemains" className="aspect-[9/16]" imgClassName="w-full h-full object-contain" pad />
+                <img src={src} alt="Variation d'habillage video Parsemains" className="h-auto max-h-[360px] w-full object-contain" loading="lazy" />
               </FadeIn>
             ))}
           </div>
