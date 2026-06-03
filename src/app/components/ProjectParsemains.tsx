@@ -26,8 +26,10 @@ import imgMobile from "../../assets/parsemains/19.refonte-de-site-mobile.png";
 import imgBookmarks from "../../assets/parsemains/23.marque-page-1-2-3.png";
 import imgPosters from "../../assets/parsemains/24-mockup-affiches.png";
 import imgPackaging from "../../assets/parsemains/25.mockup-packaging.png";
+import shapeSun from "../../assets/parsemains/A.soleil.svg";
 import shapeWaveA from "../../assets/parsemains/C.vagues-1.svg";
 import shapeWaveB from "../../assets/parsemains/D.vagues-2.svg";
+import shapeWaveC from "../../assets/parsemains/E.vagues-3.svg";
 import extraIconA from "../../assets/parsemains/F.picto.svg";
 import extraIconB from "../../assets/parsemains/G.picto.svg";
 import extraIconC from "../../assets/parsemains/H.picto.svg";
@@ -181,6 +183,30 @@ function DecorativeLayer() {
         animate={{ x: [0, -16, 0] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
       />
+    </div>
+  );
+}
+
+function PageDecor() {
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      <motion.img
+        src={shapeSun}
+        alt=""
+        className="absolute -right-24 top-[18rem] w-[24rem] opacity-[0.07]"
+        animate={{ rotate: [0, 10, 0], scale: [1, 1.035, 1] }}
+        transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.img
+        src={shapeSun}
+        alt=""
+        className="absolute -left-32 top-[190rem] w-[22rem] opacity-[0.06]"
+        animate={{ rotate: [0, -8, 0], y: [0, 18, 0] }}
+        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <img src={shapeWaveA} alt="" className="absolute -right-[20%] top-[74rem] w-[56rem] opacity-[0.08]" />
+      <img src={shapeWaveB} alt="" className="absolute -left-[16%] top-[132rem] w-[48rem] opacity-[0.07]" />
+      <img src={shapeWaveC} alt="" className="absolute right-[-18%] bottom-[34rem] w-[58rem] opacity-[0.08]" />
     </div>
   );
 }
@@ -602,34 +628,49 @@ function MotionSection() {
 }
 
 function WebsiteSection() {
+  const { r, isDark } = useTheme();
   return (
     <section className="px-6 md:px-12 py-20">
       <div className="max-w-6xl mx-auto">
         <FadeIn>
-          <SectionLabel>Site web desktop</SectionLabel>
+          <SectionLabel>Experience numerique</SectionLabel>
           <SectionTitle>Experience numerique</SectionTitle>
         </FadeIn>
-        <BrowserMockup src={imgWebsite} alt="Refonte desktop du site Parsemains" />
-      </div>
-    </section>
-  );
-}
-
-function MobileSection() {
-  const { r } = useTheme();
-  return (
-    <section className="px-6 md:px-12 py-20">
-      <div className="max-w-6xl mx-auto grid lg:grid-cols-[0.75fr_1.25fr] gap-12 items-center">
         <FadeIn>
-          <SectionLabel>Site web mobile</SectionLabel>
-          <SectionTitle>La marque dans un format vertical</SectionTitle>
-          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.38) }}>
-            La version mobile conserve l'impact du systeme graphique tout en privilegiant la lecture, le rythme et la comprehension des engagements de la marque.
-          </p>
-        </FadeIn>
-        <FadeIn delay={0.08}>
-          <div className="flex justify-center">
-            <PhoneMockup src={imgMobile} alt="Refonte mobile du site Parsemains" />
+          <div
+            className="relative overflow-hidden rounded-3xl bg-white px-5 py-10 md:px-10 md:py-14"
+            style={{
+              border: `1px solid ${r(0.06)}`,
+              boxShadow: isDark ? "0 28px 80px rgba(0,0,0,0.24)" : "0 28px 80px rgba(0,0,0,0.08)",
+            }}
+          >
+            <img src={shapeWaveA} alt="" className="absolute -right-24 -top-28 w-[34rem] opacity-[0.18]" />
+            <div className="relative z-10 grid lg:grid-cols-[1.35fr_0.65fr] gap-8 md:gap-12 items-center">
+              <motion.div
+                className="relative mx-auto w-full max-w-[690px] rounded-[1.15rem] bg-black p-2 shadow-2xl"
+                style={{ transform: "rotate(-4deg)" }}
+                whileHover={{ rotate: -2, y: -4 }}
+                transition={{ type: "spring", stiffness: 180, damping: 22 }}
+              >
+                <div className="absolute left-1/2 top-2 z-10 h-3 w-20 -translate-x-1/2 rounded-b-xl bg-black" />
+                <div className="aspect-[16/10] overflow-hidden rounded-xl bg-white flex items-center justify-center">
+                  <img src={imgWebsite} alt="Refonte desktop du site Parsemains" className="max-h-full w-full object-contain" loading="lazy" />
+                </div>
+                <div className="mx-auto h-4 w-[82%] rounded-b-xl bg-gradient-to-b from-zinc-300 to-zinc-100" />
+              </motion.div>
+
+              <motion.div
+                className="relative mx-auto w-full max-w-[250px] rounded-[2.4rem] bg-black p-2 shadow-2xl"
+                style={{ transform: "rotate(6deg)" }}
+                whileHover={{ rotate: 3, y: -4 }}
+                transition={{ type: "spring", stiffness: 180, damping: 22 }}
+              >
+                <div className="absolute left-1/2 top-4 z-10 h-5 w-20 -translate-x-1/2 rounded-full bg-black" />
+                <div className="aspect-[390/760] overflow-hidden rounded-[1.9rem] bg-white flex items-center justify-center">
+                  <img src={imgMobile} alt="Refonte mobile du site Parsemains" className="max-h-full w-full object-contain" loading="lazy" />
+                </div>
+              </motion.div>
+            </div>
           </div>
         </FadeIn>
       </div>
@@ -641,24 +682,24 @@ function VideoSection() {
   const { r, isDark } = useTheme();
   return (
     <section className="px-6 md:px-12 py-20">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto grid lg:grid-cols-[0.8fr_1.2fr] gap-10 items-center">
         <FadeIn>
           <SectionLabel>Video de presentation</SectionLabel>
           <SectionTitle>Une section dediee au film</SectionTitle>
+          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.38) }}>
+            Le film prolonge l'identite dans un format vertical, avec une presence plus vivante, rythmique et directement adaptee aux supports mobiles.
+          </p>
         </FadeIn>
         <FadeIn>
-          <div
-            className="rounded-3xl overflow-hidden"
-            style={{ background: isDark ? r(0.04) : "#fff", border: `1px solid ${r(0.06)}` }}
-          >
-            <div className="grid lg:grid-cols-[0.65fr_1.35fr]">
-              <div className="p-6 md:p-8 flex items-center justify-center" style={{ background: ORANGE }}>
-                <img src={imgMotionHero} alt="Apercu de la video Parsemains" className="max-h-[520px] w-auto max-w-full object-contain" loading="lazy" />
-              </div>
-              <div className="p-8 md:p-10 flex flex-col justify-center">
-                <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.42) }}>
-                  Le film prolonge le systeme graphique dans un format plus vivant : formes circulaires, contrastes francs et rythme editorial accompagnent la presentation de la marque sans perdre la clarte du message.
-                </p>
+          <div className="relative flex justify-center">
+            <img src={shapeSun} alt="" className="absolute -right-8 top-8 w-[17rem] opacity-[0.08]" />
+            <div
+              className="relative w-full max-w-[270px] rounded-[2.8rem] bg-black p-2.5"
+              style={{ boxShadow: isDark ? "0 32px 90px rgba(0,0,0,0.38)" : "0 32px 90px rgba(0,0,0,0.16)" }}
+            >
+              <div className="absolute left-1/2 top-5 z-10 h-6 w-24 -translate-x-1/2 rounded-full bg-black" />
+              <div className="overflow-hidden rounded-[2.1rem] bg-white">
+                <img src={imgMotionHero} alt="Apercu de la video Parsemains" className="block h-auto w-full" loading="lazy" />
               </div>
             </div>
           </div>
@@ -687,19 +728,21 @@ function ClosingSection() {
 export function ProjectParsemains() {
   return (
     <main className="relative min-h-screen overflow-hidden">
-      <HeroSection />
-      <IntroSection />
-      <LogoSection />
-      <LogoVariationsSection />
-      <UniverseSection />
-      <PictogramsSection />
-      <PrintSection />
-      <SocialSection />
-      <MotionSection />
-      <WebsiteSection />
-      <MobileSection />
-      <VideoSection />
-      <ClosingSection />
+      <PageDecor />
+      <div className="relative z-10">
+        <HeroSection />
+        <IntroSection />
+        <LogoSection />
+        <LogoVariationsSection />
+        <UniverseSection />
+        <PictogramsSection />
+        <PrintSection />
+        <SocialSection />
+        <MotionSection />
+        <WebsiteSection />
+        <VideoSection />
+        <ClosingSection />
+      </div>
     </main>
   );
 }
