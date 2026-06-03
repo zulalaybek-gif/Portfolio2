@@ -18,7 +18,7 @@ import imgPeople from "../../assets/collectif-haiti-de-france/04.image.png";
 
 /* ── Project imagery ── */
 import imgMockupSituation from "../../assets/collectif-haiti-de-france/05.mise-en-situation.png";
-import imgInstagram from "../../assets/collectif-haiti-de-france/06.reseaux-sociaux.png";
+import imgInstagram from "../../assets/collectif-haiti-de-france/06.reseaux-sociaux-2.png";
 import imgMonoLight from "../../assets/collectif-haiti-de-france/23.monochrome.png";
 import imgMonoDark from "../../assets/collectif-haiti-de-france/24.monochrome.png";
 import imgPrototypeHome from "../../assets/collectif-haiti-de-france/25.homepage.png";
@@ -535,11 +535,31 @@ function DirectionSection() {
   const { r } = useTheme();
 
   return (
-    <section className="px-6 md:px-12 py-16">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16">
-        <div>
-          <SectionLabel text="01" />
-          <SectionTitle text={t("haiti.direction.title")} color={PURPLE} />
+    <section className="px-6 md:px-12 py-14">
+      <div className="max-w-6xl mx-auto">
+        <FadeIn>
+          <span
+            className="section-eyebrow uppercase tracking-[0.28em] block mb-8"
+            style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.62rem", color: r(0.22) }}
+          >
+            Introduction
+          </span>
+        </FadeIn>
+        <div className="grid md:grid-cols-2 gap-10 md:gap-16">
+          <div>
+            <FadeIn>
+              <h2
+                className="mb-5"
+                style={{
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontSize: "clamp(1.25rem, 2.4vw, 1.75rem)",
+                  fontWeight: 600,
+                  color: PURPLE,
+                }}
+              >
+                {t("haiti.direction.title")}
+              </h2>
+            </FadeIn>
           <FadeIn>
             <p
               style={{
@@ -554,8 +574,19 @@ function DirectionSection() {
           </FadeIn>
         </div>
         <div>
-          <SectionLabel text="02" />
-          <SectionTitle text={t("haiti.enjeu.title")} color={RED} />
+          <FadeIn delay={0.08}>
+            <h2
+              className="mb-5"
+              style={{
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: "clamp(1.25rem, 2.4vw, 1.75rem)",
+                fontWeight: 600,
+                color: RED,
+              }}
+            >
+              {t("haiti.enjeu.title")}
+            </h2>
+          </FadeIn>
           <FadeIn delay={0.1}>
             <p
               style={{
@@ -568,6 +599,7 @@ function DirectionSection() {
               {t("haiti.enjeu.desc")}
             </p>
           </FadeIn>
+          </div>
         </div>
       </div>
     </section>
@@ -598,7 +630,14 @@ function BeforeRefonteSection() {
   return (
     <section className="px-6 md:px-12 py-16">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="03" />
+        <FadeIn>
+          <span
+            className="section-eyebrow uppercase tracking-[0.28em] block mb-4"
+            style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.62rem", color: r(0.22) }}
+          >
+            État existant
+          </span>
+        </FadeIn>
         <SectionTitle text="Avant refonte" color={NAVY} />
         <FadeIn>
           <p
@@ -658,41 +697,52 @@ function BeforeRefonteSection() {
 function VisualSystemSection() {
   const { r, isDark } = useTheme();
 
-  const themes = [
+  const colors = [
     {
-      title: "Droit à l'éducation",
+      title: "Rouge",
+      theme: "Droit à l'éducation",
       color: RED,
-      icon: <IconEducation size={70} />,
-      desc: "Le rouge rend ce pilier immédiatement visible et porte la dimension d'urgence, d'engagement et d'accès aux savoirs.",
+      desc: "Un repère direct pour les contenus liés à l'accès aux savoirs, à la formation et aux actions éducatives.",
+      usage: "Identifier les contenus éducatifs",
     },
     {
-      title: "Droit à l'information",
+      title: "Bleu",
+      theme: "Droit à l'information",
       color: CYAN,
-      icon: <IconInformation size={70} />,
-      desc: "Le bleu accompagne les contenus liés à la transmission, aux ressources et à la circulation d'une information claire.",
+      desc: "Une couleur associée à la transmission, aux ressources et à la circulation d'une information claire.",
+      usage: "Guider vers les ressources",
     },
     {
-      title: "Souveraineté alimentaire",
+      title: "Vert",
+      theme: "Souveraineté alimentaire",
       color: GREEN,
-      icon: <IconSovereignty size={70} />,
-      desc: "Le vert identifie les sujets liés à l'autonomie, au vivant et aux actions autour de l'alimentation.",
+      desc: "Un signal lié au vivant, à l'autonomie et aux sujets qui touchent à l'alimentation.",
+      usage: "Repérer les actions alimentaires",
     },
     {
-      title: "Respect des droits des migrants",
+      title: "Violet",
+      theme: "Respect des droits des migrants",
       color: PURPLE,
-      icon: <IconMigrants size={70} />,
-      desc: "Le violet donne un repère sensible aux sujets d'accueil, de dignité et de protection des parcours migratoires.",
+      desc: "Un repère plus sensible pour les prises de parole autour de l'accueil, de la dignité et des parcours migratoires.",
+      usage: "Identifier les sujets migrants",
+    },
+    {
+      title: "Bleu marine",
+      theme: "Couleur structurelle",
+      color: NAVY,
+      desc: "La couleur d'ancrage de l'identité : elle apporte contraste, stabilité, lisibilité et cohérence globale.",
+      usage: "Stabiliser l'ensemble",
     },
   ];
 
   return (
     <section className="px-6 md:px-12 py-20">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="04" />
-        <SectionTitle text="Système couleur & pictogrammes" />
+        <SectionLabel text="01" />
+        <SectionTitle text="Code couleur & repérage visuel" />
         <FadeIn>
           <div
-            className="rounded-3xl p-6 md:p-8 mb-8"
+            className="grid lg:grid-cols-[0.95fr_1.05fr] gap-8 rounded-3xl p-6 md:p-8 mb-8"
             style={{
               background: isDark ? r(0.04) : "#f8f8f8",
               border: `1px solid ${r(0.06)}`,
@@ -701,71 +751,73 @@ function VisualSystemSection() {
             <p
               style={{
                 fontFamily: "'Inter', sans-serif",
-                fontSize: "clamp(0.98rem, 1.6vw, 1.12rem)",
+                fontSize: "clamp(0.98rem, 1.6vw, 1.08rem)",
                 lineHeight: 1.85,
                 color: r(0.45),
-                maxWidth: 860,
               }}
             >
-              L'identité visuelle repose sur un système de repères associant une couleur à une thématique et à une icône dédiée. Ce principe permet d'identifier rapidement chaque axe d'action, que ce soit sur le logo, le site web, les publications ou les supports vidéo. La couleur ne sert donc pas seulement à décorer : elle devient un langage visuel, pensé pour rendre la communication plus claire, plus lisible et plus mémorisable.
+              L'identité visuelle repose sur un système de repères associant une couleur à une thématique. Ce principe permet d'identifier rapidement chaque axe d'action, que ce soit sur le site web, les publications, les vidéos ou les supports de communication.
+            </p>
+            <p
+              style={{
+                fontFamily: "'Inter', sans-serif",
+                fontSize: "0.9rem",
+                lineHeight: 1.8,
+                color: r(0.34),
+              }}
+            >
+              La couleur ne sert donc pas seulement à décorer : elle devient un langage visuel, pensé pour rendre la communication plus claire, plus lisible et plus mémorisable. Les pictogrammes prolongent ensuite ce code dans le logo et les supports, sans que cette section répète sa construction.
             </p>
           </div>
         </FadeIn>
 
-        <div className="grid md:grid-cols-2 gap-5">
-          {themes.map((theme, i) => (
-            <FadeIn key={theme.title} delay={i * 0.08}>
+        <div className="space-y-3">
+          {colors.map((item, i) => (
+            <FadeIn key={item.title} delay={i * 0.06}>
               <motion.div
-                className="relative rounded-3xl p-6 md:p-7 overflow-hidden h-full"
+                className="grid md:grid-cols-[1.1fr_1.2fr_0.8fr] gap-4 md:gap-6 items-center rounded-2xl p-4 md:p-5"
                 style={{
                   background: isDark ? r(0.04) : "#fff",
                   border: `1px solid ${r(0.06)}`,
                 }}
-                whileHover={{ y: -5 }}
+                whileHover={{ x: 6 }}
                 transition={{ type: "spring", stiffness: 260, damping: 24 }}
               >
-                <div className="absolute inset-x-0 top-0 h-1.5" style={{ background: theme.color }} />
-                <div className="flex items-start gap-5">
-                  <div
-                    className="shrink-0 rounded-2xl p-4"
-                    style={{
-                      background: `${theme.color}18`,
-                      boxShadow: `inset 0 0 0 1px ${theme.color}33`,
-                    }}
-                  >
-                    {theme.icon}
-                  </div>
+                <div className="flex items-center gap-4">
+                  <span className="block h-14 w-14 rounded-2xl shrink-0" style={{ background: item.color, boxShadow: `0 14px 38px ${item.color}35` }} />
                   <div>
-                    <span
-                      className="inline-flex rounded-full px-3 py-1 mb-3"
-                      style={{
-                        background: theme.color,
-                        color: "#fff",
-                        fontFamily: "'Inter', sans-serif",
-                        fontSize: "0.68rem",
-                        fontWeight: 600,
-                      }}
-                    >
-                      Repère visuel
-                    </span>
+                    <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.68rem", color: r(0.25) }}>{item.color}</span>
                     <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.08rem", fontWeight: 650, color: r(0.68) }}>
-                      {theme.title}
+                      {item.title}
                     </h3>
-                    <p className="mt-2" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.82rem", lineHeight: 1.75, color: r(0.34) }}>
-                      {theme.desc}
-                    </p>
                   </div>
                 </div>
+                <div>
+                  <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.68rem", color: r(0.25) }}>Thématique</span>
+                  <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1rem", fontWeight: 600, color: r(0.62) }}>
+                    {item.theme}
+                  </p>
+                  <p className="mt-2" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.8rem", lineHeight: 1.65, color: r(0.34) }}>
+                    {item.desc}
+                  </p>
+                </div>
+                <span
+                  className="justify-self-start md:justify-self-end rounded-full px-3 py-1.5"
+                  style={{
+                    background: `${item.color}18`,
+                    color: item.color,
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "0.68rem",
+                    fontWeight: 650,
+                    border: `1px solid ${item.color}30`,
+                  }}
+                >
+                  {item.usage}
+                </span>
               </motion.div>
             </FadeIn>
           ))}
         </div>
-
-        <FadeIn>
-          <p className="mt-8 max-w-3xl" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", lineHeight: 1.8, color: r(0.35) }}>
-            Le bleu marine complète ce système comme couleur structurelle : il stabilise l'ensemble, apporte du contraste, renforce la lisibilité et installe un ton plus institutionnel et professionnel.
-          </p>
-        </FadeIn>
       </div>
     </section>
   );
@@ -780,7 +832,7 @@ function LogoSection() {
   return (
     <section className="px-6 md:px-12 py-20">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="05" />
+        <SectionLabel text="02" />
         <SectionTitle text="Nouveau logo & principe de construction" />
         <FadeIn>
           <p
@@ -831,7 +883,7 @@ function LogoConceptSection() {
   return (
     <section className="px-6 md:px-12 py-16">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="06" />
+        <SectionLabel text="03" />
         <SectionTitle text={t("haiti.logoConcept.title")} />
         <FadeIn>
           <p
@@ -975,7 +1027,7 @@ function DeclinationsSection() {
   return (
     <section className="px-6 md:px-12 py-16">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="07" />
+        <SectionLabel text="04" />
         <SectionTitle text={t("haiti.decli.title")} />
         <FadeIn>
           <p
@@ -1038,7 +1090,7 @@ function MonochromeSection() {
   return (
     <section className="px-6 md:px-12 py-16">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="08" />
+        <SectionLabel text="05" />
         <SectionTitle text="Versions monochromes" />
         <FadeIn>
           <p
@@ -1156,7 +1208,14 @@ function MockupSituationSection() {
   return (
     <section className="px-6 md:px-12 py-16">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="08b" />
+        <FadeIn>
+          <span
+            className="section-eyebrow uppercase tracking-[0.28em] block mb-4"
+            style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.62rem", color: r(0.22) }}
+          >
+            Application
+          </span>
+        </FadeIn>
         <SectionTitle text="Mise en situation" />
         <FadeIn>
           <div
@@ -1237,7 +1296,7 @@ function ApplicationsIdentitySection() {
   return (
     <section id="section-applications" className="px-6 md:px-12 py-20">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="09" />
+        <SectionLabel text="06" />
         <SectionTitle text="Applications de l'identité" />
         <FadeIn>
           <p className="max-w-2xl mb-12" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.35) }}>
@@ -1673,7 +1732,14 @@ function StoriesSection() {
   return (
     <section id="stories-instagram" className="px-6 md:px-12 py-16">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="09b" />
+        <FadeIn>
+          <span
+            className="section-eyebrow uppercase tracking-[0.28em] block mb-4"
+            style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.62rem", color: r(0.22) }}
+          >
+            Supports sociaux
+          </span>
+        </FadeIn>
         <SectionTitle text="Stories Instagram" />
         <FadeIn>
           <p className="max-w-2xl mb-8" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.35) }}>
@@ -1749,7 +1815,6 @@ function ClosingSection() {
   return (
     <section className="px-6 md:px-12 py-20">
       <div className="max-w-4xl mx-auto text-center">
-        <SectionLabel text="10" />
         <SectionTitle text="Résultat final" />
         <FadeIn>
           <div className="w-16 h-[1px] mx-auto mb-8" style={{ background: `linear-gradient(90deg, transparent, ${PURPLE}, transparent)` }} />
