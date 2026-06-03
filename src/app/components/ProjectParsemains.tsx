@@ -179,16 +179,6 @@ function DecorativeLayer() {
         animate={{ y: [0, 18, 0], rotate: [0, 1.5, 0] }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
       />
-      <motion.div
-        className="absolute -left-36 top-[18%] h-[22rem] w-[22rem] rounded-full opacity-[0.55]"
-        style={{
-          background: `repeating-radial-gradient(circle, transparent 0 18px, ${ORANGE} 19px 21px, transparent 22px 34px)`,
-          maskImage: "radial-gradient(circle, black 0 58%, transparent 70%)",
-          WebkitMaskImage: "radial-gradient(circle, black 0 58%, transparent 70%)",
-        }}
-        animate={{ rotate: [0, 8, 0], scale: [1, 1.04, 1] }}
-        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-      />
       <motion.img
         src={shapeWaveB}
         alt=""
@@ -219,8 +209,8 @@ function HeroSection() {
       </ProjectBackButton>
       <DecorativeLayer />
 
-      <div className="relative z-10 max-w-6xl mx-auto min-h-[62vh] grid lg:grid-cols-[0.9fr_1.1fr] gap-12 items-center">
-        <div>
+      <div className="relative z-10 max-w-6xl mx-auto min-h-[62vh] flex items-center">
+        <div className="max-w-3xl">
           <motion.span
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -250,16 +240,6 @@ function HeroSection() {
             Repenser l'identite d'une marque francaise specialisee dans le papier ensemence, avec un univers plus graphique, plus audacieux et plus memorisable que les codes ecologiques traditionnels.
           </motion.p>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 34, rotate: 1 }}
-          animate={{ opacity: 1, y: 0, rotate: 0 }}
-          transition={{ duration: 0.95, delay: 0.16, ease: "easeOut" }}
-          className="relative"
-        >
-          <div className="absolute -inset-4 rounded-[2rem]" style={{ background: `linear-gradient(135deg, ${ORANGE}22, ${MAGENTA}12, ${BLUE}16)` }} />
-          <ImageCard src={imgPackaging} alt="Packaging Parsemains" className="relative aspect-[4/3]" imgClassName="w-full h-full object-cover" />
-        </motion.div>
       </div>
     </section>
   );
