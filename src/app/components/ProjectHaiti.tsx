@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { useState } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useI18n } from "./i18n";
 import { useTheme } from "./theme";
@@ -574,21 +574,230 @@ function DirectionSection() {
 }
 
 /* ══════════════════════════════════════════
-   3. LOGO SECTION
+   2b. AVANT REFONTE
+   ══════════════════════════════════════════ */
+function BeforeRefonteSection() {
+  const { r, isDark } = useTheme();
+
+  const cards = [
+    {
+      image: imgOldLogo,
+      title: "Ancien logo",
+      desc: "Une base institutionnelle à clarifier pour mieux exprimer les axes d'action du collectif.",
+      fit: "contain",
+    },
+    {
+      image: imgOldWebsite,
+      title: "Ancien site web",
+      desc: "Une présence digitale à restructurer pour rendre l'information plus lisible et plus identifiable.",
+      fit: "cover",
+    },
+  ];
+
+  return (
+    <section className="px-6 md:px-12 py-16">
+      <div className="max-w-6xl mx-auto">
+        <SectionLabel text="03" />
+        <SectionTitle text="Avant refonte" color={NAVY} />
+        <FadeIn>
+          <p
+            className="max-w-2xl mb-10"
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "0.95rem",
+              lineHeight: 1.8,
+              color: r(0.35),
+            }}
+          >
+            L'analyse de l'existant permet de séparer clairement ce qui relevait de l'ancien territoire visuel et ce que la refonte devait apporter : plus de structure, plus de cohérence et un système de repères immédiatement reconnaissable.
+          </p>
+        </FadeIn>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          {cards.map((card, i) => (
+            <FadeIn key={card.title} delay={i * 0.08}>
+              <motion.div
+                className="rounded-3xl overflow-hidden h-full"
+                style={{
+                  background: isDark ? r(0.04) : "#f8f8f8",
+                  border: `1px solid ${r(0.06)}`,
+                }}
+                whileHover={{ y: -4 }}
+                transition={{ type: "spring", stiffness: 260, damping: 24 }}
+              >
+                <div className="aspect-[16/10] overflow-hidden" style={{ background: isDark ? r(0.03) : "#fff" }}>
+                  <img
+                    src={card.image}
+                    alt={card.title}
+                    className="h-full w-full p-4"
+                    style={{ objectFit: card.fit as "cover" | "contain", objectPosition: "top center" }}
+                    loading="lazy"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1rem", fontWeight: 600, color: r(0.65) }}>
+                    {card.title}
+                  </h3>
+                  <p className="mt-2" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.82rem", lineHeight: 1.7, color: r(0.32) }}>
+                    {card.desc}
+                  </p>
+                </div>
+              </motion.div>
+            </FadeIn>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ══════════════════════════════════════════
+   3. SYSTEME COULEUR & PICTOGRAMMES
+   ══════════════════════════════════════════ */
+function VisualSystemSection() {
+  const { r, isDark } = useTheme();
+
+  const themes = [
+    {
+      title: "Droit à l'éducation",
+      color: RED,
+      icon: <IconEducation size={70} />,
+      desc: "Le rouge rend ce pilier immédiatement visible et porte la dimension d'urgence, d'engagement et d'accès aux savoirs.",
+    },
+    {
+      title: "Droit à l'information",
+      color: CYAN,
+      icon: <IconInformation size={70} />,
+      desc: "Le bleu accompagne les contenus liés à la transmission, aux ressources et à la circulation d'une information claire.",
+    },
+    {
+      title: "Souveraineté alimentaire",
+      color: GREEN,
+      icon: <IconSovereignty size={70} />,
+      desc: "Le vert identifie les sujets liés à l'autonomie, au vivant et aux actions autour de l'alimentation.",
+    },
+    {
+      title: "Respect des droits des migrants",
+      color: PURPLE,
+      icon: <IconMigrants size={70} />,
+      desc: "Le violet donne un repère sensible aux sujets d'accueil, de dignité et de protection des parcours migratoires.",
+    },
+  ];
+
+  return (
+    <section className="px-6 md:px-12 py-20">
+      <div className="max-w-6xl mx-auto">
+        <SectionLabel text="04" />
+        <SectionTitle text="Système couleur & pictogrammes" />
+        <FadeIn>
+          <div
+            className="rounded-3xl p-6 md:p-8 mb-8"
+            style={{
+              background: isDark ? r(0.04) : "#f8f8f8",
+              border: `1px solid ${r(0.06)}`,
+            }}
+          >
+            <p
+              style={{
+                fontFamily: "'Inter', sans-serif",
+                fontSize: "clamp(0.98rem, 1.6vw, 1.12rem)",
+                lineHeight: 1.85,
+                color: r(0.45),
+                maxWidth: 860,
+              }}
+            >
+              L'identité visuelle repose sur un système de repères associant une couleur à une thématique et à une icône dédiée. Ce principe permet d'identifier rapidement chaque axe d'action, que ce soit sur le logo, le site web, les publications ou les supports vidéo. La couleur ne sert donc pas seulement à décorer : elle devient un langage visuel, pensé pour rendre la communication plus claire, plus lisible et plus mémorisable.
+            </p>
+          </div>
+        </FadeIn>
+
+        <div className="grid md:grid-cols-2 gap-5">
+          {themes.map((theme, i) => (
+            <FadeIn key={theme.title} delay={i * 0.08}>
+              <motion.div
+                className="relative rounded-3xl p-6 md:p-7 overflow-hidden h-full"
+                style={{
+                  background: isDark ? r(0.04) : "#fff",
+                  border: `1px solid ${r(0.06)}`,
+                }}
+                whileHover={{ y: -5 }}
+                transition={{ type: "spring", stiffness: 260, damping: 24 }}
+              >
+                <div className="absolute inset-x-0 top-0 h-1.5" style={{ background: theme.color }} />
+                <div className="flex items-start gap-5">
+                  <div
+                    className="shrink-0 rounded-2xl p-4"
+                    style={{
+                      background: `${theme.color}18`,
+                      boxShadow: `inset 0 0 0 1px ${theme.color}33`,
+                    }}
+                  >
+                    {theme.icon}
+                  </div>
+                  <div>
+                    <span
+                      className="inline-flex rounded-full px-3 py-1 mb-3"
+                      style={{
+                        background: theme.color,
+                        color: "#fff",
+                        fontFamily: "'Inter', sans-serif",
+                        fontSize: "0.68rem",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Repère visuel
+                    </span>
+                    <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.08rem", fontWeight: 650, color: r(0.68) }}>
+                      {theme.title}
+                    </h3>
+                    <p className="mt-2" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.82rem", lineHeight: 1.75, color: r(0.34) }}>
+                      {theme.desc}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </FadeIn>
+          ))}
+        </div>
+
+        <FadeIn>
+          <p className="mt-8 max-w-3xl" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", lineHeight: 1.8, color: r(0.35) }}>
+            Le bleu marine complète ce système comme couleur structurelle : il stabilise l'ensemble, apporte du contraste, renforce la lisibilité et installe un ton plus institutionnel et professionnel.
+          </p>
+        </FadeIn>
+      </div>
+    </section>
+  );
+}
+
+/* ══════════════════════════════════════════
+   4. LOGO SECTION
    ══════════════════════════════════════════ */
 function LogoSection() {
-  const { t } = useI18n();
   const { r, isDark } = useTheme();
 
   return (
     <section className="px-6 md:px-12 py-20">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="03" />
-        <SectionTitle text={t("haiti.logo.title")} />
+        <SectionLabel text="05" />
+        <SectionTitle text="Nouveau logo & principe de construction" />
+        <FadeIn>
+          <p
+            className="max-w-2xl mb-10"
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "0.95rem",
+              lineHeight: 1.8,
+              color: r(0.35),
+            }}
+          >
+            Le logo repose sur l'assemblage de quatre icônes complémentaires, chacune liée à une thématique et à une couleur. Chaque élément possède sa propre fonction dans l'identité, tout en participant à l'équilibre global du signe.
+          </p>
+        </FadeIn>
 
         <FadeIn>
           <div
-            className="mt-8 rounded-3xl flex items-center justify-center py-16 px-8"
+            className="rounded-3xl flex items-center justify-center py-16 px-8"
             style={{
               background: isDark ? r(0.04) : "#f8f8f8",
               border: `1px solid ${r(0.06)}`,
@@ -621,7 +830,7 @@ function LogoConceptSection() {
   return (
     <section className="px-6 md:px-12 py-16">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="04" />
+        <SectionLabel text="06" />
         <SectionTitle text={t("haiti.logoConcept.title")} />
         <FadeIn>
           <p
@@ -765,7 +974,7 @@ function DeclinationsSection() {
   return (
     <section className="px-6 md:px-12 py-16">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="06" />
+        <SectionLabel text="07" />
         <SectionTitle text={t("haiti.decli.title")} />
         <FadeIn>
           <p
@@ -814,12 +1023,42 @@ function DeclinationsSection() {
           ))}
         </div>
 
-        <div className="grid md:grid-cols-2 gap-4 mt-6">
+      </div>
+    </section>
+  );
+}
+
+/* ══════════════════════════════════════════
+   8. VERSIONS MONOCHROMES
+   ══════════════════════════════════════════ */
+function MonochromeSection() {
+  const { r } = useTheme();
+
+  return (
+    <section className="px-6 md:px-12 py-16">
+      <div className="max-w-6xl mx-auto">
+        <SectionLabel text="08" />
+        <SectionTitle text="Versions monochromes" />
+        <FadeIn>
+          <p
+            className="max-w-2xl mb-10"
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "0.95rem",
+              lineHeight: 1.8,
+              color: r(0.35),
+            }}
+          >
+            Les versions monochromes assurent la lisibilité du logo lorsque le contexte impose un traitement plus sobre, sans perdre la structure du signe ni son équilibre institutionnel.
+          </p>
+        </FadeIn>
+
+        <div className="grid md:grid-cols-2 gap-4">
           {[
             { image: imgMonoLight, bg: "#f8f8f8", label: "Version monochrome claire" },
             { image: imgMonoDark, bg: NAVY, label: "Version monochrome sombre" },
           ].map((item, i) => (
-            <FadeIn key={item.label} delay={0.12 + i * 0.08}>
+            <FadeIn key={item.label} delay={i * 0.08}>
               <motion.div
                 className="rounded-2xl p-8 md:p-10 flex flex-col items-center justify-center gap-4 aspect-[16/7]"
                 style={{ background: item.bg, border: `1px solid ${r(0.06)}` }}
@@ -916,7 +1155,7 @@ function MockupSituationSection() {
   return (
     <section className="px-6 md:px-12 py-16">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="07b" />
+        <SectionLabel text="08b" />
         <SectionTitle text="Mise en situation" />
         <FadeIn>
           <div
@@ -935,6 +1174,136 @@ function MockupSituationSection() {
             />
           </div>
         </FadeIn>
+      </div>
+    </section>
+  );
+}
+
+/* ══════════════════════════════════════════
+   9. APPLICATIONS DE L'IDENTITE
+   ══════════════════════════════════════════ */
+function ApplicationsIdentitySection() {
+  const { r, isDark } = useTheme();
+  const figmaUrl = "https://www.figma.com/proto/IEQpcT3LJXFg0Vh5X66Gim/Collectif-Ha%C3%AFti-de-France?page-id=4%3A2&type=design&node-id=230-188&viewport=-382%2C393%2C0.08&t=yBIhMimf8JMiraKN-1&scaling=scale-down-width&starting-point-node-id=230%3A188&mode=design";
+  const youtubeUrl = "https://www.youtube.com/watch?v=y1wARMgXyCE";
+
+  const cardStyle = {
+    background: isDark ? r(0.04) : "#f8f8f8",
+    border: `1px solid ${r(0.06)}`,
+    boxShadow: isDark ? "0 28px 80px rgba(0,0,0,0.24)" : "0 28px 80px rgba(0,0,0,0.07)",
+  };
+
+  const Button = ({ label }: { label: string }) => (
+    <span
+      className="inline-flex items-center gap-2 rounded-full px-4 py-2"
+      style={{
+        background: NAVY,
+        color: "#fff",
+        fontFamily: "'Inter', sans-serif",
+        fontSize: "0.72rem",
+        fontWeight: 600,
+      }}
+    >
+      {label}
+      <ArrowUpRight size={14} />
+    </span>
+  );
+
+  return (
+    <section id="section-applications" className="px-6 md:px-12 py-20">
+      <div className="max-w-6xl mx-auto">
+        <SectionLabel text="09" />
+        <SectionTitle text="Applications de l'identité" />
+        <FadeIn>
+          <p className="max-w-2xl mb-12" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.35) }}>
+            Le système couleur + pictogramme se prolonge sur les supports digitaux : le site web, les publications sociales et la vidéo reprennent les mêmes repères pour rendre chaque prise de parole plus claire, plus cohérente et plus reconnaissable.
+          </p>
+        </FadeIn>
+
+        <div className="grid lg:grid-cols-3 gap-6">
+          <FadeIn>
+            <motion.a
+              href={figmaUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="group block rounded-3xl overflow-hidden h-full cursor-pointer"
+              style={cardStyle}
+              whileHover={{ y: -6 }}
+              transition={{ type: "spring", stiffness: 260, damping: 24 }}
+            >
+              <div className="flex items-center gap-2 px-5 py-3" style={{ borderBottom: `1px solid ${r(0.06)}` }}>
+                {[RED, GREEN, CYAN].map((color) => (
+                  <span key={color} className="block h-2.5 w-2.5 rounded-full" style={{ background: color }} />
+                ))}
+                <span className="ml-3" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.68rem", color: r(0.25) }}>
+                  site web
+                </span>
+              </div>
+              <div className="h-[330px] overflow-y-auto overflow-x-hidden" style={{ scrollbarWidth: "thin", background: isDark ? r(0.02) : "#fff" }}>
+                <img src={imgPrototypeHome} alt="Aperçu de la proposition de homepage Collectif Haïti de France" className="block w-full" loading="lazy" />
+              </div>
+              <div className="p-6">
+                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1rem", fontWeight: 650, color: r(0.68) }}>Site web</h3>
+                <p className="mt-2 mb-5" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.82rem", lineHeight: 1.7, color: r(0.34) }}>
+                  Une refonte structurée autour des axes d'action, avec des couleurs qui guident la lecture.
+                </p>
+                <Button label="Voir le prototype" />
+              </div>
+            </motion.a>
+          </FadeIn>
+
+          <FadeIn delay={0.08}>
+            <motion.a
+              href="#stories-instagram"
+              className="group block rounded-3xl overflow-hidden h-full cursor-pointer"
+              style={cardStyle}
+              whileHover={{ y: -6 }}
+              transition={{ type: "spring", stiffness: 260, damping: 24 }}
+            >
+              <div className="flex justify-center px-6 pt-7 pb-4" style={{ background: isDark ? r(0.02) : "#fff" }}>
+                <PhoneMockup image={imgInstagram} alt="Réseaux sociaux — Collectif Haïti de France" fit="contain" />
+              </div>
+              <div className="p-6">
+                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1rem", fontWeight: 650, color: r(0.68) }}>Réseaux sociaux</h3>
+                <p className="mt-2 mb-5" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.82rem", lineHeight: 1.7, color: r(0.34) }}>
+                  Une grille sociale pensée comme un système éditorial, identifiable par couleur et par pictogramme.
+                </p>
+                <Button label="Voir les visuels" />
+              </div>
+            </motion.a>
+          </FadeIn>
+
+          <FadeIn delay={0.16}>
+            <motion.a
+              href={youtubeUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="group block rounded-3xl overflow-hidden h-full cursor-pointer"
+              style={cardStyle}
+              whileHover={{ y: -6 }}
+              transition={{ type: "spring", stiffness: 260, damping: 24 }}
+            >
+              <div className="relative w-full aspect-video" style={{ background: isDark ? r(0.02) : "#fff" }}>
+                <iframe
+                  title="Vidéo Collectif Haïti de France"
+                  src="https://www.youtube-nocookie.com/embed/y1wARMgXyCE"
+                  className="absolute inset-0 h-full w-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  loading="lazy"
+                  style={{ border: 0 }}
+                />
+              </div>
+              <div className="p-6">
+                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1rem", fontWeight: 650, color: r(0.68) }}>Vidéo</h3>
+                <p className="mt-2 mb-5" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.82rem", lineHeight: 1.7, color: r(0.34) }}>
+                  Un support animé où le système d'icônes devient un langage de transition et de reconnaissance.
+                </p>
+                <Button label="Ouvrir la vidéo" />
+              </div>
+            </motion.a>
+          </FadeIn>
+        </div>
       </div>
     </section>
   );
@@ -1282,13 +1651,13 @@ function StoriesSection() {
   const dotColors = [NAVY, RED, CYAN, GREEN];
 
   return (
-    <section className="px-6 md:px-12 py-16">
+    <section id="stories-instagram" className="px-6 md:px-12 py-16">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="10b" />
+        <SectionLabel text="09b" />
         <SectionTitle text="Stories Instagram" />
         <FadeIn>
           <p className="max-w-2xl mb-8" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.35) }}>
-            Chaque thématique d'action dispose de sa propre famille de stories, reprenant l'icône et la couleur associée sur des photographies en noir et blanc.
+            Les formats sociaux prolongent le même langage visuel : chaque famille de contenus reprend les codes de couleur et les repères graphiques associés, sans ajouter d'éléments parasites aux visuels fournis.
           </p>
         </FadeIn>
 
@@ -1360,6 +1729,8 @@ function ClosingSection() {
   return (
     <section className="px-6 md:px-12 py-20">
       <div className="max-w-4xl mx-auto text-center">
+        <SectionLabel text="10" />
+        <SectionTitle text="Résultat final" />
         <FadeIn>
           <div className="w-16 h-[1px] mx-auto mb-8" style={{ background: `linear-gradient(90deg, transparent, ${PURPLE}, transparent)` }} />
           <div className="flex items-center justify-center gap-3 mb-6 opacity-40">
@@ -1387,17 +1758,15 @@ export function ProjectHaiti() {
     <div className="relative w-full">
       <HeroSection />
       <DirectionSection />
+      <BeforeRefonteSection />
+      <VisualSystemSection />
       <LogoSection />
       <LogoConceptSection />
-      <IconographySection />
       <DeclinationsSection />
-      <PatternSection />
+      <MonochromeSection />
       <MockupSituationSection />
-      <PaletteSection />
-      <ApplicationsNavSection />
-      <InstagramSection />
+      <ApplicationsIdentitySection />
       <StoriesSection />
-      <LinksSection />
       <ClosingSection />
       <div className="h-24" />
     </div>
