@@ -311,42 +311,21 @@ function IntroSection() {
 }
 
 function LogoSection() {
-  const { r, isDark } = useTheme();
+  const { isDark } = useTheme();
   return (
-    <section className="relative overflow-hidden px-6 md:px-12 py-14 md:py-20">
+    <section className="px-6 py-12 md:px-12 md:py-16">
       <div className="max-w-6xl mx-auto">
         <FadeIn>
           <SectionTitle>Logo principal</SectionTitle>
         </FadeIn>
         <FadeIn>
-          <div
-            className="relative overflow-hidden rounded-[2rem] px-6 py-12 md:px-12 md:py-16"
-            style={{
-              background: isDark ? `linear-gradient(135deg, ${r(0.03)}, rgba(240,129,0,0.07))` : `linear-gradient(135deg, #fff, ${PAPER})`,
-              border: `1px solid ${r(0.06)}`,
-            }}
-          >
-            <motion.img
-              src={shapeWaveJ}
-              alt=""
-              className="absolute right-6 top-4 w-[34rem] max-w-[86vw] opacity-[0.3]"
-              animate={{ y: [0, 10, 0], x: [0, -8, 0] }}
-              transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+          <div className="flex min-h-[6rem] items-center justify-center py-4 md:min-h-[7rem] md:py-6">
+            <img
+              src={logoMain}
+              alt="Logo principal Parsemains"
+              className="w-[58%] max-w-[8rem] md:w-[38%] md:max-w-[10.5rem]"
+              style={{ filter: isDark ? "invert(1)" : "none" }}
             />
-            <div className="absolute left-8 top-8 h-8 w-[1px]" style={{ background: ORANGE }} />
-            <div className="absolute left-8 top-8 h-[1px] w-12" style={{ background: ORANGE }} />
-            <div className="absolute right-10 bottom-10 h-10 w-[1px]" style={{ background: r(0.14) }} />
-            <div className="absolute right-10 bottom-10 h-[1px] w-14" style={{ background: r(0.14) }} />
-            <motion.img
-              src={shapeSun}
-              alt=""
-              className="absolute right-10 top-12 w-14 opacity-[0.26] md:w-16"
-              animate={{ rotate: [0, 8, 0], scale: [1, 1.04, 1] }}
-              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            />
-            <div className="relative z-10 flex min-h-[8rem] items-center justify-center md:min-h-[10rem]">
-              <img src={logoMain} alt="Logo principal Parsemains" className="w-full max-w-[8rem] md:max-w-[11rem]" style={{ filter: isDark ? "invert(1)" : "none" }} />
-            </div>
           </div>
         </FadeIn>
       </div>
