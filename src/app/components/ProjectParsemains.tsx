@@ -307,8 +307,8 @@ function LogoSection() {
           <SectionTitle>Logo principal</SectionTitle>
         </FadeIn>
         <FadeIn>
-          <div className="min-h-[6rem] flex items-center justify-start py-5 md:py-7">
-            <img src={logoMain} alt="Logo principal Parsemains" className="w-full max-w-[10rem] md:max-w-[14rem]" style={{ filter: isDark ? "invert(1)" : "none" }} />
+          <div className="min-h-[4.5rem] flex items-center justify-start py-4 md:py-5">
+            <img src={logoMain} alt="Logo principal Parsemains" className="w-full max-w-[6rem] md:max-w-[8rem]" style={{ filter: isDark ? "invert(1)" : "none" }} />
           </div>
         </FadeIn>
       </div>
