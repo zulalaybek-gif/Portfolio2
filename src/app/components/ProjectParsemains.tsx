@@ -541,12 +541,17 @@ function GraphicSystemSection() {
                 </motion.div>
               ))}
             </div>
-            <div className="mt-9 grid gap-3 md:grid-cols-3">
-              {legends.map((legend) => (
-                <p key={legend} style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.74rem", lineHeight: 1.55, color: r(0.3) }}>
-                  {legend}
-                </p>
-              ))}
+            <div className="mx-auto mt-9 max-w-4xl border-t pt-5 text-center" style={{ borderColor: r(0.07) }}>
+              <span className="mb-3 block uppercase tracking-[0.18em]" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.58rem", color: r(0.24) }}>
+                Principes visuels
+              </span>
+              <div className="flex flex-wrap justify-center gap-x-5 gap-y-2">
+                {legends.map((legend) => (
+                  <span key={legend} style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.74rem", lineHeight: 1.55, color: r(0.34) }}>
+                    {legend}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </FadeIn>
