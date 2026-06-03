@@ -11,13 +11,19 @@ import svgLogo from "../../imports/svg-aatdl08gls";
 import svgIcons from "../../imports/svg-1ye22s9tf9";
 
 /* ── Photos from Logo Concept slide ── */
-import imgCitadelle from "figma:asset/6d18d2ef8a3eeeb9f70821217d88f9f508bc53b9.png";
-import imgOcean from "figma:asset/3ec36564db007833b12c20998652cd420608b701.png";
-import imgMountains from "figma:asset/a325ffc1e8e3b5ce6d7905d7fd85be4557151cea.png";
-import imgPeople from "figma:asset/c5bc96110de225685fb2b06c21807da6a07fae60.png";
+import imgCitadelle from "../../assets/collectif-haiti-de-france/01.image.png";
+import imgOcean from "../../assets/collectif-haiti-de-france/02.image.png";
+import imgMountains from "../../assets/collectif-haiti-de-france/03.image.png";
+import imgPeople from "../../assets/collectif-haiti-de-france/04.image.png";
 
-/* ── Instagram mockup ── */
-import imgInstagram from "figma:asset/4eb8e1986f3b781df2ce0ff2b30ecdcd6c4b2db6.png";
+/* ── Project imagery ── */
+import imgMockupSituation from "../../assets/collectif-haiti-de-france/05.mise-en-situation.png";
+import imgInstagram from "../../assets/collectif-haiti-de-france/06.reseaux-sociaux.png";
+import imgMonoLight from "../../assets/collectif-haiti-de-france/23.monochrome.png";
+import imgMonoDark from "../../assets/collectif-haiti-de-france/24.monochrome.png";
+import imgPrototypeHome from "../../assets/collectif-haiti-de-france/25.homepage.png";
+import imgOldLogo from "../../assets/collectif-haiti-de-france/27.ancien-logo.JPG";
+import imgOldWebsite from "../../assets/collectif-haiti-de-france/28.ancien-site-web.png";
 
 /* ── Story SVGs ── */
 import svgStoryGreen from "../../imports/svg-5ll5yqgwlz";
@@ -26,28 +32,28 @@ import svgStoryRed from "../../imports/svg-0hajrz4y61";
 import svgStoryCyan from "../../imports/svg-3lua1n9wnj";
 
 /* ── Family 1 story images ── */
-import imgStoryGreen from "figma:asset/696cb7a86f28ff04f82114d9515d7871273fbd62.png";
-import imgStoryPurple from "figma:asset/3b9648be09ea60b1d9990360846fbfad3eb0808d.png";
-import imgStoryRed from "figma:asset/220872f5833c484b0bf2ac122a4d6d96f6d0a5b6.png";
-import imgStoryCyan from "figma:asset/cff2c457be731d193311f5e604f800876541297c.png";
+import imgStoryGreen from "../../assets/collectif-haiti-de-france/19.thematique.png";
+import imgStoryPurple from "../../assets/collectif-haiti-de-france/20.thematique.png";
+import imgStoryRed from "../../assets/collectif-haiti-de-france/21.thematique.png";
+import imgStoryCyan from "../../assets/collectif-haiti-de-france/22.thematique.png";
 
 /* ── Family 2 story images ── */
-import imgStory2Red from "figma:asset/b8dbeba0f966fbcdd378595f889bb2f54b30dae3.png";
-import imgStory2Purple from "figma:asset/695579629e0aab6f5abd699457193e7d913b502b.png";
-import imgStory2Cyan from "figma:asset/f5de8856b81c621f737d721d9f4b01c46418e740.png";
-import imgStory2Green from "figma:asset/9f56cf3aa0ae000f7b27290f6eb0af1181919e56.png";
+import imgStory2Red from "../../assets/collectif-haiti-de-france/15.article.png";
+import imgStory2Purple from "../../assets/collectif-haiti-de-france/16.article.png";
+import imgStory2Cyan from "../../assets/collectif-haiti-de-france/17.article.png";
+import imgStory2Green from "../../assets/collectif-haiti-de-france/18.article.png";
 
 /* ── Family 3 story images ── */
-import imgStory3Purple from "figma:asset/3b9648be09ea60b1d9990360846fbfad3eb0808d.png";
-import imgStory3Red from "figma:asset/68a7a892febcc95f0ce1d44fb3cc2994ea2e3201.png";
-import imgStory3Cyan from "figma:asset/f1e1de17d3d9715ff6a8a6f1586ba3432bf73eae.png";
-import imgStory3Green from "figma:asset/7dfc5227fe684e0be24dff8b1b8a78e17d67d54d.png";
+import imgStory3Purple from "../../assets/collectif-haiti-de-france/11.actu.png";
+import imgStory3Red from "../../assets/collectif-haiti-de-france/12.actu.png";
+import imgStory3Cyan from "../../assets/collectif-haiti-de-france/13.actu.png";
+import imgStory3Green from "../../assets/collectif-haiti-de-france/14.actu.png";
 
 /* ── Family 4 story images ── */
-import imgStory4Purple from "figma:asset/9f6e52fbe67e0809b3647d493b18c78d35b8a030.png";
-import imgStory4Red from "figma:asset/6662bc1082de6ddc6d86dd8f9a06404b3e386caa.png";
-import imgStory4Cyan from "figma:asset/d5bcad09939f9c2d98e21dafaac61780350e5f7c.png";
-import imgStory4Green from "figma:asset/16491a86c3006d109b4416f632a1c07350afbb38.png";
+import imgStory4Purple from "../../assets/collectif-haiti-de-france/07.chiffres-cles.png";
+import imgStory4Red from "../../assets/collectif-haiti-de-france/08.chiffres-cles.png";
+import imgStory4Cyan from "../../assets/collectif-haiti-de-france/09.chiffres-cles.png";
+import imgStory4Green from "../../assets/collectif-haiti-de-france/10.chiffres-cles.png";
 
 /* ── Brand Colors ── */
 const RED = "#DA655C";
@@ -112,6 +118,37 @@ function SectionTitle({ text, color }: { text: string; color?: string }) {
         {text}
       </h2>
     </FadeIn>
+  );
+}
+
+function PhoneMockup({ image, alt, fit = "cover" }: { image: string; alt: string; fit?: "cover" | "contain" }) {
+  const { isDark } = useTheme();
+
+  return (
+    <motion.div
+      className="relative w-full max-w-[315px] rounded-[2.4rem] p-[10px]"
+      style={{
+        aspectRatio: "390 / 844",
+        background: isDark
+          ? "linear-gradient(145deg, rgba(255,255,255,0.16), rgba(255,255,255,0.04) 38%, rgba(0,0,0,0.34))"
+          : "linear-gradient(145deg, rgba(20,20,20,0.92), rgba(0,0,0,0.98))",
+        boxShadow: isDark ? "0 30px 90px rgba(0,0,0,0.34)" : "0 30px 90px rgba(0,0,0,0.14)",
+      }}
+      whileHover={{ y: -4 }}
+      transition={{ type: "spring", stiffness: 220, damping: 26 }}
+    >
+      <div className="absolute left-1/2 top-[18px] z-10 h-[22px] w-[98px] -translate-x-1/2 rounded-full bg-black shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]" />
+      <div className="h-full w-full overflow-hidden rounded-[1.85rem]" style={{ background: "#f8f8f8" }}>
+        <img
+          src={image}
+          alt={alt}
+          className="h-full w-full"
+          style={{ objectFit: fit }}
+          loading="lazy"
+          draggable={false}
+        />
+      </div>
+    </motion.div>
   );
 }
 
@@ -776,6 +813,27 @@ function DeclinationsSection() {
             </FadeIn>
           ))}
         </div>
+
+        <div className="grid md:grid-cols-2 gap-4 mt-6">
+          {[
+            { image: imgMonoLight, bg: "#f8f8f8", label: "Version monochrome claire" },
+            { image: imgMonoDark, bg: NAVY, label: "Version monochrome sombre" },
+          ].map((item, i) => (
+            <FadeIn key={item.label} delay={0.12 + i * 0.08}>
+              <motion.div
+                className="rounded-2xl p-8 md:p-10 flex flex-col items-center justify-center gap-4 aspect-[16/7]"
+                style={{ background: item.bg, border: `1px solid ${r(0.06)}` }}
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 260, damping: 22 }}
+              >
+                <img src={item.image} alt={item.label} className="max-h-20 w-auto max-w-full object-contain" loading="lazy" />
+                <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.68rem", color: item.bg === NAVY ? "rgba(255,255,255,0.6)" : r(0.25) }}>
+                  {item.label}
+                </span>
+              </motion.div>
+            </FadeIn>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -850,6 +908,39 @@ function PatternSection() {
 }
 
 /* ══════════════════════════════════════════
+   7b. MISE EN SITUATION
+   ══════════════════════════════════════════ */
+function MockupSituationSection() {
+  const { r, isDark } = useTheme();
+
+  return (
+    <section className="px-6 md:px-12 py-16">
+      <div className="max-w-6xl mx-auto">
+        <SectionLabel text="07b" />
+        <SectionTitle text="Mise en situation" />
+        <FadeIn>
+          <div
+            className="rounded-3xl overflow-hidden"
+            style={{
+              background: isDark ? r(0.04) : "#f8f8f8",
+              border: `1px solid ${r(0.06)}`,
+              boxShadow: isDark ? "0 28px 80px rgba(0,0,0,0.28)" : "0 28px 80px rgba(0,0,0,0.08)",
+            }}
+          >
+            <img
+              src={imgMockupSituation}
+              alt="Mise en situation de l'identité Collectif Haïti de France"
+              className="w-full h-auto"
+              loading="lazy"
+            />
+          </div>
+        </FadeIn>
+      </div>
+    </section>
+  );
+}
+
+/* ══════════════════════════════════════════
    8a. APPLICATIONS NAV (clickable cards that scroll to sections)
    ══════════════════════════════════════════ */
 function ApplicationsNavSection() {
@@ -898,34 +989,81 @@ function ApplicationsNavSection() {
    ══════════════════════════════════════════ */
 function LinksSection() {
   const { r, isDark } = useTheme();
-  const links = [
-    { label: "Site web (prototype Figma)", url: "https://www.figma.com/proto/IEQpcT3LJXFg0Vh5X66Gim/Collectif-Ha%C3%AFti-de-France?page-id=4%3A2&type=design&node-id=230-188&viewport=-382%2C393%2C0.08&t=yBIhMimf8JMiraKN-1&scaling=scale-down-width&starting-point-node-id=230%3A188&mode=design", displayUrl: "Prototype Figma", color: PURPLE },
-    { label: "Vidéo", url: "https://www.youtube.com/watch?v=y1wARMgXyCE", displayUrl: "youtube.com", color: CYAN },
-  ];
   return (
     <section id="section-liens" className="px-6 md:px-12 py-16">
       <div className="max-w-6xl mx-auto">
         <SectionLabel text="11" />
-        <SectionTitle text="Liens" />
-        <div className="grid md:grid-cols-2 gap-6">
-          {links.map((link, i) => (
-            <FadeIn key={link.label} delay={i * 0.1}>
-              <motion.a href={link.url} target="_blank" rel="noopener noreferrer" className="rounded-2xl p-8 flex items-center gap-6 no-underline" style={{ background: isDark ? r(0.04) : "#f8f8f8", border: `1px solid ${r(0.06)}` }} whileHover={{ scale: 1.03, y: -3 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
-                <div className="flex-shrink-0 w-14 h-14 rounded-xl flex items-center justify-center" style={{ background: link.color }}>
-                  <div className="grid grid-cols-2 gap-0.5">
-                    <IconEducation size={12} color="white" />
-                    <IconInformation size={12} color="white" />
-                    <IconSovereignty size={12} color="white" />
-                    <IconMigrants size={12} color="white" />
+        <SectionTitle text="Prototype, vidéo & refonte" />
+        <FadeIn>
+          <p className="max-w-2xl mb-12" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.35) }}>
+            Aperçu du déploiement digital de l'identité : proposition de refonte web, vidéo de présentation et comparaison avec l'existant.
+          </p>
+        </FadeIn>
+
+        <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-8 items-start">
+          <FadeIn>
+            <div
+              className="rounded-3xl overflow-hidden"
+              style={{
+                background: isDark ? r(0.04) : "#f8f8f8",
+                border: `1px solid ${r(0.06)}`,
+                boxShadow: isDark ? "0 30px 90px rgba(0,0,0,0.28)" : "0 30px 90px rgba(0,0,0,0.08)",
+              }}
+            >
+              <div className="flex items-center gap-2 px-5 py-3" style={{ borderBottom: `1px solid ${r(0.06)}` }}>
+                {[RED, GREEN, CYAN].map((color) => (
+                  <span key={color} className="block h-2.5 w-2.5 rounded-full" style={{ background: color }} />
+                ))}
+                <span className="ml-3" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.68rem", color: r(0.25) }}>
+                  collectif-haiti-de-france.fr
+                </span>
+              </div>
+              <div className="max-h-[620px] overflow-y-auto overflow-x-hidden" style={{ scrollbarWidth: "thin" }}>
+                <img src={imgPrototypeHome} alt="Aperçu de la proposition de homepage Collectif Haïti de France" className="block w-full" loading="lazy" />
+              </div>
+            </div>
+          </FadeIn>
+
+          <div className="space-y-8">
+            <FadeIn delay={0.1}>
+              <div
+                className="rounded-3xl overflow-hidden"
+                style={{
+                  background: isDark ? r(0.04) : "#f8f8f8",
+                  border: `1px solid ${r(0.06)}`,
+                }}
+              >
+                <div className="relative w-full aspect-video">
+                  <iframe
+                    title="Vidéo Collectif Haïti de France"
+                    src="https://www.youtube-nocookie.com/embed/y1wARMgXyCE"
+                    className="absolute inset-0 h-full w-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    loading="lazy"
+                    style={{ border: 0 }}
+                  />
+                </div>
+              </div>
+            </FadeIn>
+
+            <FadeIn delay={0.16}>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="rounded-2xl overflow-hidden" style={{ background: isDark ? r(0.04) : "#f8f8f8", border: `1px solid ${r(0.06)}` }}>
+                  <img src={imgOldLogo} alt="Ancien logo du Collectif Haïti de France" className="w-full aspect-[4/3] object-contain p-4" loading="lazy" />
+                  <div className="px-4 pb-4" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.68rem", color: r(0.3) }}>
+                    Ancien logo
                   </div>
                 </div>
-                <div>
-                  <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.1rem", fontWeight: 600, color: r(0.7) }}>{link.label}</div>
-                  <div className="underline" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.8rem", color: link.color, marginTop: 4 }}>{link.displayUrl}</div>
+                <div className="rounded-2xl overflow-hidden" style={{ background: isDark ? r(0.04) : "#f8f8f8", border: `1px solid ${r(0.06)}` }}>
+                  <img src={imgOldWebsite} alt="Ancienne page web avant refonte" className="w-full aspect-[4/3] object-cover object-top" loading="lazy" />
+                  <div className="px-4 pb-4" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.68rem", color: r(0.3) }}>
+                    Site avant refonte
+                  </div>
                 </div>
-              </motion.a>
+              </div>
             </FadeIn>
-          ))}
+          </div>
         </div>
       </div>
     </section>
@@ -1009,23 +1147,7 @@ function InstagramSection() {
 
         <FadeIn>
           <div className="flex justify-center">
-            <motion.div
-              className="rounded-3xl overflow-hidden max-w-sm"
-              style={{
-                boxShadow: isDark
-                  ? "0 30px 80px rgba(0,0,0,0.4)"
-                  : "0 30px 80px rgba(0,0,0,0.1)",
-                clipPath: "inset(0 1px 0 0)",
-              }}
-              whileHover={{ scale: 1.01 }}
-              transition={{ type: "spring", stiffness: 200, damping: 30 }}
-            >
-              <img
-                src={imgInstagram}
-                alt="Instagram mockup — Collectif Haïti de France"
-                className="w-full h-auto"
-              />
-            </motion.div>
+            <PhoneMockup image={imgInstagram} alt="Réseaux sociaux — Collectif Haïti de France" fit="contain" />
           </div>
         </FadeIn>
       </div>
@@ -1304,6 +1426,7 @@ export function ProjectHaiti() {
       <IconographySection />
       <DeclinationsSection />
       <PatternSection />
+      <MockupSituationSection />
       <PaletteSection />
       <ApplicationsNavSection />
       <InstagramSection />
