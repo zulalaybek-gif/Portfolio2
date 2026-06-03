@@ -12,6 +12,7 @@ import { AmbientMovingLines } from "./AmbientMovingLines";
 import imgKittyHubPreview from "../../assets/kittyhub/10-mockup-bento.jpg";
 import imgSnatshPreview from "../../assets/snatsh/06-mockup.png";
 import imgArtePreview from "../../assets/arte-en-scène/04-mockup.png";
+import imgParsemainsPreview from "../../assets/parsemains/25.mockup-packaging.png";
 
 /* ─── Data ─── */
 type ViewMode = "standard" | "projects" | "workshops";
@@ -147,8 +148,8 @@ const projects = [
     type: "project" as const,
     tagKeys: ["tag.identity", "tag.branding"] as TranslationKey[],
     descKey: "proj.parsemains.desc" as TranslationKey,
-    image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 900'%3E%3Cdefs%3E%3CradialGradient id='a' cx='24%25' cy='20%25' r='70%25'%3E%3Cstop offset='0%25' stop-color='%235DA9FF' stop-opacity='.9'/%3E%3Cstop offset='58%25' stop-color='%230D1B2A'/%3E%3Cstop offset='100%25' stop-color='%2311263C'/%3E%3C/radialGradient%3E%3ClinearGradient id='b' x1='0' x2='1' y1='1' y2='0'%3E%3Cstop stop-color='%237B2D52' stop-opacity='.32'/%3E%3Cstop offset='1' stop-color='%237FD6FF' stop-opacity='.18'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='900' fill='url(%23a)'/%3E%3Ccircle cx='930' cy='180' r='330' fill='url(%23b)' opacity='.7'/%3E%3Cpath d='M150 705 C350 580 425 750 640 610 S950 520 1060 355' fill='none' stroke='%23F4F5F7' stroke-opacity='.18' stroke-width='3'/%3E%3Ctext x='92' y='790' fill='%23F4F5F7' fill-opacity='.72' font-family='Space Grotesk, Arial' font-size='94' font-weight='700' letter-spacing='-5'%3EParsemains%3C/text%3E%3C/svg%3E",
-    color: "#7FA0AE", accent: "127,160,174",
+    image: imgParsemainsPreview,
+    color: "#F08100", accent: "240,129,0",
     slug: "/projects/parsemains",
   },
 ];
