@@ -702,47 +702,42 @@ function VisualSystemSection() {
       title: "Rouge",
       theme: "Droit à l'éducation",
       color: RED,
-      desc: "Un repère direct pour les contenus liés à l'accès aux savoirs, à la formation et aux actions éducatives.",
-      usage: "Identifier les contenus éducatifs",
+      desc: "Repère les contenus liés à l'accès aux savoirs.",
     },
     {
       title: "Bleu",
       theme: "Droit à l'information",
       color: CYAN,
-      desc: "Une couleur associée à la transmission, aux ressources et à la circulation d'une information claire.",
-      usage: "Guider vers les ressources",
+      desc: "Guide vers les ressources et la transmission.",
     },
     {
       title: "Vert",
       theme: "Souveraineté alimentaire",
       color: GREEN,
-      desc: "Un signal lié au vivant, à l'autonomie et aux sujets qui touchent à l'alimentation.",
-      usage: "Repérer les actions alimentaires",
+      desc: "Signale les sujets liés au vivant et à l'autonomie.",
     },
     {
       title: "Violet",
-      theme: "Respect des droits des migrants",
+      theme: "Droits des migrants",
       color: PURPLE,
-      desc: "Un repère plus sensible pour les prises de parole autour de l'accueil, de la dignité et des parcours migratoires.",
-      usage: "Identifier les sujets migrants",
+      desc: "Identifie les sujets d'accueil, de dignité et de protection.",
     },
     {
       title: "Bleu marine",
-      theme: "Couleur structurelle",
+      theme: "Structure, contraste, cohérence globale",
       color: NAVY,
-      desc: "La couleur d'ancrage de l'identité : elle apporte contraste, stabilité, lisibilité et cohérence globale.",
-      usage: "Stabiliser l'ensemble",
+      desc: "Ancre l'identité et stabilise l'ensemble du système.",
     },
   ];
 
   return (
     <section className="px-6 md:px-12 py-20">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="01" />
+        <SectionLabel text="Système visuel" />
         <SectionTitle text="Code couleur & repérage visuel" />
         <FadeIn>
           <div
-            className="grid lg:grid-cols-[0.95fr_1.05fr] gap-8 rounded-3xl p-6 md:p-8 mb-8"
+            className="rounded-3xl p-6 md:p-8 mb-8"
             style={{
               background: isDark ? r(0.04) : "#f8f8f8",
               border: `1px solid ${r(0.06)}`,
@@ -758,62 +753,34 @@ function VisualSystemSection() {
             >
               L'identité visuelle repose sur un système de repères associant une couleur à une thématique. Ce principe permet d'identifier rapidement chaque axe d'action, que ce soit sur le site web, les publications, les vidéos ou les supports de communication.
             </p>
-            <p
-              style={{
-                fontFamily: "'Inter', sans-serif",
-                fontSize: "0.9rem",
-                lineHeight: 1.8,
-                color: r(0.34),
-              }}
-            >
-              La couleur ne sert donc pas seulement à décorer : elle devient un langage visuel, pensé pour rendre la communication plus claire, plus lisible et plus mémorisable. Les pictogrammes prolongent ensuite ce code dans le logo et les supports, sans que cette section répète sa construction.
-            </p>
           </div>
         </FadeIn>
 
-        <div className="space-y-3">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {colors.map((item, i) => (
             <FadeIn key={item.title} delay={i * 0.06}>
               <motion.div
-                className="grid md:grid-cols-[1.1fr_1.2fr_0.8fr] gap-4 md:gap-6 items-center rounded-2xl p-4 md:p-5"
+                className="rounded-2xl overflow-hidden h-full"
                 style={{
                   background: isDark ? r(0.04) : "#fff",
                   border: `1px solid ${r(0.06)}`,
                 }}
-                whileHover={{ x: 6 }}
+                whileHover={{ y: -6 }}
                 transition={{ type: "spring", stiffness: 260, damping: 24 }}
               >
-                <div className="flex items-center gap-4">
-                  <span className="block h-14 w-14 rounded-2xl shrink-0" style={{ background: item.color, boxShadow: `0 14px 38px ${item.color}35` }} />
-                  <div>
-                    <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.68rem", color: r(0.25) }}>{item.color}</span>
-                    <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.08rem", fontWeight: 650, color: r(0.68) }}>
-                      {item.title}
-                    </h3>
-                  </div>
-                </div>
-                <div>
-                  <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.68rem", color: r(0.25) }}>Thématique</span>
-                  <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1rem", fontWeight: 600, color: r(0.62) }}>
+                <div className="h-28 md:h-32" style={{ background: item.color }} />
+                <div className="p-5">
+                  <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.68rem", color: r(0.25) }}>{item.color}</span>
+                  <h3 className="mt-1" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.05rem", fontWeight: 650, color: r(0.68) }}>
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 min-h-[3.2rem]" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.88rem", fontWeight: 600, lineHeight: 1.35, color: r(0.58) }}>
                     {item.theme}
                   </p>
-                  <p className="mt-2" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.8rem", lineHeight: 1.65, color: r(0.34) }}>
+                  <p className="mt-3" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.75rem", lineHeight: 1.6, color: r(0.32) }}>
                     {item.desc}
                   </p>
                 </div>
-                <span
-                  className="justify-self-start md:justify-self-end rounded-full px-3 py-1.5"
-                  style={{
-                    background: `${item.color}18`,
-                    color: item.color,
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: "0.68rem",
-                    fontWeight: 650,
-                    border: `1px solid ${item.color}30`,
-                  }}
-                >
-                  {item.usage}
-                </span>
               </motion.div>
             </FadeIn>
           ))}
@@ -832,7 +799,7 @@ function LogoSection() {
   return (
     <section className="px-6 md:px-12 py-20">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="02" />
+        <SectionLabel text="Logo" />
         <SectionTitle text="Nouveau logo & principe de construction" />
         <FadeIn>
           <p
@@ -883,7 +850,7 @@ function LogoConceptSection() {
   return (
     <section className="px-6 md:px-12 py-16">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="03" />
+        <SectionLabel text="Logo concept" />
         <SectionTitle text={t("haiti.logoConcept.title")} />
         <FadeIn>
           <p
@@ -962,7 +929,7 @@ function IconographySection() {
   return (
     <section className="px-6 md:px-12 py-20">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="05" />
+        <SectionLabel text="Iconographie" />
         <SectionTitle text={t("haiti.icono.title")} />
         <FadeIn>
           <p
@@ -1027,7 +994,7 @@ function DeclinationsSection() {
   return (
     <section className="px-6 md:px-12 py-16">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="04" />
+        <SectionLabel text="Déclinaisons" />
         <SectionTitle text={t("haiti.decli.title")} />
         <FadeIn>
           <p
@@ -1090,7 +1057,7 @@ function MonochromeSection() {
   return (
     <section className="px-6 md:px-12 py-16">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="05" />
+        <SectionLabel text="Versions monochromes" />
         <SectionTitle text="Versions monochromes" />
         <FadeIn>
           <p
@@ -1154,7 +1121,7 @@ function PatternSection() {
   return (
     <section className="px-6 md:px-12 py-20">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="07" />
+        <SectionLabel text="Motif" />
         <SectionTitle text={t("haiti.pattern.title")} />
         <FadeIn>
           <p
@@ -1296,7 +1263,7 @@ function ApplicationsIdentitySection() {
   return (
     <section id="section-applications" className="px-6 md:px-12 py-20">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="06" />
+        <SectionLabel text="Applications" />
         <SectionTitle text="Applications de l'identité" />
         <FadeIn>
           <p className="max-w-2xl mb-12" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.35) }}>
@@ -1403,7 +1370,7 @@ function ApplicationsNavSection() {
   return (
     <section className="px-6 md:px-12 py-16">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="08" />
+        <SectionLabel text="Applications" />
         <SectionTitle text={t("haiti.apps.title")} />
         <FadeIn><p className="max-w-2xl mb-8" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.35) }}>{t("haiti.apps.desc")}</p></FadeIn>
         <div className="grid md:grid-cols-3 gap-6">
@@ -1440,7 +1407,7 @@ function LinksSection() {
   return (
     <section id="section-liens" className="px-6 md:px-12 py-16">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="11" />
+        <SectionLabel text="Prototype & vidéo" />
         <SectionTitle text="Prototype, vidéo & refonte" />
         <FadeIn>
           <p className="max-w-2xl mb-12" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.35) }}>
@@ -1527,7 +1494,7 @@ function PaletteSection() {
   return (
     <section className="px-6 md:px-12 py-16">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="09" />
+        <SectionLabel text="Palette" />
         <SectionTitle text="Palette" />
 
         <div className="flex gap-4 mt-8">
@@ -1577,7 +1544,7 @@ function InstagramSection() {
   return (
     <section id="section-reseaux" className="px-6 md:px-12 py-16">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="10" />
+        <SectionLabel text="Réseaux sociaux" />
         <SectionTitle text="Réseaux sociaux" />
         <FadeIn>
           <p
@@ -1737,7 +1704,7 @@ function StoriesSection() {
             className="section-eyebrow uppercase tracking-[0.28em] block mb-4"
             style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.62rem", color: r(0.22) }}
           >
-            Supports sociaux
+            Supports réseaux sociaux
           </span>
         </FadeIn>
         <SectionTitle text="Stories Instagram" />
