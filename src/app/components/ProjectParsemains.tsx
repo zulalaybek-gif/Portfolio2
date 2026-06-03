@@ -277,7 +277,7 @@ function HeroSection() {
             className="max-w-xl"
             style={{ fontFamily: "'Inter', sans-serif", fontSize: "clamp(1rem, 1.7vw, 1.25rem)", lineHeight: 1.8, color: r(0.45) }}
           >
-            Parsemains est un projet de refonte d'identite visuelle pense autour du papier, du territoire et de la transmission. L'objectif etait de construire un univers plus contemporain, expressif et memorable, tout en conservant l'ancrage artisanal et local de la marque.
+            Parsemains est un workshop realise en equipe autour de la refonte d'une identite visuelle. Le projet explore l'univers du papier ensemence, du reemploi et de la transmission, avec l'objectif de construire une image plus contemporaine, chaleureuse et memorable.
           </motion.p>
         </div>
       </div>
@@ -292,16 +292,16 @@ function IntroSection() {
       <div className="max-w-6xl mx-auto grid gap-8 md:grid-cols-[0.72fr_1.28fr] md:items-start">
         <FadeIn>
           <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(1.6rem, 3vw, 2.35rem)", fontWeight: 700, letterSpacing: "-0.035em", color: r(0.78) }}>
-            Contexte du workshop
+            Rôle
           </h2>
         </FadeIn>
         <FadeIn delay={0.08}>
           <div className="grid gap-5 md:grid-cols-2">
             <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.38) }}>
-              Projet realise en equipe dans le cadre d'un workshop. J'ai participe a la construction de la direction artistique, aux recherches graphiques et a la formalisation de l'univers visuel de la marque.
+              J'ai participe a la construction de la direction artistique, aux recherches graphiques, au systeme visuel et aux declinaisons de marque.
             </p>
             <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.38) }}>
-              Le projet s'appuie sur un storytelling fort : celui de papiers recuperes localement, transformes et perpetues a travers une identite visuelle chaleureuse, elegante et legerement decalee.
+              L'identite s'appuie sur une typographie forte, une palette orange chaleureuse et des elements graphiques inspires de l'edition, du papier et du territoire.
             </p>
           </div>
         </FadeIn>
@@ -398,7 +398,7 @@ function TitleSystemSection() {
                 ))}
               </div>
               <p className="max-w-md" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", lineHeight: 1.75, color: r(0.38) }}>
-                Le systeme graphique reprend des elements lies au papier, a l'edition et a la fabrication : labels, traits de coupe, compositions de titrage et reperes visuels.
+                Les traits de coupe, les labels, les lignes topographiques, les formes circulaires et les references symboliques permettent de creer un univers structure, vivant et reconnaissable.
               </p>
             </div>
           </div>
@@ -418,9 +418,9 @@ function TypographySection() {
         </FadeIn>
         <div className="grid gap-5 md:grid-cols-2">
           {[
-            ["Titrage", "DAZZLE UNICASE", "Typographie forte et genereuse pour les labels, titres et mots-signaux.", "'Dazzle Unicase', 'Space Grotesk', sans-serif", 800],
-            ["Texte courant", "Avenir", "Typographie plus sobre pour equilibrer caractere et lisibilite.", "'Avenir', 'Inter', sans-serif", 400],
-          ].map(([label, name, text, family, weight]) => (
+            ["Titrage", "DAZZLE UNICASE", "'Dazzle Unicase', 'Space Grotesk', sans-serif", 800],
+            ["Texte courant", "Avenir", "'Avenir', 'Inter', sans-serif", 400],
+          ].map(([label, name, family, weight]) => (
             <FadeIn key={name as string}>
               <div className="border-y py-6 md:py-8" style={{ borderColor: r(0.07) }}>
                 <span className="uppercase tracking-[0.18em]" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.58rem", color: r(0.24) }}>
@@ -429,9 +429,6 @@ function TypographySection() {
                 <h3 className="mt-4" style={{ fontFamily: family as string, fontSize: "clamp(1.7rem, 4vw, 3.2rem)", fontWeight: weight as number, color: isDark ? r(0.86) : r(0.78), letterSpacing: name === "DAZZLE UNICASE" ? "-0.04em" : "0" }}>
                   {name}
                 </h3>
-                <p className="mt-3 max-w-md" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.84rem", lineHeight: 1.7, color: r(0.34) }}>
-                  {text}
-                </p>
               </div>
             </FadeIn>
           ))}
@@ -462,7 +459,7 @@ function PaletteSection() {
         <FadeIn>
           <SectionTitle>Palette chromatique</SectionTitle>
           <p className="max-w-2xl" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", lineHeight: 1.75, color: r(0.36) }}>
-            Orange pour l'energie et la vitalite, blanc pour la simplicite, noir pour le contraste, avec des touches secondaires plus vivantes et florales.
+            L'identite s'appuie sur une typographie forte, une palette orange chaleureuse et des elements graphiques inspires de l'edition, du papier et du territoire.
           </p>
         </FadeIn>
         <FadeIn>
@@ -501,9 +498,11 @@ function PaletteSection() {
 function GraphicSystemSection() {
   const { r, isDark } = useTheme();
   const items = [
-    ["Formes circulaires", "Unite, cycle de vie et diffusion."],
-    ["Lignes topographiques", "Territoire, volumes et ancrage local."],
-    ["References symboliques", "Protection, transmission et singularite."],
+    "Traits de coupe",
+    "Labels",
+    "Lignes topographiques",
+    "Formes circulaires",
+    "References symboliques",
   ];
   return (
     <section className="relative overflow-hidden px-6 md:px-12 py-14 md:py-20">
@@ -523,14 +522,14 @@ function GraphicSystemSection() {
             <div className="relative z-10 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
               <div>
                 <p className="max-w-lg" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", lineHeight: 1.75, color: "rgba(255,255,255,0.84)" }}>
-                  Les pictogrammes ajoutent une touche plus decalee et humoristique a l'identite. Ils cassent les codes trop doux ou trop floraux, tout en rendant l'univers plus accessible.
+                  Les traits de coupe, les labels, les lignes topographiques, les formes circulaires et les references symboliques permettent de creer un univers structure, vivant et reconnaissable.
                 </p>
                 <div className="mt-7 grid gap-3">
-                  {items.map(([title, text]) => (
+                  {items.map((title) => (
                     <div key={title} className="flex gap-3 border-t pt-3" style={{ borderColor: "rgba(255,255,255,0.22)" }}>
                       <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-white" />
                       <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.78rem", lineHeight: 1.6, color: "rgba(255,255,255,0.78)" }}>
-                        <strong style={{ color: "#fff" }}>{title}</strong> — {text}
+                        <strong style={{ color: "#fff" }}>{title}</strong>
                       </p>
                     </div>
                   ))}
@@ -831,7 +830,7 @@ function SocialSection() {
         <FadeIn>
           <SectionTitle>Déclinaisons social media</SectionTitle>
           <p className="max-w-3xl" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.38) }}>
-            L'identite a ete pensee pour plusieurs supports : logo principal, declinaisons social media, systemes de titrage, pictogrammes, visuels Instagram et LinkedIn.
+            L'identite a ete declinee sur plusieurs supports : logo, systeme de titrage, supports imprimes, pictogrammes, contenus social media et mises en situation digitales.
           </p>
         </FadeIn>
 
@@ -974,7 +973,7 @@ function ClosingSection() {
           </h2>
           <div className="w-16 h-[1px] mx-auto mb-8" style={{ background: `linear-gradient(90deg, transparent, ${ORANGE}, transparent)` }} />
           <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", lineHeight: 1.8, color: r(0.32) }}>
-            L'enjeu etait de donner a Parsemains une identite reconnaissable, capable de raconter son histoire sans devenir trop institutionnelle : une direction artistique plus affirmee, entre elegance, matiere, reemploi et spontaneite.
+            L'enjeu etait de donner a Parsemains une identite plus affirmee, capable de raconter son histoire sans devenir trop institutionnelle ni trop attendue.
           </p>
         </div>
       </FadeIn>
