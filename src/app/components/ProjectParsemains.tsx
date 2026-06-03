@@ -366,7 +366,7 @@ function LogoVariationsSection() {
 }
 
 function TitleSystemSection() {
-  const { r, isDark } = useTheme();
+  const { r } = useTheme();
   return (
     <section className="px-6 md:px-12 py-12 md:py-16">
       <div className="max-w-6xl mx-auto">
@@ -374,24 +374,36 @@ function TitleSystemSection() {
           <SectionTitle>Système de titrage</SectionTitle>
         </FadeIn>
         <FadeIn>
-          <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-            <div className="grid gap-7">
-              {[titleSystemA, titleSystemB].map((src) => (
+          <div
+            className="relative overflow-hidden rounded-[1.5rem] bg-white px-6 py-10 md:px-12 md:py-14"
+            style={{
+              border: `1px solid ${r(0.06)}`,
+              boxShadow: "0 28px 80px rgba(0,0,0,0.075)",
+            }}
+          >
+            <div
+              className="pointer-events-none absolute right-0 top-0 h-40 w-44 opacity-70 md:h-56 md:w-64"
+              style={{
+                background: `radial-gradient(circle at 100% 0%, rgba(240,129,0,0.55), rgba(240,129,0,0.18) 32%, transparent 68%)`,
+                filter: "blur(10px)",
+              }}
+            />
+            <div className="relative z-10 grid items-center gap-10 md:grid-cols-2 md:gap-14">
+              {[
+                { src: titleSystemA, className: "md:justify-self-start" },
+                { src: titleSystemB, className: "md:justify-self-end" },
+              ].map((item) => (
                 <motion.img
-                  key={src}
-                  src={src}
+                  key={item.src}
+                  src={item.src}
                   alt="Système de titrage Parsemains"
-                  className="w-full max-h-[12rem] object-contain md:max-h-[14rem]"
-                  style={{ filter: isDark ? "brightness(0) invert(1)" : "none" }}
+                  className={`w-full max-h-[12rem] object-contain md:max-h-[15rem] ${item.className}`}
                   loading="lazy"
                   whileHover={{ y: -4 }}
                   transition={{ type: "spring", stiffness: 220, damping: 24 }}
                 />
               ))}
             </div>
-            <p className="max-w-sm lg:justify-self-end" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", lineHeight: 1.75, color: r(0.38) }}>
-              Les titres deviennent des repères éditoriaux : labels, blocs typographiques et signes inspirés du papier.
-            </p>
           </div>
         </FadeIn>
       </div>
