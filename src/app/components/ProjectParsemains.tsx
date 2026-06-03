@@ -764,38 +764,59 @@ function PictogramsSection() {
 }
 
 function PrintSection() {
-  const printItems = [
-    { src: imgBrochure, alt: "Mise en situation du dépliant Parsemains" },
-    { src: imgBookmarks, alt: "Trois marque-pages Parsemains", contain: true },
-    { src: imgBookmarkMockup, alt: "Mise en situation marque-page Parsemains" },
-    { src: imgPosters, alt: "Mockup affiches Parsemains" },
-    { src: imgPackaging, alt: "Mockup packaging Parsemains" },
+  const { r, isDark } = useTheme();
+  const pairedPrintItems = [
+    { src: imgPosters, alt: "Mockup affiches Parsemains", label: "Affiches" },
+    { src: imgPackaging, alt: "Mockup packaging Parsemains", label: "Packaging" },
   ];
+
   return (
     <section className="px-6 md:px-12 py-14 md:py-20">
       <div className="max-w-6xl mx-auto">
         <FadeIn>
           <SectionTitle>Supports imprimés</SectionTitle>
         </FadeIn>
-        <FadeIn>
-          <div className="-mx-6 flex gap-5 overflow-x-auto px-6 pb-4 md:-mx-12 md:px-12" style={{ scrollbarWidth: "thin" }}>
-            {printItems.map((item, index) => (
+        <div className="grid gap-5 md:gap-6">
+          <FadeIn>
+            <motion.figure
+              className="overflow-hidden rounded-3xl"
+              style={{
+                background: isDark ? r(0.035) : "#fff",
+                border: `1px solid ${r(0.06)}`,
+                boxShadow: isDark ? "0 28px 80px rgba(0,0,0,0.22)" : "0 28px 80px rgba(0,0,0,0.08)",
+              }}
+              whileHover={{ y: -5 }}
+              transition={{ type: "spring", stiffness: 240, damping: 24 }}
+            >
+              <img src={imgBrochure} alt="Mise en situation du dépliant Parsemains" className="h-[20rem] w-full object-cover md:h-[28rem]" loading="lazy" />
+              <figcaption className="px-5 py-4" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.72rem", color: r(0.34) }}>
+                Dépliant & marque-page
+              </figcaption>
+            </motion.figure>
+          </FadeIn>
+
+          <div className="grid gap-5 md:grid-cols-2 md:gap-6">
+            {pairedPrintItems.map((item, index) => (
+              <FadeIn key={item.src} delay={index * 0.06}>
               <motion.div
-                key={item.src}
-                className="relative h-[18rem] w-[78vw] max-w-[28rem] shrink-0 overflow-hidden rounded-3xl md:h-[24rem] md:w-[34rem]"
+                className="overflow-hidden rounded-3xl"
                 style={{
-                  background: index === 1 ? PAPER : "#fff",
-                  border: "1px solid rgba(0,0,0,0.06)",
-                  boxShadow: "0 24px 70px rgba(0,0,0,0.08)",
+                  background: "#fff",
+                  border: `1px solid ${r(0.06)}`,
+                  boxShadow: isDark ? "0 28px 80px rgba(0,0,0,0.2)" : "0 28px 80px rgba(0,0,0,0.075)",
                 }}
                 whileHover={{ y: -5 }}
                 transition={{ type: "spring", stiffness: 240, damping: 24 }}
               >
-                <img src={item.src} alt={item.alt} className={`h-full w-full ${item.contain ? "object-contain p-6" : "object-cover"}`} loading="lazy" />
+                <img src={item.src} alt={item.alt} className="h-[17rem] w-full object-cover md:h-[23rem]" loading="lazy" />
+                <div className="px-5 py-4" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.72rem", color: r(0.34) }}>
+                  {item.label}
+                </div>
               </motion.div>
+              </FadeIn>
             ))}
           </div>
-        </FadeIn>
+        </div>
       </div>
     </section>
   );
@@ -803,11 +824,6 @@ function PrintSection() {
 
 function SocialSection() {
   const { r, isDark } = useTheme();
-  const socialItems = [
-    { src: imgSocialProfile, alt: "Composition Instagram Parsemains", wide: true },
-    { src: imgLinkedin, alt: "Publication LinkedIn Parsemains" },
-    { src: imgLinkedinPosts, alt: "Publications LinkedIn Parsemains" },
-  ];
   return (
     <section className="relative overflow-hidden px-6 md:px-12 py-14 md:py-20">
       <div className="relative z-10 max-w-6xl mx-auto">
@@ -818,23 +834,47 @@ function SocialSection() {
           </p>
         </FadeIn>
 
-        <FadeIn>
-          <div className="relative mt-8 overflow-hidden rounded-[2rem] px-4 py-6 md:px-6" style={{ background: "#fff", border: `1px solid ${r(0.06)}`, boxShadow: isDark ? "0 28px 80px rgba(0,0,0,0.24)" : "0 28px 80px rgba(0,0,0,0.08)" }}>
-            <div className="relative z-10 flex gap-5 overflow-x-auto pb-3" style={{ scrollbarWidth: "thin" }}>
-              {socialItems.map((item) => (
+        <div className="mt-8 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+          <FadeIn>
+            <div>
+              <h3 className="mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.15rem", fontWeight: 700, color: r(0.72) }}>
+                Instagram
+              </h3>
+              <motion.div
+                className="overflow-hidden rounded-3xl bg-white p-3"
+                style={{ border: `1px solid ${r(0.06)}`, boxShadow: isDark ? "0 24px 70px rgba(0,0,0,0.22)" : "0 24px 70px rgba(0,0,0,0.075)" }}
+                whileHover={{ y: -4 }}
+                transition={{ type: "spring", stiffness: 240, damping: 24 }}
+              >
+                <img src={imgSocialProfile} alt="Déclinaisons Instagram Parsemains" className="mx-auto max-h-[31rem] w-full object-contain" loading="lazy" />
+              </motion.div>
+            </div>
+          </FadeIn>
+
+          <FadeIn delay={0.08}>
+            <div>
+              <h3 className="mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.15rem", fontWeight: 700, color: r(0.72) }}>
+                LinkedIn
+              </h3>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+                {[
+                  { src: imgLinkedin, alt: "Publication LinkedIn Parsemains" },
+                  { src: imgLinkedinPosts, alt: "Publications LinkedIn Parsemains" },
+                ].map((item) => (
                 <motion.div
                   key={item.src}
-                  className={`flex h-[20rem] shrink-0 items-center justify-center overflow-hidden rounded-2xl p-4 md:h-[24rem] ${item.wide ? "w-[22rem] md:w-[30rem]" : "w-[20rem] md:w-[26rem]"}`}
-                  style={{ background: "#fff", border: `1px solid ${r(0.06)}` }}
+                  className="flex h-[18rem] items-center justify-center overflow-hidden rounded-3xl bg-white p-3 md:h-[22rem]"
+                  style={{ border: `1px solid ${r(0.06)}`, boxShadow: isDark ? "0 24px 70px rgba(0,0,0,0.2)" : "0 24px 70px rgba(0,0,0,0.07)" }}
                   whileHover={{ y: -4 }}
                   transition={{ type: "spring", stiffness: 240, damping: 24 }}
                 >
                   <img src={item.src} alt={item.alt} className="max-h-full w-full object-contain" loading="lazy" />
                 </motion.div>
               ))}
+              </div>
             </div>
-          </div>
-        </FadeIn>
+          </FadeIn>
+        </div>
       </div>
     </section>
   );
