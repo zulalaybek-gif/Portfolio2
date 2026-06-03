@@ -207,6 +207,9 @@ function PageDecor() {
       <img src={shapeWaveA} alt="" className="absolute -right-[20%] top-[74rem] w-[56rem] opacity-[0.08]" />
       <img src={shapeWaveB} alt="" className="absolute -left-[16%] top-[132rem] w-[48rem] opacity-[0.07]" />
       <img src={shapeWaveC} alt="" className="absolute right-[-18%] bottom-[34rem] w-[58rem] opacity-[0.08]" />
+      <img src={extraIconA} alt="" className="absolute left-[7%] top-[116rem] w-24 opacity-[0.06]" />
+      <img src={extraIconB} alt="" className="absolute right-[8%] top-[214rem] w-28 opacity-[0.055]" />
+      <img src={extraIconC} alt="" className="absolute left-[10%] bottom-[72rem] w-24 opacity-[0.055]" />
     </div>
   );
 }
@@ -473,14 +476,10 @@ function UniverseSection() {
 }
 
 function PictogramsSection() {
-  const { r, isDark } = useTheme();
   const icons = [
     { src: iconRecover, label: "Recuperer le papier" },
     { src: iconDry, label: "Secher le papier" },
     { src: iconSift, label: "Tamiser le papier" },
-    { src: extraIconA, label: "Circularite" },
-    { src: extraIconB, label: "Transformation" },
-    { src: extraIconC, label: "Fabrication" },
   ];
   return (
     <section className="px-6 md:px-12 py-16">
@@ -489,21 +488,33 @@ function PictogramsSection() {
           <SectionLabel>Pictogrammes</SectionLabel>
           <SectionTitle>Un vocabulaire simple et identifiable</SectionTitle>
         </FadeIn>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {icons.map((icon, index) => (
-            <FadeIn key={icon.label} delay={index * 0.04}>
-              <motion.div
-                className="rounded-3xl p-5 aspect-square flex flex-col items-center justify-center gap-4"
-                style={{ background: isDark ? r(0.04) : PAPER, border: `1px solid ${r(0.06)}` }}
-                whileHover={{ y: -5, rotate: index % 2 === 0 ? 1 : -1 }}
-                transition={{ type: "spring", stiffness: 240, damping: 24 }}
-              >
-                <img src={icon.src} alt={icon.label} className="h-16 w-16 object-contain" style={{ filter: isDark ? "invert(1)" : "none" }} />
-                <span className="text-center" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.68rem", lineHeight: 1.35, color: r(0.36) }}>{icon.label}</span>
-              </motion.div>
-            </FadeIn>
-          ))}
-        </div>
+        <FadeIn>
+          <div className="relative overflow-hidden rounded-3xl px-6 py-12 md:px-12 md:py-16" style={{ background: ORANGE }}>
+            <img src={shapeWaveA} alt="" className="absolute -left-24 -top-28 w-[34rem] opacity-[0.22] brightness-0 invert" />
+            <img src={shapeWaveB} alt="" className="absolute -right-24 -bottom-32 w-[36rem] opacity-[0.18] brightness-0 invert" />
+            <div className="relative z-10 grid md:grid-cols-3 gap-10 md:gap-12 items-end">
+              {icons.map((icon, index) => (
+                <motion.div
+                  key={icon.label}
+                  className="flex flex-col items-center justify-end gap-8"
+                  whileHover={{ y: -6, rotate: index === 1 ? -1 : 1 }}
+                  transition={{ type: "spring", stiffness: 220, damping: 22 }}
+                >
+                  <img
+                    src={icon.src}
+                    alt={icon.label}
+                    className="h-[11rem] md:h-[14rem] w-full object-contain"
+                    style={{ filter: "brightness(0) invert(1)" }}
+                    loading="lazy"
+                  />
+                  <h3 className="text-center uppercase" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(1.15rem, 2.4vw, 1.85rem)", fontWeight: 500, letterSpacing: "0", color: "#fff" }}>
+                    {icon.label}
+                  </h3>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </FadeIn>
       </div>
     </section>
   );
