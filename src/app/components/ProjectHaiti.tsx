@@ -24,7 +24,7 @@ import imgMonoDark from "../../assets/collectif-haiti-de-france/24.monochrome.pn
 import imgPrototypeHome from "../../assets/collectif-haiti-de-france/25.homepage.png";
 import imgOldLogo from "../../assets/collectif-haiti-de-france/27.ancien-logo.JPG";
 import imgOldWebsite from "../../assets/collectif-haiti-de-france/28.ancien-site-web.png";
-import videoHaiti from "../../assets/collectif-haiti-de-france/29.Collectif Haïti France.mp4";
+import videoHaiti from "../../assets/collectif-haiti-de-france/29.collectif-haiti-france.mp4";
 
 /* ── Story SVGs ── */
 import svgStoryGreen from "../../imports/svg-5ll5yqgwlz";
