@@ -22,6 +22,7 @@ import imgInstagram from "../../assets/collectif-haiti-de-france/06.reseaux-soci
 import imgMonoLight from "../../assets/collectif-haiti-de-france/23.monochrome.png";
 import imgMonoDark from "../../assets/collectif-haiti-de-france/24.monochrome.png";
 import imgPrototypeHome from "../../assets/collectif-haiti-de-france/25.homepage.png";
+import imgPrototypeMobile from "../../assets/collectif-haiti-de-france/26.notre-histoire.png";
 import imgOldLogo from "../../assets/collectif-haiti-de-france/27.ancien-logo.JPG";
 import imgOldWebsite from "../../assets/collectif-haiti-de-france/28.ancien-site-web.png";
 import videoHaiti from "../../assets/collectif-haiti-de-france/29.collectif-haiti-france.mp4";
@@ -148,6 +149,30 @@ function PhoneMockup({ image, alt, fit = "cover" }: { image: string; alt: string
           loading="lazy"
           draggable={false}
         />
+      </div>
+    </motion.div>
+  );
+}
+
+function ScrollPhoneMockup({ image, alt }: { image: string; alt: string }) {
+  const { isDark } = useTheme();
+
+  return (
+    <motion.div
+      className="relative w-full max-w-[330px] rounded-[2.5rem] p-[10px]"
+      style={{
+        aspectRatio: "390 / 844",
+        background: isDark
+          ? "linear-gradient(145deg, rgba(255,255,255,0.16), rgba(255,255,255,0.04) 38%, rgba(0,0,0,0.34))"
+          : "linear-gradient(145deg, rgba(20,20,20,0.92), rgba(0,0,0,0.98))",
+        boxShadow: isDark ? "0 30px 90px rgba(0,0,0,0.34)" : "0 30px 90px rgba(0,0,0,0.14)",
+      }}
+      whileHover={{ y: -4 }}
+      transition={{ type: "spring", stiffness: 220, damping: 26 }}
+    >
+      <div className="absolute left-1/2 top-[18px] z-10 h-[22px] w-[98px] -translate-x-1/2 rounded-full bg-black shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]" />
+      <div className="h-full w-full overflow-y-auto overflow-x-hidden rounded-[1.85rem]" style={{ background: "#f8f8f8", scrollbarWidth: "thin" }}>
+        <img src={image} alt={alt} className="block w-full h-auto" loading="lazy" draggable={false} />
       </div>
     </motion.div>
   );
@@ -1014,26 +1039,26 @@ function DeclinationsSection() {
           {variations.map((v, i) => (
             <FadeIn key={i} delay={i * 0.08}>
               <motion.div
-                className="rounded-2xl p-6 md:p-8 flex items-center justify-center aspect-[16/10]"
+                className="rounded-2xl p-5 md:p-7 flex items-center justify-center aspect-[16/10]"
                 style={{ background: v.bg }}
                 whileHover={{ scale: 1.03 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
-                <div className="flex items-center gap-3">
-                  <div className="grid grid-cols-2 gap-1">
-                    <IconEducation size={24} color={v.iconColors[0]} />
-                    <IconInformation size={24} color={v.iconColors[1]} />
-                    <IconSovereignty size={24} color={v.iconColors[2]} />
-                    <IconMigrants size={24} color={v.iconColors[3]} />
+                <div className="flex items-center gap-4 md:gap-5 scale-110 md:scale-125">
+                  <div className="grid grid-cols-2 gap-1.5">
+                    <IconEducation size={32} color={v.iconColors[0]} />
+                    <IconInformation size={32} color={v.iconColors[1]} />
+                    <IconSovereignty size={32} color={v.iconColors[2]} />
+                    <IconMigrants size={32} color={v.iconColors[3]} />
                   </div>
                   <div style={{ color: v.text }}>
-                    <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.65rem", fontWeight: 600, lineHeight: 1.2 }}>
+                    <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.78rem", fontWeight: 600, lineHeight: 1.2 }}>
                       Collectif
                     </div>
-                    <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.9rem", fontWeight: 700, lineHeight: 1.1 }}>
+                    <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.25rem", fontWeight: 700, lineHeight: 1.05 }}>
                       Ha&#239;ti
                     </div>
-                    <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.55rem", fontWeight: 600, lineHeight: 1.2 }}>
+                    <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.68rem", fontWeight: 600, lineHeight: 1.2 }}>
                       de France
                     </div>
                   </div>
@@ -1080,15 +1105,12 @@ function MonochromeSection() {
           ].map((item, i) => (
             <FadeIn key={item.label} delay={i * 0.08}>
               <motion.div
-                className="rounded-2xl p-8 md:p-10 flex flex-col items-center justify-center gap-4 aspect-[16/7]"
+                className="rounded-2xl p-8 md:p-10 flex items-center justify-center aspect-[16/7]"
                 style={{ background: item.bg, border: `1px solid ${r(0.06)}` }}
                 whileHover={{ scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 260, damping: 22 }}
               >
-                <img src={item.image} alt={item.label} className="max-h-20 w-auto max-w-full object-contain" loading="lazy" />
-                <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.68rem", color: item.bg === NAVY ? "rgba(255,255,255,0.6)" : r(0.25) }}>
-                  {item.label}
-                </span>
+                <img src={item.image} alt={item.label} className="max-h-28 md:max-h-32 w-auto max-w-full object-contain" loading="lazy" />
               </motion.div>
             </FadeIn>
           ))}
@@ -1263,15 +1285,15 @@ function ApplicationsIdentitySection() {
   return (
     <section id="section-applications" className="px-6 md:px-12 py-20">
       <div className="max-w-6xl mx-auto">
-        <SectionLabel text="Applications" />
-        <SectionTitle text="Applications de l'identité" />
+        <SectionLabel text="Prototypes" />
+        <SectionTitle text="Prototypes web & mobile" />
         <FadeIn>
           <p className="max-w-2xl mb-12" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.35) }}>
-            Le système couleur + pictogramme se prolonge sur les supports digitaux : le site web, les publications sociales et la vidéo reprennent les mêmes repères pour rendre chaque prise de parole plus claire, plus cohérente et plus reconnaissable.
+            Les prototypes montrent comment le système couleur et pictogramme guide la navigation, structure les contenus et rend chaque axe d'action rapidement identifiable sur les interfaces.
           </p>
         </FadeIn>
 
-        <div className="grid lg:grid-cols-3 gap-6">
+        <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-6">
           <FadeIn>
             <motion.div
               className="group block rounded-3xl overflow-hidden h-full cursor-pointer"
@@ -1304,48 +1326,21 @@ function ApplicationsIdentitySection() {
           </FadeIn>
 
           <FadeIn delay={0.08}>
-            <motion.a
-              href="#stories-instagram"
-              className="group block rounded-3xl overflow-hidden h-full cursor-pointer"
-              style={cardStyle}
-              whileHover={{ y: -6 }}
-              transition={{ type: "spring", stiffness: 260, damping: 24 }}
-            >
-              <div className="flex justify-center px-6 pt-7 pb-4" style={{ background: isDark ? r(0.02) : "#fff" }}>
-                <PhoneMockup image={imgInstagram} alt="Réseaux sociaux — Collectif Haïti de France" fit="contain" />
-              </div>
-              <div className="p-6">
-                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1rem", fontWeight: 650, color: r(0.68) }}>Réseaux sociaux</h3>
-                <p className="mt-2 mb-5" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.82rem", lineHeight: 1.7, color: r(0.34) }}>
-                  Une grille sociale pensée comme un système éditorial, identifiable par couleur et par pictogramme.
-                </p>
-                <Button label="Voir les visuels" />
-              </div>
-            </motion.a>
-          </FadeIn>
-
-          <FadeIn delay={0.16}>
             <motion.div
-              className="group block rounded-3xl overflow-hidden h-full cursor-pointer"
+              className="group block rounded-3xl overflow-hidden h-full"
               style={cardStyle}
               whileHover={{ y: -6 }}
               transition={{ type: "spring", stiffness: 260, damping: 24 }}
             >
-              <div className="relative w-full aspect-video" style={{ background: isDark ? r(0.02) : "#fff" }}>
-                <video
-                  src={videoHaiti}
-                  className="absolute inset-0 h-full w-full object-cover"
-                  controls
-                  preload="metadata"
-                  playsInline
-                />
+              <div className="h-[330px] overflow-y-auto overflow-x-hidden" style={{ scrollbarWidth: "thin", background: isDark ? r(0.02) : "#fff" }}>
+                <img src={imgPrototypeMobile} alt="Aperçu mobile de la proposition Collectif Haïti de France" className="block w-full" loading="lazy" />
               </div>
               <div className="p-6">
-                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1rem", fontWeight: 650, color: r(0.68) }}>Vidéo</h3>
+                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1rem", fontWeight: 650, color: r(0.68) }}>Prototype mobile</h3>
                 <p className="mt-2 mb-5" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.82rem", lineHeight: 1.7, color: r(0.34) }}>
-                  Un support animé où le système d'icônes devient un langage de transition et de reconnaissance.
+                  Une version pensée pour vérifier la lisibilité du système sur un format plus contraint.
                 </p>
-                <Button label="Ouvrir la vidéo" href={videoHaiti} />
+                <Button label="Version mobile" href={mobileFigmaUrl} />
               </div>
             </motion.div>
           </FadeIn>
@@ -1714,59 +1709,125 @@ function StoriesSection() {
           </p>
         </FadeIn>
 
-        {/* Dot selector */}
-        <div className="flex items-center gap-4 mb-10">
-          {families.map((fam, i) => (
-            <button
-              key={i}
-              onClick={() => setActiveFamily(i)}
-              className="flex items-center gap-2 cursor-pointer transition-all duration-300"
-              style={{ opacity: activeFamily === i ? 1 : 0.4 }}
+        <div className="grid lg:grid-cols-[0.85fr_1.15fr] gap-10 items-start">
+          <FadeIn>
+            <div className="flex justify-center lg:justify-start">
+              <ScrollPhoneMockup image={imgInstagram} alt="Profil réseaux sociaux Collectif Haïti de France" />
+            </div>
+          </FadeIn>
+
+          <div>
+            {/* Dot selector */}
+            <div className="flex flex-wrap items-center gap-4 mb-10">
+              {families.map((fam, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActiveFamily(i)}
+                  className="flex items-center gap-2 cursor-pointer transition-all duration-300"
+                  style={{ opacity: activeFamily === i ? 1 : 0.4 }}
+                >
+                  <motion.div
+                    className="rounded-full"
+                    style={{ background: dotColors[i], width: activeFamily === i ? 12 : 8, height: activeFamily === i ? 12 : 8 }}
+                    animate={{ scale: activeFamily === i ? 1 : 0.8 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                  />
+                  <span
+                    style={{
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: "0.72rem",
+                      color: activeFamily === i ? r(0.6) : r(0.25),
+                      transition: "color 0.3s",
+                    }}
+                  >
+                    {fam.label}
+                  </span>
+                </button>
+              ))}
+            </div>
+
+            {/* Stories grid — image assets only */}
+            <motion.div
+              key={activeFamily}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              className="grid grid-cols-2 md:grid-cols-4 gap-4"
             >
-              <motion.div
-                className="rounded-full"
-                style={{ background: dotColors[i], width: activeFamily === i ? 12 : 8, height: activeFamily === i ? 12 : 8 }}
-                animate={{ scale: activeFamily === i ? 1 : 0.8 }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+              {current.items.map((s, i) => (
+                <motion.div
+                  key={`${activeFamily}-${i}`}
+                  className="rounded-2xl overflow-hidden"
+                  style={{
+                    background: isDark ? r(0.04) : "#f8f8f8",
+                    border: `1px solid ${r(0.06)}`,
+                    aspectRatio: "9/16",
+                  }}
+                  whileHover={{ scale: 1.03, y: -5 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                >
+                  <img src={s.image} alt={s.alt} className="h-full w-full object-contain" loading="lazy" />
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function VideoSection() {
+  const { r, isDark } = useTheme();
+
+  return (
+    <section className="px-6 md:px-12 py-16">
+      <div className="max-w-6xl mx-auto">
+        <SectionLabel text="Vidéo" />
+        <SectionTitle text="Support vidéo" />
+        <FadeIn>
+          <p className="max-w-2xl mb-10" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.35) }}>
+            Un support animé où le système d'icônes devient un langage de transition et de reconnaissance, séparé des prototypes pour garder une lecture plus claire des applications.
+          </p>
+        </FadeIn>
+        <FadeIn>
+          <div
+            className="rounded-3xl overflow-hidden"
+            style={{
+              background: isDark ? r(0.04) : "#f8f8f8",
+              border: `1px solid ${r(0.06)}`,
+              boxShadow: isDark ? "0 28px 80px rgba(0,0,0,0.24)" : "0 28px 80px rgba(0,0,0,0.07)",
+            }}
+          >
+            <div className="relative w-full aspect-video" style={{ background: isDark ? r(0.02) : "#fff" }}>
+              <video
+                src={videoHaiti}
+                className="absolute inset-0 h-full w-full object-cover"
+                controls
+                preload="metadata"
+                playsInline
               />
-              <span
+            </div>
+            <div className="p-6">
+              <a
+                href={videoHaiti}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-full px-4 py-2"
                 style={{
+                  background: NAVY,
+                  color: "#fff",
                   fontFamily: "'Inter', sans-serif",
                   fontSize: "0.72rem",
-                  color: activeFamily === i ? r(0.6) : r(0.25),
-                  transition: "color 0.3s",
+                  fontWeight: 600,
                 }}
               >
-                {fam.label}
-              </span>
-            </button>
-          ))}
-        </div>
-
-        {/* Stories grid — image assets only */}
-        <motion.div
-          key={activeFamily}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4"
-        >
-          {current.items.map((s, i) => (
-            <motion.div
-              key={`${activeFamily}-${i}`}
-              className="rounded-2xl overflow-hidden"
-              style={{
-                background: isDark ? r(0.04) : "#f8f8f8",
-                border: `1px solid ${r(0.06)}`,
-                aspectRatio: "9/16",
-              }}
-              whileHover={{ scale: 1.03, y: -5 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            >
-              <img src={s.image} alt={s.alt} className="h-full w-full object-contain" loading="lazy" />
-            </motion.div>
-          ))}
-        </motion.div>
+                Ouvrir la vidéo
+                <ArrowUpRight size={14} />
+              </a>
+            </div>
+          </div>
+        </FadeIn>
       </div>
     </section>
   );
@@ -1782,7 +1843,6 @@ function ClosingSection() {
   return (
     <section className="px-6 md:px-12 py-20">
       <div className="max-w-4xl mx-auto text-center">
-        <SectionTitle text="Résultat final" />
         <FadeIn>
           <div className="w-16 h-[1px] mx-auto mb-8" style={{ background: `linear-gradient(90deg, transparent, ${PURPLE}, transparent)` }} />
           <div className="flex items-center justify-center gap-3 mb-6 opacity-40">
@@ -1819,6 +1879,7 @@ export function ProjectHaiti() {
       <MockupSituationSection />
       <ApplicationsIdentitySection />
       <StoriesSection />
+      <VideoSection />
       <ClosingSection />
       <div className="h-24" />
     </div>
