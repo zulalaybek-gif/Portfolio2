@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "motion/react";
 import { lazy, Suspense, useState, useEffect, useRef, useCallback } from "react";
-import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, Maximize2, Minimize2 } from "lucide-react";
+import type { ReactNode } from "react";
+import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, Mail, Maximize2, Minimize2, Pause, Play } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useI18n } from "./i18n";
 import { useTheme } from "./theme";
@@ -35,11 +36,21 @@ const SLIDE_LOADERS = [
   () => import("../../imports/25"),
 ];
 
-/* ── Onboarding phone images ── */
-import imgPhone1 from "figma:asset/2636e6ec7110e5eca67c760f081cd3058b72c3d8.png";
-import imgPhone2 from "figma:asset/ab6ac30c707710def679592d42d3252ff64d76b2.png";
-import imgPhone3 from "figma:asset/5af6ccef921b97ccb914a7aa411e5dad4d0d0326.png";
-import imgPhone4 from "figma:asset/2b3c16c913980c097f83c4a8c1644d3fec07a85c.png";
+import imgPhone1 from "../../assets/sncf-connect/01.splash-screen.png";
+import imgPhone2 from "../../assets/sncf-connect/02.creez-vos-routines.png";
+import imgPhone3 from "../../assets/sncf-connect/03.personnalisez-l-accueil.png";
+import imgPhone4 from "../../assets/sncf-connect/04.parametrage.png";
+import imgRoutineCreate from "../../assets/sncf-connect/05.creaton-routine.png";
+import imgRoutineList from "../../assets/sncf-connect/06.mes-routines.png";
+import imgNewsletter from "../../assets/sncf-connect/07.newsletter.png";
+import imgCampaignBlue from "../../assets/sncf-connect/08.jeu-concours-bleu.png";
+import imgCampaignPink from "../../assets/sncf-connect/09.jeu-concours-rose.png";
+import imgCampaignPhone from "../../assets/sncf-connect/10.jeu-concours.png";
+import imgSpotifyDark from "../../assets/sncf-connect/11.playlist-spotify-sombre.png";
+import imgSpotifyLight from "../../assets/sncf-connect/12.playlist-spotify-clair.png";
+import imgSpotifyMain from "../../assets/sncf-connect/13.playlist-spotify.png";
+import videoMain from "../../assets/sncf-connect/14.video-finale-workshop.mp4";
+import lineAsset from "../../assets/sncf-connect/assets/03.line.svg";
 
 const SLIDES = SLIDE_LOADERS.map((load) => lazy(load));
 const SLIDE_W = 1920;
@@ -66,6 +77,8 @@ const ONBOARDING_PHONES = [
   { src: imgPhone3, label: "Personnalisez l'accueil" },
   { src: imgPhone4, label: "Paramétrage" },
 ];
+
+const UGC_URL = "https://www.youtube.com/embed/_AJf2dtOLtQ";
 
 /* ── Hero Section ── */
 function HeroSection() {
@@ -532,89 +545,555 @@ function PresentationViewer() {
   );
 }
 
+function SectionHeader({
+  eyebrow,
+  title,
+  children,
+  className = "",
+}: {
+  eyebrow: string;
+  title: string;
+  children?: ReactNode;
+  className?: string;
+}) {
+  const { r } = useTheme();
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "120px 0px" }}
+      transition={{ duration: 0.6 }}
+      className={className}
+    >
+      <span
+        className="section-eyebrow uppercase tracking-[0.3em] block mb-4"
+        style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", color: r(0.24) }}
+      >
+        {eyebrow}
+      </span>
+      <h2
+        style={{
+          fontFamily: "'Space Grotesk', sans-serif",
+          fontSize: "clamp(1.8rem, 4vw, 3rem)",
+          fontWeight: 650,
+          color: r(0.72),
+          letterSpacing: "-0.035em",
+          lineHeight: 1,
+        }}
+      >
+        {title}
+      </h2>
+      {children ? (
+        <p
+          className="mt-4 max-w-2xl"
+          style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.75, color: r(0.34) }}
+        >
+          {children}
+        </p>
+      ) : null}
+    </motion.div>
+  );
+}
+
+function PhoneFrame({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
+  const { isDark } = useTheme();
+
+  return (
+    <div
+      className={`relative mx-auto rounded-[2.1rem] p-2 ${className}`}
+      style={{
+        background: isDark ? "linear-gradient(145deg, #172233, #050912)" : "linear-gradient(145deg, #07101f, #263a52)",
+        boxShadow: `0 28px 70px rgba(0,0,0,${isDark ? 0.42 : 0.18}), 0 0 36px rgba(${ACCENT_RGB},0.08)`,
+      }}
+    >
+      <div className="absolute left-1/2 top-3 z-10 h-4 w-20 -translate-x-1/2 rounded-full bg-black/80" />
+      <img src={src} alt={alt} className="block w-full rounded-[1.55rem]" />
+    </div>
+  );
+}
+
+function ParticleField({ active = false }: { active?: boolean }) {
+  const particles = Array.from({ length: active ? 46 : 18 });
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {particles.map((_, i) => {
+        const left = (i * 37) % 100;
+        const top = (i * 53) % 100;
+        const size = 2 + (i % 4);
+        return (
+          <motion.span
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              left: `${left}%`,
+              top: `${top}%`,
+              width: size,
+              height: size,
+              background: i % 3 === 0 ? ACCENT : "rgba(255,255,255,0.72)",
+              boxShadow: `0 0 ${active ? 18 : 10}px rgba(${ACCENT_RGB},${active ? 0.38 : 0.18})`,
+            }}
+            animate={{
+              x: active ? [0, (i % 2 ? 32 : -28), 0] : [0, (i % 2 ? 8 : -6), 0],
+              y: active ? [0, -38 - (i % 7) * 6, 8, 0] : [0, -10, 0],
+              opacity: active ? [0.18, 0.78, 0.28] : [0.12, 0.3, 0.12],
+              scale: active ? [0.8, 1.5, 0.9] : [0.8, 1, 0.8],
+            }}
+            transition={{
+              duration: active ? 3.2 + (i % 5) * 0.35 : 7 + (i % 4),
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: (i % 9) * 0.14,
+            }}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
 /* ── Onboarding Section ── */
 function OnboardingSection() {
-  const { t } = useI18n();
+  const { r, isDark } = useTheme();
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActive((current) => (current + 1) % ONBOARDING_PHONES.length);
+    }, 2600);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  return (
+    <section className="px-6 md:px-12 py-16 overflow-hidden">
+      <div className="max-w-6xl mx-auto">
+        <SectionHeader eyebrow="ONBOARDING" title="Un parcours d’entrée plus clair et progressif">
+          Quatre écrans guident l’utilisateur de la découverte de l’application jusqu’au paramétrage, avec une logique de progression lisible dès le premier regard.
+        </SectionHeader>
+
+        <div
+          className="relative mt-12 grid gap-8 lg:grid-cols-[1.05fr_0.95fr] items-center rounded-[2rem] p-5 md:p-8"
+          style={{
+            background: isDark
+              ? `linear-gradient(135deg, rgba(${ACCENT_RGB},0.08), rgba(255,255,255,0.025))`
+              : `linear-gradient(135deg, rgba(${ACCENT_RGB},0.18), rgba(255,255,255,0.78))`,
+            border: `1px solid ${r(0.07)}`,
+          }}
+        >
+          <div className="absolute inset-0 overflow-hidden rounded-[2rem] pointer-events-none">
+            <motion.div
+              className="absolute -right-16 top-12 h-56 w-56 rounded-full blur-3xl"
+              style={{ background: `rgba(${ACCENT_RGB},${isDark ? 0.16 : 0.22})` }}
+              animate={{ scale: [1, 1.12, 1], opacity: [0.45, 0.75, 0.45] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </div>
+
+          <div className="relative min-h-[34rem] flex items-center justify-center">
+            {ONBOARDING_PHONES.map((phone, i) => {
+              const offset = i - active;
+              const visible = Math.abs(offset) <= 1 || (active === 0 && i === ONBOARDING_PHONES.length - 1);
+              return (
+                <motion.div
+                  key={phone.label}
+                  className="absolute w-[min(15.5rem,72vw)]"
+                  animate={{
+                    opacity: i === active ? 1 : visible ? 0.34 : 0,
+                    x: i === active ? 0 : offset > 0 ? 130 : -130,
+                    y: i === active ? 0 : 26,
+                    scale: i === active ? 1 : 0.82,
+                    rotate: i === active ? 0 : offset > 0 ? 5 : -5,
+                  }}
+                  transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <PhoneFrame src={phone.src} alt={phone.label} />
+                </motion.div>
+              );
+            })}
+          </div>
+
+          <div className="relative space-y-4">
+            {ONBOARDING_PHONES.map((phone, i) => (
+              <button
+                key={phone.label}
+                onClick={() => setActive(i)}
+                className="group grid w-full grid-cols-[2rem_1fr] items-center gap-4 rounded-2xl p-4 text-left transition-colors"
+                style={{
+                  background: active === i ? (isDark ? "rgba(141,232,254,0.11)" : "rgba(0,44,76,0.06)") : "transparent",
+                  border: `1px solid ${active === i ? `rgba(${ACCENT_RGB},0.32)` : r(0.06)}`,
+                }}
+              >
+                <span
+                  className="flex h-8 w-8 items-center justify-center rounded-full"
+                  style={{
+                    background: active === i ? ACCENT : r(0.05),
+                    color: active === i ? BG_DARK : r(0.4),
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontSize: "0.78rem",
+                    fontWeight: 700,
+                  }}
+                >
+                  {i + 1}
+                </span>
+                <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1rem", color: r(0.62), fontWeight: 600 }}>
+                  {phone.label}
+                </span>
+              </button>
+            ))}
+            <div className="h-1 overflow-hidden rounded-full" style={{ background: r(0.06) }}>
+              <motion.div
+                className="h-full rounded-full"
+                style={{ background: ACCENT }}
+                animate={{ width: `${((active + 1) / ONBOARDING_PHONES.length) * 100}%` }}
+                transition={{ duration: 0.45 }}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function RoutineSection() {
   const { r, isDark } = useTheme();
 
   return (
     <section className="px-6 md:px-12 py-16">
       <div className="max-w-6xl mx-auto">
-        {/* Label */}
-        <motion.span
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="section-eyebrow uppercase tracking-[0.3em] block mb-4"
-          style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", color: r(0.2) }}
-        >
-          {t("sncf.onboarding.label")}
-        </motion.span>
+        <SectionHeader eyebrow="CONNECT ROUTINE" title="Créer, retrouver, personnaliser le quotidien">
+          La fonctionnalité Connect Routine transforme les habitudes de trajet en raccourcis utiles, depuis la création jusqu’à la gestion des routines enregistrées.
+        </SectionHeader>
 
-        {/* Title */}
-        <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          style={{
-            fontFamily: "'Space Grotesk', sans-serif",
-            fontSize: "clamp(1.6rem, 4vw, 2.8rem)",
-            fontWeight: 600,
-            color: r(0.7),
-            letterSpacing: "-0.03em",
-          }}
-        >
-          {t("sncf.onboarding.title")}
-        </motion.h2>
-
-        {/* Description */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="mt-4 max-w-2xl mb-14"
-          style={{
-            fontFamily: "'Inter', sans-serif",
-            fontSize: "0.95rem",
-            lineHeight: 1.8,
-            color: r(0.3),
-          }}
-        >
-          {t("sncf.onboarding.desc")}
-        </motion.p>
-
-        {/* Phone grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6">
-          {ONBOARDING_PHONES.map((phone, i) => (
+        <div className="relative mt-12 grid gap-8 lg:grid-cols-[1fr_auto_1fr] items-center">
+          {[
+            { src: imgRoutineCreate, title: "Création de routine", text: "Un parcours guidé pour composer une routine autour des trajets récurrents." },
+            { src: imgRoutineList, title: "Mes routines", text: "Une vue de gestion claire pour retrouver, modifier et activer ses habitudes." },
+          ].map((item, i) => (
             <motion.div
-              key={phone.label}
+              key={item.title}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              className="flex flex-col items-center gap-4"
+              transition={{ duration: 0.65, delay: i * 0.12 }}
+              className="relative rounded-[2rem] p-5"
+              style={{
+                background: isDark ? "rgba(255,255,255,0.035)" : "rgba(255,255,255,0.74)",
+                border: `1px solid ${r(0.07)}`,
+                boxShadow: `0 24px 80px rgba(0,0,0,${isDark ? 0.22 : 0.08})`,
+              }}
             >
-              <motion.img
-                src={phone.src}
-                alt={phone.label}
-                className="w-full h-auto cursor-pointer"
-                whileHover={{ scale: 1.18 }}
-                transition={{ type: "spring", stiffness: 260, damping: 18 }}
-              />
-              <span
-                className="text-center w-full"
-                style={{
-                  fontFamily: "'Inter', sans-serif",
-                  fontSize: "0.75rem",
-                  color: r(0.3),
-                }}
-              >
-                {phone.label}
-              </span>
+              <PhoneFrame src={item.src} alt={item.title} className="w-[min(15rem,72vw)]" />
+              <div className="mt-5">
+                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.1rem", color: r(0.66), fontWeight: 650 }}>
+                  {item.title}
+                </h3>
+                <p className="mt-2" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.86rem", lineHeight: 1.65, color: r(0.32) }}>
+                  {item.text}
+                </p>
+              </div>
             </motion.div>
           ))}
+
+          <div className="hidden lg:flex h-full min-h-[26rem] items-center justify-center">
+            <div className="relative h-[72%] w-28">
+              <img src={lineAsset} alt="" className="absolute left-1/2 top-0 h-full -translate-x-1/2 opacity-40" />
+              <motion.div
+                className="absolute left-1/2 top-1/2 h-14 w-14 -translate-x-1/2 -translate-y-1/2 rounded-full"
+                style={{ background: `rgba(${ACCENT_RGB},0.16)`, border: `1px solid rgba(${ACCENT_RGB},0.3)` }}
+                animate={{ scale: [1, 1.12, 1] }}
+                transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function NewsletterSection() {
+  const { r, isDark } = useTheme();
+
+  return (
+    <section className="px-6 md:px-12 py-16">
+      <div className="max-w-6xl mx-auto">
+        <div
+          className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] items-center rounded-[2rem] p-6 md:p-10"
+          style={{
+            background: isDark
+              ? `linear-gradient(135deg, rgba(255,255,255,0.035), rgba(${ACCENT_RGB},0.07))`
+              : `linear-gradient(135deg, rgba(255,255,255,0.88), rgba(${ACCENT_RGB},0.15))`,
+            border: `1px solid ${r(0.07)}`,
+          }}
+        >
+          <SectionHeader eyebrow="NEWSLETTER" title="Une communication produit au moment du lancement">
+            La newsletter accompagne la sortie de la fonctionnalité avec un support clair, direct et identifiable dans l’écosystème SNCF Connect.
+          </SectionHeader>
+
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="relative"
+          >
+            <motion.div
+              className="absolute -left-6 top-8 hidden h-14 w-14 items-center justify-center rounded-2xl lg:flex"
+              style={{ background: ACCENT, color: BG_DARK }}
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <Mail size={22} />
+            </motion.div>
+            <img
+              src={imgNewsletter}
+              alt="Newsletter de lancement Connect Routine"
+              className="w-full rounded-[1.5rem]"
+              style={{ boxShadow: `0 28px 80px rgba(0,0,0,${isDark ? 0.34 : 0.14})` }}
+            />
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ActivationSection() {
+  const { r, isDark } = useTheme();
+  const [variant, setVariant] = useState<"blue" | "pink">("blue");
+  const config =
+    variant === "blue"
+      ? { image: imgCampaignBlue, color: "#2D8CFF", soft: "45,140,255", label: "Bleu" }
+      : { image: imgCampaignPink, color: "#FF72B8", soft: "255,114,184", label: "Rose" };
+
+  return (
+    <section className="px-6 md:px-12 py-16">
+      <div className="max-w-6xl mx-auto">
+        <SectionHeader eyebrow="COMMUNICATION & ACTIVATION" title="Une campagne dont l’ambiance se module">
+          L’univers graphique réagit au choix de couleur pour montrer comment une même activation peut porter deux tonalités de campagne.
+        </SectionHeader>
+
+        <motion.div
+          className="relative mt-12 overflow-hidden rounded-[2.2rem] p-6 md:p-10"
+          animate={{
+            background: isDark
+              ? `radial-gradient(circle at 74% 20%, rgba(${config.soft},0.22), transparent 34%), linear-gradient(135deg, rgba(255,255,255,0.045), rgba(255,255,255,0.018))`
+              : `radial-gradient(circle at 74% 20%, rgba(${config.soft},0.25), transparent 34%), linear-gradient(135deg, rgba(255,255,255,0.94), rgba(${ACCENT_RGB},0.12))`,
+          }}
+          transition={{ duration: 0.45 }}
+          style={{ border: `1px solid ${r(0.07)}` }}
+        >
+          <motion.div
+            className="absolute -right-20 -top-20 h-72 w-72 rounded-full blur-3xl"
+            animate={{ background: `rgba(${config.soft},0.34)`, scale: [1, 1.08, 1] }}
+            transition={{ background: { duration: 0.45 }, scale: { duration: 4, repeat: Infinity } }}
+          />
+          <motion.div
+            className="absolute left-10 bottom-10 hidden h-40 w-40 rounded-full blur-2xl md:block"
+            animate={{ background: `rgba(${config.soft},0.18)`, x: [0, 14, 0] }}
+            transition={{ background: { duration: 0.45 }, x: { duration: 5, repeat: Infinity } }}
+          />
+
+          <div className="relative grid gap-10 lg:grid-cols-[0.82fr_1fr] items-center">
+            <div className="flex flex-col items-center">
+              <PhoneFrame src={imgCampaignPhone} alt="Écran Instagram de campagne" className="w-[min(17rem,74vw)]" />
+              <div className="mt-6 flex items-center gap-3">
+                {[
+                  { id: "blue" as const, color: "#2D8CFF", label: "Version bleue" },
+                  { id: "pink" as const, color: "#FF72B8", label: "Version rose" },
+                ].map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    aria-label={item.label}
+                    onClick={() => setVariant(item.id)}
+                    className="relative h-11 w-11 rounded-full transition-transform"
+                    style={{
+                      background: item.color,
+                      outline: variant === item.id ? `3px solid ${isDark ? "rgba(255,255,255,0.78)" : "rgba(0,44,76,0.32)"}` : "none",
+                      boxShadow: `0 0 24px ${item.color}66`,
+                    }}
+                  >
+                    <span className="absolute inset-2 rounded-full border border-white/60" />
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={variant}
+                initial={{ opacity: 0, y: 20, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.96 }}
+                transition={{ duration: 0.45, ease: "easeOut" }}
+                className="relative"
+              >
+                <img
+                  src={config.image}
+                  alt={`Déclinaison ${config.label.toLowerCase()} de l'activation`}
+                  className="w-full rounded-[1.6rem]"
+                  style={{ boxShadow: `0 30px 90px rgba(${config.soft},0.22)` }}
+                />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function SpotifyExperienceSection() {
+  const { r, isDark } = useTheme();
+  const [playing, setPlaying] = useState(false);
+  const [mode, setMode] = useState<"dark" | "light">("dark");
+  const cover = mode === "dark" ? imgSpotifyDark : imgSpotifyLight;
+
+  return (
+    <section className="px-6 md:px-12 py-16">
+      <div className="max-w-6xl mx-auto">
+        <SectionHeader eyebrow="EXPÉRIENCE SPOTIFY" title="Un player qui donne du mouvement à l’univers">
+          Le player transforme l’univers sable noir de la playlist en particules vivantes, calmes au repos et plus présentes quand l’expérience est activée.
+        </SectionHeader>
+
+        <div
+          className="relative mt-12 overflow-hidden rounded-[2.2rem] p-6 md:p-10"
+          style={{
+            background: isDark ? "linear-gradient(135deg, #050912, #101927)" : "linear-gradient(135deg, #08111f, #20344c)",
+            border: `1px solid ${isDark ? "rgba(141,232,254,0.15)" : "rgba(0,44,76,0.18)"}`,
+          }}
+        >
+          <ParticleField active={playing} />
+          <div className="relative grid gap-8 lg:grid-cols-[1.1fr_0.9fr] items-center">
+            <motion.img
+              src={imgSpotifyMain}
+              alt="Playlist Spotify SNCF Connect"
+              className="w-full rounded-[1.6rem]"
+              animate={{ scale: playing ? 1.015 : 1 }}
+              transition={{ duration: 0.8 }}
+              style={{ boxShadow: `0 32px 90px rgba(0,0,0,0.42)` }}
+            />
+
+            <div
+              className="rounded-[1.7rem] p-5 backdrop-blur-xl"
+              style={{ background: "rgba(255,255,255,0.09)", border: "1px solid rgba(255,255,255,0.15)" }}
+            >
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={mode}
+                  src={cover}
+                  alt={`Playlist Spotify version ${mode === "dark" ? "sombre" : "claire"}`}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -16 }}
+                  transition={{ duration: 0.35 }}
+                  className="w-full rounded-[1.2rem]"
+                />
+              </AnimatePresence>
+
+              <div className="mt-5 flex items-center justify-between gap-4">
+                <button
+                  type="button"
+                  onClick={() => setPlaying((value) => !value)}
+                  className="flex h-14 w-14 items-center justify-center rounded-full"
+                  style={{ background: ACCENT, color: BG_DARK, boxShadow: `0 0 30px rgba(${ACCENT_RGB},0.4)` }}
+                  aria-label={playing ? "Mettre en pause" : "Lancer l'expérience"}
+                >
+                  {playing ? <Pause size={22} fill={BG_DARK} /> : <Play size={22} fill={BG_DARK} />}
+                </button>
+                <div className="flex-1">
+                  <div style={{ fontFamily: "'Space Grotesk', sans-serif", color: "white", fontWeight: 650 }}>
+                    Playlist Connect
+                  </div>
+                  <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-white/12">
+                    <motion.div
+                      className="h-full rounded-full"
+                      style={{ background: ACCENT }}
+                      animate={{ width: playing ? ["12%", "82%"] : "18%" }}
+                      transition={playing ? { duration: 5, repeat: Infinity, ease: "linear" } : { duration: 0.35 }}
+                    />
+                  </div>
+                </div>
+                <div className="flex rounded-full bg-white/10 p-1">
+                  {(["dark", "light"] as const).map((item) => (
+                    <button
+                      key={item}
+                      type="button"
+                      onClick={() => setMode(item)}
+                      className="rounded-full px-3 py-1.5"
+                      style={{
+                        fontFamily: "'Inter', sans-serif",
+                        fontSize: "0.72rem",
+                        color: mode === item ? BG_DARK : "rgba(255,255,255,0.62)",
+                        background: mode === item ? ACCENT : "transparent",
+                      }}
+                    >
+                      {item === "dark" ? "Sombre" : "Clair"}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function VideoSection() {
+  const { r, isDark } = useTheme();
+
+  return (
+    <section className="px-6 md:px-12 py-16">
+      <div className="max-w-6xl mx-auto">
+        <SectionHeader eyebrow="VIDÉO PRINCIPALE" title="Une présentation vidéo intégrée à l’expérience">
+          Le motion principal conserve l’énergie lumineuse du projet dans un format fluide et responsive.
+        </SectionHeader>
+        <div
+          className="mt-10 overflow-hidden rounded-[2rem] p-2"
+          style={{ background: isDark ? "rgba(255,255,255,0.045)" : "rgba(0,44,76,0.06)", border: `1px solid ${r(0.07)}` }}
+        >
+          <video src={videoMain} controls playsInline preload="metadata" className="block w-full rounded-[1.55rem]" />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function UGCSection() {
+  const { r, isDark } = useTheme();
+
+  return (
+    <section className="px-6 md:px-12 py-16">
+      <div className="max-w-6xl mx-auto">
+        <div className="grid gap-10 lg:grid-cols-[0.78fr_1fr] items-center">
+          <SectionHeader eyebrow="UGC" title="Un format plus direct, pensé pour la prise de parole sociale">
+            Le contenu UGC apporte une dimension plus humaine et spontanée, distincte du film principal.
+          </SectionHeader>
+          <div className="mx-auto w-[min(22rem,78vw)]">
+            <div
+              className="relative overflow-hidden rounded-[2.2rem] p-2"
+              style={{
+                background: isDark ? "#050912" : "#07101f",
+                boxShadow: `0 28px 80px rgba(0,0,0,${isDark ? 0.36 : 0.18})`,
+              }}
+            >
+              <div className="absolute left-1/2 top-3 z-10 h-4 w-20 -translate-x-1/2 rounded-full bg-black/80" />
+              <div className="aspect-[9/16] overflow-hidden rounded-[1.65rem] bg-black">
+                <iframe
+                  src={UGC_URL}
+                  title="Vidéo UGC SNCF Connect"
+                  className="h-full w-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -658,6 +1137,12 @@ export function ProjectSncf() {
       <HeroSection />
       <PresentationViewer />
       <OnboardingSection />
+      <RoutineSection />
+      <NewsletterSection />
+      <ActivationSection />
+      <SpotifyExperienceSection />
+      <VideoSection />
+      <UGCSection />
       <ClosingSection />
       <div className="h-24" />
     </div>
