@@ -566,142 +566,210 @@ function GraphicSystemSection() {
   );
 }
 
-function BloomSprout({
+function FloralStem({
   className,
-  size = "w-24 md:w-32",
+  side = "left",
+  variant = "field",
   delay = 0,
-  variant = "arc",
 }: {
   className: string;
-  size?: string;
+  side?: "left" | "right";
+  variant?: "field" | "climb" | "bloom" | "sprig";
   delay?: number;
-  variant?: "arc" | "lean" | "tall";
 }) {
-  const { isDark } = useTheme();
   const reduceMotion = useReducedMotion();
-  const stroke = isDark ? "rgba(255,255,255,0.72)" : ORANGE;
-  const glow = isDark ? "rgba(240,129,0,0.13)" : "rgba(240,129,0,0.17)";
-  const stemPath =
-    variant === "tall"
-      ? "M78 208 C76 168 86 130 76 88 C71 64 79 38 98 22"
-      : variant === "lean"
-        ? "M72 208 C84 174 65 142 78 106 C88 78 118 58 126 28"
-        : "M78 208 C79 170 99 144 90 108 C82 76 50 62 56 30";
-  const flowerOrigin = variant === "tall" ? "98px 22px" : variant === "lean" ? "126px 28px" : "56px 30px";
-  const flowerTranslate = variant === "tall" ? "translate(98 22)" : variant === "lean" ? "translate(126 28)" : "translate(56 30)";
+  const stroke = ORANGE;
+  const mirror = side === "right" ? "translate(220 0) scale(-1 1)" : undefined;
+  const strokeOpacity = 0.92;
+  const mainPath =
+    variant === "climb"
+      ? "M58 516 C44 454 64 402 56 348 C48 292 76 246 72 198 C69 144 91 86 132 28"
+      : variant === "bloom"
+        ? "M68 516 C82 452 62 406 78 350 C96 288 78 236 98 176 C112 134 138 87 176 38"
+        : variant === "sprig"
+          ? "M62 516 C62 458 74 404 70 344 C65 286 90 242 88 184 C86 126 106 75 146 28"
+          : "M54 516 C50 456 72 408 62 350 C52 292 80 244 74 190 C69 138 86 79 126 30";
+  const branches =
+    variant === "bloom"
+      ? [
+          "M82 384 C120 363 137 326 112 306",
+          "M92 292 C54 272 45 236 80 218",
+          "M106 190 C145 176 165 139 144 116",
+          "M128 118 C96 101 93 70 122 54",
+        ]
+      : variant === "climb"
+        ? [
+            "M58 390 C24 363 18 324 54 305",
+            "M70 262 C112 244 132 205 104 184",
+            "M88 150 C55 131 49 96 82 76",
+          ]
+        : variant === "sprig"
+          ? [
+              "M72 374 C112 352 126 316 98 295",
+              "M84 246 C44 231 33 194 68 174",
+              "M104 116 C142 100 158 68 132 48",
+            ]
+          : [
+              "M60 364 C25 344 19 308 54 290",
+              "M74 258 C112 238 126 202 98 184",
+              "M86 158 C50 141 46 104 80 84",
+              "M98 96 C137 88 158 54 136 34",
+            ];
+  const leaves =
+    variant === "bloom"
+      ? [
+          { d: "M81 383 C116 368 128 343 111 322 C92 332 78 356 81 383Z", delay: 0.64 },
+          { d: "M93 292 C61 278 55 251 80 228 C98 246 103 272 93 292Z", delay: 0.72 },
+          { d: "M107 189 C141 178 151 150 135 126 C117 139 106 163 107 189Z", delay: 0.84 },
+        ]
+      : [
+          { d: "M60 364 C30 345 29 319 55 299 C72 319 75 344 60 364Z", delay: 0.58 },
+          { d: "M74 258 C107 243 116 216 98 194 C80 208 70 233 74 258Z", delay: 0.7 },
+          { d: "M88 158 C57 143 55 116 80 94 C98 113 103 139 88 158Z", delay: 0.82 },
+        ];
+  const flowers =
+    variant === "field"
+      ? [
+          { x: 126, y: 30, size: 1, delay: 1.05 },
+          { x: 98, y: 184, size: 0.72, delay: 1.18 },
+        ]
+      : variant === "climb"
+        ? [
+            { x: 132, y: 28, size: 0.86, delay: 1.05 },
+            { x: 54, y: 305, size: 0.62, delay: 1.22 },
+          ]
+        : variant === "sprig"
+          ? [
+              { x: 146, y: 28, size: 0.78, delay: 1.05 },
+              { x: 68, y: 174, size: 0.58, delay: 1.22 },
+            ]
+          : [
+              { x: 176, y: 38, size: 1.05, delay: 1.08 },
+              { x: 112, y: 306, size: 0.66, delay: 1.24 },
+              { x: 144, y: 116, size: 0.56, delay: 1.34 },
+            ];
+
+  const drawProps = reduceMotion
+    ? { initial: false }
+    : {
+        initial: { pathLength: 0, opacity: 0 },
+        whileInView: { pathLength: 1, opacity: strokeOpacity },
+        viewport: { once: true, amount: 0.18 },
+      };
+  const revealProps = reduceMotion
+    ? { initial: false }
+    : {
+        initial: { opacity: 0, scale: 0.55 },
+        whileInView: { opacity: 1, scale: 1 },
+        viewport: { once: true, amount: 0.18 },
+      };
 
   return (
-    <motion.div
-      className={`absolute pointer-events-none ${size} ${className}`}
-      initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.35 }}
-      transition={{ duration: 0.7, delay, ease: "easeOut" }}
+    <motion.svg
+      className={`absolute pointer-events-none overflow-visible ${className}`}
+      viewBox="0 0 220 540"
+      fill="none"
       aria-hidden="true"
+      initial={reduceMotion ? false : { opacity: 0 }}
+      whileInView={reduceMotion ? undefined : { opacity: 1 }}
+      viewport={{ once: true, amount: 0.12 }}
+      transition={{ duration: 0.55, delay, ease: "easeOut" }}
     >
-      <svg viewBox="0 0 160 220" className="h-auto w-full overflow-visible">
-        <motion.ellipse
-          cx="82"
-          cy="185"
-          rx="54"
-          ry="22"
-          fill={glow}
-          initial={reduceMotion ? false : { scale: 0.7, opacity: 0 }}
-          whileInView={reduceMotion ? undefined : { scale: 1, opacity: 1 }}
-          viewport={{ once: true, amount: 0.35 }}
-          transition={{ duration: 1, delay: delay + 0.1, ease: "easeOut" }}
+      <g transform={mirror} stroke={stroke} strokeLinecap="round" strokeLinejoin="round">
+        <motion.path
+          d={mainPath}
+          strokeWidth="2.15"
+          {...drawProps}
+          transition={{ duration: 1.85, delay, ease: "easeInOut" }}
         />
-        <motion.g
-          fill="none"
-          stroke={stroke}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          animate={reduceMotion ? undefined : { rotate: [-0.8, 0.7, -0.8] }}
-          transition={{ duration: 9 + delay, repeat: Infinity, ease: "easeInOut" }}
-          style={{ transformOrigin: "80px 190px" }}
-        >
+        {branches.map((path, index) => (
           <motion.path
-            d={stemPath}
-            strokeWidth="1.25"
-            initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
-            whileInView={reduceMotion ? undefined : { pathLength: 1, opacity: 0.86 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 1.35, delay, ease: "easeInOut" }}
+            key={path}
+            d={path}
+            strokeWidth={index === 0 ? 1.7 : 1.45}
+            opacity="0.86"
+            {...drawProps}
+            transition={{ duration: 1.05, delay: delay + 0.42 + index * 0.13, ease: "easeInOut" }}
           />
+        ))}
+        {leaves.map((leaf, index) => (
           <motion.path
-            d={variant === "lean" ? "M82 120 C54 112 47 96 70 91" : "M82 128 C50 124 42 105 68 98"}
-            strokeWidth="1"
-            initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
-            whileInView={reduceMotion ? undefined : { pathLength: 1, opacity: 0.72 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.8, delay: delay + 0.55, ease: "easeInOut" }}
+            key={leaf.d}
+            d={leaf.d}
+            strokeWidth="1.35"
+            fill="rgba(240,129,0,0.035)"
+            style={{ transformOrigin: `${index % 2 ? 94 : 64}px ${index % 2 ? 235 : 340}px` }}
+            {...revealProps}
+            transition={{ duration: 0.62, delay: delay + leaf.delay, ease: "easeOut" }}
           />
-          <motion.path
-            d={variant === "arc" ? "M88 96 C118 88 128 70 100 67" : "M82 83 C112 78 123 61 96 58"}
-            strokeWidth="1"
-            initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
-            whileInView={reduceMotion ? undefined : { pathLength: 1, opacity: 0.72 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.8, delay: delay + 0.72, ease: "easeInOut" }}
-          />
+        ))}
+        {flowers.map((flower, index) => (
           <motion.g
-            transform={flowerTranslate}
-            initial={reduceMotion ? false : { scale: 0.2, rotate: -10, opacity: 0 }}
-            whileInView={reduceMotion ? undefined : { scale: 1, rotate: 0, opacity: 1 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.85, delay: delay + 1.05, ease: "easeOut" }}
-            style={{ transformOrigin: flowerOrigin }}
+            key={`${flower.x}-${flower.y}`}
+            transform={`translate(${flower.x} ${flower.y}) scale(${flower.size})`}
+            style={{ transformOrigin: `${flower.x}px ${flower.y}px` }}
+            {...revealProps}
+            transition={{ duration: 0.72, delay: delay + flower.delay, ease: "easeOut" }}
           >
-            {[0, 72, 144, 216, 288].map((angle) => (
+            {[0, 60, 120, 180, 240, 300].map((angle) => (
               <ellipse
                 key={angle}
                 cx="0"
-                cy="-8"
-                rx="3.4"
-                ry="10"
+                cy="-10"
+                rx={index === 0 ? 4.4 : 3.4}
+                ry={index === 0 ? 14 : 10}
                 transform={`rotate(${angle})`}
-                opacity="0.72"
+                strokeWidth="1.25"
+                opacity="0.9"
               />
             ))}
-            <circle cx="0" cy="0" r="2.5" fill={stroke} opacity="0.7" />
+            <circle cx="0" cy="0" r="2.4" fill={stroke} opacity="0.82" />
           </motion.g>
-        </motion.g>
-      </svg>
-    </motion.div>
+        ))}
+      </g>
+    </motion.svg>
   );
 }
 
-function PageBloomDecor() {
-  const { isDark } = useTheme();
-  const topoStroke = isDark ? "rgba(255,255,255,0.08)" : "rgba(240,129,0,0.16)";
-
+function FloralScrollDecor() {
   return (
     <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-      <div
-        className="absolute left-[-10rem] top-[88rem] h-[28rem] w-[28rem] rounded-full opacity-50 blur-3xl"
-        style={{ background: "radial-gradient(circle, rgba(240,129,0,0.18), transparent 68%)" }}
+      <FloralStem
+        side="left"
+        variant="field"
+        delay={0.02}
+        className="left-[-2.7rem] top-[46rem] w-[9rem] opacity-[0.86] md:left-[-1.4rem] md:top-[48rem] md:w-[13.5rem]"
       />
-      <div
-        className="absolute right-[-12rem] top-[250rem] h-[32rem] w-[32rem] rounded-full opacity-45 blur-3xl"
-        style={{ background: "radial-gradient(circle, rgba(240,129,0,0.16), transparent 70%)" }}
+      <FloralStem
+        side="right"
+        variant="bloom"
+        delay={0.08}
+        className="right-[-3.4rem] top-[78rem] w-[10rem] opacity-[0.88] md:right-[-1.6rem] md:top-[82rem] md:w-[15rem]"
       />
-      <svg viewBox="0 0 680 420" className="absolute right-[-7rem] top-[154rem] h-[24rem] w-[40rem] max-w-[80vw] opacity-70 max-md:hidden" aria-hidden="true">
-        <g fill="none" stroke={topoStroke} strokeLinecap="round" strokeLinejoin="round">
-          {[
-            "M58 212 C100 130 199 102 292 132 C386 162 430 226 530 198 C598 179 635 129 664 74",
-            "M108 222 C149 162 221 144 291 166 C363 189 410 235 488 218 C552 205 588 163 618 114",
-            "M174 232 C213 198 259 190 304 202 C354 216 388 244 440 236 C493 228 530 194 557 154",
-          ].map((path) => (
-            <path key={path} d={path} strokeWidth="1.1" />
-          ))}
-        </g>
-      </svg>
-      <BloomSprout className="left-[3%] top-[58rem] opacity-70 max-md:left-[-0.5rem] max-md:top-[54rem]" variant="arc" delay={0.05} size="w-20 md:w-28" />
-      <BloomSprout className="right-[4%] top-[112rem] opacity-75 max-md:right-[-1.5rem] max-md:top-[128rem]" variant="lean" delay={0.12} size="w-24 md:w-36" />
-      <BloomSprout className="left-[5%] top-[176rem] opacity-65 max-md:hidden" variant="tall" delay={0.18} size="w-20 md:w-28" />
-      <BloomSprout className="right-[6%] top-[244rem] opacity-75 max-md:right-[-1rem] max-md:top-[226rem]" variant="arc" delay={0.08} size="w-20 md:w-32" />
-      <BloomSprout className="left-[4%] top-[318rem] opacity-70 max-md:left-[-1rem] max-md:top-[306rem]" variant="lean" delay={0.16} size="w-24 md:w-[8.5rem]" />
-      <BloomSprout className="right-[3%] top-[392rem] opacity-65 max-md:hidden" variant="tall" delay={0.1} size="w-20 md:w-[7.5rem]" />
+      <FloralStem
+        side="left"
+        variant="climb"
+        delay={0.12}
+        className="left-[-3rem] top-[138rem] hidden w-[14rem] opacity-[0.72] md:block lg:left-[-1.1rem] lg:w-[16rem]"
+      />
+      <FloralStem
+        side="right"
+        variant="sprig"
+        delay={0.04}
+        className="right-[-3rem] top-[210rem] w-[9rem] opacity-[0.76] md:right-[-1.2rem] md:top-[222rem] md:w-[13rem]"
+      />
+      <FloralStem
+        side="left"
+        variant="bloom"
+        delay={0.1}
+        className="left-[-3.2rem] top-[294rem] w-[9.5rem] opacity-[0.78] md:left-[-1.7rem] md:top-[310rem] md:w-[14rem]"
+      />
+      <FloralStem
+        side="right"
+        variant="climb"
+        delay={0.16}
+        className="right-[-2.9rem] top-[382rem] hidden w-[13rem] opacity-[0.68] md:block lg:right-[-1.4rem]"
+      />
     </div>
   );
 }
@@ -857,7 +925,7 @@ function SocialSection() {
 export function ProjectParsemains() {
   return (
     <main className="relative min-h-screen overflow-hidden">
-      <PageBloomDecor />
+      <FloralScrollDecor />
       <div className="relative z-10">
         <HeroSection />
         <IntroSection />
