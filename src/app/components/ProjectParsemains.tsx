@@ -670,10 +670,6 @@ function FloralStem({
       viewBox="0 0 220 540"
       fill="none"
       aria-hidden="true"
-      initial={reduceMotion ? false : { opacity: 0 }}
-      whileInView={reduceMotion ? undefined : { opacity: 1 }}
-      viewport={{ once: true, amount: 0.12 }}
-      transition={{ duration: 0.55, delay, ease: "easeOut" }}
     >
       <g transform={mirror} stroke={stroke} strokeLinecap="round" strokeLinejoin="round">
         <motion.path
@@ -733,42 +729,42 @@ function FloralStem({
 
 function FloralScrollDecor() {
   return (
-    <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+    <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
       <FloralStem
         side="left"
         variant="field"
-        delay={0.02}
-        className="left-[-2.7rem] top-[46rem] w-[9rem] opacity-[0.86] md:left-[-1.4rem] md:top-[48rem] md:w-[13.5rem]"
+        delay={0}
+        className="left-[-3.2rem] top-[14rem] w-[10rem] opacity-[0.92] md:left-[-1.5rem] md:top-[16rem] md:w-[15rem]"
       />
       <FloralStem
         side="right"
         variant="bloom"
-        delay={0.08}
-        className="right-[-3.4rem] top-[78rem] w-[10rem] opacity-[0.88] md:right-[-1.6rem] md:top-[82rem] md:w-[15rem]"
+        delay={0.06}
+        className="right-[-3.5rem] top-[36rem] w-[10.5rem] opacity-[0.94] md:right-[-1.6rem] md:top-[40rem] md:w-[15.5rem]"
       />
       <FloralStem
         side="left"
         variant="climb"
         delay={0.12}
-        className="left-[-3rem] top-[138rem] hidden w-[14rem] opacity-[0.72] md:block lg:left-[-1.1rem] lg:w-[16rem]"
+        className="left-[-3rem] top-[104rem] hidden w-[14rem] opacity-[0.82] md:block lg:left-[-1.1rem] lg:w-[16rem]"
       />
       <FloralStem
         side="right"
         variant="sprig"
         delay={0.04}
-        className="right-[-3rem] top-[210rem] w-[9rem] opacity-[0.76] md:right-[-1.2rem] md:top-[222rem] md:w-[13rem]"
+        className="right-[-3rem] top-[174rem] w-[9.5rem] opacity-[0.86] md:right-[-1.2rem] md:top-[190rem] md:w-[13.5rem]"
       />
       <FloralStem
         side="left"
         variant="bloom"
         delay={0.1}
-        className="left-[-3.2rem] top-[294rem] w-[9.5rem] opacity-[0.78] md:left-[-1.7rem] md:top-[310rem] md:w-[14rem]"
+        className="left-[-3.2rem] top-[254rem] w-[10rem] opacity-[0.86] md:left-[-1.7rem] md:top-[278rem] md:w-[14.5rem]"
       />
       <FloralStem
         side="right"
         variant="climb"
         delay={0.16}
-        className="right-[-2.9rem] top-[382rem] hidden w-[13rem] opacity-[0.68] md:block lg:right-[-1.4rem]"
+        className="right-[-2.9rem] top-[338rem] hidden w-[13.5rem] opacity-[0.78] md:block lg:right-[-1.4rem]"
       />
     </div>
   );
