@@ -5,6 +5,8 @@ import { useI18n } from "./i18n";
 import { useTheme } from "./theme";
 
 import logoMain from "../../assets/parsemains/01.logo-principal.svg";
+import logoVariantA from "../../assets/parsemains/02.declinaison-logo.svg";
+import logoVariantB from "../../assets/parsemains/03.declinaison-logo.svg";
 import titleSystemA from "../../assets/parsemains/04.systeme-de-titrage.svg";
 import titleSystemB from "../../assets/parsemains/05.systeme-de-titrage.svg";
 import imgBrochure from "../../assets/parsemains/06.depliant.jpg";
@@ -68,10 +70,10 @@ function SectionTitle({ children, color }: { children: string; color?: string })
 function GeologicalDecor() {
   const { isDark } = useTheme();
   const reduceMotion = useReducedMotion();
-  const lineColor = isDark ? "rgba(240,129,0,0.26)" : "rgba(240,129,0,0.46)";
-  const lineOpacity = isDark ? 0.62 : 0.82;
-  const mainHaloOpacity = isDark ? [0.36, 0.52, 0.36] : [0.58, 0.82, 0.58];
-  const secondaryHaloOpacity = isDark ? [0.26, 0.4, 0.26] : [0.38, 0.58, 0.38];
+  const lineColor = isDark ? "rgba(240,129,0,0.34)" : "rgba(240,129,0,0.56)";
+  const lineOpacity = isDark ? 0.72 : 0.9;
+  const mainHaloOpacity = isDark ? [0.46, 0.66, 0.46] : [0.7, 0.92, 0.7];
+  const secondaryHaloOpacity = isDark ? [0.34, 0.5, 0.34] : [0.46, 0.66, 0.46];
   const topographicLines = [
     "M73 236 C102 173 169 139 243 137 C315 135 362 159 431 136 C511 109 590 74 677 98 C765 122 821 181 812 251 C803 318 738 350 663 359 C578 369 521 345 454 373 C381 403 296 436 213 409 C130 382 47 319 73 236Z",
     "M127 245 C151 196 206 171 265 173 C327 175 372 196 428 178 C497 156 560 125 633 143 C703 160 751 207 746 259 C741 313 681 331 626 337 C554 344 505 322 449 345 C386 371 315 398 250 377 C184 355 102 299 127 245Z",
@@ -83,18 +85,18 @@ function GeologicalDecor() {
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden">
       <motion.div
-        className="absolute -right-20 -top-20 h-[28rem] w-[28rem] rounded-full md:h-[42rem] md:w-[42rem]"
+        className="absolute -right-24 -top-24 h-[32rem] w-[32rem] rounded-full md:h-[48rem] md:w-[48rem]"
         style={{
           background:
             "radial-gradient(circle at 42% 38%, rgba(240,129,0,0.42), rgba(240,129,0,0.18) 30%, rgba(240,129,0,0.06) 50%, transparent 72%), radial-gradient(circle at 52% 46%, rgba(255,255,255,0.22) 0 1px, transparent 1.4px)",
           backgroundSize: "auto, 10px 10px",
-          filter: "blur(30px)",
+          filter: "blur(34px)",
         }}
         animate={reduceMotion ? undefined : { scale: [1, 1.05, 1], x: [0, -10, 0], y: [0, 5, 0], opacity: mainHaloOpacity }}
         transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="absolute bottom-10 left-8 h-52 w-52 rounded-full md:left-16 md:h-64 md:w-64"
+        className="absolute bottom-6 left-4 h-56 w-56 rounded-full md:left-12 md:h-72 md:w-72"
         style={{
           background:
             "radial-gradient(circle at 40% 44%, rgba(240,129,0,0.26), rgba(240,129,0,0.08) 48%, transparent 68%), radial-gradient(circle at 30% 30%, rgba(255,255,255,0.16) 0 1px, transparent 1.5px)",
@@ -105,7 +107,7 @@ function GeologicalDecor() {
         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="absolute left-1/2 top-1/2 h-[34rem] w-[58rem] max-w-[155vw] -translate-x-1/2 -translate-y-1/2"
+        className="absolute left-1/2 top-1/2 h-[38rem] w-[66rem] max-w-[165vw] -translate-x-1/2 -translate-y-1/2"
         style={{ opacity: lineOpacity }}
         animate={reduceMotion ? undefined : { x: ["-50%", "calc(-50% + 10px)", "-50%"], y: ["-50%", "calc(-50% + 8px)", "-50%"] }}
         transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
@@ -142,6 +144,14 @@ function GeologicalDecor() {
       <div
         className="absolute inset-x-0 bottom-0 h-32"
         style={{ background: "linear-gradient(180deg, transparent, rgba(248,242,232,0.08))" }}
+      />
+      <div
+        className="absolute inset-0 opacity-45"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 24% 32%, rgba(0,0,0,0.08) 0 0.55px, transparent 0.9px), radial-gradient(circle at 72% 48%, rgba(240,129,0,0.16) 0 0.7px, transparent 1px)",
+          backgroundSize: "14px 14px, 20px 20px",
+        }}
       />
     </div>
   );
@@ -240,10 +250,14 @@ function IntroSection() {
 }
 
 function LogoSection() {
-  const { r } = useTheme();
+  const { r, isDark } = useTheme();
   const versions = [
     { alt: "Logo principal Parsemains noir", background: "#fff", filter: "none", border: "rgba(0,0,0,0.08)" },
     { alt: "Logo principal Parsemains blanc", background: "#050505", filter: "invert(1)", border: "rgba(255,255,255,0.12)" },
+  ];
+  const variants = [
+    { src: logoVariantA, alt: "Déclinaison du logo Parsemains" },
+    { src: logoVariantB, alt: "Déclinaison secondaire du logo Parsemains" },
   ];
 
   return (
@@ -251,6 +265,9 @@ function LogoSection() {
       <div className="max-w-6xl mx-auto">
         <FadeIn>
           <SectionTitle>Logo principal</SectionTitle>
+          <p className="mb-8 max-w-3xl" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", lineHeight: 1.75, color: r(0.36) }}>
+            Le logo associe une typographie impactante mais lisible à des traits latéraux inspirés des traits de coupe du papier. Il évoque l'édition, la fabrication et la découpe sans perdre sa force de marque.
+          </p>
         </FadeIn>
         <div className="grid gap-5 md:grid-cols-2">
           {versions.map((version, index) => (
@@ -268,6 +285,23 @@ function LogoSection() {
             </FadeIn>
           ))}
         </div>
+        <FadeIn delay={0.08}>
+          <div className="mt-8 grid gap-5 md:grid-cols-2">
+            {variants.map((variant) => (
+              <figure
+                key={variant.src}
+                className="flex min-h-[11rem] items-center justify-center rounded-3xl px-8 py-8 md:min-h-[13rem]"
+                style={{
+                  background: isDark ? r(0.035) : "rgba(255,255,255,0.72)",
+                  border: `1px solid ${r(0.06)}`,
+                  boxShadow: isDark ? "0 24px 70px rgba(0,0,0,0.16)" : "0 22px 62px rgba(0,0,0,0.055)",
+                }}
+              >
+                <img src={variant.src} alt={variant.alt} className="max-h-[7rem] w-full object-contain md:max-h-[8rem]" loading="lazy" style={{ filter: isDark ? "invert(1)" : "none" }} />
+              </figure>
+            ))}
+          </div>
+        </FadeIn>
       </div>
     </section>
   );
@@ -308,6 +342,11 @@ function TitleSystemSection() {
 function TypographySection() {
   const { r, isDark } = useTheme();
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const typographicNotes = [
+    ["Usage", "Titrage, labels, mots-signaux"],
+    ["Rôle", "Impact visuel, rythme, personnalité"],
+    ["Équilibre", "Contraste avec une base texte plus lisible"],
+  ];
   return (
     <section className="px-6 md:px-12 py-12 md:py-16">
       <div className="max-w-6xl mx-auto">
@@ -322,8 +361,16 @@ function TypographySection() {
                 DAZZLE<br />UNICASE
               </h3>
               <p className="mt-6 max-w-sm" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.82rem", lineHeight: 1.7, color: r(0.34) }}>
-                Titrage, labels et mots-signaux.
+                Une typographie de titrage expressive, pensée pour composer des labels, renforcer l'impact des messages et installer une présence immédiatement reconnaissable.
               </p>
+              <div className="mt-7 grid gap-3">
+                {typographicNotes.map(([label, text]) => (
+                  <div key={label} className="flex items-baseline justify-between gap-5 border-t pt-3" style={{ borderColor: r(0.07) }}>
+                    <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.68rem", color: r(0.28) }}>{label}</span>
+                    <span className="text-right" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.72rem", color: r(0.46) }}>{text}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </FadeIn>
           <FadeIn delay={0.06}>
@@ -338,8 +385,15 @@ function TypographySection() {
                 ))}
               </div>
               <p className="mt-6" style={{ fontFamily: "'Avenir', 'Inter', sans-serif", fontSize: "0.88rem", lineHeight: 1.75, color: r(0.34) }}>
-                Une base plus sobre pour équilibrer les compositions expressives.
+                Une base plus sobre pour le texte courant, choisie pour sa lisibilité et son équilibre éditorial face aux compositions de titrage plus affirmées.
               </p>
+              <div className="mt-7 grid grid-cols-2 gap-3 border-t pt-5" style={{ borderColor: r(0.07) }}>
+                {["Lisibilité", "Sobriété", "Hiérarchie", "Respiration"].map((item) => (
+                  <span key={item} style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.72rem", color: r(0.44) }}>
+                    {item}
+                  </span>
+                ))}
+              </div>
             </div>
           </FadeIn>
         </div>
@@ -381,22 +435,24 @@ function PaletteSection() {
               <div key={title as string} className="grid gap-5 border-t pt-6 md:grid-cols-[13rem_1fr]" style={{ borderColor: r(0.07) }}>
                 <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.98rem", fontWeight: 700, color: r(0.68) }}>{title as string}</h3>
                 <div className="flex flex-wrap gap-4">
-                  {(colors as typeof primaryColors).map((color) => (
+                  {(colors as typeof primaryColors).map((color) => {
+                    const darkSwatch = color.value === "#050505" || color.value === PURPLE || color.value === MAGENTA;
+                    return (
                     <div key={color.name} className="w-[7.2rem]">
                       <div
-                        className="h-24 rounded-t-[2.4rem] rounded-b-[0.85rem]"
+                        className="flex h-24 flex-col justify-end rounded-t-[2.4rem] rounded-b-[0.85rem] p-3"
                         style={{
                           background: color.value,
                           border: color.value === "#FFFFFF" ? `1px solid ${r(0.14)}` : "none",
                           boxShadow: color.value === "#FFFFFF" ? "none" : "0 18px 42px rgba(0,0,0,0.075)",
                         }}
-                      />
-                      <div className="mt-3">
-                        <span className="block" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.72rem", color: r(0.44) }}>{color.name}</span>
-                        <span className="mt-0.5 block" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.62rem", fontWeight: 700, color: r(0.34) }}>{color.value}</span>
+                      >
+                        <span className="block" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.7rem", color: darkSwatch ? "#fff" : "#111" }}>{color.name}</span>
+                        <span className="mt-0.5 block" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.58rem", fontWeight: 700, color: darkSwatch ? "rgba(255,255,255,0.72)" : "rgba(0,0,0,0.56)" }}>{color.value}</span>
                       </div>
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             ))}
@@ -416,56 +472,54 @@ function InteractivePictogram({
   label: string;
   behavior: "recover" | "dry" | "sift";
 }) {
-  const { r } = useTheme();
-  const reduceMotion = useReducedMotion();
+  const { r, isDark } = useTheme();
+  const eyeColor = isDark ? "#0b1118" : ORANGE;
+  const expressionColor = isDark ? "#fff" : ORANGE;
   const sizeClass =
     behavior === "dry"
       ? "h-24 md:h-32"
       : behavior === "sift"
         ? "h-20 md:h-28"
         : "h-[5.5rem] md:h-[7.5rem]";
-  const idle =
+  const facePosition =
     behavior === "recover"
-      ? { y: [0, -2, 0], rotate: [0, -0.8, 0] }
+      ? "left-[24%] top-[46%]"
       : behavior === "dry"
-        ? { y: [0, -3, 0], rotate: [0, 0.7, 0] }
-        : { y: [0, 2, 0], rotate: [0, -0.45, 0] };
-  const hover =
-    behavior === "recover"
-      ? { y: -5, rotate: -2.2, scale: 1.02 }
-      : behavior === "dry"
-        ? { y: -3, rotate: 1.4, scale: 1.04 }
-        : { y: -4, rotate: 1.2, scale: 0.98 };
+        ? "left-[33%] top-[52%]"
+        : "left-[58%] top-[27%]";
 
   return (
-    <motion.div className="flex flex-col items-center gap-4" whileHover={reduceMotion ? undefined : hover}>
-      <motion.div
-        animate={reduceMotion ? undefined : idle}
-        transition={{ duration: behavior === "sift" ? 6.8 : behavior === "dry" ? 5.8 : 6.4, repeat: Infinity, ease: "easeInOut" }}
-        className="relative flex h-32 items-center justify-center md:h-40"
-      >
-        {behavior === "dry" && (
-          <motion.span
-            className="absolute left-1/2 top-4 h-12 w-px origin-top"
-            style={{ background: r(0.1) }}
-            animate={reduceMotion ? undefined : { rotate: [-2, 2, -2] }}
-            transition={{ duration: 4.6, repeat: Infinity, ease: "easeInOut" }}
-          />
-        )}
-        {behavior === "sift" && (
-          <motion.span
-            className="absolute -right-2 top-5 h-12 w-12 rounded-full"
-            style={{ border: `1px solid ${r(0.08)}` }}
-            animate={reduceMotion ? undefined : { x: [0, 2, 0], rotate: [0, -3, 0] }}
-            transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut", delay: 0.45 }}
-          />
-        )}
+    <div className="group flex flex-col items-center gap-5">
+      <div className="relative flex h-32 items-center justify-center md:h-40">
         <img src={src} alt={label} className={`${sizeClass} w-full object-contain`} loading="lazy" />
-      </motion.div>
+        <svg className={`absolute ${facePosition} h-8 w-10 overflow-visible opacity-0 transition-opacity duration-300 group-hover:opacity-100`} viewBox="0 0 44 32" aria-hidden="true">
+          {behavior === "recover" && (
+            <>
+              <motion.circle cx="15" cy="11" r="2.6" fill={eyeColor} whileHover={{ cx: 17 }} />
+              <motion.circle cx="28" cy="11" r="2.6" fill={eyeColor} whileHover={{ cx: 30 }} />
+              <motion.path d="M15 22 C20 27 28 27 33 21" fill="none" stroke={expressionColor} strokeWidth="2" strokeLinecap="round" initial={false} />
+            </>
+          )}
+          {behavior === "dry" && (
+            <>
+              <motion.path d="M12 11 C15 8 18 8 21 11" fill="none" stroke={expressionColor} strokeWidth="2" strokeLinecap="round" />
+              <motion.path d="M25 11 C28 8 31 8 34 11" fill="none" stroke={expressionColor} strokeWidth="2" strokeLinecap="round" />
+              <motion.ellipse cx="23" cy="22" rx="4.5" ry="2.6" fill={expressionColor} initial={false} />
+            </>
+          )}
+          {behavior === "sift" && (
+            <>
+              <motion.ellipse cx="15" cy="11" rx="2.4" ry="4" fill={eyeColor} whileHover={{ cy: 9 }} />
+              <motion.ellipse cx="29" cy="11" rx="2.4" ry="4" fill={eyeColor} whileHover={{ cy: 9 }} />
+              <motion.path d="M16 23 C22 19 28 19 34 23" fill="none" stroke={expressionColor} strokeWidth="2" strokeLinecap="round" />
+            </>
+          )}
+        </svg>
+      </div>
       <span className="text-center" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(0.78rem, 1.5vw, 1rem)", fontWeight: 600, color: r(0.64) }}>
         {label}
       </span>
-    </motion.div>
+    </div>
   );
 }
 
@@ -478,26 +532,35 @@ function GraphicSystemSection() {
   ];
 
   return (
-    <section className="px-6 md:px-12 py-12 md:py-16">
+    <section className="px-6 md:px-12 py-14 md:py-20">
       <div className="max-w-6xl mx-auto">
-        <FadeIn>
-          <SectionTitle>Système graphique</SectionTitle>
-          <p className="max-w-2xl" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", lineHeight: 1.75, color: r(0.36) }}>
-            Les pictogrammes, traits de coupe, lignes topographiques et références symboliques construisent un langage visuel à la fois structuré, vivant et reconnaissable.
-          </p>
-          <p className="mt-3 max-w-3xl" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.76rem", lineHeight: 1.7, color: r(0.3) }}>
-            Formes circulaires, courbes de territoire et références symboliques servent de repères communs à l'ensemble de l'univers.
-          </p>
-        </FadeIn>
-        <FadeIn>
-          <div className="mt-8 border-y py-7 md:py-9" style={{ borderColor: r(0.08) }}>
-            <div className="grid grid-cols-3 items-end gap-4 md:gap-8">
+        <div className="grid gap-10 md:grid-cols-[0.78fr_1.22fr] md:items-center">
+          <FadeIn>
+            <SectionTitle>Système graphique</SectionTitle>
+            <p className="max-w-xl" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", lineHeight: 1.75, color: r(0.36) }}>
+              Les pictogrammes, traits de coupe, lignes topographiques et références symboliques construisent un langage visuel à la fois structuré, vivant et reconnaissable.
+            </p>
+            <p className="mt-4 max-w-md" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.76rem", lineHeight: 1.7, color: r(0.3) }}>
+              Formes circulaires, courbes de territoire et références symboliques servent de repères communs à l'ensemble de l'univers.
+            </p>
+          </FadeIn>
+          <FadeIn>
+          <div
+            className="rounded-[2rem] px-5 py-8 md:px-8 md:py-10"
+            style={{
+              background: isDark ? r(0.028) : "rgba(255,255,255,0.58)",
+              border: `1px solid ${r(0.055)}`,
+              boxShadow: isDark ? "0 24px 70px rgba(0,0,0,0.16)" : "0 22px 65px rgba(0,0,0,0.045)",
+            }}
+          >
+            <div className="grid grid-cols-3 items-end gap-6 md:gap-10">
               {pictograms.map((icon) => (
                 <InteractivePictogram key={icon.label} {...icon} />
               ))}
             </div>
           </div>
-        </FadeIn>
+          </FadeIn>
+        </div>
       </div>
     </section>
   );
@@ -609,8 +672,30 @@ function BloomSprout({
 }
 
 function PageBloomDecor() {
+  const { isDark } = useTheme();
+  const topoStroke = isDark ? "rgba(255,255,255,0.08)" : "rgba(240,129,0,0.16)";
+
   return (
     <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+      <div
+        className="absolute left-[-10rem] top-[88rem] h-[28rem] w-[28rem] rounded-full opacity-50 blur-3xl"
+        style={{ background: "radial-gradient(circle, rgba(240,129,0,0.18), transparent 68%)" }}
+      />
+      <div
+        className="absolute right-[-12rem] top-[250rem] h-[32rem] w-[32rem] rounded-full opacity-45 blur-3xl"
+        style={{ background: "radial-gradient(circle, rgba(240,129,0,0.16), transparent 70%)" }}
+      />
+      <svg viewBox="0 0 680 420" className="absolute right-[-7rem] top-[154rem] h-[24rem] w-[40rem] max-w-[80vw] opacity-70 max-md:hidden" aria-hidden="true">
+        <g fill="none" stroke={topoStroke} strokeLinecap="round" strokeLinejoin="round">
+          {[
+            "M58 212 C100 130 199 102 292 132 C386 162 430 226 530 198 C598 179 635 129 664 74",
+            "M108 222 C149 162 221 144 291 166 C363 189 410 235 488 218 C552 205 588 163 618 114",
+            "M174 232 C213 198 259 190 304 202 C354 216 388 244 440 236 C493 228 530 194 557 154",
+          ].map((path) => (
+            <path key={path} d={path} strokeWidth="1.1" />
+          ))}
+        </g>
+      </svg>
       <BloomSprout className="left-[3%] top-[58rem] opacity-70 max-md:left-[-0.5rem] max-md:top-[54rem]" variant="arc" delay={0.05} size="w-20 md:w-28" />
       <BloomSprout className="right-[4%] top-[112rem] opacity-75 max-md:right-[-1.5rem] max-md:top-[128rem]" variant="lean" delay={0.12} size="w-24 md:w-36" />
       <BloomSprout className="left-[5%] top-[176rem] opacity-65 max-md:hidden" variant="tall" delay={0.18} size="w-20 md:w-28" />
@@ -624,13 +709,13 @@ function PageBloomDecor() {
 function PrintSection() {
   const { r, isDark } = useTheme();
   const mainPrintItems = [
-    { src: imgBrochure, alt: "Mise en situation du dépliant Parsemains", label: "Dépliant" },
-    { src: imgBookmarkMockup, alt: "Mise en situation marque-page Parsemains", label: "Marque-page" },
-    { src: imgBookmarks, alt: "Trois marque-pages Parsemains", label: "Variations" },
+    { src: imgBrochure, alt: "Mise en situation du dépliant Parsemains", label: "Dépliant", fit: "cover", background: isDark ? r(0.035) : "#d8c9b6" },
+    { src: imgBookmarkMockup, alt: "Mise en situation marque-page Parsemains", label: "Marque-page", fit: "cover", background: isDark ? r(0.035) : "#d8c9b6" },
+    { src: imgBookmarks, alt: "Trois marque-pages Parsemains", label: "Variations", fit: "contain", background: isDark ? r(0.035) : "#d8c9b6" },
   ];
   const pairedPrintItems = [
-    { src: imgPosters, alt: "Mockup affiches Parsemains", label: "Affiches" },
-    { src: imgPackaging, alt: "Mockup packaging Parsemains", label: "Packaging" },
+    { src: imgPosters, alt: "Mockup affiches Parsemains", label: "Affiches", background: isDark ? r(0.035) : "#d8c9b6" },
+    { src: imgPackaging, alt: "Mockup packaging Parsemains", label: "Packaging", background: isDark ? r(0.035) : "#d8c9b6" },
   ];
 
   return (
@@ -643,20 +728,20 @@ function PrintSection() {
           <div className="grid gap-5 md:grid-cols-3">
             {mainPrintItems.map((item, index) => (
               <FadeIn key={item.src} delay={index * 0.05}>
-                <figure
-                  className="flex h-full flex-col overflow-hidden rounded-3xl"
-                  style={{
-                    background: isDark ? r(0.035) : "#fff",
-                    border: `1px solid ${r(0.06)}`,
-                    boxShadow: isDark ? "0 24px 70px rgba(0,0,0,0.2)" : "0 24px 70px rgba(0,0,0,0.065)",
-                  }}
-                >
-                  <div className="flex h-[15rem] items-center justify-center overflow-hidden md:h-[17rem]">
-                    <img src={item.src} alt={item.alt} className={`h-full w-full ${index === 2 ? "object-contain p-4" : "object-cover"}`} loading="lazy" />
-                  </div>
-                  <figcaption className="flex min-h-[3.25rem] items-center px-5 py-4" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.72rem", color: r(0.34) }}>
+                <figure>
+                  <figcaption className="mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.9rem", fontWeight: 700, color: r(0.66) }}>
                     {item.label}
                   </figcaption>
+                  <div
+                    className="flex h-[17rem] items-center justify-center overflow-hidden rounded-3xl md:h-[19rem]"
+                    style={{
+                      background: item.background,
+                      border: `1px solid ${r(0.045)}`,
+                      boxShadow: isDark ? "0 24px 70px rgba(0,0,0,0.2)" : "0 24px 70px rgba(0,0,0,0.065)",
+                    }}
+                  >
+                    <img src={item.src} alt={item.alt} className={`h-full w-full ${item.fit === "contain" ? "object-contain p-5" : "object-cover"}`} loading="lazy" />
+                  </div>
                 </figure>
               </FadeIn>
             ))}
@@ -672,7 +757,7 @@ function PrintSection() {
                   <div
                     className="overflow-hidden rounded-3xl"
                     style={{
-                      background: "transparent",
+                      background: item.background,
                       boxShadow: isDark ? "0 28px 80px rgba(0,0,0,0.2)" : "0 28px 80px rgba(0,0,0,0.075)",
                     }}
                   >
