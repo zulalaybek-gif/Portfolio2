@@ -1,7 +1,6 @@
 import { motion, AnimatePresence } from "motion/react";
 import { useState, useEffect } from "react";
-import type { ReactNode } from "react";
-import { ArrowLeft, Mail, Pause, Play } from "lucide-react";
+import { ArrowLeft, Pause, Play } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useI18n } from "./i18n";
 import { useTheme } from "./theme";
@@ -15,9 +14,8 @@ import imgPhone4 from "../../assets/sncf-connect/04.parametrage.png";
 import imgRoutineCreate from "../../assets/sncf-connect/05.creaton-routine.png";
 import imgRoutineList from "../../assets/sncf-connect/06.mes-routines.png";
 import imgNewsletter from "../../assets/sncf-connect/07.newsletter.png";
-import imgCampaignBlue from "../../assets/sncf-connect/08.jeu-concours-bleu.png";
-import imgCampaignPink from "../../assets/sncf-connect/09.jeu-concours-rose.png";
-import imgCampaignPhone from "../../assets/sncf-connect/10.jeu-concours.png";
+import imgCampaignPink from "../../assets/sncf-connect/10.jeu-concours-insta-rose.png";
+import imgCampaignBlue from "../../assets/sncf-connect/16.jeu-concours-insta-bleu.png";
 import imgSpotifyDark from "../../assets/sncf-connect/11.playlist-spotify-sombre.png";
 import imgSpotifyLight from "../../assets/sncf-connect/12.playlist-spotify-clair.png";
 import imgSpotifyMain from "../../assets/sncf-connect/13.playlist-spotify.png";
@@ -243,71 +241,26 @@ function HeroSection() {
   );
 }
 
-function SectionHeader({
-  eyebrow,
-  title,
-  children,
-  className = "",
-}: {
-  eyebrow: string;
-  title: string;
-  children?: ReactNode;
-  className?: string;
-}) {
+function SectionTitle({ title, align = "left" }: { title: string; align?: "left" | "center" }) {
   const { r } = useTheme();
-
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
+    <motion.h2
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "120px 0px" }}
       transition={{ duration: 0.65, ease: "easeOut" }}
-      className={className}
-    >
-      <span
-        className="section-eyebrow uppercase tracking-[0.3em] block mb-4"
-        style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", color: r(0.24) }}
-      >
-        {eyebrow}
-      </span>
-      <h2
-        style={{
-          fontFamily: "'Space Grotesk', sans-serif",
-          fontSize: "clamp(2rem, 5vw, 4.2rem)",
-          fontWeight: 700,
-          color: r(0.74),
-          letterSpacing: "-0.045em",
-          lineHeight: 0.95,
-        }}
-      >
-        {title}
-      </h2>
-      {children ? (
-        <p
-          className="mt-5 max-w-2xl"
-          style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.98rem", lineHeight: 1.75, color: r(0.34) }}
-        >
-          {children}
-        </p>
-      ) : null}
-    </motion.div>
-  );
-}
-
-function PhoneFrame({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
-  const { isDark } = useTheme();
-
-  return (
-    <div
-      className={`relative mx-auto rounded-[2.25rem] p-2 ${className}`}
+      className={align === "center" ? "text-center" : ""}
       style={{
-        background: isDark ? "linear-gradient(145deg, #172233, #050912)" : "linear-gradient(145deg, #07101f, #263a52)",
-        boxShadow: `0 30px 80px rgba(0,0,0,${isDark ? 0.44 : 0.2}), 0 0 42px rgba(${ACCENT_RGB},0.1)`,
+        fontFamily: "'Space Grotesk', sans-serif",
+        fontSize: "clamp(2rem, 5vw, 4.4rem)",
+        fontWeight: 700,
+        color: r(0.72),
+        letterSpacing: "-0.045em",
+        lineHeight: 0.92,
       }}
     >
-      <div className="absolute left-1/2 top-3 z-10 h-4 w-20 -translate-x-1/2 rounded-full bg-black/80" />
-      <img src={src} alt={alt} className="block w-full rounded-[1.7rem]" />
-    </div>
+      {title}
+    </motion.h2>
   );
 }
 
@@ -317,23 +270,22 @@ function AmbientLine({ className = "", flip = false }: { className?: string; fli
       src={lineAsset}
       alt=""
       aria-hidden="true"
-      className={`pointer-events-none absolute opacity-25 ${className}`}
+      className={`pointer-events-none absolute ${className}`}
       style={{ transform: flip ? "scaleX(-1)" : undefined }}
-      animate={{ x: [0, 18, 0], opacity: [0.16, 0.32, 0.16] }}
-      transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+      animate={{ x: [0, 22, 0], opacity: [0.12, 0.35, 0.12] }}
+      transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
     />
   );
 }
 
-function ParticleField({ active = false, color = ACCENT }: { active?: boolean; color?: string }) {
-  const particles = Array.from({ length: active ? 64 : 24 });
-
+function PageParticleField({ active = false }: { active?: boolean }) {
+  const dots = Array.from({ length: active ? 86 : 34 });
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {particles.map((_, i) => {
-        const left = (i * 37) % 100;
-        const top = (i * 53) % 100;
-        const size = 1.5 + (i % 4) * 0.8;
+    <div className="pointer-events-none fixed inset-0 z-[1] overflow-hidden">
+      {dots.map((_, i) => {
+        const left = (i * 41) % 100;
+        const top = (i * 67) % 100;
+        const size = 1.4 + (i % 4) * 0.7;
         return (
           <motion.span
             key={i}
@@ -343,20 +295,20 @@ function ParticleField({ active = false, color = ACCENT }: { active?: boolean; c
               top: `${top}%`,
               width: size,
               height: size,
-              background: i % 4 === 0 ? color : "rgba(255,255,255,0.7)",
-              boxShadow: `0 0 ${active ? 22 : 10}px ${color}${active ? "80" : "38"}`,
+              background: i % 5 === 0 ? ACCENT : "rgba(255,255,255,0.64)",
+              boxShadow: `0 0 ${active ? 20 : 8}px rgba(${ACCENT_RGB},${active ? 0.36 : 0.16})`,
             }}
             animate={{
-              x: active ? [0, (i % 2 ? 42 : -36), 0] : [0, (i % 2 ? 8 : -8), 0],
-              y: active ? [0, -52 - (i % 7) * 8, 12, 0] : [0, -10, 0],
-              opacity: active ? [0.12, 0.78, 0.28] : [0.1, 0.28, 0.1],
-              scale: active ? [0.8, 1.7, 0.9] : [0.75, 1, 0.75],
+              x: active ? [0, i % 2 ? 52 : -44, 0] : [0, i % 2 ? 8 : -8, 0],
+              y: active ? [0, -64 - (i % 8) * 8, 8, 0] : [0, -12, 0],
+              opacity: active ? [0.08, 0.62, 0.18] : [0.05, 0.22, 0.05],
+              scale: active ? [0.7, 1.6, 0.8] : [0.75, 1, 0.75],
             }}
             transition={{
-              duration: active ? 3 + (i % 5) * 0.35 : 7 + (i % 4),
+              duration: active ? 3.4 + (i % 5) * 0.28 : 8 + (i % 5),
               repeat: Infinity,
               ease: "easeInOut",
-              delay: (i % 11) * 0.1,
+              delay: (i % 13) * 0.08,
             }}
           />
         );
@@ -365,94 +317,133 @@ function ParticleField({ active = false, color = ACCENT }: { active?: boolean; c
   );
 }
 
+function SectionParticleField({ active = false, color = ACCENT }: { active?: boolean; color?: string }) {
+  const dots = Array.from({ length: active ? 48 : 22 });
+  return (
+    <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
+      {dots.map((_, i) => {
+        const left = (i * 37) % 100;
+        const top = (i * 53) % 100;
+        const size = 1.6 + (i % 5) * 0.75;
+        return (
+          <motion.span
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              left: `${left}%`,
+              top: `${top}%`,
+              width: size,
+              height: size,
+              background: i % 4 === 0 ? color : "rgba(255,255,255,0.62)",
+              boxShadow: `0 0 ${active ? 24 : 10}px ${color}${active ? "80" : "38"}`,
+            }}
+            animate={{
+              x: active ? [0, i % 2 ? 42 : -36, 0] : [0, i % 2 ? 10 : -10, 0],
+              y: active ? [0, -56 - (i % 6) * 8, 0] : [0, -12, 0],
+              opacity: active ? [0.12, 0.7, 0.16] : [0.08, 0.24, 0.08],
+              scale: active ? [0.8, 1.55, 0.9] : [0.8, 1, 0.8],
+            }}
+            transition={{
+              duration: active ? 3.2 + (i % 5) * 0.3 : 7 + (i % 5),
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: (i % 11) * 0.08,
+            }}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+function FloatingMockup({ src, alt, className = "", delay = 0 }: { src: string; alt: string; className?: string; delay?: number }) {
+  return (
+    <motion.img
+      src={src}
+      alt={alt}
+      className={`relative z-10 select-none ${className}`}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "100px 0px" }}
+      transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
+      animate={{ y: [0, -10, 0] }}
+      style={{ filter: `drop-shadow(0 34px 48px rgba(0,0,0,0.28)) drop-shadow(0 0 28px rgba(${ACCENT_RGB},0.12))` }}
+    />
+  );
+}
+
 function OnboardingSection() {
   const { r, isDark } = useTheme();
   const [active, setActive] = useState(0);
 
   useEffect(() => {
-    const timer = window.setInterval(() => {
-      setActive((current) => (current + 1) % ONBOARDING_PHONES.length);
-    }, 2800);
+    const timer = window.setInterval(() => setActive((value) => (value + 1) % ONBOARDING_PHONES.length), 2800);
     return () => window.clearInterval(timer);
   }, []);
 
   return (
-    <section className="relative px-6 md:px-12 py-20 overflow-hidden">
-      <AmbientLine className="left-[-14rem] top-28 h-44 w-[34rem]" />
-      <AmbientLine className="right-[-16rem] bottom-20 h-52 w-[40rem]" flip />
-      <div className="max-w-6xl mx-auto">
-        <SectionHeader eyebrow="ONBOARDING" title="Une découverte guidée, écran par écran">
-          Le parcours d’entrée est scénarisé comme une progression : accueil, création des routines, personnalisation, puis paramétrage.
-        </SectionHeader>
-
-        <div className="relative mt-14 min-h-[38rem] lg:min-h-[44rem]">
-          <div
-            className="absolute inset-x-0 top-1/2 h-[1px] -translate-y-1/2"
-            style={{ background: `linear-gradient(90deg, transparent, rgba(${ACCENT_RGB},0.65), transparent)` }}
-          />
-          <motion.div
-            className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
-            style={{ background: `rgba(${ACCENT_RGB},${isDark ? 0.16 : 0.24})` }}
-            animate={{ scale: [1, 1.16, 1], opacity: [0.45, 0.85, 0.45] }}
-            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-          />
-
+    <section className="relative px-6 md:px-12 py-24 overflow-hidden">
+      <AmbientLine className="left-[-18rem] top-28 h-56 w-[46rem] opacity-30" />
+      <AmbientLine className="right-[-18rem] bottom-8 h-64 w-[48rem] opacity-25" flip />
+      <motion.div
+        className="absolute left-1/2 top-[46%] h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
+        style={{ background: `rgba(${ACCENT_RGB},${isDark ? 0.13 : 0.2})` }}
+        animate={{ scale: [1, 1.14, 1], opacity: [0.45, 0.85, 0.45] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <div className="relative z-10 max-w-6xl mx-auto">
+        <SectionTitle title="Onboarding" />
+        <div className="relative mt-14 min-h-[42rem] lg:min-h-[48rem]">
+          <div className="absolute left-0 right-0 top-1/2 h-[1px]" style={{ background: `linear-gradient(90deg, transparent, rgba(${ACCENT_RGB},0.75), transparent)` }} />
           {ONBOARDING_PHONES.map((phone, i) => {
             const isActive = active === i;
             const positions = [
-              "left-[2%] top-10 rotate-[-8deg]",
-              "left-[27%] top-0 rotate-[3deg]",
-              "right-[25%] top-20 rotate-[-3deg]",
-              "right-[3%] top-4 rotate-[8deg]",
+              "left-0 top-16 lg:w-[18rem] rotate-[-3deg]",
+              "left-[24%] top-2 lg:w-[19rem] rotate-[2deg]",
+              "right-[22%] top-24 lg:w-[18rem] rotate-[-2deg]",
+              "right-0 top-8 lg:w-[18rem] rotate-[3deg]",
             ];
             return (
               <motion.button
                 key={phone.label}
                 type="button"
                 onClick={() => setActive(i)}
-                initial={{ opacity: 0, y: 60 }}
+                className={`absolute hidden lg:block ${positions[i]}`}
+                initial={{ opacity: 0, y: 70 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: i * 0.08 }}
-                className={`absolute ${positions[i]} hidden w-[min(14.5rem,24vw)] text-left lg:block`}
-                animate={{ y: isActive ? -18 : 0, scale: isActive ? 1.08 : 0.92, zIndex: isActive ? 8 : 3 }}
+                transition={{ duration: 0.8, delay: i * 0.08 }}
+                animate={{ scale: isActive ? 1.06 : 0.9, opacity: isActive ? 1 : 0.56, y: isActive ? -16 : 0, zIndex: isActive ? 10 : 2 }}
               >
-                <PhoneFrame src={phone.src} alt={phone.label} />
-                <motion.div
-                  className="mt-4 rounded-2xl px-4 py-3 backdrop-blur-xl"
-                  animate={{ opacity: isActive ? 1 : 0.58 }}
-                  style={{ background: isDark ? "rgba(255,255,255,0.055)" : "rgba(255,255,255,0.78)", border: `1px solid ${r(0.06)}` }}
-                >
-                  <span style={{ fontFamily: "'Space Grotesk', sans-serif", color: r(0.64), fontWeight: 650 }}>{phone.label}</span>
-                </motion.div>
+                <img src={phone.src} alt={phone.label} className="w-full" style={{ filter: `drop-shadow(0 34px 48px rgba(0,0,0,0.24)) drop-shadow(0 0 26px rgba(${ACCENT_RGB},0.16))` }} />
               </motion.button>
             );
           })}
 
-          <div className="relative flex min-h-[36rem] items-center justify-center lg:hidden">
+          <div className="relative flex min-h-[38rem] items-center justify-center lg:hidden">
             <AnimatePresence mode="wait">
-              <motion.div
+              <motion.img
                 key={active}
-                initial={{ opacity: 0, x: 70, rotate: 4 }}
-                animate={{ opacity: 1, x: 0, rotate: 0 }}
-                exit={{ opacity: 0, x: -70, rotate: -4 }}
+                src={ONBOARDING_PHONES[active].src}
+                alt={ONBOARDING_PHONES[active].label}
+                className="w-[min(17rem,78vw)]"
+                initial={{ opacity: 0, x: 80 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -80 }}
                 transition={{ duration: 0.45 }}
-                className="w-[min(16rem,72vw)]"
-              >
-                <PhoneFrame src={ONBOARDING_PHONES[active].src} alt={ONBOARDING_PHONES[active].label} />
-              </motion.div>
+              />
             </AnimatePresence>
           </div>
 
-          <div className="absolute bottom-0 left-1/2 flex -translate-x-1/2 items-center gap-3 rounded-full p-2 backdrop-blur-xl" style={{ background: r(0.04), border: `1px solid ${r(0.08)}` }}>
+          <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center gap-4">
             {ONBOARDING_PHONES.map((phone, i) => (
               <button
                 key={phone.label}
                 type="button"
-                onClick={() => setActive(i)}
-                className="h-3 rounded-full transition-all"
-                style={{ width: active === i ? 34 : 12, background: active === i ? ACCENT : r(0.14) }}
                 aria-label={`Afficher ${phone.label}`}
+                onClick={() => setActive(i)}
+                className="h-1.5 rounded-full"
+                style={{ width: active === i ? 54 : 18, background: active === i ? ACCENT : r(0.14) }}
               />
             ))}
           </div>
@@ -463,47 +454,25 @@ function OnboardingSection() {
 }
 
 function RoutineSection() {
-  const { r, isDark } = useTheme();
-
+  const { r } = useTheme();
   return (
-    <section className="relative px-6 md:px-12 py-20 overflow-hidden">
-      <div className="max-w-6xl mx-auto">
-        <div className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr] items-center">
-          <SectionHeader eyebrow="CONNECT ROUTINE" title="Une routine qui devient un raccourci vivant">
-            Les écrans de création et de gestion sont présentés comme deux temps du même usage : composer son quotidien, puis le retrouver sans effort.
-          </SectionHeader>
-
-          <div className="relative min-h-[34rem]">
-            <motion.div
-              className="absolute left-4 top-8 w-[74%] overflow-hidden rounded-[2rem]"
-              initial={{ opacity: 0, x: 50, rotate: -3 }}
-              whileInView={{ opacity: 1, x: 0, rotate: -2 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.75 }}
-              style={{ boxShadow: `0 32px 90px rgba(0,0,0,${isDark ? 0.34 : 0.14})` }}
-            >
-              <img src={imgRoutineCreate} alt="Création de routine" className="w-full" />
-            </motion.div>
-            <motion.div
-              className="absolute bottom-4 right-0 w-[46%] overflow-hidden rounded-[1.7rem]"
-              initial={{ opacity: 0, x: -42, y: 30, rotate: 5 }}
-              whileInView={{ opacity: 1, x: 0, y: 0, rotate: 4 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.75, delay: 0.15 }}
-              style={{ boxShadow: `0 28px 80px rgba(${ACCENT_RGB},0.18)` }}
-            >
-              <img src={imgRoutineList} alt="Gestion des routines" className="w-full" />
-            </motion.div>
-            <motion.div
-              className="absolute left-[13%] bottom-[16%] flex items-center gap-3 rounded-full px-5 py-3 backdrop-blur-xl"
-              style={{ background: isDark ? "rgba(12,19,31,0.72)" : "rgba(255,255,255,0.76)", border: `1px solid rgba(${ACCENT_RGB},0.28)` }}
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <img src={trainAsset} alt="" className="h-6 w-6 opacity-80" />
-              <span style={{ fontFamily: "'Space Grotesk', sans-serif", color: r(0.62), fontWeight: 650 }}>quotidien personnalisé</span>
-            </motion.div>
-          </div>
+    <section className="relative px-6 md:px-12 py-24 overflow-hidden">
+      <AmbientLine className="left-[8%] top-12 h-44 w-[34rem] opacity-20" />
+      <div className="relative z-10 max-w-6xl mx-auto">
+        <SectionTitle title="Connect Routine" />
+        <div className="relative mt-12 min-h-[40rem]">
+          <FloatingMockup src={imgRoutineCreate} alt="Création de routine" className="absolute left-0 top-0 w-[min(42rem,76vw)] rounded-[2rem]" />
+          <FloatingMockup src={imgRoutineList} alt="Mes routines" className="absolute right-0 bottom-0 w-[min(24rem,44vw)] rounded-[1.6rem]" delay={0.12} />
+          <motion.div
+            className="absolute left-[42%] top-[48%] hidden -translate-x-1/2 -translate-y-1/2 items-center gap-3 lg:flex"
+            initial={{ opacity: 0, scale: 0.92 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <img src={trainAsset} alt="" className="h-10 w-10 opacity-80" />
+            <span style={{ fontFamily: "'Space Grotesk', sans-serif", color: r(0.58), fontSize: "1.1rem", fontWeight: 650 }}>créer → retrouver</span>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -512,52 +481,61 @@ function RoutineSection() {
 
 function NewsletterSection() {
   const { r, isDark } = useTheme();
-  const words = ["Trajets", "Personnalisés", "Simplifiés"];
+  const ribbons = [
+    { word: "Trajets", top: "14%", left: "8%", rotate: -8, delay: 0 },
+    { word: "Personnalisés", top: "38%", right: "5%", rotate: 7, delay: 0.15 },
+    { word: "Simplifiés", bottom: "12%", left: "12%", rotate: 4, delay: 0.3 },
+  ];
 
   return (
     <section className="relative px-6 md:px-12 py-24 overflow-hidden">
       <motion.div
-        className="absolute left-1/2 top-1/2 h-[38rem] w-[38rem] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
-        style={{ background: `rgba(${ACCENT_RGB},${isDark ? 0.12 : 0.22})` }}
-        animate={{ scale: [1, 1.12, 1] }}
+        className="absolute left-1/2 top-1/2 h-[40rem] w-[40rem] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
+        style={{ background: `rgba(${ACCENT_RGB},${isDark ? 0.15 : 0.25})` }}
+        animate={{ scale: [1, 1.12, 1], opacity: [0.45, 0.8, 0.45] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
       />
-      <div className="max-w-6xl mx-auto relative">
-        <SectionHeader eyebrow="NEWSLETTER CONNECT ROUTINE" title="L’annonce produit devient une scène de lancement" className="text-center mx-auto" />
-        <div className="relative mt-12 min-h-[46rem] flex items-center justify-center">
-          {words.map((word, i) => (
-            <motion.span
-              key={word}
-              className="absolute hidden text-[clamp(2.5rem,8vw,7rem)] font-bold leading-none tracking-[-0.06em] lg:block"
+      <div className="relative z-10 max-w-6xl mx-auto">
+        <SectionTitle title="Newsletter" align="center" />
+        <div className="relative mt-8 min-h-[48rem] flex items-center justify-center">
+          {ribbons.map((item) => (
+            <motion.div
+              key={item.word}
+              className="absolute hidden rounded-full px-8 py-4 backdrop-blur-xl lg:block"
               style={{
+                top: item.top,
+                left: item.left,
+                right: item.right,
+                bottom: item.bottom,
+                rotate: `${item.rotate}deg`,
+                background: isDark ? "rgba(141,232,254,0.1)" : "rgba(255,255,255,0.74)",
+                border: `1px solid rgba(${ACCENT_RGB},0.28)`,
+                color: item.word === "Personnalisés" ? ACCENT : r(0.58),
                 fontFamily: "'Space Grotesk', sans-serif",
-                color: i === 1 ? ACCENT : r(0.12),
-                left: i === 0 ? "2%" : i === 1 ? "55%" : "8%",
-                top: i === 0 ? "18%" : i === 1 ? "42%" : "70%",
+                fontSize: "clamp(1.4rem,3vw,2.6rem)",
+                fontWeight: 700,
+                letterSpacing: "-0.04em",
               }}
-              initial={{ opacity: 0, x: i % 2 ? 80 : -80 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: i * 0.12 }}
+              transition={{ duration: 0.7, delay: item.delay }}
+              animate={{ y: [0, -12, 0] }}
             >
-              {word}
-            </motion.span>
+              {item.word}
+            </motion.div>
           ))}
-          <motion.div
-            className="relative z-10 w-[min(22rem,78vw)]"
-            initial={{ opacity: 0, y: 80, rotate: -4 }}
-            whileInView={{ opacity: 1, y: 0, rotate: -2 }}
+          <motion.img
+            src={imgNewsletter}
+            alt="Newsletter Connect Routine complète"
+            className="relative z-10 max-h-[42rem] w-auto max-w-[72vw]"
+            initial={{ opacity: 0, y: 60, rotate: -2 }}
+            whileInView={{ opacity: 1, y: 0, rotate: -1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.85, ease: "easeOut" }}
-            animate={{ y: [0, -12, 0] }}
-          >
-            <div className="rounded-[2.4rem] p-3" style={{ background: BG_DARK, boxShadow: `0 40px 120px rgba(${ACCENT_RGB},0.18)` }}>
-              <img src={imgNewsletter} alt="Newsletter Connect Routine" className="w-full rounded-[1.9rem]" />
-            </div>
-          </motion.div>
-          <motion.div className="absolute right-8 top-24 hidden lg:flex h-20 w-20 items-center justify-center rounded-3xl" style={{ background: ACCENT }} animate={{ rotate: [0, 8, 0], y: [0, -8, 0] }} transition={{ duration: 4, repeat: Infinity }}>
-            <Mail size={32} color={BG_DARK} />
-          </motion.div>
+            transition={{ duration: 0.85 }}
+            animate={{ y: [0, -10, 0] }}
+            style={{ filter: `drop-shadow(0 40px 58px rgba(0,0,0,0.28)) drop-shadow(0 0 34px rgba(${ACCENT_RGB},0.16))` }}
+          />
         </div>
       </div>
     </section>
@@ -566,122 +544,124 @@ function NewsletterSection() {
 
 function ActivationSection() {
   const { r, isDark } = useTheme();
-  const [variant, setVariant] = useState<"blue" | "pink">("blue");
+  const [variant, setVariant] = useState<"blue" | "pink">("pink");
   const config =
     variant === "blue"
-      ? { image: imgCampaignBlue, color: "#2D8CFF", soft: "45,140,255", label: "Bleu" }
-      : { image: imgCampaignPink, color: "#FF72B8", soft: "255,114,184", label: "Rose" };
+      ? { image: imgCampaignBlue, color: "#2D8CFF", soft: "45,140,255", opposite: "#8DE8FE" }
+      : { image: imgCampaignPink, color: "#FF72B8", soft: "255,114,184", opposite: "#BA7CFF" };
 
   return (
-    <section className="px-6 md:px-12 py-20">
-      <div className="max-w-6xl mx-auto">
-        <SectionHeader eyebrow="COMMUNICATION & ACTIVATION" title="Une direction de campagne modulable">
-          Deux choix chromatiques pilotent toute l’ambiance de la scène : visuel, halos, lignes et énergie graphique se transforment ensemble.
-        </SectionHeader>
+    <section className="relative px-6 md:px-12 py-24 overflow-hidden">
+      <motion.div
+        className="absolute inset-0"
+        animate={{
+          background: isDark
+            ? `radial-gradient(circle at 50% 42%, rgba(${config.soft},0.22), transparent 28%), radial-gradient(circle at 18% 70%, rgba(${ACCENT_RGB},0.1), transparent 24%)`
+            : `radial-gradient(circle at 50% 42%, rgba(${config.soft},0.25), transparent 28%), radial-gradient(circle at 18% 70%, rgba(${ACCENT_RGB},0.16), transparent 24%)`,
+        }}
+        transition={{ duration: 0.55 }}
+      />
+      <AmbientLine className="left-[-18rem] top-1/3 h-64 w-[52rem] opacity-25" />
+      <AmbientLine className="right-[-16rem] bottom-16 h-64 w-[52rem] opacity-25" flip />
+      <div className="relative z-10 max-w-6xl mx-auto">
+        <SectionTitle title="Communication" align="center" />
+        <div className="relative mt-10 min-h-[48rem] flex flex-col items-center justify-center">
+          <motion.div className="absolute h-[34rem] w-[34rem] rounded-full blur-3xl" animate={{ background: `rgba(${config.soft},0.28)`, scale: [1, 1.12, 1] }} transition={{ background: { duration: 0.5 }, scale: { duration: 4.5, repeat: Infinity } }} />
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={variant}
+              src={config.image}
+              alt={`Instagram ${variant === "blue" ? "bleu" : "rose"}`}
+              className="relative z-10 w-[min(22rem,76vw)]"
+              initial={{ opacity: 0, y: 40, scale: 0.92, filter: "blur(8px)" }}
+              animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+              exit={{ opacity: 0, y: -36, scale: 0.94, filter: "blur(8px)" }}
+              transition={{ duration: 0.55, ease: "easeOut" }}
+              style={{ filter: `drop-shadow(0 42px 62px rgba(${config.soft},0.32)) drop-shadow(0 0 40px rgba(${config.soft},0.24))` }}
+            />
+          </AnimatePresence>
 
-        <motion.div
-          className="relative mt-12 min-h-[46rem] overflow-hidden rounded-[2.8rem] p-6 md:p-10"
-          animate={{
-            background: isDark
-              ? `radial-gradient(circle at 50% 24%, rgba(${config.soft},0.26), transparent 28%), linear-gradient(135deg, #07101f, #0c1320)`
-              : `radial-gradient(circle at 50% 24%, rgba(${config.soft},0.26), transparent 28%), linear-gradient(135deg, rgba(255,255,255,0.96), rgba(${ACCENT_RGB},0.15))`,
-          }}
-          transition={{ duration: 0.55 }}
-          style={{ border: `1px solid ${r(0.08)}` }}
-        >
-          <motion.div className="absolute -left-24 top-20 h-72 w-72 rounded-full blur-3xl" animate={{ background: `rgba(${config.soft},0.28)`, scale: [1, 1.12, 1] }} transition={{ background: { duration: 0.5 }, scale: { duration: 4.8, repeat: Infinity } }} />
-          <motion.div className="absolute -right-24 bottom-12 h-80 w-80 rounded-full blur-3xl" animate={{ background: `rgba(${config.soft},0.24)`, scale: [1.08, 1, 1.08] }} transition={{ background: { duration: 0.5 }, scale: { duration: 5.2, repeat: Infinity } }} />
-          <motion.div className="absolute inset-x-[-10%] top-1/2 h-[1px]" animate={{ background: `linear-gradient(90deg, transparent, rgba(${config.soft},0.8), transparent)` }} />
+          {Array.from({ length: 18 }).map((_, i) => (
+            <motion.span
+              key={`${variant}-${i}`}
+              className="absolute rounded-full"
+              style={{
+                left: `${8 + ((i * 17) % 84)}%`,
+                top: `${12 + ((i * 23) % 74)}%`,
+                width: 4 + (i % 4),
+                height: 4 + (i % 4),
+                background: i % 2 ? config.color : config.opposite,
+                boxShadow: `0 0 18px ${config.color}`,
+              }}
+              animate={{ x: [0, i % 2 ? 24 : -24, 0], y: [0, -28, 0], opacity: [0.18, 0.72, 0.18] }}
+              transition={{ duration: 3 + (i % 4) * 0.35, repeat: Infinity, ease: "easeInOut" }}
+            />
+          ))}
 
-          <div className="relative z-10 flex min-h-[40rem] flex-col items-center justify-center gap-8">
-            <div className="relative">
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={variant}
-                  src={config.image}
-                  alt={`Visuel d'activation ${config.label.toLowerCase()}`}
-                  className="absolute left-1/2 top-1/2 hidden w-64 -translate-x-1/2 -translate-y-1/2 rounded-[2rem] md:block"
-                  initial={{ opacity: 0, scale: 0.72, rotate: -10 }}
-                  animate={{ opacity: 0.92, scale: 1.15, rotate: variant === "blue" ? -12 : 12, x: variant === "blue" ? -250 : 250 }}
-                  exit={{ opacity: 0, scale: 0.75 }}
-                  transition={{ duration: 0.55 }}
-                  style={{ boxShadow: `0 30px 90px rgba(${config.soft},0.34)` }}
-                />
-              </AnimatePresence>
-              <PhoneFrame src={imgCampaignPhone} alt="Mockup Instagram concours" className="relative z-10 w-[min(18rem,74vw)]" />
-            </div>
-
-            <div className="flex items-center gap-4 rounded-full p-2 backdrop-blur-xl" style={{ background: isDark ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.78)", border: `1px solid ${r(0.08)}` }}>
-              {[
-                { id: "blue" as const, color: "#2D8CFF", label: "Activation bleue" },
-                { id: "pink" as const, color: "#FF72B8", label: "Activation rose" },
-              ].map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  aria-label={item.label}
-                  onClick={() => setVariant(item.id)}
-                  className="relative h-12 w-12 rounded-full"
-                  style={{ background: item.color, boxShadow: `0 0 ${variant === item.id ? 36 : 16}px ${item.color}88` }}
-                >
-                  <motion.span className="absolute inset-2 rounded-full border border-white/70" animate={{ scale: variant === item.id ? [1, 1.16, 1] : 1 }} transition={{ duration: 1.5, repeat: variant === item.id ? Infinity : 0 }} />
-                </button>
-              ))}
-            </div>
+          <div className="relative z-20 mt-8 flex items-center gap-5">
+            {[
+              { id: "blue" as const, color: "#2D8CFF", label: "Version bleue" },
+              { id: "pink" as const, color: "#FF72B8", label: "Version rose" },
+            ].map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                aria-label={item.label}
+                onClick={() => setVariant(item.id)}
+                className="relative h-14 w-14 rounded-full"
+                style={{ background: item.color, boxShadow: `0 0 ${variant === item.id ? 42 : 18}px ${item.color}99` }}
+              >
+                <motion.span className="absolute inset-3 rounded-full border border-white/75" animate={{ scale: variant === item.id ? [1, 1.18, 1] : 1 }} transition={{ duration: 1.4, repeat: variant === item.id ? Infinity : 0 }} />
+              </button>
+            ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
 }
 
-function SpotifyExperienceSection() {
-  const { r, isDark } = useTheme();
-  const [playing, setPlaying] = useState(false);
+function SpotifyExperienceSection({ playing, setPlaying }: { playing: boolean; setPlaying: (value: boolean) => void }) {
   const [mode, setMode] = useState<"dark" | "light">("dark");
   const cover = mode === "dark" ? imgSpotifyDark : imgSpotifyLight;
 
   return (
     <section className="relative px-6 md:px-12 py-24 overflow-hidden">
-      <div className="max-w-6xl mx-auto">
-        <SectionHeader eyebrow="EXPÉRIENCE SPOTIFY" title="Le son imaginé comme une matière en mouvement">
-          Le mockup désertique reste la scène principale. Le player active les particules comme si la playlist mettait l’environnement en vibration.
-        </SectionHeader>
-
-        <div className="relative mt-12 overflow-hidden rounded-[2.8rem] bg-black p-4 md:p-8">
-          <ParticleField active={playing} color="#8DE8FE" />
+      <div className="relative z-10 max-w-6xl mx-auto">
+        <SectionTitle title="Playlist Spotify" />
+        <div className="relative mt-10 min-h-[44rem] flex items-center justify-center">
+          <SectionParticleField active={playing} color={ACCENT} />
           <motion.img
             src={imgSpotifyMain}
             alt="Mockup Spotify avec téléphone dans le désert"
-            className="relative z-10 w-full rounded-[2rem]"
+            className="relative z-10 w-full max-w-5xl"
             animate={{ scale: playing ? 1.018 : 1 }}
             transition={{ duration: 0.8 }}
+            style={{ filter: `drop-shadow(0 44px 70px rgba(0,0,0,0.45))` }}
           />
           <motion.div
-            className="relative z-20 mx-auto -mt-10 grid max-w-4xl gap-5 rounded-[2rem] p-4 backdrop-blur-2xl md:grid-cols-[8rem_1fr_auto] md:p-5"
-            style={{ background: "rgba(7,13,22,0.76)", border: "1px solid rgba(255,255,255,0.14)", boxShadow: "0 30px 90px rgba(0,0,0,0.38)" }}
+            className="absolute bottom-0 z-20 flex w-[min(54rem,90vw)] items-center gap-5 rounded-full px-5 py-4 backdrop-blur-2xl"
+            style={{ background: "rgba(7,13,22,0.72)", border: "1px solid rgba(255,255,255,0.14)" }}
           >
             <AnimatePresence mode="wait">
-              <motion.img key={mode} src={cover} alt="Déclinaison playlist" className="w-full rounded-2xl" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} />
+              <motion.img key={mode} src={cover} alt="Déclinaison playlist" className="h-16 w-16 rounded-2xl" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.92 }} transition={{ duration: 0.45 }} />
             </AnimatePresence>
-            <div className="flex flex-col justify-center">
-              <span style={{ fontFamily: "'Space Grotesk', sans-serif", color: "white", fontSize: "1.25rem", fontWeight: 700 }}>Votre playlist du quotidien</span>
-              <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/10">
-                <motion.div className="h-full rounded-full" style={{ background: ACCENT }} animate={{ width: playing ? ["8%", "92%"] : "18%" }} transition={playing ? { duration: 5.5, repeat: Infinity, ease: "linear" } : { duration: 0.35 }} />
+            <div className="min-w-0 flex-1">
+              <div style={{ fontFamily: "'Space Grotesk', sans-serif", color: "white", fontWeight: 700 }}>Votre playlist du quotidien</div>
+              <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/12">
+                <motion.div className="h-full rounded-full" style={{ background: ACCENT }} animate={{ width: playing ? ["10%", "90%"] : "18%" }} transition={playing ? { duration: 5.2, repeat: Infinity, ease: "linear" } : { duration: 0.35 }} />
               </div>
             </div>
-            <div className="flex items-center justify-between gap-3 md:justify-end">
-              <div className="flex rounded-full bg-white/10 p-1">
-                {(["dark", "light"] as const).map((item) => (
-                  <button key={item} type="button" onClick={() => setMode(item)} className="rounded-full px-3 py-2" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.72rem", color: mode === item ? BG_DARK : "rgba(255,255,255,0.65)", background: mode === item ? ACCENT : "transparent" }}>
-                    {item === "dark" ? "Sombre" : "Clair"}
-                  </button>
-                ))}
-              </div>
-              <button type="button" onClick={() => setPlaying((value) => !value)} className="flex h-14 w-14 items-center justify-center rounded-full" style={{ background: ACCENT, color: BG_DARK, boxShadow: `0 0 36px rgba(${ACCENT_RGB},0.5)` }} aria-label={playing ? "Pause" : "Play"}>
-                {playing ? <Pause size={22} fill={BG_DARK} /> : <Play size={22} fill={BG_DARK} />}
-              </button>
+            <div className="hidden rounded-full bg-white/10 p-1 sm:flex">
+              {(["dark", "light"] as const).map((item) => (
+                <button key={item} type="button" onClick={() => setMode(item)} className="rounded-full px-3 py-2" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.72rem", color: mode === item ? BG_DARK : "rgba(255,255,255,0.65)", background: mode === item ? ACCENT : "transparent" }}>
+                  {item === "dark" ? "Sombre" : "Clair"}
+                </button>
+              ))}
             </div>
+            <button type="button" onClick={() => setPlaying(!playing)} className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full" style={{ background: ACCENT, color: BG_DARK, boxShadow: `0 0 36px rgba(${ACCENT_RGB},0.5)` }} aria-label={playing ? "Pause" : "Play"}>
+              {playing ? <Pause size={22} fill={BG_DARK} /> : <Play size={22} fill={BG_DARK} />}
+            </button>
           </motion.div>
         </div>
       </div>
@@ -690,46 +670,31 @@ function SpotifyExperienceSection() {
 }
 
 function VideoSection() {
-  const { r, isDark } = useTheme();
-
+  const { isDark } = useTheme();
   return (
-    <section className="px-6 md:px-12 py-24">
-      <div className="max-w-6xl mx-auto">
-        <SectionHeader eyebrow="VIDÉO PRINCIPALE" title="Un film présenté comme une projection premium">
-          La vidéo locale devient un moment cinématique, intégré dans la lumière bleue du projet plutôt qu’un simple lecteur posé sur la page.
-        </SectionHeader>
-        <div className="relative mt-12 overflow-hidden rounded-[2.8rem] p-3" style={{ background: isDark ? `radial-gradient(circle at 50% 0%, rgba(${ACCENT_RGB},0.2), transparent 36%), #050912` : `radial-gradient(circle at 50% 0%, rgba(${ACCENT_RGB},0.22), transparent 36%), rgba(255,255,255,0.86)`, border: `1px solid ${r(0.08)}` }}>
-          <div className="absolute inset-x-10 top-6 h-[1px]" style={{ background: `linear-gradient(90deg, transparent, rgba(${ACCENT_RGB},0.7), transparent)` }} />
-          <video src={videoMain} controls playsInline preload="metadata" className="relative z-10 block w-full rounded-[2.25rem]" style={{ boxShadow: "0 36px 110px rgba(0,0,0,0.35)" }} />
+    <section className="relative px-6 md:px-12 py-24 overflow-hidden">
+      <motion.div className="absolute left-1/2 top-1/2 h-[38rem] w-[56rem] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl" style={{ background: `rgba(${ACCENT_RGB},${isDark ? 0.14 : 0.22})` }} animate={{ scale: [1, 1.08, 1] }} transition={{ duration: 6, repeat: Infinity }} />
+      <div className="relative z-10 max-w-6xl mx-auto">
+        <SectionTitle title="Vidéos" />
+        <div className="relative mt-12">
+          <video src={videoMain} controls playsInline preload="metadata" className="block w-full rounded-[2rem]" style={{ boxShadow: "0 42px 110px rgba(0,0,0,0.38)" }} />
         </div>
-      </div>
-    </section>
-  );
-}
-
-function UGCSection() {
-  const { r, isDark } = useTheme();
-
-  return (
-    <section className="px-6 md:px-12 py-20">
-      <div className="max-w-6xl mx-auto">
-        <div className="grid gap-12 lg:grid-cols-[0.8fr_1fr] items-center">
-          <SectionHeader eyebrow="UGC" title="Une prise de parole plus sociale et directe">
-            Le format UGC est traité comme un contenu mobile, plus spontané, plus humain, et volontairement distinct du film principal.
-          </SectionHeader>
-          <div className="relative mx-auto w-[min(24rem,78vw)]">
-            <motion.div className="absolute -left-10 top-12 h-28 w-28 rounded-full blur-2xl" style={{ background: `rgba(${ACCENT_RGB},0.24)` }} animate={{ y: [0, -12, 0] }} transition={{ duration: 4, repeat: Infinity }} />
-            <div className="relative overflow-hidden rounded-[2.5rem] p-2" style={{ background: isDark ? "#050912" : "#07101f", boxShadow: `0 32px 90px rgba(0,0,0,${isDark ? 0.38 : 0.2})` }}>
+        <div className="mt-20 grid gap-12 lg:grid-cols-[0.8fr_1fr] items-center">
+          <div className="relative mx-auto w-[min(22rem,76vw)]">
+            <div className="relative overflow-hidden rounded-[2.4rem] bg-black p-2" style={{ boxShadow: "0 36px 90px rgba(0,0,0,0.32)" }}>
               <div className="absolute left-1/2 top-3 z-10 h-4 w-20 -translate-x-1/2 rounded-full bg-black/80" />
-              <div className="aspect-[9/16] overflow-hidden rounded-[1.85rem] bg-black">
+              <div className="aspect-[9/16] overflow-hidden rounded-[1.75rem] bg-black">
                 <iframe src={UGC_URL} title="Vidéo UGC SNCF Connect" className="h-full w-full" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
               </div>
             </div>
-            <div className="mt-5 flex items-center gap-3 rounded-full px-5 py-3" style={{ background: r(0.04), border: `1px solid ${r(0.08)}` }}>
-              <img src={vehiculesAsset} alt="" className="h-6 w-6 opacity-70" />
-              <span style={{ fontFamily: "'Inter', sans-serif", color: r(0.36), fontSize: "0.82rem" }}>format social media</span>
-            </div>
           </div>
+          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
+            <span style={{ fontFamily: "'Space Grotesk', sans-serif", color: ACCENT, fontSize: "clamp(1.7rem,4vw,3.4rem)", fontWeight: 700, letterSpacing: "-0.04em" }}>UGC</span>
+            <p className="mt-4 max-w-md" style={{ fontFamily: "'Inter', sans-serif", color: "rgba(255,255,255,0.58)", lineHeight: 1.75 }}>
+              Un format plus social, vertical et spontané, traité différemment du film principal.
+            </p>
+            <img src={vehiculesAsset} alt="" className="mt-8 h-14 w-14 opacity-50" />
+          </motion.div>
         </div>
       </div>
     </section>
@@ -768,18 +733,22 @@ function ClosingSection() {
 
 /* ── Main Export ── */
 export function ProjectSncf() {
+  const [spotifyPlaying, setSpotifyPlaying] = useState(false);
+
   return (
-    <div className="relative w-full">
-      <HeroSection />
-      <OnboardingSection />
-      <RoutineSection />
-      <NewsletterSection />
-      <ActivationSection />
-      <SpotifyExperienceSection />
-      <VideoSection />
-      <UGCSection />
-      <ClosingSection />
-      <div className="h-24" />
+    <div className="relative w-full overflow-hidden">
+      <PageParticleField active={spotifyPlaying} />
+      <div className="relative z-10">
+        <HeroSection />
+        <OnboardingSection />
+        <RoutineSection />
+        <NewsletterSection />
+        <ActivationSection />
+        <SpotifyExperienceSection playing={spotifyPlaying} setPlaying={setSpotifyPlaying} />
+        <VideoSection />
+        <ClosingSection />
+        <div className="h-24" />
+      </div>
     </div>
   );
 }
