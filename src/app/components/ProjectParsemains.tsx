@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { useNavigate } from "react-router";
 import { ProjectBackButton } from "./ProjectBackButton";
 import { useI18n } from "./i18n";
@@ -63,6 +63,15 @@ function SectionTitle({ children, color }: { children: string; color?: string })
 }
 
 function GeologicalDecor() {
+  const reduceMotion = useReducedMotion();
+  const topographicLines = [
+    "M73 236 C102 173 169 139 243 137 C315 135 362 159 431 136 C511 109 590 74 677 98 C765 122 821 181 812 251 C803 318 738 350 663 359 C578 369 521 345 454 373 C381 403 296 436 213 409 C130 382 47 319 73 236Z",
+    "M127 245 C151 196 206 171 265 173 C327 175 372 196 428 178 C497 156 560 125 633 143 C703 160 751 207 746 259 C741 313 681 331 626 337 C554 344 505 322 449 345 C386 371 315 398 250 377 C184 355 102 299 127 245Z",
+    "M182 258 C201 225 238 204 287 206 C344 208 376 226 426 210 C478 193 531 169 584 181 C635 193 681 228 675 267 C669 306 622 317 574 319 C518 322 480 306 432 325 C382 345 324 366 271 349 C221 333 160 296 182 258Z",
+    "M239 263 C254 245 280 233 313 236 C354 239 382 249 421 237 C459 226 495 209 532 219 C569 229 603 249 599 278 C595 307 559 314 524 313 C486 312 458 300 421 313 C381 328 341 337 306 326 C272 315 222 287 239 263Z",
+    "M292 273 C307 260 326 258 349 263 C378 270 394 279 423 270 C450 262 477 251 500 261 C521 270 540 285 534 301 C528 318 503 319 479 316 C456 313 439 306 414 314 C390 322 364 326 340 318 C316 311 277 288 292 273Z",
+  ];
+
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden">
       <motion.div
@@ -72,32 +81,54 @@ function GeologicalDecor() {
             "radial-gradient(circle at 42% 38%, rgba(240,129,0,0.32), rgba(240,129,0,0.11) 34%, transparent 70%)",
           filter: "blur(28px)",
         }}
-        animate={{ scale: [1, 1.04, 1], opacity: [0.55, 0.76, 0.55] }}
+        animate={reduceMotion ? undefined : { scale: [1, 1.04, 1], x: [0, -8, 0], opacity: [0.48, 0.7, 0.48] }}
         transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="absolute left-1/2 top-1/2 h-[34rem] w-[34rem] max-w-[120vw] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-45"
-        style={{
-          background:
-            "repeating-radial-gradient(ellipse at center, transparent 0 22px, rgba(240,129,0,0.22) 23px 24px, transparent 25px 42px)",
-          transform: "translate(-50%, -50%) rotate(-10deg) scaleX(1.28)",
-          WebkitMaskImage: "radial-gradient(ellipse at center, black 0%, black 48%, transparent 72%)",
-          maskImage: "radial-gradient(ellipse at center, black 0%, black 48%, transparent 72%)",
-        }}
-        animate={{ y: [0, 10, 0], rotate: [-10, -9.2, -10] }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-16 left-8 h-36 w-36 rounded-full opacity-50 md:left-20 md:h-48 md:w-48"
+        className="absolute bottom-12 left-8 h-44 w-44 rounded-full opacity-45 md:left-20 md:h-56 md:w-56"
         style={{
           background:
             "radial-gradient(circle, rgba(240,129,0,0.16), transparent 62%), radial-gradient(circle at 30% 30%, rgba(255,255,255,0.14) 0 1px, transparent 1.5px)",
           backgroundSize: "auto, 9px 9px",
-          filter: "blur(10px)",
+          filter: "blur(11px)",
         }}
-        animate={{ x: [0, 8, 0], opacity: [0.34, 0.52, 0.34] }}
-        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+        animate={reduceMotion ? undefined : { x: [0, 8, 0], y: [0, -5, 0], opacity: [0.32, 0.5, 0.32] }}
+        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
       />
+      <motion.div
+        className="absolute left-1/2 top-1/2 h-[30rem] w-[54rem] max-w-[150vw] -translate-x-1/2 -translate-y-1/2 opacity-55"
+        animate={reduceMotion ? undefined : { x: ["-50%", "calc(-50% + 10px)", "-50%"], y: ["-50%", "calc(-50% + 8px)", "-50%"] }}
+        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <svg viewBox="0 0 880 520" className="h-full w-full overflow-visible" aria-hidden="true">
+          <defs>
+            <filter id="parsemains-topo-soften">
+              <feGaussianBlur stdDeviation="0.18" />
+            </filter>
+          </defs>
+          <motion.g
+            fill="none"
+            stroke="rgba(240,129,0,0.34)"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            filter="url(#parsemains-topo-soften)"
+            animate={reduceMotion ? undefined : { rotate: [-1.2, -0.2, -1.2], scaleX: [1, 1.012, 1], scaleY: [1, 0.992, 1] }}
+            transition={{ duration: 24, repeat: Infinity, ease: "easeInOut" }}
+            style={{ transformOrigin: "50% 50%" }}
+          >
+            {topographicLines.map((path, index) => (
+              <motion.path
+                key={path}
+                d={path}
+                strokeWidth={index === 0 ? 1.25 : 0.95}
+                opacity={0.68 - index * 0.07}
+                animate={reduceMotion ? undefined : { pathLength: [0.96, 1, 0.96], pathOffset: [0, index % 2 ? 0.008 : -0.006, 0] }}
+                transition={{ duration: 16 + index * 1.4, repeat: Infinity, ease: "easeInOut" }}
+              />
+            ))}
+          </motion.g>
+        </svg>
+      </motion.div>
       <div
         className="absolute inset-x-0 bottom-0 h-32"
         style={{ background: "linear-gradient(180deg, transparent, rgba(248,242,232,0.08))" }}
