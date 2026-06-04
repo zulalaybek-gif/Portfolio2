@@ -503,40 +503,124 @@ function GraphicSystemSection() {
   );
 }
 
-function SeededPaperSection() {
+function GrowingPlant({
+  x,
+  height,
+  bend = 0,
+  delay = 0,
+  flower = true,
+  accent = ORANGE,
+}: {
+  x: number;
+  height: number;
+  bend?: number;
+  delay?: number;
+  flower?: boolean;
+  accent?: string;
+}) {
+  const reduceMotion = useReducedMotion();
+  const stemStart = 330;
+  const stemEnd = stemStart - height;
+  const stemPath = `M${x} ${stemStart} C${x + bend * 0.35} ${stemStart - height * 0.34} ${x + bend} ${stemStart - height * 0.68} ${x + bend * 0.52} ${stemEnd}`;
+  const headX = x + bend * 0.52;
+
+  return (
+    <motion.g
+      whileHover={
+        reduceMotion
+          ? undefined
+          : {
+              y: -2,
+              transition: { duration: 0.45, ease: "easeOut" },
+            }
+      }
+    >
+      <motion.path
+        d={stemPath}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.45"
+        strokeLinecap="round"
+        initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
+        whileInView={reduceMotion ? undefined : { pathLength: 1, opacity: 0.9 }}
+        viewport={{ once: true, amount: 0.35 }}
+        transition={{ duration: 1.45, delay, ease: "easeInOut" }}
+      />
+      <motion.path
+        d={`M${x + bend * 0.18} ${stemStart - height * 0.36} C${x - 34} ${stemStart - height * 0.42} ${x - 42} ${stemStart - height * 0.58} ${x - 8} ${stemStart - height * 0.53}`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.15"
+        strokeLinecap="round"
+        initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
+        whileInView={reduceMotion ? undefined : { pathLength: 1, opacity: 0.72 }}
+        viewport={{ once: true, amount: 0.35 }}
+        transition={{ duration: 0.85, delay: delay + 0.62, ease: "easeInOut" }}
+      />
+      <motion.path
+        d={`M${x + bend * 0.34} ${stemStart - height * 0.56} C${x + 36} ${stemStart - height * 0.62} ${x + 44} ${stemStart - height * 0.78} ${x + 8} ${stemStart - height * 0.72}`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.15"
+        strokeLinecap="round"
+        initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
+        whileInView={reduceMotion ? undefined : { pathLength: 1, opacity: 0.72 }}
+        viewport={{ once: true, amount: 0.35 }}
+        transition={{ duration: 0.85, delay: delay + 0.78, ease: "easeInOut" }}
+      />
+      {flower && (
+        <motion.g
+          transform={`translate(${headX} ${stemEnd})`}
+          initial={reduceMotion ? false : { scale: 0.2, rotate: -8, opacity: 0 }}
+          whileInView={reduceMotion ? undefined : { scale: 1, rotate: 0, opacity: 1 }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: 0.9, delay: delay + 1.08, ease: "easeOut" }}
+          style={{ transformOrigin: `${headX}px ${stemEnd}px` }}
+        >
+          {[0, 72, 144, 216, 288].map((angle) => (
+            <ellipse
+              key={angle}
+              cx="0"
+              cy="-10"
+              rx="4.2"
+              ry="13"
+              fill="none"
+              stroke={accent}
+              strokeWidth="1.1"
+              transform={`rotate(${angle})`}
+              opacity="0.82"
+            />
+          ))}
+          <circle cx="0" cy="0" r="3.1" fill={accent} opacity="0.78" />
+        </motion.g>
+      )}
+    </motion.g>
+  );
+}
+
+function BloomingPageSection() {
   const { r, isDark } = useTheme();
   const reduceMotion = useReducedMotion();
-  const topoPaths = [
-    "M80 210 C126 156 205 136 274 157 C342 178 377 222 451 209 C523 196 566 139 642 151 C716 163 765 221 742 285 C720 348 636 367 567 345 C497 323 457 287 387 304 C305 324 239 380 162 349 C86 319 41 256 80 210Z",
-    "M139 218 C177 185 229 174 279 190 C330 207 365 238 421 227 C477 216 515 179 573 189 C627 198 668 237 656 282 C643 330 574 337 520 319 C467 301 434 278 381 292 C322 308 267 342 213 319 C160 296 104 249 139 218Z",
-    "M205 231 C232 214 267 211 300 224 C333 238 361 255 400 249 C443 242 473 219 511 226 C550 233 582 258 573 289 C565 322 517 324 481 311 C445 298 421 284 384 294 C343 304 308 321 272 305 C236 289 179 249 205 231Z",
-  ];
-  const seeds = [
-    { cx: 30, cy: 72, delay: 0.1 },
-    { cx: 42, cy: 118, delay: 0.25 },
-    { cx: 72, cy: 92, delay: 0.38 },
-    { cx: 654, cy: 96, delay: 0.18 },
-    { cx: 690, cy: 145, delay: 0.32 },
-    { cx: 626, cy: 284, delay: 0.46 },
-  ];
+  const lineColor = isDark ? "rgba(255,255,255,0.78)" : ORANGE;
+  const softLine = isDark ? "rgba(255,255,255,0.18)" : "rgba(240,129,0,0.2)";
 
   return (
     <section className="px-6 py-12 md:px-12 md:py-16">
       <div className="mx-auto max-w-6xl">
         <FadeIn>
-          <SectionTitle>La page qui s'ensemence</SectionTitle>
+          <SectionTitle>La page qui fleurit</SectionTitle>
           <p className="max-w-2xl" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", lineHeight: 1.75, color: r(0.36) }}>
-            Une surface papier révèle doucement ses grains, ses lignes de territoire et quelques pousses discrètes au passage du scroll.
+            À mesure que la page avance, quelques tiges fines poussent dans la matière et révèlent une floraison légère, presque dessinée au trait.
           </p>
         </FadeIn>
         <motion.div
-          className="relative mt-8 overflow-hidden rounded-[2rem] px-6 py-10 md:px-12 md:py-14"
+          className="relative mt-8 overflow-hidden rounded-[2rem] px-4 py-8 md:px-10 md:py-12"
           style={{
             background: isDark
-              ? "linear-gradient(135deg, rgba(255,255,255,0.065), rgba(240,129,0,0.04))"
-              : "linear-gradient(135deg, #fffaf4, #f5eadb)",
+              ? "linear-gradient(135deg, rgba(255,255,255,0.05), rgba(240,129,0,0.035))"
+              : "linear-gradient(135deg, #fffdf8, #f8eee0)",
             border: `1px solid ${r(0.07)}`,
-            boxShadow: isDark ? "0 30px 90px rgba(0,0,0,0.22)" : "0 30px 90px rgba(0,0,0,0.07)",
+            boxShadow: isDark ? "0 30px 90px rgba(0,0,0,0.2)" : "0 28px 80px rgba(0,0,0,0.065)",
           }}
           initial={reduceMotion ? false : { opacity: 0, y: 24 }}
           whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
@@ -544,72 +628,46 @@ function SeededPaperSection() {
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <div
-            className="absolute inset-0 opacity-50"
+            className="absolute inset-0 opacity-55"
             style={{
               backgroundImage:
-                "radial-gradient(circle at 30% 30%, rgba(0,0,0,0.08) 0 0.6px, transparent 0.8px), radial-gradient(circle at 70% 60%, rgba(240,129,0,0.16) 0 0.8px, transparent 1px)",
-              backgroundSize: "13px 13px, 19px 19px",
+                "radial-gradient(circle at 22% 34%, rgba(0,0,0,0.08) 0 0.55px, transparent 0.85px), radial-gradient(circle at 70% 58%, rgba(240,129,0,0.14) 0 0.75px, transparent 1px)",
+              backgroundSize: "12px 12px, 18px 18px",
             }}
           />
           <motion.div
-            className="absolute -right-20 -top-16 h-72 w-72 rounded-full"
+            className="absolute -right-16 top-8 h-56 w-56 rounded-full md:h-72 md:w-72"
             style={{
               background:
-                "radial-gradient(circle at 44% 42%, rgba(240,129,0,0.34), rgba(240,129,0,0.12) 36%, transparent 70%)",
-              filter: "blur(24px)",
+                "radial-gradient(circle at 44% 42%, rgba(240,129,0,0.24), rgba(240,129,0,0.08) 38%, transparent 72%)",
+              filter: "blur(28px)",
             }}
-            animate={reduceMotion ? undefined : { x: [0, -8, 0], y: [0, 6, 0], opacity: [0.45, 0.68, 0.45] }}
-            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+            animate={reduceMotion ? undefined : { x: [0, -7, 0], y: [0, 6, 0], opacity: [0.42, 0.62, 0.42] }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
           />
-          <svg viewBox="0 0 760 360" className="relative z-10 h-[18rem] w-full md:h-[24rem]" aria-hidden="true">
-            <g fill="none" stroke={ORANGE} strokeLinecap="round" strokeLinejoin="round">
-              {topoPaths.map((path, index) => (
-                <motion.path
-                  key={path}
-                  d={path}
-                  strokeWidth={index === 0 ? 1.35 : 1}
-                  opacity={isDark ? 0.5 - index * 0.08 : 0.62 - index * 0.08}
-                  initial={reduceMotion ? false : { pathLength: 0 }}
-                  whileInView={reduceMotion ? undefined : { pathLength: 1 }}
-                  viewport={{ once: true, amount: 0.48 }}
-                  transition={{ duration: 1.6, delay: index * 0.18, ease: "easeInOut" }}
-                />
-              ))}
+          <svg viewBox="0 0 760 360" className="relative z-10 h-[20rem] w-full md:h-[25rem]" aria-hidden="true">
+            <g fill="none" stroke={softLine} strokeLinecap="round" strokeLinejoin="round">
+              <motion.path
+                d="M86 318 C182 274 220 308 305 262 C391 216 443 244 520 197 C594 152 666 169 718 128"
+                strokeWidth="1"
+                initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
+                whileInView={reduceMotion ? undefined : { pathLength: 1, opacity: 1 }}
+                viewport={{ once: true, amount: 0.35 }}
+                transition={{ duration: 1.4, ease: "easeInOut" }}
+              />
+              <motion.path
+                d="M44 265 C143 224 215 251 291 204 C355 165 432 183 506 142 C594 94 650 111 727 68"
+                strokeWidth="0.9"
+                initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
+                whileInView={reduceMotion ? undefined : { pathLength: 1, opacity: 0.82 }}
+                viewport={{ once: true, amount: 0.35 }}
+                transition={{ duration: 1.6, delay: 0.16, ease: "easeInOut" }}
+              />
             </g>
-            <g fill={ORANGE}>
-              {seeds.map((seed) => (
-                <motion.ellipse
-                  key={`${seed.cx}-${seed.cy}`}
-                  cx={seed.cx}
-                  cy={seed.cy}
-                  rx="3.5"
-                  ry="6"
-                  opacity="0.72"
-                  transform={`rotate(${seed.cx % 40} ${seed.cx} ${seed.cy})`}
-                  initial={reduceMotion ? false : { opacity: 0, scale: 0.5 }}
-                  whileInView={reduceMotion ? undefined : { opacity: 0.72, scale: 1 }}
-                  viewport={{ once: true, amount: 0.45 }}
-                  transition={{ duration: 0.8, delay: 0.45 + seed.delay, ease: "easeOut" }}
-                />
-              ))}
-            </g>
-            <g fill="none" stroke={isDark ? "#fff" : BLACK} strokeLinecap="round" strokeLinejoin="round">
-              {[
-                "M214 277 C214 256 221 243 235 232 M235 232 C230 219 233 207 248 198 M235 232 C249 225 265 227 276 240",
-                "M516 282 C516 260 525 245 542 234 M542 234 C538 219 546 207 560 201 M542 234 C558 230 572 237 580 250",
-              ].map((path, index) => (
-                <motion.path
-                  key={path}
-                  d={path}
-                  strokeWidth="1.25"
-                  opacity={0.72}
-                  initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
-                  whileInView={reduceMotion ? undefined : { pathLength: 1, opacity: 0.72 }}
-                  viewport={{ once: true, amount: 0.45 }}
-                  transition={{ duration: 1, delay: 0.85 + index * 0.18, ease: "easeInOut" }}
-                />
-              ))}
-            </g>
+            <GrowingPlant x={126} height={120} bend={-18} delay={0.12} accent={lineColor} />
+            <GrowingPlant x={304} height={188} bend={24} delay={0.28} accent={lineColor} />
+            <GrowingPlant x={506} height={150} bend={-12} delay={0.44} flower={false} accent={lineColor} />
+            <GrowingPlant x={648} height={205} bend={18} delay={0.58} accent={lineColor} />
           </svg>
         </motion.div>
       </div>
@@ -617,37 +675,55 @@ function SeededPaperSection() {
   );
 }
 
-function BloomTransition() {
+function BloomingTransition() {
   const { r } = useTheme();
   const reduceMotion = useReducedMotion();
 
   return (
     <motion.div
-      className="pointer-events-none relative mx-auto h-14 max-w-6xl px-6 md:px-12"
+      className="pointer-events-none relative mx-auto h-20 max-w-6xl px-6 md:px-12"
       initial={reduceMotion ? false : { opacity: 0 }}
       whileInView={reduceMotion ? undefined : { opacity: 1 }}
       viewport={{ once: true, amount: 0.6 }}
       transition={{ duration: 0.8 }}
       aria-hidden="true"
     >
-      <motion.span
-        className="absolute left-[18%] top-4 h-8 w-px"
-        style={{ background: ORANGE }}
-        animate={reduceMotion ? undefined : { scaleY: [0.75, 1, 0.75], opacity: [0.35, 0.65, 0.35] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.span
-        className="absolute top-5 h-4 w-5 rounded-full"
-        style={{ left: "calc(18% + 0.15rem)", border: `1px solid ${r(0.18)}`, borderLeftColor: ORANGE }}
-        animate={reduceMotion ? undefined : { rotate: [-7, 6, -7] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.span
-        className="absolute right-[16%] top-2 h-2 w-2 rounded-full"
-        style={{ background: ORANGE, opacity: 0.55 }}
-        animate={reduceMotion ? undefined : { y: [0, -5, 0], opacity: [0.35, 0.7, 0.35] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-      />
+      <svg viewBox="0 0 260 100" className="absolute right-[8%] top-0 h-20 w-52 max-w-[45vw]" aria-hidden="true">
+        <g fill="none" stroke={ORANGE} strokeLinecap="round" strokeLinejoin="round" opacity="0.72">
+          <motion.path
+            d="M42 88 C42 66 50 49 64 35 M64 35 C58 25 62 15 75 10 M64 35 C79 29 91 35 97 49"
+            strokeWidth="1.2"
+            initial={reduceMotion ? false : { pathLength: 0 }}
+            whileInView={reduceMotion ? undefined : { pathLength: 1 }}
+            viewport={{ once: true, amount: 0.6 }}
+            transition={{ duration: 1.15, ease: "easeInOut" }}
+          />
+          <motion.path
+            d="M174 92 C174 72 167 57 155 44 M155 44 C164 36 176 34 187 43"
+            strokeWidth="1.1"
+            initial={reduceMotion ? false : { pathLength: 0 }}
+            whileInView={reduceMotion ? undefined : { pathLength: 1 }}
+            viewport={{ once: true, amount: 0.6 }}
+            transition={{ duration: 1.05, delay: 0.25, ease: "easeInOut" }}
+          />
+        </g>
+        <motion.g
+          fill="none"
+          stroke={r(0.48)}
+          strokeWidth="1"
+          initial={reduceMotion ? false : { scale: 0.35, opacity: 0 }}
+          whileInView={reduceMotion ? undefined : { scale: 1, opacity: 0.68 }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ duration: 0.75, delay: 0.95, ease: "easeOut" }}
+          style={{ transformOrigin: "75px 10px" }}
+        >
+          <ellipse cx="75" cy="10" rx="3.5" ry="10" transform="rotate(0 75 10)" />
+          <ellipse cx="75" cy="10" rx="3.5" ry="10" transform="rotate(70 75 10)" />
+          <ellipse cx="75" cy="10" rx="3.5" ry="10" transform="rotate(140 75 10)" />
+          <ellipse cx="75" cy="10" rx="3.5" ry="10" transform="rotate(210 75 10)" />
+          <ellipse cx="75" cy="10" rx="3.5" ry="10" transform="rotate(280 75 10)" />
+        </motion.g>
+      </svg>
     </motion.div>
   );
 }
@@ -811,8 +887,8 @@ export function ProjectParsemains() {
         <TypographySection />
         <PaletteSection />
         <GraphicSystemSection />
-        <SeededPaperSection />
-        <BloomTransition />
+        <BloomingPageSection />
+        <BloomingTransition />
         <PrintSection />
         <SocialSection />
       </div>
