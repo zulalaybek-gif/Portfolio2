@@ -21,6 +21,9 @@ import imgLinkedinPosts from "../../assets/parsemains/13.linkedin-publications.p
 import imgBookmarks from "../../assets/parsemains/23.marque-page-1-2-3.png";
 import imgPosters from "../../assets/parsemains/24-mockup-affiches.png";
 import imgPackaging from "../../assets/parsemains/25.mockup-packaging.png";
+import imgInstagramFeatureA from "../../assets/parsemains/26.img.png";
+import imgInstagramFeatureB from "../../assets/parsemains/27.img.png";
+import imgInstagramFeatureC from "../../assets/parsemains/28.img.png";
 
 const ORANGE = "#F08100";
 const ORANGE_SOFT = "#F4A64A";
@@ -63,7 +66,12 @@ function SectionTitle({ children, color }: { children: string; color?: string })
 }
 
 function GeologicalDecor() {
+  const { isDark } = useTheme();
   const reduceMotion = useReducedMotion();
+  const lineColor = isDark ? "rgba(240,129,0,0.26)" : "rgba(240,129,0,0.46)";
+  const lineOpacity = isDark ? 0.62 : 0.82;
+  const mainHaloOpacity = isDark ? [0.36, 0.52, 0.36] : [0.58, 0.82, 0.58];
+  const secondaryHaloOpacity = isDark ? [0.26, 0.4, 0.26] : [0.38, 0.58, 0.38];
   const topographicLines = [
     "M73 236 C102 173 169 139 243 137 C315 135 362 159 431 136 C511 109 590 74 677 98 C765 122 821 181 812 251 C803 318 738 350 663 359 C578 369 521 345 454 373 C381 403 296 436 213 409 C130 382 47 319 73 236Z",
     "M127 245 C151 196 206 171 265 173 C327 175 372 196 428 178 C497 156 560 125 633 143 C703 160 751 207 746 259 C741 313 681 331 626 337 C554 344 505 322 449 345 C386 371 315 398 250 377 C184 355 102 299 127 245Z",
@@ -75,28 +83,30 @@ function GeologicalDecor() {
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden">
       <motion.div
-        className="absolute -right-28 -top-24 h-[26rem] w-[26rem] rounded-full opacity-70 md:h-[38rem] md:w-[38rem]"
+        className="absolute -right-20 -top-20 h-[28rem] w-[28rem] rounded-full md:h-[42rem] md:w-[42rem]"
         style={{
           background:
-            "radial-gradient(circle at 42% 38%, rgba(240,129,0,0.32), rgba(240,129,0,0.11) 34%, transparent 70%)",
-          filter: "blur(28px)",
+            "radial-gradient(circle at 42% 38%, rgba(240,129,0,0.42), rgba(240,129,0,0.18) 30%, rgba(240,129,0,0.06) 50%, transparent 72%), radial-gradient(circle at 52% 46%, rgba(255,255,255,0.22) 0 1px, transparent 1.4px)",
+          backgroundSize: "auto, 10px 10px",
+          filter: "blur(30px)",
         }}
-        animate={reduceMotion ? undefined : { scale: [1, 1.04, 1], x: [0, -8, 0], opacity: [0.48, 0.7, 0.48] }}
+        animate={reduceMotion ? undefined : { scale: [1, 1.05, 1], x: [0, -10, 0], y: [0, 5, 0], opacity: mainHaloOpacity }}
         transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="absolute bottom-12 left-8 h-44 w-44 rounded-full opacity-45 md:left-20 md:h-56 md:w-56"
+        className="absolute bottom-10 left-8 h-52 w-52 rounded-full md:left-16 md:h-64 md:w-64"
         style={{
           background:
-            "radial-gradient(circle, rgba(240,129,0,0.16), transparent 62%), radial-gradient(circle at 30% 30%, rgba(255,255,255,0.14) 0 1px, transparent 1.5px)",
+            "radial-gradient(circle at 40% 44%, rgba(240,129,0,0.26), rgba(240,129,0,0.08) 48%, transparent 68%), radial-gradient(circle at 30% 30%, rgba(255,255,255,0.16) 0 1px, transparent 1.5px)",
           backgroundSize: "auto, 9px 9px",
           filter: "blur(11px)",
         }}
-        animate={reduceMotion ? undefined : { x: [0, 8, 0], y: [0, -5, 0], opacity: [0.32, 0.5, 0.32] }}
+        animate={reduceMotion ? undefined : { x: [0, 8, 0], y: [0, -5, 0], opacity: secondaryHaloOpacity }}
         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="absolute left-1/2 top-1/2 h-[30rem] w-[54rem] max-w-[150vw] -translate-x-1/2 -translate-y-1/2 opacity-55"
+        className="absolute left-1/2 top-1/2 h-[34rem] w-[58rem] max-w-[155vw] -translate-x-1/2 -translate-y-1/2"
+        style={{ opacity: lineOpacity }}
         animate={reduceMotion ? undefined : { x: ["-50%", "calc(-50% + 10px)", "-50%"], y: ["-50%", "calc(-50% + 8px)", "-50%"] }}
         transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
       >
@@ -108,7 +118,7 @@ function GeologicalDecor() {
           </defs>
           <motion.g
             fill="none"
-            stroke="rgba(240,129,0,0.34)"
+            stroke={lineColor}
             strokeLinecap="round"
             strokeLinejoin="round"
             filter="url(#parsemains-topo-soften)"
@@ -245,18 +255,16 @@ function LogoSection() {
         <div className="grid gap-5 md:grid-cols-2">
           {versions.map((version, index) => (
             <FadeIn key={version.alt} delay={index * 0.06}>
-              <motion.figure
+              <figure
                 className="flex min-h-[13rem] items-center justify-center rounded-3xl px-8 py-10 md:min-h-[16rem]"
                 style={{
                   background: version.background,
                   border: `1px solid ${version.border}`,
                   boxShadow: "0 26px 70px rgba(0,0,0,0.08)",
                 }}
-                whileHover={{ y: -4 }}
-                transition={{ type: "spring", stiffness: 240, damping: 24 }}
               >
                 <img src={logoMain} alt={version.alt} className="w-[58%] max-w-[10rem] md:max-w-[13rem]" style={{ filter: version.filter }} />
-              </motion.figure>
+              </figure>
             </FadeIn>
           ))}
         </div>
@@ -282,14 +290,12 @@ function TitleSystemSection() {
               { src: titleSystemA, className: "md:justify-self-start" },
               { src: titleSystemB, className: "md:justify-self-end" },
             ].map((item) => (
-              <motion.img
+              <img
                 key={item.src}
                 src={item.src}
                 alt="Système de titrage Parsemains"
                 className={`w-full max-h-[12rem] object-contain md:max-h-[15rem] ${item.className}`}
                 loading="lazy"
-                whileHover={{ y: -4 }}
-                transition={{ type: "spring", stiffness: 220, damping: 24 }}
               />
             ))}
           </div>
@@ -367,27 +373,27 @@ function PaletteSection() {
           </p>
         </FadeIn>
         <FadeIn>
-          <div className="mt-10 grid gap-8">
+          <div className="mt-10 grid gap-7">
             {[
               ["Couleurs principales", primaryColors],
               ["Couleurs secondaires", secondaryColors],
             ].map(([title, colors]) => (
-              <div key={title as string} className="grid gap-4 border-t pt-6 md:grid-cols-[12rem_1fr]" style={{ borderColor: r(0.07) }}>
-                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1rem", fontWeight: 700, color: r(0.68) }}>{title as string}</h3>
-                <div className="grid gap-3 sm:grid-cols-3 md:grid-cols-5">
+              <div key={title as string} className="grid gap-5 border-t pt-6 md:grid-cols-[13rem_1fr]" style={{ borderColor: r(0.07) }}>
+                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.98rem", fontWeight: 700, color: r(0.68) }}>{title as string}</h3>
+                <div className="flex flex-wrap gap-4">
                   {(colors as typeof primaryColors).map((color) => (
-                    <div key={color.name} className="group">
+                    <div key={color.name} className="w-[7.2rem]">
                       <div
-                        className="h-20 rounded-[1.15rem] transition-transform duration-300 group-hover:-translate-y-1 md:h-24"
+                        className="h-24 rounded-t-[2.4rem] rounded-b-[0.85rem]"
                         style={{
                           background: color.value,
                           border: color.value === "#FFFFFF" ? `1px solid ${r(0.14)}` : "none",
-                          boxShadow: color.value === "#FFFFFF" ? "none" : "0 18px 42px rgba(0,0,0,0.08)",
+                          boxShadow: color.value === "#FFFFFF" ? "none" : "0 18px 42px rgba(0,0,0,0.075)",
                         }}
                       />
-                      <div className="mt-3 flex items-baseline justify-between gap-3 border-t pt-2" style={{ borderColor: r(0.06) }}>
-                        <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.7rem", color: r(0.38) }}>{color.name}</span>
-                        <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.62rem", fontWeight: 700, color: r(0.48) }}>{color.value}</span>
+                      <div className="mt-3">
+                        <span className="block" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.72rem", color: r(0.44) }}>{color.name}</span>
+                        <span className="mt-0.5 block" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.62rem", fontWeight: 700, color: r(0.34) }}>{color.value}</span>
                       </div>
                     </div>
                   ))}
@@ -401,12 +407,74 @@ function PaletteSection() {
   );
 }
 
+function InteractivePictogram({
+  src,
+  label,
+  behavior,
+}: {
+  src: string;
+  label: string;
+  behavior: "recover" | "dry" | "sift";
+}) {
+  const { r } = useTheme();
+  const reduceMotion = useReducedMotion();
+  const sizeClass =
+    behavior === "dry"
+      ? "h-24 md:h-32"
+      : behavior === "sift"
+        ? "h-20 md:h-28"
+        : "h-[5.5rem] md:h-[7.5rem]";
+  const idle =
+    behavior === "recover"
+      ? { y: [0, -2, 0], rotate: [0, -0.8, 0] }
+      : behavior === "dry"
+        ? { y: [0, -3, 0], rotate: [0, 0.7, 0] }
+        : { y: [0, 2, 0], rotate: [0, -0.45, 0] };
+  const hover =
+    behavior === "recover"
+      ? { y: -5, rotate: -2.2, scale: 1.02 }
+      : behavior === "dry"
+        ? { y: -3, rotate: 1.4, scale: 1.04 }
+        : { y: -4, rotate: 1.2, scale: 0.98 };
+
+  return (
+    <motion.div className="flex flex-col items-center gap-4" whileHover={reduceMotion ? undefined : hover}>
+      <motion.div
+        animate={reduceMotion ? undefined : idle}
+        transition={{ duration: behavior === "sift" ? 6.8 : behavior === "dry" ? 5.8 : 6.4, repeat: Infinity, ease: "easeInOut" }}
+        className="relative flex h-32 items-center justify-center md:h-40"
+      >
+        {behavior === "dry" && (
+          <motion.span
+            className="absolute left-1/2 top-4 h-12 w-px origin-top"
+            style={{ background: r(0.1) }}
+            animate={reduceMotion ? undefined : { rotate: [-2, 2, -2] }}
+            transition={{ duration: 4.6, repeat: Infinity, ease: "easeInOut" }}
+          />
+        )}
+        {behavior === "sift" && (
+          <motion.span
+            className="absolute -right-2 top-5 h-12 w-12 rounded-full"
+            style={{ border: `1px solid ${r(0.08)}` }}
+            animate={reduceMotion ? undefined : { x: [0, 2, 0], rotate: [0, -3, 0] }}
+            transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut", delay: 0.45 }}
+          />
+        )}
+        <img src={src} alt={label} className={`${sizeClass} w-full object-contain`} loading="lazy" />
+      </motion.div>
+      <span className="text-center" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(0.78rem, 1.5vw, 1rem)", fontWeight: 600, color: r(0.64) }}>
+        {label}
+      </span>
+    </motion.div>
+  );
+}
+
 function GraphicSystemSection() {
   const { r, isDark } = useTheme();
   const pictograms = [
-    { src: isDark ? iconRecoverDark : iconRecoverLight, label: "Récupérer le papier" },
-    { src: isDark ? iconDryDark : iconDryLight, label: "Sécher le papier" },
-    { src: isDark ? iconSiftDark : iconSiftLight, label: "Tamiser le papier" },
+    { src: isDark ? iconRecoverDark : iconRecoverLight, label: "Récupérer le papier", behavior: "recover" as const },
+    { src: isDark ? iconDryDark : iconDryLight, label: "Sécher le papier", behavior: "dry" as const },
+    { src: isDark ? iconSiftDark : iconSiftLight, label: "Tamiser le papier", behavior: "sift" as const },
   ];
 
   return (
@@ -424,30 +492,163 @@ function GraphicSystemSection() {
         <FadeIn>
           <div className="mt-8 border-y py-7 md:py-9" style={{ borderColor: r(0.08) }}>
             <div className="grid grid-cols-3 items-end gap-4 md:gap-8">
-              {pictograms.map((icon, index) => (
-                <motion.div
-                  key={icon.label}
-                  className="flex flex-col items-center gap-4"
-                  animate={{ y: [0, index === 1 ? -3 : 3, 0] }}
-                  whileHover={{ y: -4, rotate: index === 1 ? -1 : 1 }}
-                  transition={{ duration: 5 + index, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  <img
-                    src={icon.src}
-                    alt={icon.label}
-                    className="h-16 w-full object-contain md:h-24"
-                    loading="lazy"
-                  />
-                  <span className="text-center" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(0.78rem, 1.5vw, 1rem)", fontWeight: 600, color: r(0.64) }}>
-                    {icon.label}
-                  </span>
-                </motion.div>
+              {pictograms.map((icon) => (
+                <InteractivePictogram key={icon.label} {...icon} />
               ))}
             </div>
           </div>
         </FadeIn>
       </div>
     </section>
+  );
+}
+
+function SeededPaperSection() {
+  const { r, isDark } = useTheme();
+  const reduceMotion = useReducedMotion();
+  const topoPaths = [
+    "M80 210 C126 156 205 136 274 157 C342 178 377 222 451 209 C523 196 566 139 642 151 C716 163 765 221 742 285 C720 348 636 367 567 345 C497 323 457 287 387 304 C305 324 239 380 162 349 C86 319 41 256 80 210Z",
+    "M139 218 C177 185 229 174 279 190 C330 207 365 238 421 227 C477 216 515 179 573 189 C627 198 668 237 656 282 C643 330 574 337 520 319 C467 301 434 278 381 292 C322 308 267 342 213 319 C160 296 104 249 139 218Z",
+    "M205 231 C232 214 267 211 300 224 C333 238 361 255 400 249 C443 242 473 219 511 226 C550 233 582 258 573 289 C565 322 517 324 481 311 C445 298 421 284 384 294 C343 304 308 321 272 305 C236 289 179 249 205 231Z",
+  ];
+  const seeds = [
+    { cx: 30, cy: 72, delay: 0.1 },
+    { cx: 42, cy: 118, delay: 0.25 },
+    { cx: 72, cy: 92, delay: 0.38 },
+    { cx: 654, cy: 96, delay: 0.18 },
+    { cx: 690, cy: 145, delay: 0.32 },
+    { cx: 626, cy: 284, delay: 0.46 },
+  ];
+
+  return (
+    <section className="px-6 py-12 md:px-12 md:py-16">
+      <div className="mx-auto max-w-6xl">
+        <FadeIn>
+          <SectionTitle>La page qui s'ensemence</SectionTitle>
+          <p className="max-w-2xl" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", lineHeight: 1.75, color: r(0.36) }}>
+            Une surface papier révèle doucement ses grains, ses lignes de territoire et quelques pousses discrètes au passage du scroll.
+          </p>
+        </FadeIn>
+        <motion.div
+          className="relative mt-8 overflow-hidden rounded-[2rem] px-6 py-10 md:px-12 md:py-14"
+          style={{
+            background: isDark
+              ? "linear-gradient(135deg, rgba(255,255,255,0.065), rgba(240,129,0,0.04))"
+              : "linear-gradient(135deg, #fffaf4, #f5eadb)",
+            border: `1px solid ${r(0.07)}`,
+            boxShadow: isDark ? "0 30px 90px rgba(0,0,0,0.22)" : "0 30px 90px rgba(0,0,0,0.07)",
+          }}
+          initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+          whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <div
+            className="absolute inset-0 opacity-50"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle at 30% 30%, rgba(0,0,0,0.08) 0 0.6px, transparent 0.8px), radial-gradient(circle at 70% 60%, rgba(240,129,0,0.16) 0 0.8px, transparent 1px)",
+              backgroundSize: "13px 13px, 19px 19px",
+            }}
+          />
+          <motion.div
+            className="absolute -right-20 -top-16 h-72 w-72 rounded-full"
+            style={{
+              background:
+                "radial-gradient(circle at 44% 42%, rgba(240,129,0,0.34), rgba(240,129,0,0.12) 36%, transparent 70%)",
+              filter: "blur(24px)",
+            }}
+            animate={reduceMotion ? undefined : { x: [0, -8, 0], y: [0, 6, 0], opacity: [0.45, 0.68, 0.45] }}
+            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <svg viewBox="0 0 760 360" className="relative z-10 h-[18rem] w-full md:h-[24rem]" aria-hidden="true">
+            <g fill="none" stroke={ORANGE} strokeLinecap="round" strokeLinejoin="round">
+              {topoPaths.map((path, index) => (
+                <motion.path
+                  key={path}
+                  d={path}
+                  strokeWidth={index === 0 ? 1.35 : 1}
+                  opacity={isDark ? 0.5 - index * 0.08 : 0.62 - index * 0.08}
+                  initial={reduceMotion ? false : { pathLength: 0 }}
+                  whileInView={reduceMotion ? undefined : { pathLength: 1 }}
+                  viewport={{ once: true, amount: 0.48 }}
+                  transition={{ duration: 1.6, delay: index * 0.18, ease: "easeInOut" }}
+                />
+              ))}
+            </g>
+            <g fill={ORANGE}>
+              {seeds.map((seed) => (
+                <motion.ellipse
+                  key={`${seed.cx}-${seed.cy}`}
+                  cx={seed.cx}
+                  cy={seed.cy}
+                  rx="3.5"
+                  ry="6"
+                  opacity="0.72"
+                  transform={`rotate(${seed.cx % 40} ${seed.cx} ${seed.cy})`}
+                  initial={reduceMotion ? false : { opacity: 0, scale: 0.5 }}
+                  whileInView={reduceMotion ? undefined : { opacity: 0.72, scale: 1 }}
+                  viewport={{ once: true, amount: 0.45 }}
+                  transition={{ duration: 0.8, delay: 0.45 + seed.delay, ease: "easeOut" }}
+                />
+              ))}
+            </g>
+            <g fill="none" stroke={isDark ? "#fff" : BLACK} strokeLinecap="round" strokeLinejoin="round">
+              {[
+                "M214 277 C214 256 221 243 235 232 M235 232 C230 219 233 207 248 198 M235 232 C249 225 265 227 276 240",
+                "M516 282 C516 260 525 245 542 234 M542 234 C538 219 546 207 560 201 M542 234 C558 230 572 237 580 250",
+              ].map((path, index) => (
+                <motion.path
+                  key={path}
+                  d={path}
+                  strokeWidth="1.25"
+                  opacity={0.72}
+                  initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
+                  whileInView={reduceMotion ? undefined : { pathLength: 1, opacity: 0.72 }}
+                  viewport={{ once: true, amount: 0.45 }}
+                  transition={{ duration: 1, delay: 0.85 + index * 0.18, ease: "easeInOut" }}
+                />
+              ))}
+            </g>
+          </svg>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function BloomTransition() {
+  const { r } = useTheme();
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      className="pointer-events-none relative mx-auto h-14 max-w-6xl px-6 md:px-12"
+      initial={reduceMotion ? false : { opacity: 0 }}
+      whileInView={reduceMotion ? undefined : { opacity: 1 }}
+      viewport={{ once: true, amount: 0.6 }}
+      transition={{ duration: 0.8 }}
+      aria-hidden="true"
+    >
+      <motion.span
+        className="absolute left-[18%] top-4 h-8 w-px"
+        style={{ background: ORANGE }}
+        animate={reduceMotion ? undefined : { scaleY: [0.75, 1, 0.75], opacity: [0.35, 0.65, 0.35] }}
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.span
+        className="absolute top-5 h-4 w-5 rounded-full"
+        style={{ left: "calc(18% + 0.15rem)", border: `1px solid ${r(0.18)}`, borderLeftColor: ORANGE }}
+        animate={reduceMotion ? undefined : { rotate: [-7, 6, -7] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.span
+        className="absolute right-[16%] top-2 h-2 w-2 rounded-full"
+        style={{ background: ORANGE, opacity: 0.55 }}
+        animate={reduceMotion ? undefined : { y: [0, -5, 0], opacity: [0.35, 0.7, 0.35] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+      />
+    </motion.div>
   );
 }
 
@@ -473,21 +674,21 @@ function PrintSection() {
           <div className="grid gap-5 md:grid-cols-3">
             {mainPrintItems.map((item, index) => (
               <FadeIn key={item.src} delay={index * 0.05}>
-                <motion.figure
-                  className="overflow-hidden rounded-3xl"
+                <figure
+                  className="flex h-full flex-col overflow-hidden rounded-3xl"
                   style={{
                     background: isDark ? r(0.035) : "#fff",
                     border: `1px solid ${r(0.06)}`,
                     boxShadow: isDark ? "0 24px 70px rgba(0,0,0,0.2)" : "0 24px 70px rgba(0,0,0,0.065)",
                   }}
-                  whileHover={{ y: -5 }}
-                  transition={{ type: "spring", stiffness: 240, damping: 24 }}
                 >
-                  <img src={item.src} alt={item.alt} className={`h-[16rem] w-full ${index === 2 ? "object-contain p-5" : "object-cover"}`} loading="lazy" />
-                  <figcaption className="px-5 py-4" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.72rem", color: r(0.34) }}>
+                  <div className="flex h-[15rem] items-center justify-center overflow-hidden md:h-[17rem]">
+                    <img src={item.src} alt={item.alt} className={`h-full w-full ${index === 2 ? "object-contain p-4" : "object-cover"}`} loading="lazy" />
+                  </div>
+                  <figcaption className="flex min-h-[3.25rem] items-center px-5 py-4" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.72rem", color: r(0.34) }}>
                     {item.label}
                   </figcaption>
-                </motion.figure>
+                </figure>
               </FadeIn>
             ))}
           </div>
@@ -499,18 +700,15 @@ function PrintSection() {
                   <h3 className="mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1rem", fontWeight: 700, color: r(0.68) }}>
                     {item.label}
                   </h3>
-                  <motion.div
+                  <div
                     className="overflow-hidden rounded-3xl"
                     style={{
-                      background: "#fff",
-                      border: `1px solid ${r(0.06)}`,
+                      background: "transparent",
                       boxShadow: isDark ? "0 28px 80px rgba(0,0,0,0.2)" : "0 28px 80px rgba(0,0,0,0.075)",
                     }}
-                    whileHover={{ y: -5 }}
-                    transition={{ type: "spring", stiffness: 240, damping: 24 }}
                   >
                     <img src={item.src} alt={item.alt} className="h-[17rem] w-full object-cover md:h-[23rem]" loading="lazy" />
-                  </motion.div>
+                  </div>
                 </div>
               </FadeIn>
             ))}
@@ -524,9 +722,9 @@ function PrintSection() {
 function SocialSection() {
   const { r, isDark } = useTheme();
   const instagramFeatures = [
-    ["graphic", "punchy", "ludique"],
-    ["zoom sur...", "coloré", "élégant"],
-    ["produits", "mise en situation", "territoire"],
+    { src: imgInstagramFeatureA, words: ["graphic", "punchy", "ludique"] },
+    { src: imgInstagramFeatureB, words: ["zoom sur...", "coloré", "élégant"] },
+    { src: imgInstagramFeatureC, words: ["produits", "mise en situation", "territoire"] },
   ];
 
   return (
@@ -545,30 +743,30 @@ function SocialSection() {
               <h3 className="mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.15rem", fontWeight: 700, color: BLACK }}>
                 Instagram
               </h3>
-              <div className="grid gap-7 lg:grid-cols-[1fr_0.7fr] lg:items-center">
-                <motion.img
+              <div className="grid gap-7 lg:grid-cols-[0.78fr_1fr] lg:items-center">
+                <img
                   src={imgSocialProfile}
                   alt="Déclinaisons Instagram Parsemains"
                   className="mx-auto max-h-[34rem] w-full object-contain lg:max-h-[38rem]"
                   loading="lazy"
-                  whileHover={{ y: -4 }}
-                  transition={{ type: "spring", stiffness: 240, damping: 24 }}
                 />
-                <div className="grid gap-6 lg:-ml-3">
-                  {instagramFeatures.map((words) => (
-                    <motion.div
-                      key={words.join("-")}
-                      className="border-l-2 pl-5"
-                      style={{ borderColor: ORANGE }}
-                      whileHover={{ x: 4 }}
-                      transition={{ type: "spring", stiffness: 240, damping: 24 }}
-                    >
-                      {words.map((word) => (
+                <div className="grid gap-5">
+                  {instagramFeatures.map((feature) => (
+                    <div key={feature.src} className="grid grid-cols-[7rem_1fr] items-center gap-5 sm:grid-cols-[9rem_1fr] md:gap-7">
+                      <img
+                        src={feature.src}
+                        alt="Déclinaison Instagram Parsemains"
+                        className="aspect-square w-full rounded-[1.1rem] object-cover"
+                        loading="lazy"
+                      />
+                      <div>
+                        {feature.words.map((word) => (
                         <span key={word} className="block uppercase" style={{ fontFamily: "'Dazzle Unicase', 'Space Grotesk', sans-serif", fontSize: "clamp(1.05rem, 2.1vw, 1.7rem)", fontWeight: 800, lineHeight: 1.04, color: BLACK }}>
                           {word}
                         </span>
-                      ))}
-                    </motion.div>
+                        ))}
+                      </div>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -585,15 +783,13 @@ function SocialSection() {
                   { src: imgLinkedin, alt: "Publication LinkedIn Parsemains" },
                   { src: imgLinkedinPosts, alt: "Publications LinkedIn Parsemains" },
                 ].map((item) => (
-                <motion.div
+                <div
                   key={item.src}
                   className="flex h-[18rem] items-center justify-center overflow-hidden rounded-3xl bg-white p-4 md:h-[22rem]"
                   style={{ border: `1px solid ${r(0.06)}`, boxShadow: isDark ? "0 24px 70px rgba(0,0,0,0.2)" : "0 24px 70px rgba(0,0,0,0.07)" }}
-                  whileHover={{ y: -4 }}
-                  transition={{ type: "spring", stiffness: 240, damping: 24 }}
                 >
                   <img src={item.src} alt={item.alt} className="max-h-full w-full object-contain" loading="lazy" />
-                </motion.div>
+                </div>
               ))}
               </div>
             </div>
@@ -615,6 +811,8 @@ export function ProjectParsemains() {
         <TypographySection />
         <PaletteSection />
         <GraphicSystemSection />
+        <SeededPaperSection />
+        <BloomTransition />
         <PrintSection />
         <SocialSection />
       </div>
