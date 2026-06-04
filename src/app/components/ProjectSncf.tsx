@@ -1,40 +1,12 @@
 import { motion, AnimatePresence } from "motion/react";
-import { lazy, Suspense, useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect } from "react";
 import type { ReactNode } from "react";
-import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, Mail, Maximize2, Minimize2, Pause, Play } from "lucide-react";
+import { ArrowLeft, Mail, Pause, Play } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useI18n } from "./i18n";
 import { useTheme } from "./theme";
 import svgLogoSncf from "../../imports/svg-xsk7542b73";
 import svgSlideIcons from "../../imports/svg-8lle55gqj4";
-
-/* ── Lazy slide imports ── */
-const SLIDE_LOADERS = [
-  () => import("../../imports/1"),
-  () => import("../../imports/2"),
-  () => import("../../imports/3"),
-  () => import("../../imports/4"),
-  () => import("../../imports/5"),
-  () => import("../../imports/6"),
-  () => import("../../imports/7"),
-  () => import("../../imports/8"),
-  () => import("../../imports/9"),
-  () => import("../../imports/10"),
-  () => import("../../imports/11"),
-  () => import("../../imports/13"),
-  () => import("../../imports/14"),
-  () => import("../../imports/15"),
-  () => import("../../imports/16"),
-  () => import("../../imports/17"),
-  () => import("../../imports/18"),
-  () => import("../../imports/19"),
-  () => import("../../imports/20"),
-  () => import("../../imports/21"),
-  () => import("../../imports/22"),
-  () => import("../../imports/23"),
-  () => import("../../imports/24"),
-  () => import("../../imports/25"),
-];
 
 import imgPhone1 from "../../assets/sncf-connect/01.splash-screen.png";
 import imgPhone2 from "../../assets/sncf-connect/02.creez-vos-routines.png";
@@ -51,10 +23,9 @@ import imgSpotifyLight from "../../assets/sncf-connect/12.playlist-spotify-clair
 import imgSpotifyMain from "../../assets/sncf-connect/13.playlist-spotify.png";
 import videoMain from "../../assets/sncf-connect/14.video-finale-workshop.mp4";
 import lineAsset from "../../assets/sncf-connect/assets/03.line.svg";
+import trainAsset from "../../assets/sncf-connect/assets/07.train.svg";
+import vehiculesAsset from "../../assets/sncf-connect/assets/10.vehicules.svg";
 
-const SLIDES = SLIDE_LOADERS.map((load) => lazy(load));
-const SLIDE_W = 1920;
-const SLIDE_H = 1080;
 const ACCENT = "#8DE8FE";
 const ACCENT_RGB = "141,232,254";
 const BG_DARK = "#0C131F";
@@ -272,279 +243,6 @@ function HeroSection() {
   );
 }
 
-/* ── Slideshow ── */
-function PresentationViewer() {
-  const { r, isDark } = useTheme();
-  const { t } = useI18n();
-  const [current, setCurrent] = useState(0);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const viewerRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(0.5);
-
-  const total = SLIDES.length;
-
-  const goTo = useCallback(
-    (idx: number) => {
-      if (idx >= 0 && idx < total) setCurrent(idx);
-    },
-    [total]
-  );
-  const next = useCallback(() => goTo(Math.min(current + 1, total - 1)), [current, total, goTo]);
-  const prev = useCallback(() => goTo(Math.max(current - 1, 0)), [current, goTo]);
-
-  /* Keyboard nav */
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight" || e.key === " ") {
-        e.preventDefault();
-        next();
-      }
-      if (e.key === "ArrowLeft") {
-        e.preventDefault();
-        prev();
-      }
-      if (e.key === "Escape" && isFullscreen) {
-        setIsFullscreen(false);
-      }
-    };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  }, [next, prev, isFullscreen]);
-
-  /* Scale calculation */
-  useEffect(() => {
-    const measure = () => {
-      if (viewerRef.current) {
-        const w = viewerRef.current.clientWidth;
-        setScale(w / SLIDE_W);
-      }
-    };
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, [isFullscreen]);
-
-  useEffect(() => {
-    void SLIDE_LOADERS[current]?.();
-    void SLIDE_LOADERS[current + 1]?.();
-    void SLIDE_LOADERS[current - 1]?.();
-  }, [current]);
-
-  const SlideComponent = SLIDES[current];
-
-  const slideViewer = (
-    <div
-      ref={viewerRef}
-      className="relative w-full overflow-hidden rounded-2xl"
-      style={{
-        background: BG_DARK,
-        border: `1px solid ${r(0.06)}`,
-        boxShadow: `0 30px 80px rgba(0,0,0,${isDark ? 0.5 : 0.15}), 0 0 40px rgba(${ACCENT_RGB},0.05)`,
-      }}
-    >
-      {/* Slide content */}
-      <div
-        style={{
-          width: SLIDE_W * scale,
-          height: SLIDE_H * scale,
-          overflow: "hidden",
-          position: "relative",
-        }}
-      >
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={current}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            style={{
-              width: SLIDE_W,
-              height: SLIDE_H,
-              transformOrigin: "top left",
-              transform: `scale(${scale})`,
-              position: "relative",
-            }}
-          >
-            <Suspense
-              fallback={
-                <div
-                  className="flex items-center justify-center"
-                  style={{ width: SLIDE_W, height: SLIDE_H, background: BG_DARK }}
-                >
-                  <div
-                    className="h-8 w-8 rounded-full border-2 border-t-transparent opacity-40 animate-spin"
-                    style={{ borderColor: ACCENT, borderTopColor: "transparent" }}
-                  />
-                </div>
-              }
-            >
-              <SlideComponent />
-            </Suspense>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* Navigation overlay */}
-      <div className="absolute inset-0 flex">
-        <button
-          onClick={prev}
-          className="w-1/3 h-full cursor-w-resize opacity-0 hover:opacity-100 transition-opacity flex items-center justify-start pl-4"
-          disabled={current === 0}
-        >
-          {current > 0 && (
-            <div
-              className="w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-md"
-              style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.15)" }}
-            >
-              <ChevronLeft size={18} color="white" />
-            </div>
-          )}
-        </button>
-        <div className="flex-1" />
-        <button
-          onClick={next}
-          className="w-1/3 h-full cursor-e-resize opacity-0 hover:opacity-100 transition-opacity flex items-center justify-end pr-4"
-          disabled={current === total - 1}
-        >
-          {current < total - 1 && (
-            <div
-              className="w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-md"
-              style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.15)" }}
-            >
-              <ChevronRight size={18} color="white" />
-            </div>
-          )}
-        </button>
-      </div>
-    </div>
-  );
-
-  return (
-    <section className="px-6 md:px-12 py-12" ref={containerRef}>
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          {/* Header */}
-          <div className="flex items-center justify-between mb-6">
-            <span
-              className="section-eyebrow uppercase tracking-[0.3em]"
-              style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", color: r(0.2) }}
-            >
-              {t("sncf.prez.label")}
-            </span>
-            <div className="flex items-center gap-3">
-              <span
-                style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.8rem", color: r(0.3) }}
-              >
-                {current + 1} / {total}
-              </span>
-              <button
-                onClick={() => setIsFullscreen(!isFullscreen)}
-                className="w-8 h-8 rounded-full flex items-center justify-center transition-all"
-                style={{ border: `1px solid ${r(0.1)}`, color: r(0.3) }}
-              >
-                {isFullscreen ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
-              </button>
-            </div>
-          </div>
-
-          {/* Slide viewer */}
-          {isFullscreen ? (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8"
-              style={{ background: isDark ? "rgba(0,0,0,0.95)" : "rgba(0,0,0,0.9)", backdropFilter: "blur(20px)" }}
-            >
-              <button
-                onClick={() => setIsFullscreen(false)}
-                className="absolute top-6 right-6 z-10 px-4 py-2 rounded-full"
-                style={{
-                  fontFamily: "'Inter', sans-serif",
-                  fontSize: "0.75rem",
-                  background: "rgba(255,255,255,0.1)",
-                  border: "1px solid rgba(255,255,255,0.15)",
-                  color: "rgba(255,255,255,0.6)",
-                }}
-              >
-                ESC
-              </button>
-              <div className="w-full max-w-7xl">{slideViewer}</div>
-              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2">
-                <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.85rem", color: "rgba(255,255,255,0.4)" }}>
-                  {current + 1} / {total}
-                </span>
-              </div>
-            </motion.div>
-          ) : (
-            slideViewer
-          )}
-
-          {/* Bottom controls */}
-          <div className="flex items-center justify-between mt-4">
-            <div className="flex items-center gap-2">
-              <button
-                onClick={prev}
-                disabled={current === 0}
-                className="w-9 h-9 rounded-full flex items-center justify-center transition-all"
-                style={{
-                  border: `1px solid ${current > 0 ? r(0.15) : r(0.05)}`,
-                  color: current > 0 ? r(0.5) : r(0.1),
-                }}
-              >
-                <ArrowLeft size={14} />
-              </button>
-              <button
-                onClick={next}
-                disabled={current === total - 1}
-                className="w-9 h-9 rounded-full flex items-center justify-center transition-all"
-                style={{
-                  border: `1px solid ${current < total - 1 ? r(0.15) : r(0.05)}`,
-                  color: current < total - 1 ? r(0.5) : r(0.1),
-                }}
-              >
-                <ArrowRight size={14} />
-              </button>
-            </div>
-
-            {/* Progress bar */}
-            <div className="flex-1 mx-6 h-[2px] rounded-full overflow-hidden" style={{ background: r(0.05) }}>
-              <motion.div
-                className="h-full rounded-full"
-                style={{ background: ACCENT }}
-                animate={{ width: `${((current + 1) / total) * 100}%` }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-              />
-            </div>
-
-            {/* Miniature dots */}
-            <div className="flex items-center gap-1.5">
-              {SLIDES.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => goTo(i)}
-                  className="rounded-full transition-all duration-300"
-                  style={{
-                    width: i === current ? 20 : 6,
-                    height: 6,
-                    background: i === current ? ACCENT : r(0.1),
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
 function SectionHeader({
   eyebrow,
   title,
@@ -563,7 +261,7 @@ function SectionHeader({
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "120px 0px" }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.65, ease: "easeOut" }}
       className={className}
     >
       <span
@@ -575,19 +273,19 @@ function SectionHeader({
       <h2
         style={{
           fontFamily: "'Space Grotesk', sans-serif",
-          fontSize: "clamp(1.8rem, 4vw, 3rem)",
-          fontWeight: 650,
-          color: r(0.72),
-          letterSpacing: "-0.035em",
-          lineHeight: 1,
+          fontSize: "clamp(2rem, 5vw, 4.2rem)",
+          fontWeight: 700,
+          color: r(0.74),
+          letterSpacing: "-0.045em",
+          lineHeight: 0.95,
         }}
       >
         {title}
       </h2>
       {children ? (
         <p
-          className="mt-4 max-w-2xl"
-          style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.75, color: r(0.34) }}
+          className="mt-5 max-w-2xl"
+          style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.98rem", lineHeight: 1.75, color: r(0.34) }}
         >
           {children}
         </p>
@@ -601,27 +299,41 @@ function PhoneFrame({ src, alt, className = "" }: { src: string; alt: string; cl
 
   return (
     <div
-      className={`relative mx-auto rounded-[2.1rem] p-2 ${className}`}
+      className={`relative mx-auto rounded-[2.25rem] p-2 ${className}`}
       style={{
         background: isDark ? "linear-gradient(145deg, #172233, #050912)" : "linear-gradient(145deg, #07101f, #263a52)",
-        boxShadow: `0 28px 70px rgba(0,0,0,${isDark ? 0.42 : 0.18}), 0 0 36px rgba(${ACCENT_RGB},0.08)`,
+        boxShadow: `0 30px 80px rgba(0,0,0,${isDark ? 0.44 : 0.2}), 0 0 42px rgba(${ACCENT_RGB},0.1)`,
       }}
     >
       <div className="absolute left-1/2 top-3 z-10 h-4 w-20 -translate-x-1/2 rounded-full bg-black/80" />
-      <img src={src} alt={alt} className="block w-full rounded-[1.55rem]" />
+      <img src={src} alt={alt} className="block w-full rounded-[1.7rem]" />
     </div>
   );
 }
 
-function ParticleField({ active = false }: { active?: boolean }) {
-  const particles = Array.from({ length: active ? 46 : 18 });
+function AmbientLine({ className = "", flip = false }: { className?: string; flip?: boolean }) {
+  return (
+    <motion.img
+      src={lineAsset}
+      alt=""
+      aria-hidden="true"
+      className={`pointer-events-none absolute opacity-25 ${className}`}
+      style={{ transform: flip ? "scaleX(-1)" : undefined }}
+      animate={{ x: [0, 18, 0], opacity: [0.16, 0.32, 0.16] }}
+      transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+    />
+  );
+}
+
+function ParticleField({ active = false, color = ACCENT }: { active?: boolean; color?: string }) {
+  const particles = Array.from({ length: active ? 64 : 24 });
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {particles.map((_, i) => {
         const left = (i * 37) % 100;
         const top = (i * 53) % 100;
-        const size = 2 + (i % 4);
+        const size = 1.5 + (i % 4) * 0.8;
         return (
           <motion.span
             key={i}
@@ -631,20 +343,20 @@ function ParticleField({ active = false }: { active?: boolean }) {
               top: `${top}%`,
               width: size,
               height: size,
-              background: i % 3 === 0 ? ACCENT : "rgba(255,255,255,0.72)",
-              boxShadow: `0 0 ${active ? 18 : 10}px rgba(${ACCENT_RGB},${active ? 0.38 : 0.18})`,
+              background: i % 4 === 0 ? color : "rgba(255,255,255,0.7)",
+              boxShadow: `0 0 ${active ? 22 : 10}px ${color}${active ? "80" : "38"}`,
             }}
             animate={{
-              x: active ? [0, (i % 2 ? 32 : -28), 0] : [0, (i % 2 ? 8 : -6), 0],
-              y: active ? [0, -38 - (i % 7) * 6, 8, 0] : [0, -10, 0],
-              opacity: active ? [0.18, 0.78, 0.28] : [0.12, 0.3, 0.12],
-              scale: active ? [0.8, 1.5, 0.9] : [0.8, 1, 0.8],
+              x: active ? [0, (i % 2 ? 42 : -36), 0] : [0, (i % 2 ? 8 : -8), 0],
+              y: active ? [0, -52 - (i % 7) * 8, 12, 0] : [0, -10, 0],
+              opacity: active ? [0.12, 0.78, 0.28] : [0.1, 0.28, 0.1],
+              scale: active ? [0.8, 1.7, 0.9] : [0.75, 1, 0.75],
             }}
             transition={{
-              duration: active ? 3.2 + (i % 5) * 0.35 : 7 + (i % 4),
+              duration: active ? 3 + (i % 5) * 0.35 : 7 + (i % 4),
               repeat: Infinity,
               ease: "easeInOut",
-              delay: (i % 9) * 0.14,
+              delay: (i % 11) * 0.1,
             }}
           />
         );
@@ -653,7 +365,6 @@ function ParticleField({ active = false }: { active?: boolean }) {
   );
 }
 
-/* ── Onboarding Section ── */
 function OnboardingSection() {
   const { r, isDark } = useTheme();
   const [active, setActive] = useState(0);
@@ -661,94 +372,89 @@ function OnboardingSection() {
   useEffect(() => {
     const timer = window.setInterval(() => {
       setActive((current) => (current + 1) % ONBOARDING_PHONES.length);
-    }, 2600);
+    }, 2800);
     return () => window.clearInterval(timer);
   }, []);
 
   return (
-    <section className="px-6 md:px-12 py-16 overflow-hidden">
+    <section className="relative px-6 md:px-12 py-20 overflow-hidden">
+      <AmbientLine className="left-[-14rem] top-28 h-44 w-[34rem]" />
+      <AmbientLine className="right-[-16rem] bottom-20 h-52 w-[40rem]" flip />
       <div className="max-w-6xl mx-auto">
-        <SectionHeader eyebrow="ONBOARDING" title="Un parcours d’entrée plus clair et progressif">
-          Quatre écrans guident l’utilisateur de la découverte de l’application jusqu’au paramétrage, avec une logique de progression lisible dès le premier regard.
+        <SectionHeader eyebrow="ONBOARDING" title="Une découverte guidée, écran par écran">
+          Le parcours d’entrée est scénarisé comme une progression : accueil, création des routines, personnalisation, puis paramétrage.
         </SectionHeader>
 
-        <div
-          className="relative mt-12 grid gap-8 lg:grid-cols-[1.05fr_0.95fr] items-center rounded-[2rem] p-5 md:p-8"
-          style={{
-            background: isDark
-              ? `linear-gradient(135deg, rgba(${ACCENT_RGB},0.08), rgba(255,255,255,0.025))`
-              : `linear-gradient(135deg, rgba(${ACCENT_RGB},0.18), rgba(255,255,255,0.78))`,
-            border: `1px solid ${r(0.07)}`,
-          }}
-        >
-          <div className="absolute inset-0 overflow-hidden rounded-[2rem] pointer-events-none">
-            <motion.div
-              className="absolute -right-16 top-12 h-56 w-56 rounded-full blur-3xl"
-              style={{ background: `rgba(${ACCENT_RGB},${isDark ? 0.16 : 0.22})` }}
-              animate={{ scale: [1, 1.12, 1], opacity: [0.45, 0.75, 0.45] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            />
-          </div>
+        <div className="relative mt-14 min-h-[38rem] lg:min-h-[44rem]">
+          <div
+            className="absolute inset-x-0 top-1/2 h-[1px] -translate-y-1/2"
+            style={{ background: `linear-gradient(90deg, transparent, rgba(${ACCENT_RGB},0.65), transparent)` }}
+          />
+          <motion.div
+            className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
+            style={{ background: `rgba(${ACCENT_RGB},${isDark ? 0.16 : 0.24})` }}
+            animate={{ scale: [1, 1.16, 1], opacity: [0.45, 0.85, 0.45] }}
+            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+          />
 
-          <div className="relative min-h-[34rem] flex items-center justify-center">
-            {ONBOARDING_PHONES.map((phone, i) => {
-              const offset = i - active;
-              const visible = Math.abs(offset) <= 1 || (active === 0 && i === ONBOARDING_PHONES.length - 1);
-              return (
+          {ONBOARDING_PHONES.map((phone, i) => {
+            const isActive = active === i;
+            const positions = [
+              "left-[2%] top-10 rotate-[-8deg]",
+              "left-[27%] top-0 rotate-[3deg]",
+              "right-[25%] top-20 rotate-[-3deg]",
+              "right-[3%] top-4 rotate-[8deg]",
+            ];
+            return (
+              <motion.button
+                key={phone.label}
+                type="button"
+                onClick={() => setActive(i)}
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: i * 0.08 }}
+                className={`absolute ${positions[i]} hidden w-[min(14.5rem,24vw)] text-left lg:block`}
+                animate={{ y: isActive ? -18 : 0, scale: isActive ? 1.08 : 0.92, zIndex: isActive ? 8 : 3 }}
+              >
+                <PhoneFrame src={phone.src} alt={phone.label} />
                 <motion.div
-                  key={phone.label}
-                  className="absolute w-[min(15.5rem,72vw)]"
-                  animate={{
-                    opacity: i === active ? 1 : visible ? 0.34 : 0,
-                    x: i === active ? 0 : offset > 0 ? 130 : -130,
-                    y: i === active ? 0 : 26,
-                    scale: i === active ? 1 : 0.82,
-                    rotate: i === active ? 0 : offset > 0 ? 5 : -5,
-                  }}
-                  transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+                  className="mt-4 rounded-2xl px-4 py-3 backdrop-blur-xl"
+                  animate={{ opacity: isActive ? 1 : 0.58 }}
+                  style={{ background: isDark ? "rgba(255,255,255,0.055)" : "rgba(255,255,255,0.78)", border: `1px solid ${r(0.06)}` }}
                 >
-                  <PhoneFrame src={phone.src} alt={phone.label} />
+                  <span style={{ fontFamily: "'Space Grotesk', sans-serif", color: r(0.64), fontWeight: 650 }}>{phone.label}</span>
                 </motion.div>
-              );
-            })}
+              </motion.button>
+            );
+          })}
+
+          <div className="relative flex min-h-[36rem] items-center justify-center lg:hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, x: 70, rotate: 4 }}
+                animate={{ opacity: 1, x: 0, rotate: 0 }}
+                exit={{ opacity: 0, x: -70, rotate: -4 }}
+                transition={{ duration: 0.45 }}
+                className="w-[min(16rem,72vw)]"
+              >
+                <PhoneFrame src={ONBOARDING_PHONES[active].src} alt={ONBOARDING_PHONES[active].label} />
+              </motion.div>
+            </AnimatePresence>
           </div>
 
-          <div className="relative space-y-4">
+          <div className="absolute bottom-0 left-1/2 flex -translate-x-1/2 items-center gap-3 rounded-full p-2 backdrop-blur-xl" style={{ background: r(0.04), border: `1px solid ${r(0.08)}` }}>
             {ONBOARDING_PHONES.map((phone, i) => (
               <button
                 key={phone.label}
+                type="button"
                 onClick={() => setActive(i)}
-                className="group grid w-full grid-cols-[2rem_1fr] items-center gap-4 rounded-2xl p-4 text-left transition-colors"
-                style={{
-                  background: active === i ? (isDark ? "rgba(141,232,254,0.11)" : "rgba(0,44,76,0.06)") : "transparent",
-                  border: `1px solid ${active === i ? `rgba(${ACCENT_RGB},0.32)` : r(0.06)}`,
-                }}
-              >
-                <span
-                  className="flex h-8 w-8 items-center justify-center rounded-full"
-                  style={{
-                    background: active === i ? ACCENT : r(0.05),
-                    color: active === i ? BG_DARK : r(0.4),
-                    fontFamily: "'Space Grotesk', sans-serif",
-                    fontSize: "0.78rem",
-                    fontWeight: 700,
-                  }}
-                >
-                  {i + 1}
-                </span>
-                <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1rem", color: r(0.62), fontWeight: 600 }}>
-                  {phone.label}
-                </span>
-              </button>
-            ))}
-            <div className="h-1 overflow-hidden rounded-full" style={{ background: r(0.06) }}>
-              <motion.div
-                className="h-full rounded-full"
-                style={{ background: ACCENT }}
-                animate={{ width: `${((active + 1) / ONBOARDING_PHONES.length) * 100}%` }}
-                transition={{ duration: 0.45 }}
+                className="h-3 rounded-full transition-all"
+                style={{ width: active === i ? 34 : 12, background: active === i ? ACCENT : r(0.14) }}
+                aria-label={`Afficher ${phone.label}`}
               />
-            </div>
+            ))}
           </div>
         </div>
       </div>
@@ -760,52 +466,43 @@ function RoutineSection() {
   const { r, isDark } = useTheme();
 
   return (
-    <section className="px-6 md:px-12 py-16">
+    <section className="relative px-6 md:px-12 py-20 overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        <SectionHeader eyebrow="CONNECT ROUTINE" title="Créer, retrouver, personnaliser le quotidien">
-          La fonctionnalité Connect Routine transforme les habitudes de trajet en raccourcis utiles, depuis la création jusqu’à la gestion des routines enregistrées.
-        </SectionHeader>
+        <div className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr] items-center">
+          <SectionHeader eyebrow="CONNECT ROUTINE" title="Une routine qui devient un raccourci vivant">
+            Les écrans de création et de gestion sont présentés comme deux temps du même usage : composer son quotidien, puis le retrouver sans effort.
+          </SectionHeader>
 
-        <div className="relative mt-12 grid gap-8 lg:grid-cols-[1fr_auto_1fr] items-center">
-          {[
-            { src: imgRoutineCreate, title: "Création de routine", text: "Un parcours guidé pour composer une routine autour des trajets récurrents." },
-            { src: imgRoutineList, title: "Mes routines", text: "Une vue de gestion claire pour retrouver, modifier et activer ses habitudes." },
-          ].map((item, i) => (
+          <div className="relative min-h-[34rem]">
             <motion.div
-              key={item.title}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              className="absolute left-4 top-8 w-[74%] overflow-hidden rounded-[2rem]"
+              initial={{ opacity: 0, x: 50, rotate: -3 }}
+              whileInView={{ opacity: 1, x: 0, rotate: -2 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.65, delay: i * 0.12 }}
-              className="relative rounded-[2rem] p-5"
-              style={{
-                background: isDark ? "rgba(255,255,255,0.035)" : "rgba(255,255,255,0.74)",
-                border: `1px solid ${r(0.07)}`,
-                boxShadow: `0 24px 80px rgba(0,0,0,${isDark ? 0.22 : 0.08})`,
-              }}
+              transition={{ duration: 0.75 }}
+              style={{ boxShadow: `0 32px 90px rgba(0,0,0,${isDark ? 0.34 : 0.14})` }}
             >
-              <PhoneFrame src={item.src} alt={item.title} className="w-[min(15rem,72vw)]" />
-              <div className="mt-5">
-                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.1rem", color: r(0.66), fontWeight: 650 }}>
-                  {item.title}
-                </h3>
-                <p className="mt-2" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.86rem", lineHeight: 1.65, color: r(0.32) }}>
-                  {item.text}
-                </p>
-              </div>
+              <img src={imgRoutineCreate} alt="Création de routine" className="w-full" />
             </motion.div>
-          ))}
-
-          <div className="hidden lg:flex h-full min-h-[26rem] items-center justify-center">
-            <div className="relative h-[72%] w-28">
-              <img src={lineAsset} alt="" className="absolute left-1/2 top-0 h-full -translate-x-1/2 opacity-40" />
-              <motion.div
-                className="absolute left-1/2 top-1/2 h-14 w-14 -translate-x-1/2 -translate-y-1/2 rounded-full"
-                style={{ background: `rgba(${ACCENT_RGB},0.16)`, border: `1px solid rgba(${ACCENT_RGB},0.3)` }}
-                animate={{ scale: [1, 1.12, 1] }}
-                transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-              />
-            </div>
+            <motion.div
+              className="absolute bottom-4 right-0 w-[46%] overflow-hidden rounded-[1.7rem]"
+              initial={{ opacity: 0, x: -42, y: 30, rotate: 5 }}
+              whileInView={{ opacity: 1, x: 0, y: 0, rotate: 4 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.75, delay: 0.15 }}
+              style={{ boxShadow: `0 28px 80px rgba(${ACCENT_RGB},0.18)` }}
+            >
+              <img src={imgRoutineList} alt="Gestion des routines" className="w-full" />
+            </motion.div>
+            <motion.div
+              className="absolute left-[13%] bottom-[16%] flex items-center gap-3 rounded-full px-5 py-3 backdrop-blur-xl"
+              style={{ background: isDark ? "rgba(12,19,31,0.72)" : "rgba(255,255,255,0.76)", border: `1px solid rgba(${ACCENT_RGB},0.28)` }}
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <img src={trainAsset} alt="" className="h-6 w-6 opacity-80" />
+              <span style={{ fontFamily: "'Space Grotesk', sans-serif", color: r(0.62), fontWeight: 650 }}>quotidien personnalisé</span>
+            </motion.div>
           </div>
         </div>
       </div>
@@ -815,44 +512,51 @@ function RoutineSection() {
 
 function NewsletterSection() {
   const { r, isDark } = useTheme();
+  const words = ["Trajets", "Personnalisés", "Simplifiés"];
 
   return (
-    <section className="px-6 md:px-12 py-16">
-      <div className="max-w-6xl mx-auto">
-        <div
-          className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] items-center rounded-[2rem] p-6 md:p-10"
-          style={{
-            background: isDark
-              ? `linear-gradient(135deg, rgba(255,255,255,0.035), rgba(${ACCENT_RGB},0.07))`
-              : `linear-gradient(135deg, rgba(255,255,255,0.88), rgba(${ACCENT_RGB},0.15))`,
-            border: `1px solid ${r(0.07)}`,
-          }}
-        >
-          <SectionHeader eyebrow="NEWSLETTER" title="Une communication produit au moment du lancement">
-            La newsletter accompagne la sortie de la fonctionnalité avec un support clair, direct et identifiable dans l’écosystème SNCF Connect.
-          </SectionHeader>
-
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="relative"
-          >
-            <motion.div
-              className="absolute -left-6 top-8 hidden h-14 w-14 items-center justify-center rounded-2xl lg:flex"
-              style={{ background: ACCENT, color: BG_DARK }}
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+    <section className="relative px-6 md:px-12 py-24 overflow-hidden">
+      <motion.div
+        className="absolute left-1/2 top-1/2 h-[38rem] w-[38rem] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
+        style={{ background: `rgba(${ACCENT_RGB},${isDark ? 0.12 : 0.22})` }}
+        animate={{ scale: [1, 1.12, 1] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <div className="max-w-6xl mx-auto relative">
+        <SectionHeader eyebrow="NEWSLETTER CONNECT ROUTINE" title="L’annonce produit devient une scène de lancement" className="text-center mx-auto" />
+        <div className="relative mt-12 min-h-[46rem] flex items-center justify-center">
+          {words.map((word, i) => (
+            <motion.span
+              key={word}
+              className="absolute hidden text-[clamp(2.5rem,8vw,7rem)] font-bold leading-none tracking-[-0.06em] lg:block"
+              style={{
+                fontFamily: "'Space Grotesk', sans-serif",
+                color: i === 1 ? ACCENT : r(0.12),
+                left: i === 0 ? "2%" : i === 1 ? "55%" : "8%",
+                top: i === 0 ? "18%" : i === 1 ? "42%" : "70%",
+              }}
+              initial={{ opacity: 0, x: i % 2 ? 80 : -80 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: i * 0.12 }}
             >
-              <Mail size={22} />
-            </motion.div>
-            <img
-              src={imgNewsletter}
-              alt="Newsletter de lancement Connect Routine"
-              className="w-full rounded-[1.5rem]"
-              style={{ boxShadow: `0 28px 80px rgba(0,0,0,${isDark ? 0.34 : 0.14})` }}
-            />
+              {word}
+            </motion.span>
+          ))}
+          <motion.div
+            className="relative z-10 w-[min(22rem,78vw)]"
+            initial={{ opacity: 0, y: 80, rotate: -4 }}
+            whileInView={{ opacity: 1, y: 0, rotate: -2 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.85, ease: "easeOut" }}
+            animate={{ y: [0, -12, 0] }}
+          >
+            <div className="rounded-[2.4rem] p-3" style={{ background: BG_DARK, boxShadow: `0 40px 120px rgba(${ACCENT_RGB},0.18)` }}>
+              <img src={imgNewsletter} alt="Newsletter Connect Routine" className="w-full rounded-[1.9rem]" />
+            </div>
+          </motion.div>
+          <motion.div className="absolute right-8 top-24 hidden lg:flex h-20 w-20 items-center justify-center rounded-3xl" style={{ background: ACCENT }} animate={{ rotate: [0, 8, 0], y: [0, -8, 0] }} transition={{ duration: 4, repeat: Infinity }}>
+            <Mail size={32} color={BG_DARK} />
           </motion.div>
         </div>
       </div>
@@ -869,76 +573,61 @@ function ActivationSection() {
       : { image: imgCampaignPink, color: "#FF72B8", soft: "255,114,184", label: "Rose" };
 
   return (
-    <section className="px-6 md:px-12 py-16">
+    <section className="px-6 md:px-12 py-20">
       <div className="max-w-6xl mx-auto">
-        <SectionHeader eyebrow="COMMUNICATION & ACTIVATION" title="Une campagne dont l’ambiance se module">
-          L’univers graphique réagit au choix de couleur pour montrer comment une même activation peut porter deux tonalités de campagne.
+        <SectionHeader eyebrow="COMMUNICATION & ACTIVATION" title="Une direction de campagne modulable">
+          Deux choix chromatiques pilotent toute l’ambiance de la scène : visuel, halos, lignes et énergie graphique se transforment ensemble.
         </SectionHeader>
 
         <motion.div
-          className="relative mt-12 overflow-hidden rounded-[2.2rem] p-6 md:p-10"
+          className="relative mt-12 min-h-[46rem] overflow-hidden rounded-[2.8rem] p-6 md:p-10"
           animate={{
             background: isDark
-              ? `radial-gradient(circle at 74% 20%, rgba(${config.soft},0.22), transparent 34%), linear-gradient(135deg, rgba(255,255,255,0.045), rgba(255,255,255,0.018))`
-              : `radial-gradient(circle at 74% 20%, rgba(${config.soft},0.25), transparent 34%), linear-gradient(135deg, rgba(255,255,255,0.94), rgba(${ACCENT_RGB},0.12))`,
+              ? `radial-gradient(circle at 50% 24%, rgba(${config.soft},0.26), transparent 28%), linear-gradient(135deg, #07101f, #0c1320)`
+              : `radial-gradient(circle at 50% 24%, rgba(${config.soft},0.26), transparent 28%), linear-gradient(135deg, rgba(255,255,255,0.96), rgba(${ACCENT_RGB},0.15))`,
           }}
-          transition={{ duration: 0.45 }}
-          style={{ border: `1px solid ${r(0.07)}` }}
+          transition={{ duration: 0.55 }}
+          style={{ border: `1px solid ${r(0.08)}` }}
         >
-          <motion.div
-            className="absolute -right-20 -top-20 h-72 w-72 rounded-full blur-3xl"
-            animate={{ background: `rgba(${config.soft},0.34)`, scale: [1, 1.08, 1] }}
-            transition={{ background: { duration: 0.45 }, scale: { duration: 4, repeat: Infinity } }}
-          />
-          <motion.div
-            className="absolute left-10 bottom-10 hidden h-40 w-40 rounded-full blur-2xl md:block"
-            animate={{ background: `rgba(${config.soft},0.18)`, x: [0, 14, 0] }}
-            transition={{ background: { duration: 0.45 }, x: { duration: 5, repeat: Infinity } }}
-          />
+          <motion.div className="absolute -left-24 top-20 h-72 w-72 rounded-full blur-3xl" animate={{ background: `rgba(${config.soft},0.28)`, scale: [1, 1.12, 1] }} transition={{ background: { duration: 0.5 }, scale: { duration: 4.8, repeat: Infinity } }} />
+          <motion.div className="absolute -right-24 bottom-12 h-80 w-80 rounded-full blur-3xl" animate={{ background: `rgba(${config.soft},0.24)`, scale: [1.08, 1, 1.08] }} transition={{ background: { duration: 0.5 }, scale: { duration: 5.2, repeat: Infinity } }} />
+          <motion.div className="absolute inset-x-[-10%] top-1/2 h-[1px]" animate={{ background: `linear-gradient(90deg, transparent, rgba(${config.soft},0.8), transparent)` }} />
 
-          <div className="relative grid gap-10 lg:grid-cols-[0.82fr_1fr] items-center">
-            <div className="flex flex-col items-center">
-              <PhoneFrame src={imgCampaignPhone} alt="Écran Instagram de campagne" className="w-[min(17rem,74vw)]" />
-              <div className="mt-6 flex items-center gap-3">
-                {[
-                  { id: "blue" as const, color: "#2D8CFF", label: "Version bleue" },
-                  { id: "pink" as const, color: "#FF72B8", label: "Version rose" },
-                ].map((item) => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    aria-label={item.label}
-                    onClick={() => setVariant(item.id)}
-                    className="relative h-11 w-11 rounded-full transition-transform"
-                    style={{
-                      background: item.color,
-                      outline: variant === item.id ? `3px solid ${isDark ? "rgba(255,255,255,0.78)" : "rgba(0,44,76,0.32)"}` : "none",
-                      boxShadow: `0 0 24px ${item.color}66`,
-                    }}
-                  >
-                    <span className="absolute inset-2 rounded-full border border-white/60" />
-                  </button>
-                ))}
-              </div>
+          <div className="relative z-10 flex min-h-[40rem] flex-col items-center justify-center gap-8">
+            <div className="relative">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={variant}
+                  src={config.image}
+                  alt={`Visuel d'activation ${config.label.toLowerCase()}`}
+                  className="absolute left-1/2 top-1/2 hidden w-64 -translate-x-1/2 -translate-y-1/2 rounded-[2rem] md:block"
+                  initial={{ opacity: 0, scale: 0.72, rotate: -10 }}
+                  animate={{ opacity: 0.92, scale: 1.15, rotate: variant === "blue" ? -12 : 12, x: variant === "blue" ? -250 : 250 }}
+                  exit={{ opacity: 0, scale: 0.75 }}
+                  transition={{ duration: 0.55 }}
+                  style={{ boxShadow: `0 30px 90px rgba(${config.soft},0.34)` }}
+                />
+              </AnimatePresence>
+              <PhoneFrame src={imgCampaignPhone} alt="Mockup Instagram concours" className="relative z-10 w-[min(18rem,74vw)]" />
             </div>
 
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={variant}
-                initial={{ opacity: 0, y: 20, scale: 0.96 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -20, scale: 0.96 }}
-                transition={{ duration: 0.45, ease: "easeOut" }}
-                className="relative"
-              >
-                <img
-                  src={config.image}
-                  alt={`Déclinaison ${config.label.toLowerCase()} de l'activation`}
-                  className="w-full rounded-[1.6rem]"
-                  style={{ boxShadow: `0 30px 90px rgba(${config.soft},0.22)` }}
-                />
-              </motion.div>
-            </AnimatePresence>
+            <div className="flex items-center gap-4 rounded-full p-2 backdrop-blur-xl" style={{ background: isDark ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.78)", border: `1px solid ${r(0.08)}` }}>
+              {[
+                { id: "blue" as const, color: "#2D8CFF", label: "Activation bleue" },
+                { id: "pink" as const, color: "#FF72B8", label: "Activation rose" },
+              ].map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  aria-label={item.label}
+                  onClick={() => setVariant(item.id)}
+                  className="relative h-12 w-12 rounded-full"
+                  style={{ background: item.color, boxShadow: `0 0 ${variant === item.id ? 36 : 16}px ${item.color}88` }}
+                >
+                  <motion.span className="absolute inset-2 rounded-full border border-white/70" animate={{ scale: variant === item.id ? [1, 1.16, 1] : 1 }} transition={{ duration: 1.5, repeat: variant === item.id ? Infinity : 0 }} />
+                </button>
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>
@@ -953,91 +642,47 @@ function SpotifyExperienceSection() {
   const cover = mode === "dark" ? imgSpotifyDark : imgSpotifyLight;
 
   return (
-    <section className="px-6 md:px-12 py-16">
+    <section className="relative px-6 md:px-12 py-24 overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        <SectionHeader eyebrow="EXPÉRIENCE SPOTIFY" title="Un player qui donne du mouvement à l’univers">
-          Le player transforme l’univers sable noir de la playlist en particules vivantes, calmes au repos et plus présentes quand l’expérience est activée.
+        <SectionHeader eyebrow="EXPÉRIENCE SPOTIFY" title="Le son imaginé comme une matière en mouvement">
+          Le mockup désertique reste la scène principale. Le player active les particules comme si la playlist mettait l’environnement en vibration.
         </SectionHeader>
 
-        <div
-          className="relative mt-12 overflow-hidden rounded-[2.2rem] p-6 md:p-10"
-          style={{
-            background: isDark ? "linear-gradient(135deg, #050912, #101927)" : "linear-gradient(135deg, #08111f, #20344c)",
-            border: `1px solid ${isDark ? "rgba(141,232,254,0.15)" : "rgba(0,44,76,0.18)"}`,
-          }}
-        >
-          <ParticleField active={playing} />
-          <div className="relative grid gap-8 lg:grid-cols-[1.1fr_0.9fr] items-center">
-            <motion.img
-              src={imgSpotifyMain}
-              alt="Playlist Spotify SNCF Connect"
-              className="w-full rounded-[1.6rem]"
-              animate={{ scale: playing ? 1.015 : 1 }}
-              transition={{ duration: 0.8 }}
-              style={{ boxShadow: `0 32px 90px rgba(0,0,0,0.42)` }}
-            />
-
-            <div
-              className="rounded-[1.7rem] p-5 backdrop-blur-xl"
-              style={{ background: "rgba(255,255,255,0.09)", border: "1px solid rgba(255,255,255,0.15)" }}
-            >
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={mode}
-                  src={cover}
-                  alt={`Playlist Spotify version ${mode === "dark" ? "sombre" : "claire"}`}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -16 }}
-                  transition={{ duration: 0.35 }}
-                  className="w-full rounded-[1.2rem]"
-                />
-              </AnimatePresence>
-
-              <div className="mt-5 flex items-center justify-between gap-4">
-                <button
-                  type="button"
-                  onClick={() => setPlaying((value) => !value)}
-                  className="flex h-14 w-14 items-center justify-center rounded-full"
-                  style={{ background: ACCENT, color: BG_DARK, boxShadow: `0 0 30px rgba(${ACCENT_RGB},0.4)` }}
-                  aria-label={playing ? "Mettre en pause" : "Lancer l'expérience"}
-                >
-                  {playing ? <Pause size={22} fill={BG_DARK} /> : <Play size={22} fill={BG_DARK} />}
-                </button>
-                <div className="flex-1">
-                  <div style={{ fontFamily: "'Space Grotesk', sans-serif", color: "white", fontWeight: 650 }}>
-                    Playlist Connect
-                  </div>
-                  <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-white/12">
-                    <motion.div
-                      className="h-full rounded-full"
-                      style={{ background: ACCENT }}
-                      animate={{ width: playing ? ["12%", "82%"] : "18%" }}
-                      transition={playing ? { duration: 5, repeat: Infinity, ease: "linear" } : { duration: 0.35 }}
-                    />
-                  </div>
-                </div>
-                <div className="flex rounded-full bg-white/10 p-1">
-                  {(["dark", "light"] as const).map((item) => (
-                    <button
-                      key={item}
-                      type="button"
-                      onClick={() => setMode(item)}
-                      className="rounded-full px-3 py-1.5"
-                      style={{
-                        fontFamily: "'Inter', sans-serif",
-                        fontSize: "0.72rem",
-                        color: mode === item ? BG_DARK : "rgba(255,255,255,0.62)",
-                        background: mode === item ? ACCENT : "transparent",
-                      }}
-                    >
-                      {item === "dark" ? "Sombre" : "Clair"}
-                    </button>
-                  ))}
-                </div>
+        <div className="relative mt-12 overflow-hidden rounded-[2.8rem] bg-black p-4 md:p-8">
+          <ParticleField active={playing} color="#8DE8FE" />
+          <motion.img
+            src={imgSpotifyMain}
+            alt="Mockup Spotify avec téléphone dans le désert"
+            className="relative z-10 w-full rounded-[2rem]"
+            animate={{ scale: playing ? 1.018 : 1 }}
+            transition={{ duration: 0.8 }}
+          />
+          <motion.div
+            className="relative z-20 mx-auto -mt-10 grid max-w-4xl gap-5 rounded-[2rem] p-4 backdrop-blur-2xl md:grid-cols-[8rem_1fr_auto] md:p-5"
+            style={{ background: "rgba(7,13,22,0.76)", border: "1px solid rgba(255,255,255,0.14)", boxShadow: "0 30px 90px rgba(0,0,0,0.38)" }}
+          >
+            <AnimatePresence mode="wait">
+              <motion.img key={mode} src={cover} alt="Déclinaison playlist" className="w-full rounded-2xl" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} />
+            </AnimatePresence>
+            <div className="flex flex-col justify-center">
+              <span style={{ fontFamily: "'Space Grotesk', sans-serif", color: "white", fontSize: "1.25rem", fontWeight: 700 }}>Votre playlist du quotidien</span>
+              <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/10">
+                <motion.div className="h-full rounded-full" style={{ background: ACCENT }} animate={{ width: playing ? ["8%", "92%"] : "18%" }} transition={playing ? { duration: 5.5, repeat: Infinity, ease: "linear" } : { duration: 0.35 }} />
               </div>
             </div>
-          </div>
+            <div className="flex items-center justify-between gap-3 md:justify-end">
+              <div className="flex rounded-full bg-white/10 p-1">
+                {(["dark", "light"] as const).map((item) => (
+                  <button key={item} type="button" onClick={() => setMode(item)} className="rounded-full px-3 py-2" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.72rem", color: mode === item ? BG_DARK : "rgba(255,255,255,0.65)", background: mode === item ? ACCENT : "transparent" }}>
+                    {item === "dark" ? "Sombre" : "Clair"}
+                  </button>
+                ))}
+              </div>
+              <button type="button" onClick={() => setPlaying((value) => !value)} className="flex h-14 w-14 items-center justify-center rounded-full" style={{ background: ACCENT, color: BG_DARK, boxShadow: `0 0 36px rgba(${ACCENT_RGB},0.5)` }} aria-label={playing ? "Pause" : "Play"}>
+                {playing ? <Pause size={22} fill={BG_DARK} /> : <Play size={22} fill={BG_DARK} />}
+              </button>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -1048,16 +693,14 @@ function VideoSection() {
   const { r, isDark } = useTheme();
 
   return (
-    <section className="px-6 md:px-12 py-16">
+    <section className="px-6 md:px-12 py-24">
       <div className="max-w-6xl mx-auto">
-        <SectionHeader eyebrow="VIDÉO PRINCIPALE" title="Une présentation vidéo intégrée à l’expérience">
-          Le motion principal conserve l’énergie lumineuse du projet dans un format fluide et responsive.
+        <SectionHeader eyebrow="VIDÉO PRINCIPALE" title="Un film présenté comme une projection premium">
+          La vidéo locale devient un moment cinématique, intégré dans la lumière bleue du projet plutôt qu’un simple lecteur posé sur la page.
         </SectionHeader>
-        <div
-          className="mt-10 overflow-hidden rounded-[2rem] p-2"
-          style={{ background: isDark ? "rgba(255,255,255,0.045)" : "rgba(0,44,76,0.06)", border: `1px solid ${r(0.07)}` }}
-        >
-          <video src={videoMain} controls playsInline preload="metadata" className="block w-full rounded-[1.55rem]" />
+        <div className="relative mt-12 overflow-hidden rounded-[2.8rem] p-3" style={{ background: isDark ? `radial-gradient(circle at 50% 0%, rgba(${ACCENT_RGB},0.2), transparent 36%), #050912` : `radial-gradient(circle at 50% 0%, rgba(${ACCENT_RGB},0.22), transparent 36%), rgba(255,255,255,0.86)`, border: `1px solid ${r(0.08)}` }}>
+          <div className="absolute inset-x-10 top-6 h-[1px]" style={{ background: `linear-gradient(90deg, transparent, rgba(${ACCENT_RGB},0.7), transparent)` }} />
+          <video src={videoMain} controls playsInline preload="metadata" className="relative z-10 block w-full rounded-[2.25rem]" style={{ boxShadow: "0 36px 110px rgba(0,0,0,0.35)" }} />
         </div>
       </div>
     </section>
@@ -1068,30 +711,23 @@ function UGCSection() {
   const { r, isDark } = useTheme();
 
   return (
-    <section className="px-6 md:px-12 py-16">
+    <section className="px-6 md:px-12 py-20">
       <div className="max-w-6xl mx-auto">
-        <div className="grid gap-10 lg:grid-cols-[0.78fr_1fr] items-center">
-          <SectionHeader eyebrow="UGC" title="Un format plus direct, pensé pour la prise de parole sociale">
-            Le contenu UGC apporte une dimension plus humaine et spontanée, distincte du film principal.
+        <div className="grid gap-12 lg:grid-cols-[0.8fr_1fr] items-center">
+          <SectionHeader eyebrow="UGC" title="Une prise de parole plus sociale et directe">
+            Le format UGC est traité comme un contenu mobile, plus spontané, plus humain, et volontairement distinct du film principal.
           </SectionHeader>
-          <div className="mx-auto w-[min(22rem,78vw)]">
-            <div
-              className="relative overflow-hidden rounded-[2.2rem] p-2"
-              style={{
-                background: isDark ? "#050912" : "#07101f",
-                boxShadow: `0 28px 80px rgba(0,0,0,${isDark ? 0.36 : 0.18})`,
-              }}
-            >
+          <div className="relative mx-auto w-[min(24rem,78vw)]">
+            <motion.div className="absolute -left-10 top-12 h-28 w-28 rounded-full blur-2xl" style={{ background: `rgba(${ACCENT_RGB},0.24)` }} animate={{ y: [0, -12, 0] }} transition={{ duration: 4, repeat: Infinity }} />
+            <div className="relative overflow-hidden rounded-[2.5rem] p-2" style={{ background: isDark ? "#050912" : "#07101f", boxShadow: `0 32px 90px rgba(0,0,0,${isDark ? 0.38 : 0.2})` }}>
               <div className="absolute left-1/2 top-3 z-10 h-4 w-20 -translate-x-1/2 rounded-full bg-black/80" />
-              <div className="aspect-[9/16] overflow-hidden rounded-[1.65rem] bg-black">
-                <iframe
-                  src={UGC_URL}
-                  title="Vidéo UGC SNCF Connect"
-                  className="h-full w-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                />
+              <div className="aspect-[9/16] overflow-hidden rounded-[1.85rem] bg-black">
+                <iframe src={UGC_URL} title="Vidéo UGC SNCF Connect" className="h-full w-full" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
               </div>
+            </div>
+            <div className="mt-5 flex items-center gap-3 rounded-full px-5 py-3" style={{ background: r(0.04), border: `1px solid ${r(0.08)}` }}>
+              <img src={vehiculesAsset} alt="" className="h-6 w-6 opacity-70" />
+              <span style={{ fontFamily: "'Inter', sans-serif", color: r(0.36), fontSize: "0.82rem" }}>format social media</span>
             </div>
           </div>
         </div>
@@ -1135,7 +771,6 @@ export function ProjectSncf() {
   return (
     <div className="relative w-full">
       <HeroSection />
-      <PresentationViewer />
       <OnboardingSection />
       <RoutineSection />
       <NewsletterSection />
