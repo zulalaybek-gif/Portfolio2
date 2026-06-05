@@ -46,17 +46,17 @@ import imgLargePhoto from "../../assets/narratiiv/22.mockup-carrousel.png";
 import imgInfographie from "../../assets/narratiiv/23.infographie.png";
 
 /* ── Videos ── */
-import videoCompetition from "../../assets/narratiiv/vidéos/01.competition-tf1.mp4";
-import videoSoiree from "../../assets/narratiiv/vidéos/02.soiree.mp4";
-import videoLoopJpo from "../../assets/narratiiv/vidéos/03.loop-jpo.mp4";
-import videoPublicite from "../../assets/narratiiv/vidéos/04.publicite.mp4";
-import videoAmd from "../../assets/narratiiv/vidéos/05.amd.mp4";
-import videoItwLaurent from "../../assets/narratiiv/vidéos/06.itw-laurent-buanec.mp4";
-import videoLoopNarratiiv from "../../assets/narratiiv/vidéos/07.loop-narratiiv.mp4";
-import videoWorkshopLoopsider from "../../assets/narratiiv/vidéos/08.workshop-loopsider.mp4";
-import videoInfluenceurs from "../../assets/narratiiv/vidéos/09.semaine-des-influenceurs.mp4";
-import videoCampus from "../../assets/narratiiv/vidéos/10.campus.mp4";
-import videoWorkshopVoici from "../../assets/narratiiv/vidéos/11.workshop-voici-magazine.mp4";
+import videoCompetition from "../../assets/narratiiv/videos/01.competition-tf1.mp4";
+import videoSoiree from "../../assets/narratiiv/videos/02.soiree.mp4";
+import videoLoopJpo from "../../assets/narratiiv/videos/03.loop-jpo.mp4";
+import videoPublicite from "../../assets/narratiiv/videos/04.publicite.mp4";
+import videoAmd from "../../assets/narratiiv/videos/05.amd.mp4";
+import videoItwLaurent from "../../assets/narratiiv/videos/06.itw-laurent-buanec.mp4";
+import videoLoopNarratiiv from "../../assets/narratiiv/videos/07.loop-narratiiv.mp4";
+import videoWorkshopLoopsider from "../../assets/narratiiv/videos/08.workshop-loopsider.mp4";
+import videoInfluenceurs from "../../assets/narratiiv/videos/09.semaine-des-influenceurs.mp4";
+import videoCampus from "../../assets/narratiiv/videos/10.campus.mp4";
+import videoWorkshopVoici from "../../assets/narratiiv/videos/11.workshop-voici-magazine.mp4";
 
 /* ══════════════════════════════════════════
    CONSTANTS
