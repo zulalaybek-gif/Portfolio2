@@ -413,15 +413,11 @@ function LogoSection() {
 
   return (
     <section className="px-6 md:px-16 py-20">
-      <div className="max-w-5xl mx-auto">
-        <FadeIn className="mb-12">
-          <SectionLabel>{t("mya.logo.label")}</SectionLabel>
-        </FadeIn>
-
-        {/* Large logo on colored bg */}
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 md:grid-cols-[0.85fr_1fr] md:items-center lg:gap-20">
         <FadeIn>
+          <SectionLabel>{t("mya.logo.label")}</SectionLabel>
           <div
-            className="mx-auto flex w-full max-w-3xl items-center justify-center rounded-2xl py-14 transition-all duration-700 md:py-20"
+            className="mt-10 flex w-full items-center justify-center rounded-2xl py-12 transition-all duration-700 md:py-16"
             style={{
               background: isDark
                 ? `linear-gradient(160deg, ${DARK_PURPLE} 0%, #1a0d24 100%)`
@@ -433,7 +429,7 @@ function LogoSection() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 1, ease: "easeOut" }}
-              className="w-[140px] md:w-[200px]"
+              className="w-[120px] md:w-[170px]"
             >
               <svg viewBox="0 0 146 145.989" fill="none" className="w-full">
                 <path d={svgPaths.p2e03cf00} fill={isDark ? "#fff" : DARK_PURPLE} />
@@ -441,26 +437,11 @@ function LogoSection() {
             </motion.div>
           </div>
         </FadeIn>
-      </div>
-    </section>
-  );
-}
 
-/* ══════════════════════════════════════════
-   5. INTENTION / SIGNIFICATION
-   ═══════════════════════════════════════════ */
-function IntentionSection() {
-  const { t } = useI18n();
-  const { r } = useTheme();
-
-  return (
-    <section className="px-6 md:px-16 py-16 max-w-5xl mx-auto">
-      <div className="max-w-3xl">
-        <FadeIn className="mb-6">
-          <SectionLabel>{t("mya.intention.label")}</SectionLabel>
-        </FadeIn>
         <FadeIn delay={0.1}>
+          <SectionLabel>{t("mya.intention.label")}</SectionLabel>
           <p
+            className="mt-8 max-w-xl"
             style={{
               fontFamily: "'Inter', sans-serif",
               fontSize: "0.85rem",
@@ -474,6 +455,13 @@ function IntentionSection() {
       </div>
     </section>
   );
+}
+
+/* ══════════════════════════════════════════
+   5. INTENTION / SIGNIFICATION
+   ═══════════════════════════════════════════ */
+function IntentionSection() {
+  return null;
 }
 
 /* ══════════════════════════════════════════
