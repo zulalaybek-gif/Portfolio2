@@ -34,7 +34,7 @@ import imgSng5 from "../../assets/digital-campus/12.plans-etages.png";
 import imgElevator from "../../assets/digital-campus/13.signaletique-ascenseur.png";
 
 // Cartes étudiantes
-import imgCartes from "figma:asset/ffe5ce8cd270f92a5a877c7ac23cd36333d2f50e.png";
+import imgCartes from "../../assets/digital-campus/14.cartes-etudiantes.png";
 
 // Écrans
 import imgScreen1 from "../../assets/digital-campus/15.visuels-ecrans.png";
