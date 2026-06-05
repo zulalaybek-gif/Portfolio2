@@ -11,72 +11,52 @@ import imgLogo1 from "figma:asset/1fb2477e9f6842dce8d7fb8348c8af0515635cf5.png";
 import imgLogo2 from "figma:asset/3e77f851ca2067ed4c3ee254fba4784b62cc2e8c.png";
 
 /* ── Signage / Stands ── */
-import imgStandsRentree from "figma:asset/b4bfa5b93fd65e87b104a385fc8f08e0566a51ff.png";
+import imgStandsRentree from "../../assets/narratiiv/01.stands-de-rentee.png";
 
 /* ── Affichage photos ── */
-import imgAffiche1 from "figma:asset/9b7139016bb92d2e4645e33bb69b2d7ab7890e53.png";
-import imgAffiche2 from "figma:asset/2e43b250710102f2cfe1d148e0dae75ff41e7dca.png";
-import imgAffiche3 from "figma:asset/a488c9b9d3f4082e6ce32702ca63abf7769b2487.png";
-import imgAffiche4 from "figma:asset/edceb0e5a1ca2e578bb7dc765bbf53c8b02b7a01.png";
-import imgAffiche5 from "figma:asset/d6af92e2a420c70dd48cea18de95703afdbd158a.png";
+import imgAffiche1 from "../../assets/narratiiv/02.affichage.png";
+import imgAffiche2 from "../../assets/narratiiv/03.affichage.png";
+import imgAffiche3 from "../../assets/narratiiv/04.affichage.png";
+import imgAffiche4 from "../../assets/narratiiv/05.affichage.png";
+import imgAffiche5 from "../../assets/narratiiv/06.affichage.png";
 
 /* ── Social media posts — batch 1 (carousel) ── */
-import imgPost11 from "figma:asset/ac2b44d8dc5211382add1c422fa04c123d891cd3.png";
-import imgPost21 from "figma:asset/9af8401ca64fdd8eba442dd6ddfe08e158f52b03.png";
-import imgPost31 from "figma:asset/11cbf80e6e31a55fc6b7ec28b0f63bf87e58aab5.png";
-import imgPost41 from "figma:asset/c5e0238df3aac359489d3859ed3a33297227828c.png";
-import imgPost51 from "figma:asset/7496f0a1f41665cfb5e73e340ae997ae240ca24d.png";
-import imgPost61 from "figma:asset/e241467e3f69feebf6728840b7df601cf4b4afe7.png";
-import imgPost71 from "figma:asset/fdbd0ed43df5d89a554e573e22d2e962cf3d1dea.png";
-import imgPost81 from "figma:asset/53274f40c5bd6d8dd22ea74029838b304abc8da6.png";
+import imgPost11 from "../../assets/narratiiv/07.carrousel-1-candidater.png";
+import imgPost21 from "../../assets/narratiiv/08.carrousel-1-candidater.png";
+import imgPost31 from "../../assets/narratiiv/09.carrousel-1-candidater.png";
+import imgPost41 from "../../assets/narratiiv/10.carrousel-1-candidater.png";
+import imgPost51 from "../../assets/narratiiv/11.carrousel-1-candidater.png";
+import imgPost61 from "../../assets/narratiiv/12.carrousel-1-candidater.png";
+import imgPost71 from "../../assets/narratiiv/13.carrousel-1-candidater.png";
+import imgPost81 from "../../assets/narratiiv/14.carrousel-1-candidater.png";
 
 /* ── Social media posts — batch 2 (carousel) ── */
-import imgPost12 from "figma:asset/5bac8d08403ddb5e2e05ddb1b98ad382dec98ffc.png";
-import imgPost22 from "figma:asset/8073eae9c29bb551bbf1538c3ce0f608b1d9413b.png";
-import imgPost32 from "figma:asset/e498ef7baf69bd7a79fbbc40678930d03cccb0e2.png";
-import imgPost42 from "figma:asset/84fd17b6e619f5ccef92b575219712b22e5f96f6.png";
-import imgPost52 from "figma:asset/03affae8b468d95d4918feca1cdd7d3fd2d35233.png";
-import imgPost62 from "figma:asset/51c11791965a62d92e661e0a99eb308d09804947.png";
+import imgPost12 from "../../assets/narratiiv/15.carnet-de-bord.png";
+import imgPost22 from "../../assets/narratiiv/16.carnet-de-bord.png";
+import imgPost32 from "../../assets/narratiiv/17.carnet-de-bord.png";
+import imgPost42 from "../../assets/narratiiv/18.carnet-de-bord.png";
+import imgPost52 from "../../assets/narratiiv/19.carnet-de-bord.png";
+import imgPost62 from "../../assets/narratiiv/20.carnet-de-bord.png";
+import imgPost72 from "../../assets/narratiiv/21.carnet-de-bord.png";
 
 /* ── Large photo ── */
-import imgLargePhoto from "figma:asset/8027b7c51358eeba5d02f7a8960757f7c1cb6c39.png";
+import imgLargePhoto from "../../assets/narratiiv/22.mockup-carrousel.png";
 
 /* ── Infographie ── */
-import imgInfographie from "figma:asset/e057f664db21e0e968054b433946d03fb840a379.png";
+import imgInfographie from "../../assets/narratiiv/23.infographie.png";
 
-/* ── Print — Carnet de bord (échantillon 5 pages sur 64 pour publication) ── */
-import imgCdb01 from "figma:asset/9abb9d48ce0f069891d6b4319ace5b2ff1713f78.png";
-import imgCdb02 from "figma:asset/c7fbc25ccb3d03d5e4e3d7190512429cb84199c7.png";
-import imgCdb32 from "figma:asset/ff540e01f03faa48ad1c34bb5ff7aaaf4f939b34.png";
-import imgCdb62 from "figma:asset/1c0569bf1704f23340bc81e97236aee498974f87.png";
-import imgCdb64 from "figma:asset/05bc21491f2dcac3f8bd9fa109d0128e8decddcc.png";
-
-/* ── Print — Guide d'accueil 23-24 (4 pages) ── */
-import imgGA1 from "figma:asset/80fc43be405d4fa0cb01579e353fae8e1a4873ed.png";
-import imgGA2 from "figma:asset/18d2b739c4f826a3ea1ee3dea970250232752b5c.png";
-import imgGA3 from "figma:asset/c2c7de302ad3b1371a979898e28e9090584911f6.png";
-import imgGA4 from "figma:asset/5d97de29fe993972c65deeb5511e0279519e73e1.png";
-
-/* ── Print — Guide de l'intervenant (échantillon 5 pages sur 28) ── */
-import imgGI01 from "figma:asset/20f1ebb9f77b58f4afcccec782321c449412f131.png";
-import imgGI02 from "figma:asset/3c078de81a1e422947af5df7c2d216d3c2483c7f.png";
-import imgGI14 from "figma:asset/a488103faa120315a283ad1e6217b37a798e0080.png";
-import imgGI27 from "figma:asset/de3fb076bfabc044ed7ebb517803492fb094abf1.png";
-import imgGI28 from "figma:asset/3a805b56c93466a4a46bb56f39941d066e456be0.png";
-
-/* ── Print — Livret blanc (échantillon 5 pages sur 16) ── */
-import imgLB01 from "figma:asset/d3a71597faad6a9bceaee295ce75d352878064b9.png";
-import imgLB02 from "figma:asset/95f76592bd9f45cd6d3ac373430e0ba13215177d.png";
-import imgLB08 from "figma:asset/0e684c3bfa4f400eee8c15f176ec020c598d99ba.png";
-import imgLB15 from "figma:asset/c9ec9fd3b3c7855a4c14d5ba5632cedaf10cec59.png";
-import imgLB16 from "figma:asset/4478949746b7f706a9a7457d61d7a15da08a04de.png";
-
-/* ── Print — Magazine IA (échantillon 5 pages sur 16) ── */
-import imgMI01 from "figma:asset/df350a40750d63878bbf733917f0c335cf45a5d1.png";
-import imgMI02 from "figma:asset/c1aedd04d60d20cd0269c19878c1b0f4cdda5d4b.png";
-import imgMI08 from "figma:asset/1fd22ed43edf7ea06bb174e4531b1f78e69a787a.png";
-import imgMI15 from "figma:asset/2f6a1fc93c085da81a5d01c4685ce0e381579d2b.png";
-import imgMI16 from "figma:asset/7ab876c36ca6120d109cb7933a15057b714647d8.png";
+/* ── Videos ── */
+import videoCompetition from "../../assets/narratiiv/vidéos/01.competition-tf1.mp4";
+import videoSoiree from "../../assets/narratiiv/vidéos/02.soiree.mp4";
+import videoLoopJpo from "../../assets/narratiiv/vidéos/03.loop-jpo.mp4";
+import videoPublicite from "../../assets/narratiiv/vidéos/04.publicite.mp4";
+import videoAmd from "../../assets/narratiiv/vidéos/05.amd.mp4";
+import videoItwLaurent from "../../assets/narratiiv/vidéos/06.itw-laurent-buanec.mp4";
+import videoLoopNarratiiv from "../../assets/narratiiv/vidéos/07.loop-narratiiv.mp4";
+import videoWorkshopLoopsider from "../../assets/narratiiv/vidéos/08.workshop-loopsider.mp4";
+import videoInfluenceurs from "../../assets/narratiiv/vidéos/09.semaine-des-influenceurs.mp4";
+import videoCampus from "../../assets/narratiiv/vidéos/10.campus.mp4";
+import videoWorkshopVoici from "../../assets/narratiiv/vidéos/11.workshop-voici-magazine.mp4";
 
 /* ══════════════════════════════════════════
    CONSTANTS
@@ -98,6 +78,18 @@ const PALETTE_TERTIARY = [
   { hex: "#ffffff", label: "Blanc", labelEn: "White", border: true as const },
 ];
 
+function sortedAssetUrls(modules: Record<string, string>) {
+  return Object.entries(modules)
+    .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+    .map(([, src]) => src);
+}
+
+const printCarnetDeBord = sortedAssetUrls(import.meta.glob<string>("../../assets/narratiiv/documents-print/01.carnet-de-bord/*.png", { eager: true, import: "default" }));
+const printGuideAccueil = sortedAssetUrls(import.meta.glob<string>("../../assets/narratiiv/documents-print/02.guide-d-accueil/*.png", { eager: true, import: "default" }));
+const printGuideIntervenant = sortedAssetUrls(import.meta.glob<string>("../../assets/narratiiv/documents-print/03..guide-de-l-intervenant/*.png", { eager: true, import: "default" }));
+const printLivretBlanc = sortedAssetUrls(import.meta.glob<string>("../../assets/narratiiv/documents-print/04.livret-blanc/*.png", { eager: true, import: "default" }));
+const printMagazineIa = sortedAssetUrls(import.meta.glob<string>("../../assets/narratiiv/documents-print/05.magazine-ia/*.png", { eager: true, import: "default" }));
+
 /* ── Video categories ── */
 const VIDEO_CATEGORIES = [
   {
@@ -105,7 +97,9 @@ const VIDEO_CATEGORIES = [
     labelFr: "Compet & Challenges",
     labelEn: "Competitions & Challenges",
     videos: [
-      { url: "https://youtube.com/shorts/fHVKhwIx5fk", titleFr: "Compétition étudiante", titleEn: "Student Competition", aspect: "9/16" },
+      { src: videoCompetition, titleFr: "Compétition TF1", titleEn: "TF1 Competition", aspect: "9/16" },
+      { src: videoWorkshopLoopsider, titleFr: "Workshop Loopsider", titleEn: "Loopsider Workshop", aspect: "9/16" },
+      { src: videoWorkshopVoici, titleFr: "Workshop Voici Magazine", titleEn: "Voici Magazine Workshop", aspect: "9/16" },
     ],
   },
   {
@@ -113,7 +107,8 @@ const VIDEO_CATEGORIES = [
     labelFr: "Soirées",
     labelEn: "Parties",
     videos: [
-      { url: "https://youtube.com/shorts/IBwy8pgVmZ8", titleFr: "Soirée Narratiiv", titleEn: "Narratiiv Party", aspect: "9/16" },
+      { src: videoSoiree, titleFr: "Soirée Narratiiv", titleEn: "Narratiiv Party", aspect: "9/16" },
+      { src: videoInfluenceurs, titleFr: "Semaine des influenceurs", titleEn: "Influencers Week", aspect: "9/16" },
     ],
   },
   {
@@ -121,7 +116,8 @@ const VIDEO_CATEGORIES = [
     labelFr: "Publicité",
     labelEn: "Advertising",
     videos: [
-      { url: "https://youtu.be/Z7QXfwZ_pBM", titleFr: "Spot publicitaire", titleEn: "Ad Spot", aspect: "16/9" },
+      { src: videoPublicite, titleFr: "Spot publicitaire", titleEn: "Ad Spot", aspect: "16/9" },
+      { src: videoAmd, titleFr: "AMD", titleEn: "AMD", aspect: "16/9" },
     ],
   },
 
@@ -130,7 +126,8 @@ const VIDEO_CATEGORIES = [
     labelFr: "Loop JPO",
     labelEn: "Open Day Loop",
     videos: [
-      { url: "https://youtu.be/rBEKoMltqps", titleFr: "Boucle Journée Portes Ouvertes", titleEn: "Open Day Loop", aspect: "16/9" },
+      { src: videoLoopJpo, titleFr: "Boucle Journée Portes Ouvertes", titleEn: "Open Day Loop", aspect: "16/9" },
+      { src: videoLoopNarratiiv, titleFr: "Loop Narratiiv", titleEn: "Narratiiv Loop", aspect: "16/9" },
     ],
   },
   {
@@ -138,7 +135,8 @@ const VIDEO_CATEGORIES = [
     labelFr: "Campus & Vie scolaire",
     labelEn: "Campus & School Life",
     videos: [
-      { url: "https://youtube.com/shorts/Y6FO4GZcb-0", titleFr: "Visite du campus", titleEn: "Campus Tour", aspect: "9/16" },
+      { src: videoCampus, titleFr: "Campus", titleEn: "Campus", aspect: "9/16" },
+      { src: videoItwLaurent, titleFr: "Interview Laurent Buanec", titleEn: "Laurent Buanec Interview", aspect: "16/9" },
     ],
   },
 ];
@@ -150,35 +148,35 @@ const PRINT_DOCS = [
     labelEn: "Student Logbook",
     descFr: "Carnet distribué aux élèves, faisant office de bloc-notes et de guide regroupant les informations pratiques de l'école, un calendrier et des mini-jeux.",
     descEn: "Student logbook combining a notepad with school info, calendar, and mini-games.",
-    pages: [imgCdb01, imgCdb02, imgCdb32, imgCdb62, imgCdb64],
+    pages: printCarnetDeBord,
   },
   {
     label: "Guide d'accueil",
     labelEn: "Welcome Guide",
     descFr: "Guide d'accueil remis à chaque nouvel étudiant lors de la rentrée 2023-2024.",
     descEn: "Welcome guide given to each new student at the 2023-2024 start of year.",
-    pages: [imgGA1, imgGA2, imgGA3, imgGA4],
+    pages: printGuideAccueil,
   },
   {
     label: "Guide de l'intervenant",
     labelEn: "Speaker's Guide",
     descFr: "Guide complet à destination des intervenants extérieurs de l'école.",
     descEn: "Comprehensive guide for the school's external speakers.",
-    pages: [imgGI01, imgGI02, imgGI14, imgGI27, imgGI28],
+    pages: printGuideIntervenant,
   },
   {
     label: "Livret blanc",
     labelEn: "White Paper",
     descFr: "Publication institutionnelle présentant l'école et ses formations.",
     descEn: "Institutional publication presenting the school and its programs.",
-    pages: [imgLB01, imgLB02, imgLB08, imgLB15, imgLB16],
+    pages: printLivretBlanc,
   },
   {
     label: "Magazine IA",
     labelEn: "AI Magazine",
     descFr: "Magazine thématique consacré à l'intelligence artificielle, conçu pour les étudiants.",
     descEn: "Thematic magazine on artificial intelligence, designed for students.",
-    pages: [imgMI01, imgMI02, imgMI08, imgMI15, imgMI16],
+    pages: printMagazineIa,
   },
 ];
 
@@ -299,11 +297,11 @@ function getYouTubeId(url: string): string {
   return "";
 }
 
-function VideoCard({ url, title, aspect }: { url: string; title: string; aspect: string }) {
+function VideoCard({ url, src, title, aspect }: { url?: string; src?: string; title: string; aspect: string }) {
   const { r, isDark } = useTheme();
   const [playing, setPlaying] = useState(false);
   const [thumbError, setThumbError] = useState(0);
-  const id = getYouTubeId(url);
+  const id = url ? getYouTubeId(url) : "";
   /* Try maxresdefault first, then sddefault, then mqdefault */
   const thumbs = [
     `https://img.youtube.com/vi/${id}/maxresdefault.jpg`,
@@ -323,7 +321,14 @@ function VideoCard({ url, title, aspect }: { url: string; title: string; aspect:
       }}
       onClick={() => setPlaying(true)}
     >
-      {playing ? (
+      {src ? (
+        <video
+          src={src}
+          controls
+          preload="metadata"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      ) : playing ? (
         <iframe
           src={`https://www.youtube.com/embed/${id}?autoplay=1&rel=0`}
           allow="autoplay; encrypted-media"
@@ -535,7 +540,7 @@ function VideoSection() {
       {/* Video grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {filtered.map((v, i) => (
-          <VideoCard key={`${v.catId}-${i}`} url={v.url} title={lang === "fr" ? v.titleFr : v.titleEn} aspect={v.aspect} />
+          <VideoCard key={`${v.catId}-${i}`} url={v.url} src={v.src} title={lang === "fr" ? v.titleFr : v.titleEn} aspect={v.aspect} />
         ))}
       </div>
     </FadeIn>
@@ -551,7 +556,7 @@ export function ProjectNrtv() {
   const navigate = useNavigate();
 
   const SOCIAL_BATCH_1 = [imgPost11, imgPost21, imgPost31, imgPost41, imgPost51, imgPost61, imgPost71, imgPost81];
-  const SOCIAL_BATCH_2 = [imgPost12, imgPost22, imgPost32, imgPost42, imgPost52, imgPost62];
+  const SOCIAL_BATCH_2 = [imgPost12, imgPost22, imgPost32, imgPost42, imgPost52, imgPost62, imgPost72];
 
   return (
     <div className="relative w-full">
