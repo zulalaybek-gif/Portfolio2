@@ -37,9 +37,13 @@ interface FloatingFlowerData {
   rotateBase: number;
 }
 const FLOWERS: FloatingFlowerData[] = [
-  { id: 0, size: 76, baseX: 88, baseY: 28, driftAmpX: 2.5, driftAmpY: 3.5, driftSpeed: 8, rotateBase: -5 },
-  { id: 1, size: 54, baseX: 8, baseY: 52, driftAmpX: 2, driftAmpY: 3, driftSpeed: 10, rotateBase: 12 },
-  { id: 2, size: 62, baseX: 92, baseY: 72, driftAmpX: 3, driftAmpY: 2.5, driftSpeed: 9, rotateBase: -8 },
+  { id: 0, size: 88, baseX: 86, baseY: 22, driftAmpX: 3.8, driftAmpY: 4.8, driftSpeed: 8, rotateBase: -5 },
+  { id: 1, size: 66, baseX: 7, baseY: 48, driftAmpX: 2.8, driftAmpY: 4.2, driftSpeed: 10, rotateBase: 12 },
+  { id: 2, size: 78, baseX: 91, baseY: 64, driftAmpX: 4.4, driftAmpY: 3.8, driftSpeed: 9, rotateBase: -8 },
+  { id: 3, size: 58, baseX: 80, baseY: 78, driftAmpX: 3.6, driftAmpY: 3.4, driftSpeed: 11, rotateBase: 16 },
+  { id: 4, size: 50, baseX: 95, baseY: 42, driftAmpX: 2.8, driftAmpY: 4.8, driftSpeed: 12, rotateBase: -18 },
+  { id: 5, size: 46, baseX: 16, baseY: 24, driftAmpX: 2.6, driftAmpY: 3.6, driftSpeed: 13, rotateBase: -10 },
+  { id: 6, size: 64, baseX: 73, baseY: 12, driftAmpX: 3.2, driftAmpY: 3.2, driftSpeed: 10.5, rotateBase: 9 },
 ];
 
 /* ── Single floating flower — flees from cursor ── */
@@ -63,8 +67,8 @@ function SingleFlower({
   const logoFill = isDark ? ACCENT : DARK_PURPLE;
 
   // Scroll-based opacity
-  const maxOpacity = isDark ? 0.75 : 0.6;
-  const opacityVal = scrollPct > 0.9 ? maxOpacity * 0.9 : maxOpacity;
+  const maxOpacity = isDark ? 0.95 : 0.78;
+  const opacityVal = scrollPct > 0.9 ? maxOpacity : maxOpacity;
 
   // Calculate repulsion from cursor
   useEffect(() => {
@@ -251,6 +255,35 @@ function FadeIn({ children, className = "", delay = 0 }: { children: React.React
       className={className}
     >
       {children}
+    </motion.div>
+  );
+}
+
+function FloatingFlowerIcon({ className = "", size = 64, delay = 0, rotate = 0 }: { className?: string; size?: number; delay?: number; rotate?: number }) {
+  const { isDark } = useTheme();
+
+  return (
+    <motion.div
+      className={`pointer-events-none absolute hidden md:block ${className}`}
+      initial={{ opacity: 0, scale: 0.72, rotate }}
+      whileInView={{ opacity: isDark ? 0.9 : 0.74, scale: 1, rotate }}
+      viewport={{ once: true, margin: "120px 0px" }}
+      animate={{
+        y: [0, -14, 7, 0],
+        x: [0, 8, -5, 0],
+        rotate: [rotate, rotate + 7, rotate - 5, rotate],
+      }}
+      transition={{
+        opacity: { duration: 0.8, delay },
+        scale: { duration: 0.8, delay },
+        x: { duration: 7 + delay, repeat: Infinity, ease: "easeInOut", delay },
+        y: { duration: 8 + delay, repeat: Infinity, ease: "easeInOut", delay },
+        rotate: { duration: 9 + delay, repeat: Infinity, ease: "easeInOut", delay },
+      }}
+    >
+      <svg viewBox="0 0 146 145.989" fill="none" style={{ width: size, height: size }}>
+        <path d={svgPaths.p2e03cf00} fill={isDark ? ACCENT : DARK_PURPLE} />
+      </svg>
     </motion.div>
   );
 }
@@ -784,8 +817,14 @@ function FinalSection() {
   const navigate = useNavigate();
 
   return (
-    <section className="px-6 md:px-16 py-24">
-      <div className="max-w-5xl mx-auto flex flex-col items-center">
+    <section className="relative overflow-hidden px-6 md:px-16 py-24">
+      <FloatingFlowerIcon className="left-[12%] top-[18%]" size={78} delay={0.1} rotate={-16} />
+      <FloatingFlowerIcon className="right-[13%] top-[10%]" size={92} delay={0.25} rotate={12} />
+      <FloatingFlowerIcon className="left-[23%] bottom-[24%]" size={54} delay={0.4} rotate={9} />
+      <FloatingFlowerIcon className="right-[24%] bottom-[28%]" size={62} delay={0.55} rotate={-10} />
+      <FloatingFlowerIcon className="right-[8%] bottom-[16%]" size={46} delay={0.7} rotate={20} />
+
+      <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center">
         <FadeIn className="mb-12">
           <div className="w-[120px] md:w-[150px]">
             <svg viewBox="0 0 146 145.989" fill="none" className="w-full">
