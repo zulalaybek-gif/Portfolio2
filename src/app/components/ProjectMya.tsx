@@ -37,13 +37,16 @@ interface FloatingFlowerData {
   rotateBase: number;
 }
 const FLOWERS: FloatingFlowerData[] = [
-  { id: 0, size: 88, baseX: 86, baseY: 22, driftAmpX: 3.8, driftAmpY: 4.8, driftSpeed: 8, rotateBase: -5 },
-  { id: 1, size: 66, baseX: 7, baseY: 48, driftAmpX: 2.8, driftAmpY: 4.2, driftSpeed: 10, rotateBase: 12 },
-  { id: 2, size: 78, baseX: 91, baseY: 64, driftAmpX: 4.4, driftAmpY: 3.8, driftSpeed: 9, rotateBase: -8 },
-  { id: 3, size: 58, baseX: 80, baseY: 78, driftAmpX: 3.6, driftAmpY: 3.4, driftSpeed: 11, rotateBase: 16 },
-  { id: 4, size: 50, baseX: 95, baseY: 42, driftAmpX: 2.8, driftAmpY: 4.8, driftSpeed: 12, rotateBase: -18 },
-  { id: 5, size: 46, baseX: 16, baseY: 24, driftAmpX: 2.6, driftAmpY: 3.6, driftSpeed: 13, rotateBase: -10 },
-  { id: 6, size: 64, baseX: 73, baseY: 12, driftAmpX: 3.2, driftAmpY: 3.2, driftSpeed: 10.5, rotateBase: 9 },
+  { id: 0, size: 118, baseX: 80, baseY: 18, driftAmpX: 3.8, driftAmpY: 4.8, driftSpeed: 8, rotateBase: -5 },
+  { id: 1, size: 76, baseX: 9, baseY: 48, driftAmpX: 2.8, driftAmpY: 4.2, driftSpeed: 10, rotateBase: 12 },
+  { id: 2, size: 104, baseX: 87, baseY: 58, driftAmpX: 4.4, driftAmpY: 3.8, driftSpeed: 9, rotateBase: -8 },
+  { id: 3, size: 74, baseX: 77, baseY: 76, driftAmpX: 3.6, driftAmpY: 3.4, driftSpeed: 11, rotateBase: 16 },
+  { id: 4, size: 86, baseX: 92, baseY: 38, driftAmpX: 2.8, driftAmpY: 4.8, driftSpeed: 12, rotateBase: -18 },
+  { id: 5, size: 56, baseX: 17, baseY: 24, driftAmpX: 2.6, driftAmpY: 3.6, driftSpeed: 13, rotateBase: -10 },
+  { id: 6, size: 82, baseX: 70, baseY: 12, driftAmpX: 3.2, driftAmpY: 3.2, driftSpeed: 10.5, rotateBase: 9 },
+  { id: 7, size: 64, baseX: 84, baseY: 82, driftAmpX: 3, driftAmpY: 4, driftSpeed: 12.5, rotateBase: 22 },
+  { id: 8, size: 52, baseX: 93, baseY: 17, driftAmpX: 2.2, driftAmpY: 3.2, driftSpeed: 14, rotateBase: 10 },
+  { id: 9, size: 68, baseX: 76, baseY: 42, driftAmpX: 2.6, driftAmpY: 2.8, driftSpeed: 11.5, rotateBase: -24 },
 ];
 
 /* ── Single floating flower — flees from cursor ── */
@@ -64,10 +67,10 @@ function SingleFlower({
   const ref = useRef<HTMLDivElement>(null);
   const [flee, setFlee] = useState({ x: 0, y: 0, rotate: 0 });
 
-  const logoFill = isDark ? ACCENT : DARK_PURPLE;
+  const logoFill = isDark ? "#fff" : DARK_PURPLE;
 
   // Scroll-based opacity
-  const maxOpacity = isDark ? 0.95 : 0.78;
+  const maxOpacity = isDark ? 0.82 : 0.72;
   const opacityVal = scrollPct > 0.9 ? maxOpacity : maxOpacity;
 
   // Calculate repulsion from cursor
@@ -102,7 +105,7 @@ function SingleFlower({
   return (
     <motion.div
       ref={ref}
-      className="fixed z-20 pointer-events-none"
+      className="fixed z-30 pointer-events-none"
       style={{ top: 0, left: 0 }}
       initial={{ opacity: 0, scale: 0.4 }}
       animate={{
@@ -264,25 +267,25 @@ function FloatingFlowerIcon({ className = "", size = 64, delay = 0, rotate = 0 }
 
   return (
     <motion.div
-      className={`pointer-events-none absolute hidden md:block ${className}`}
-      initial={{ opacity: 0, scale: 0.72, rotate }}
-      whileInView={{ opacity: isDark ? 0.9 : 0.74, scale: 1, rotate }}
-      viewport={{ once: true, margin: "120px 0px" }}
+      className={`pointer-events-none absolute z-0 hidden md:block ${className}`}
+      initial={{ opacity: isDark ? 0.52 : 0.42, scale: 0.92, rotate }}
       animate={{
+        opacity: isDark ? [0.58, 0.9, 0.7, 0.58] : [0.42, 0.72, 0.54, 0.42],
+        scale: [0.96, 1.04, 0.99, 0.96],
         y: [0, -14, 7, 0],
         x: [0, 8, -5, 0],
         rotate: [rotate, rotate + 7, rotate - 5, rotate],
       }}
       transition={{
-        opacity: { duration: 0.8, delay },
-        scale: { duration: 0.8, delay },
+        opacity: { duration: 6 + delay, repeat: Infinity, ease: "easeInOut", delay },
+        scale: { duration: 7 + delay, repeat: Infinity, ease: "easeInOut", delay },
         x: { duration: 7 + delay, repeat: Infinity, ease: "easeInOut", delay },
         y: { duration: 8 + delay, repeat: Infinity, ease: "easeInOut", delay },
         rotate: { duration: 9 + delay, repeat: Infinity, ease: "easeInOut", delay },
       }}
     >
       <svg viewBox="0 0 146 145.989" fill="none" style={{ width: size, height: size }}>
-        <path d={svgPaths.p2e03cf00} fill={isDark ? ACCENT : DARK_PURPLE} />
+        <path d={svgPaths.p2e03cf00} fill={isDark ? "#fff" : DARK_PURPLE} />
       </svg>
     </motion.div>
   );
@@ -818,11 +821,14 @@ function FinalSection() {
 
   return (
     <section className="relative overflow-hidden px-6 md:px-16 py-24">
-      <FloatingFlowerIcon className="left-[12%] top-[18%]" size={78} delay={0.1} rotate={-16} />
-      <FloatingFlowerIcon className="right-[13%] top-[10%]" size={92} delay={0.25} rotate={12} />
-      <FloatingFlowerIcon className="left-[23%] bottom-[24%]" size={54} delay={0.4} rotate={9} />
-      <FloatingFlowerIcon className="right-[24%] bottom-[28%]" size={62} delay={0.55} rotate={-10} />
-      <FloatingFlowerIcon className="right-[8%] bottom-[16%]" size={46} delay={0.7} rotate={20} />
+      <FloatingFlowerIcon className="left-[22%] top-[18%]" size={98} delay={0.1} rotate={-16} />
+      <FloatingFlowerIcon className="right-[22%] top-[14%]" size={112} delay={0.25} rotate={12} />
+      <FloatingFlowerIcon className="left-[31%] bottom-[30%]" size={72} delay={0.4} rotate={9} />
+      <FloatingFlowerIcon className="right-[31%] bottom-[30%]" size={78} delay={0.55} rotate={-10} />
+      <FloatingFlowerIcon className="left-[15%] bottom-[18%]" size={62} delay={0.7} rotate={20} />
+      <FloatingFlowerIcon className="right-[15%] bottom-[18%]" size={66} delay={0.85} rotate={-22} />
+      <FloatingFlowerIcon className="left-[43%] top-[8%]" size={48} delay={1} rotate={18} />
+      <FloatingFlowerIcon className="right-[43%] bottom-[16%]" size={46} delay={1.15} rotate={-14} />
 
       <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center">
         <FadeIn className="mb-12">
