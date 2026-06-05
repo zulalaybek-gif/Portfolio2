@@ -15,96 +15,137 @@ import imgLogoNoir from "figma:asset/5c90a72b6b6a65866efbceb3835fae1f1cdf9561.pn
 import imgLogoBlanc from "figma:asset/e8e6d85e718d6e14b46015f5f68cf8cea509223d.png";
 
 // Signalétique — entrée étages
-import imgSign1 from "figma:asset/3b3f12d2ed0fdc869c8604c2d0c9b095443aa2af.png";
-import imgSign2 from "figma:asset/ba0485ad693d7d171f702a164cac6f3219285f9f.png";
-import imgSign3 from "figma:asset/3c4bdf51ef6180176e4aa1e0aa0c1c96be43bc88.png";
-import imgSign4 from "figma:asset/d1b62d30287b851f9af84b7d2ec736e4a540a1da.png";
-import imgSign5 from "figma:asset/acca9b8f399bddcc81d0448951af1ed1182b7b01.png";
+import imgSign1 from "../../assets/digital-campus/01.signaletique.png";
+import imgSign2 from "../../assets/digital-campus/02.signaletique.png";
+import imgSign3 from "../../assets/digital-campus/03.signaletique.png";
+import imgSign4 from "../../assets/digital-campus/04.signaletique.png";
+import imgSign5 from "../../assets/digital-campus/05.signaletique.png";
 
 // Signalétique — plans étages
-import imgSng1 from "figma:asset/5523b9e45b2d04b06a1144ef1cb39e0d3d6ac3a2.png";
-import imgSng0 from "figma:asset/dbaa8eab4c3a161e114a9f5e3060b453583a4ab9.png";
-import imgSngA from "figma:asset/93b1b70e4c9094d246f7c64ae4eecdcf914841a8.png";
-import imgSng2 from "figma:asset/255e87810599eac6e6c491b9b3c212ca2d9e9fa1.png";
-import imgSng3 from "figma:asset/4f97d9fae158245b6c2176731d888235842295f7.png";
-import imgSng4 from "figma:asset/bd8db1bd9a2096ad8f61e5c3d965d3930f06d3d9.png";
-import imgSng5 from "figma:asset/7b424c920753f8c71913dd6bfc99352e7ea3ebd0.png";
+import imgSng1 from "../../assets/digital-campus/06.plans-etages.png";
+import imgSng0 from "../../assets/digital-campus/07.plans-etages.png";
+import imgSngA from "../../assets/digital-campus/08.plans-etages.png";
+import imgSng2 from "../../assets/digital-campus/09.plans-etages.png";
+import imgSng3 from "../../assets/digital-campus/10.plans-etages.png";
+import imgSng4 from "../../assets/digital-campus/11.plans-etages.png";
+import imgSng5 from "../../assets/digital-campus/12.plans-etages.png";
 
 // Signalétique ascenseur
-import imgElevator from "figma:asset/77efaaf0ce8b5623b3c06bfdd5f2a25813062686.png";
+import imgElevator from "../../assets/digital-campus/13.signaletique-ascenseur.png";
 
 // Cartes étudiantes
 import imgCartes from "figma:asset/ffe5ce8cd270f92a5a877c7ac23cd36333d2f50e.png";
 
 // Écrans
-import imgScreen1 from "figma:asset/721233a0040c53d7b768cf2027d25130aca0cf90.png";
-import imgScreen2 from "figma:asset/7eddb1d4a5bd7ca9182e5cf7f281fccb75582d75.png";
-import imgScreen3 from "figma:asset/20712a54294267c67438cd386e2c636ba428b91d.png";
+import imgScreen1 from "../../assets/digital-campus/15.visuels-ecrans.png";
+import imgScreen2 from "../../assets/digital-campus/16.visuels-ecrans.png";
+import imgScreen3 from "../../assets/digital-campus/17.visuels-ecrans.png";
 
 // Affiches
-import imgAffiches from "figma:asset/40001e26ab55be91674c61b334d50f6a05a6d7c8.png";
+import imgAffiches from "../../assets/digital-campus/18.affiches.png";
 
 // Bannières & réseaux sociaux
-import imgBanniere from "figma:asset/98a540edc7fda5b31b56d08153892f8dc633c870.png";
-import imgDcTalk from "figma:asset/d279f49148fc2c98af33f50b470ea862b403d20b.png";
-import imgCampagne from "figma:asset/bf27d3b9bda8fba1015b21cee6f38c4e2990af02.png";
-import imgPost from "figma:asset/e830f7496296150e7882fc26a578c5f2900999a3.png";
-
-// Flyer
-import imgFlyer from "figma:asset/377b9751d831d2adb7593d461c9723dee528acfa.png";
+import imgBanniere from "../../assets/digital-campus/19.jpo.png";
+import imgDcTalk from "../../assets/digital-campus/20.dc-talk.png";
+import imgCampagne from "../../assets/digital-campus/21.flyer.png";
+import imgPost from "../../assets/digital-campus/22.flyer.png";
 
 // Parcours & Timeline
-import imgParcours from "figma:asset/2d922eef4337d9811f903b3a143efc5dd134f854.png";
-import imgTimeline from "figma:asset/532b755d125ac66378705ad83f36c66702f059e6.png";
+import imgParcours from "../../assets/digital-campus/23.parcours-d-etudes.png";
+import imgTimeline from "../../assets/digital-campus/24.timeline.png";
 
 // Pack salons
-import imgKakemono01 from "figma:asset/164d6da88031f3d27d4ec964e0ad09fc6818db50.png";
-import imgKakemono02 from "figma:asset/8de888f36f85a5ed952cf5aa87f490dc839f420a.png";
-import imgKakemono03 from "figma:asset/20a32d4e2ace30218f1dec5044ad2481df07569f.png";
-import imgKakemono04 from "figma:asset/fbc3fa1415fe8f1b09795539eb00559f84571b73.png";
-import imgKakemono05 from "figma:asset/bf2f24be00699782e982eff20ea7a5c9686e818e.png";
-import imgStand1 from "figma:asset/24460cec786bbc2e7af42906d451398db419d422.png";
-import imgStand2 from "figma:asset/26dfb94c1da8b925530802b98f65cce27f3c766f.png";
-import imgStand3 from "figma:asset/3d0d12553ab978172f9e6b9a64f510655642abbc.png";
-import imgFlyerMockup from "figma:asset/b4c0c4569cc16744e8cc7a9a00d42a3779ec5241.png";
+import imgKakemono01 from "../../assets/digital-campus/25.kakemono.png";
+import imgKakemono02 from "../../assets/digital-campus/26.kakemono.png";
+import imgKakemono03 from "../../assets/digital-campus/27.kakemono.png";
+import imgKakemono04 from "../../assets/digital-campus/28.kakemono.png";
+import imgKakemono05 from "../../assets/digital-campus/29.kakemono.png";
+import imgStand1 from "../../assets/digital-campus/30.salon-etudiant.jpg";
+import imgStand2 from "../../assets/digital-campus/32.salon-etudiant.jpg";
+import imgStand3 from "../../assets/digital-campus/33.salon-etudiant.jpg";
 
-// Print — Guide d'utilisation des outils (6 pages, incomplet)
-import imgGuide1 from "figma:asset/36ad4eb55be813dccdaf248e6e88b17d35f73ea0.png";
-import imgGuide2 from "figma:asset/26f1dec0c7c9fc2ceb1924543a881922e591001e.png";
-import imgGuide3 from "figma:asset/760cfab3bd1b27a41b2c417188fe2c6b67e2a438.png";
-import imgGuide4 from "figma:asset/6bd01dcf62ef81c8bf6e793c9864705da3952c63.png";
-import imgGuide5 from "figma:asset/413a8ea5b31c3b19e46adbf74590911b7dcdc543.png";
-import imgGuide6 from "figma:asset/4962080360a3e056e47b692b3936da0893c4f9ad.png";
+// Print — Guide d'utilisation des outils
+import imgGuide34 from "../../assets/digital-campus/34.guide-utilisation.pdf.png";
+import imgGuide35 from "../../assets/digital-campus/35.guide-utilisation.png";
+import imgGuide36 from "../../assets/digital-campus/36.guide-utilisation.png";
+import imgGuide37 from "../../assets/digital-campus/37.guide-utilisation.png";
+import imgGuide38 from "../../assets/digital-campus/38.guide-utilisation.png";
+import imgGuide39 from "../../assets/digital-campus/39.guide-utilisation.png";
 
-// Print — Guide de l'admis (4 pages)
-import imgAdmis1 from "figma:asset/17009ca331ef77bca789d97986effa977642d4d7.png";
-import imgAdmis2 from "figma:asset/293877cebea4210401d7c065a928abb05ac58179.png";
-import imgAdmis3 from "figma:asset/b8ee77e7d931e9ad843c04b77d91b2c77f993fde.png";
-import imgAdmis4 from "figma:asset/9f0f0c4df59507a80473b42c5b7beae7e0a14d07.png";
+// Print — Guide de l'admis
+import imgAdmis40 from "../../assets/digital-campus/40.guide-de-l-admis.png";
+import imgAdmis41 from "../../assets/digital-campus/41.guide-de-l-admis.png";
+import imgAdmis42 from "../../assets/digital-campus/42.guide-de-l-admis.png";
+import imgAdmis43 from "../../assets/digital-campus/43.guide-de-l-admis.png";
+import imgAdmis44 from "../../assets/digital-campus/44.guide-de-l-admis.png";
+import imgAdmis45 from "../../assets/digital-campus/45.guide-de-l-admis.png";
+import imgAdmis46 from "../../assets/digital-campus/46.guide-de-l-admis.png";
+import imgAdmis47 from "../../assets/digital-campus/47.guide-de-l-admis.png";
 
-// Print — Guide de l'admis rafraîchi (4 pages)
-import imgAdmisR1 from "figma:asset/6f4f63401b1425594650b3ef48fb66b93138bd10.png";
-import imgAdmisR2 from "figma:asset/d84da7583f0a68c8dbf6e5117e21c118a4e4e451.png";
-import imgAdmisR3 from "figma:asset/218c71160554d6e8c7474724b45d337bd97b9c49.png";
-import imgAdmisR4 from "figma:asset/745a7ab288e4250f5f75c2ba90abc47c00507edd.png";
+// Print — Plaquette FC
+import imgFC48 from "../../assets/digital-campus/48.plaquette-fc.png";
+import imgFC49 from "../../assets/digital-campus/49.plaquette-fc.png";
+import imgFC50 from "../../assets/digital-campus/50.plaquette-fc.png";
+import imgFC51 from "../../assets/digital-campus/51.plaquette-fc.png";
+import imgFC52 from "../../assets/digital-campus/52.plaquette-fc.png";
+import imgFC53 from "../../assets/digital-campus/53.plaquette-fc.png";
+import imgFC54 from "../../assets/digital-campus/54.plaquette-fc.png";
+import imgFC55 from "../../assets/digital-campus/55.plaquette-fc.png";
+import imgFC56 from "../../assets/digital-campus/56.plaquette-fc.png";
+import imgFC57 from "../../assets/digital-campus/57.plaquette-fc.png";
+import imgFC58 from "../../assets/digital-campus/58.plaquette-fc.png";
+import imgFC59 from "../../assets/digital-campus/59.plaquette-fc.png";
+import imgFC60 from "../../assets/digital-campus/60.plaquette-fc.png";
+import imgFC61 from "../../assets/digital-campus/61.plaquette-fc.png";
+import imgFC62 from "../../assets/digital-campus/62.plaquette-fc.png";
+import imgFC63 from "../../assets/digital-campus/63.plaquette-fc.png";
+import imgFC64 from "../../assets/digital-campus/64.plaquette-fc.png";
+import imgFC65 from "../../assets/digital-campus/65.plaquette-fc.png";
+import imgFC66 from "../../assets/digital-campus/66.plaquette-fc.png";
+import imgFC67 from "../../assets/digital-campus/67.plaquette-fc.png";
+import imgFC68 from "../../assets/digital-campus/68.plaquette-fc.png";
+import imgFC69 from "../../assets/digital-campus/69.plaquette-fc.png";
+import imgFC70 from "../../assets/digital-campus/70.plaquette-fc.png";
+import imgFC71 from "../../assets/digital-campus/71.plaquette-fc.png";
+import imgFC72 from "../../assets/digital-campus/72.plaquette-fc.png";
+import imgFC73 from "../../assets/digital-campus/73.plaquette-fc.png";
+import imgFC74 from "../../assets/digital-campus/74.plaquette-fc.png";
+import imgFC75 from "../../assets/digital-campus/75.plaquette-fc.png";
+import imgFC76 from "../../assets/digital-campus/76.plaquette-fc.png";
 
-// Print — Plaquette FC (échantillon 4 pages sur 29)
-import imgFC01 from "figma:asset/87d7153c1168102cd32d028642c7ca6b17b16677.png";
-import imgFC02 from "figma:asset/0fa7c4abdabf7489ee142cf064be9197d67183e7.png";
-import imgFC15 from "figma:asset/efe2906473dd603a87ccb3167c93fb7ec9599a4d.png";
-import imgFC29 from "figma:asset/b0cec114d3fa0e0bd5a824874d1422cc3ef300a8.png";
+// Print — Plaquette formations
+import imgPlaq77 from "../../assets/digital-campus/77.plaquette-formation.png";
+import imgPlaq78 from "../../assets/digital-campus/78.plaquette-formation.png";
+import imgPlaq79 from "../../assets/digital-campus/79.plaquette-formation.png";
+import imgPlaq80 from "../../assets/digital-campus/80.plaquette-formation.png";
+import imgPlaq81 from "../../assets/digital-campus/81.plaquette-formation.png";
+import imgPlaq82 from "../../assets/digital-campus/82.plaquette-formation.png";
+import imgPlaq83 from "../../assets/digital-campus/83.plaquette-formation.png";
+import imgPlaq84 from "../../assets/digital-campus/84.plaquette-formation.png";
 
-// Print — Plaquette formations (échantillon 4 pages sur 8)
-import imgPlaq1 from "figma:asset/c412322b49df7fe5b40daa54c039448d9c329fb9.png";
-import imgPlaq2 from "figma:asset/1dd960701ec42272efc74dd66cd2b93455d1838c.png";
-import imgPlaq5 from "figma:asset/50dc5173fb074f82ea31a59fc827ef9840b794ab.png";
-import imgPlaq8 from "figma:asset/a3463e13cdab8a4513cfa584255a4042553fed14.png";
-
-// Print — Livret préparer sa recherche (échantillon 4 pages sur 22)
-import imgLiv01 from "figma:asset/31329094a920494d1f2a86b902b07d397aaa8ea4.png";
-import imgLiv02 from "figma:asset/3efac74bbc58c442750eaa5a89ebd8889210f297.png";
-import imgLiv11 from "figma:asset/53228c25b0311a6836364bf6f5e5dec3a09f74fb.png";
-import imgLiv22 from "figma:asset/10d074b3321fab2674333afa712f752d683a14d0.png";
+// Print — Livret préparer sa recherche
+import imgLiv85 from "../../assets/digital-campus/85.livret-preparer-sa-recherche.png";
+import imgLiv86 from "../../assets/digital-campus/86.livret-preparer-sa-recherche.png";
+import imgLiv87 from "../../assets/digital-campus/87.livret-preparer-sa-recherche.png";
+import imgLiv88 from "../../assets/digital-campus/88.livret-preparer-sa-recherche.png";
+import imgLiv89 from "../../assets/digital-campus/89.livret-preparer-sa-recherche.png";
+import imgLiv90 from "../../assets/digital-campus/90.livret-preparer-sa-recherche.png";
+import imgLiv91 from "../../assets/digital-campus/91.livret-preparer-sa-recherche.png";
+import imgLiv92 from "../../assets/digital-campus/92.livret-preparer-sa-recherche.png";
+import imgLiv93 from "../../assets/digital-campus/93.livret-preparer-sa-recherche.png";
+import imgLiv94 from "../../assets/digital-campus/94.livret-preparer-sa-recherche.png";
+import imgLiv95 from "../../assets/digital-campus/95.livret-preparer-sa-recherche.png";
+import imgLiv96 from "../../assets/digital-campus/96.livret-preparer-sa-recherche.png";
+import imgLiv97 from "../../assets/digital-campus/97.livret-preparer-sa-recherche.png";
+import imgLiv98 from "../../assets/digital-campus/98.livret-preparer-sa-recherche.png";
+import imgLiv99 from "../../assets/digital-campus/99.livret-preparer-sa-recherche.png";
+import imgLiv100 from "../../assets/digital-campus/100.livret-preparer-sa-recherche.png";
+import imgLiv101 from "../../assets/digital-campus/101.livret-preparer-sa-recherche.png";
+import imgLiv102 from "../../assets/digital-campus/102.livret-preparer-sa-recherche.png";
+import imgLiv103 from "../../assets/digital-campus/103.livret-preparer-sa-recherche.png";
+import imgLiv104 from "../../assets/digital-campus/104.livret-preparer-sa-recherche.png";
+import imgLiv105 from "../../assets/digital-campus/105.livret-preparer-sa-recherche.png";
+import imgLiv106 from "../../assets/digital-campus/106.livret-preparer-sa-recherche.png";
 
 /* ── Constants ── */
 const ACCENT = "#0092BD";
@@ -178,12 +219,72 @@ function ScrollRow({ children, className = "" }: { children: React.ReactNode; cl
 
 /* ── Print flipbook data ── */
 const PRINT_DOCS = [
-  { label: "Guide d'utilisation", labelEn: "Usage Guide", pages: [imgGuide4, imgGuide5, imgGuide6, imgGuide1, imgGuide2, imgGuide3], note: "Extrait" },
-  { label: "Guide de l'admis", labelEn: "Admission Guide", pages: [imgAdmis1, imgAdmis2, imgAdmis3, imgAdmis4] },
-  { label: "Guide de l'admis (v2)", labelEn: "Admission Guide (v2)", pages: [imgAdmisR1, imgAdmisR2, imgAdmisR3, imgAdmisR4] },
-  { label: "Plaquette FC", labelEn: "FC Brochure", pages: [imgFC01,imgFC02,imgFC15,imgFC29] },
-  { label: "Plaquette formations", labelEn: "Training Brochure", pages: [imgPlaq1,imgPlaq2,imgPlaq5,imgPlaq8] },
-  { label: "Livret recherche", labelEn: "Job Search Booklet", pages: [imgLiv01,imgLiv02,imgLiv11,imgLiv22] },
+  { label: "Guide d'utilisation", labelEn: "Usage Guide", pages: [imgGuide34, imgGuide35, imgGuide36, imgGuide37, imgGuide38, imgGuide39] },
+  { label: "Guide de l'admis", labelEn: "Admission Guide", pages: [imgAdmis40, imgAdmis41, imgAdmis42, imgAdmis43, imgAdmis44, imgAdmis45, imgAdmis46, imgAdmis47] },
+  {
+    label: "Plaquette FC",
+    labelEn: "FC Brochure",
+    pages: [
+      imgFC48,
+      imgFC49,
+      imgFC50,
+      imgFC51,
+      imgFC52,
+      imgFC53,
+      imgFC54,
+      imgFC55,
+      imgFC56,
+      imgFC57,
+      imgFC58,
+      imgFC59,
+      imgFC60,
+      imgFC61,
+      imgFC62,
+      imgFC63,
+      imgFC64,
+      imgFC65,
+      imgFC66,
+      imgFC67,
+      imgFC68,
+      imgFC69,
+      imgFC70,
+      imgFC71,
+      imgFC72,
+      imgFC73,
+      imgFC74,
+      imgFC75,
+      imgFC76,
+    ],
+  },
+  { label: "Plaquette formations", labelEn: "Training Brochure", pages: [imgPlaq77, imgPlaq78, imgPlaq79, imgPlaq80, imgPlaq81, imgPlaq82, imgPlaq83, imgPlaq84] },
+  {
+    label: "Livret recherche",
+    labelEn: "Job Search Booklet",
+    pages: [
+      imgLiv85,
+      imgLiv86,
+      imgLiv87,
+      imgLiv88,
+      imgLiv89,
+      imgLiv90,
+      imgLiv91,
+      imgLiv92,
+      imgLiv93,
+      imgLiv94,
+      imgLiv95,
+      imgLiv96,
+      imgLiv97,
+      imgLiv98,
+      imgLiv99,
+      imgLiv100,
+      imgLiv101,
+      imgLiv102,
+      imgLiv103,
+      imgLiv104,
+      imgLiv105,
+      imgLiv106,
+    ],
+  },
 ];
 
 /* ── Helpers ── */
