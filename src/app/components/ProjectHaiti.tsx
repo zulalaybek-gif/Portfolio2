@@ -19,8 +19,6 @@ import imgPeople from "../../assets/collectif-haiti-de-france/04.image.png";
 /* ── Project imagery ── */
 import imgMockupSituation from "../../assets/collectif-haiti-de-france/05.mise-en-situation.png";
 import imgInstagram from "../../assets/collectif-haiti-de-france/06.reseaux-sociaux-2.png";
-import imgMonoLight from "../../assets/collectif-haiti-de-france/23.monochrome.png";
-import imgMonoDark from "../../assets/collectif-haiti-de-france/24.monochrome.png";
 import imgPrototypeHome from "../../assets/collectif-haiti-de-france/25.homepage.png";
 import imgPrototypeMobile from "../../assets/collectif-haiti-de-france/26.notre-histoire.png";
 import imgOldLogo from "../../assets/collectif-haiti-de-france/27.ancien-logo.JPG";
@@ -663,7 +661,7 @@ function BeforeRefonteSection() {
             État existant
           </span>
         </FadeIn>
-        <SectionTitle text="Avant refonte" color={NAVY} />
+        <SectionTitle text="Point de départ" color={NAVY} />
         <FadeIn>
           <p
             className="max-w-2xl mb-10"
@@ -1004,7 +1002,6 @@ function IconographySection() {
    6. DECLINAISONS (Color variations)
    ═════════════════════════════════════════ */
 function DeclinationsSection() {
-  const { t } = useI18n();
   const { r } = useTheme();
 
   const variations = [
@@ -1020,7 +1017,7 @@ function DeclinationsSection() {
     <section className="px-6 md:px-12 py-16">
       <div className="max-w-6xl mx-auto">
         <SectionLabel text="Déclinaisons" />
-        <SectionTitle text={t("haiti.decli.title")} />
+        <SectionTitle text="Déclinaisons" />
         <FadeIn>
           <p
             className="max-w-2xl mb-12"
@@ -1031,7 +1028,7 @@ function DeclinationsSection() {
               color: r(0.35),
             }}
           >
-            {t("haiti.decli.desc")}
+            Pensées comme un système modulable, les déclinaisons permettent au logo de s’adapter aux fonds, aux usages et aux supports sans perdre son identité.
           </p>
         </FadeIn>
 
@@ -1068,53 +1065,6 @@ function DeclinationsSection() {
           ))}
         </div>
 
-      </div>
-    </section>
-  );
-}
-
-/* ══════════════════════════════════════════
-   8. VERSIONS MONOCHROMES
-   ══════════════════════════════════════════ */
-function MonochromeSection() {
-  const { r } = useTheme();
-
-  return (
-    <section className="px-6 md:px-12 py-16">
-      <div className="max-w-6xl mx-auto">
-        <SectionLabel text="Versions monochromes" />
-        <SectionTitle text="Versions monochromes" />
-        <FadeIn>
-          <p
-            className="max-w-2xl mb-10"
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: "0.95rem",
-              lineHeight: 1.8,
-              color: r(0.35),
-            }}
-          >
-            Les versions monochromes assurent la lisibilité du logo lorsque le contexte impose un traitement plus sobre, sans perdre la structure du signe ni son équilibre institutionnel.
-          </p>
-        </FadeIn>
-
-        <div className="grid md:grid-cols-2 gap-4">
-          {[
-            { image: imgMonoLight, bg: "#f8f8f8", label: "Version monochrome claire" },
-            { image: imgMonoDark, bg: NAVY, label: "Version monochrome sombre" },
-          ].map((item, i) => (
-            <FadeIn key={item.label} delay={i * 0.08}>
-              <motion.div
-                className="rounded-2xl p-8 md:p-10 flex items-center justify-center aspect-[16/7]"
-                style={{ background: item.bg, border: `1px solid ${r(0.06)}` }}
-                whileHover={{ scale: 1.02 }}
-                transition={{ type: "spring", stiffness: 260, damping: 22 }}
-              >
-                <img src={item.image} alt={item.label} className="max-h-28 md:max-h-32 w-auto max-w-full object-contain" loading="lazy" />
-              </motion.div>
-            </FadeIn>
-          ))}
-        </div>
       </div>
     </section>
   );
@@ -1871,11 +1821,10 @@ export function ProjectHaiti() {
       <HeroSection />
       <DirectionSection />
       <BeforeRefonteSection />
-      <VisualSystemSection />
       <LogoSection />
       <LogoConceptSection />
+      <VisualSystemSection />
       <DeclinationsSection />
-      <MonochromeSection />
       <MockupSituationSection />
       <ApplicationsIdentitySection />
       <StoriesSection />
