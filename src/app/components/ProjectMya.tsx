@@ -305,7 +305,7 @@ function HeroSection() {
           <svg viewBox="0 0 146 145.989" fill="none" className="w-full h-full">
             <path
               d={svgPaths.p2e03cf00}
-              fill={isDark ? ACCENT : DARK_PURPLE}
+              fill={isDark ? "#fff" : DARK_PURPLE}
               className="transition-all duration-700"
             />
           </svg>
@@ -385,8 +385,8 @@ function ContextSection() {
 
   return (
     <section className="px-6 md:px-16 py-12 max-w-5xl mx-auto">
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-8 items-start">
-        <FadeIn>
+      <div className="max-w-3xl">
+        <FadeIn className="mb-6">
           <SectionLabel>{t("mya.context.label")}</SectionLabel>
         </FadeIn>
         <FadeIn delay={0.1}>
@@ -423,7 +423,7 @@ function LogoSection() {
         {/* Large logo on colored bg */}
         <FadeIn>
           <div
-            className="w-full rounded-2xl flex items-center justify-center py-20 md:py-28 transition-all duration-700"
+            className="mx-auto flex w-full max-w-3xl items-center justify-center rounded-2xl py-14 transition-all duration-700 md:py-20"
             style={{
               background: isDark
                 ? `linear-gradient(160deg, ${DARK_PURPLE} 0%, #1a0d24 100%)`
@@ -435,10 +435,10 @@ function LogoSection() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 1, ease: "easeOut" }}
-              className="w-[200px] md:w-[280px]"
+              className="w-[140px] md:w-[200px]"
             >
               <svg viewBox="0 0 146 145.989" fill="none" className="w-full">
-                <path d={svgPaths.p2e03cf00} fill={isDark ? ACCENT : DARK_PURPLE} />
+                <path d={svgPaths.p2e03cf00} fill={isDark ? "#fff" : DARK_PURPLE} />
               </svg>
             </motion.div>
           </div>
@@ -453,12 +453,12 @@ function LogoSection() {
    ═══════════════════════════════════════════ */
 function IntentionSection() {
   const { t } = useI18n();
-  const { r, isDark } = useTheme();
+  const { r } = useTheme();
 
   return (
     <section className="px-6 md:px-16 py-16 max-w-5xl mx-auto">
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-8 items-start">
-        <FadeIn>
+      <div className="max-w-3xl">
+        <FadeIn className="mb-6">
           <SectionLabel>{t("mya.intention.label")}</SectionLabel>
         </FadeIn>
         <FadeIn delay={0.1}>
@@ -501,13 +501,7 @@ function ConstructionSection() {
 
         {/* Construction grid SVG */}
         <FadeIn>
-          <div
-            className="w-full max-w-xl mx-auto rounded-2xl p-10 md:p-16 flex items-center justify-center transition-all duration-700"
-            style={{
-              background: isDark ? "rgba(255,255,255,0.02)" : "rgba(0,0,0,0.02)",
-              border: `1px solid ${r(0.05)}`,
-            }}
-          >
+          <div className="w-full max-w-xl mx-auto flex items-center justify-center transition-all duration-700">
             <svg viewBox="0 0 194.292 191.654" fill="none" className="w-full" style={{ maxWidth: 420 }}>
               {/* Logo with fill + stroke */}
               <path
@@ -683,7 +677,7 @@ function ProcessSection() {
         </FadeIn>
 
         <FadeIn>
-          <div className="w-full rounded-2xl overflow-hidden" style={{ border: `1px solid ${r(0.05)}` }}>
+          <div className="mx-auto w-full max-w-3xl rounded-2xl overflow-hidden" style={{ border: `1px solid ${r(0.05)}` }}>
             <img src={imgProcess} alt="Creative process" className="w-full object-cover" />
           </div>
         </FadeIn>
@@ -707,7 +701,7 @@ function MockupsSection() {
         </FadeIn>
 
         {/* Jewelry photo grid */}
-        <div className="grid grid-cols-2 gap-3 mb-3">
+        <div className="mx-auto grid max-w-3xl grid-cols-2 gap-3 mb-3">
           {[img1, img2, img3, img4].map((src, i) => (
             <FadeIn key={i} delay={i * 0.08}>
               <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
