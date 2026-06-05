@@ -267,14 +267,14 @@ function FloatingFlowerIcon({ className = "", size = 64, delay = 0, rotate = 0 }
 
   return (
     <motion.div
-      className={`pointer-events-none absolute z-0 hidden md:block ${className}`}
-      initial={{ opacity: isDark ? 0.52 : 0.42, scale: 0.92, rotate }}
+      className={`pointer-events-none absolute z-20 hidden md:block ${className}`}
+      initial={{ opacity: isDark ? 0.88 : 0.66, scale: 0.94, rotate }}
       animate={{
-        opacity: isDark ? [0.58, 0.9, 0.7, 0.58] : [0.42, 0.72, 0.54, 0.42],
-        scale: [0.96, 1.04, 0.99, 0.96],
-        y: [0, -14, 7, 0],
-        x: [0, 8, -5, 0],
-        rotate: [rotate, rotate + 7, rotate - 5, rotate],
+        opacity: isDark ? [0.88, 1, 0.92, 0.88] : [0.66, 0.9, 0.74, 0.66],
+        scale: [0.98, 1.08, 1.01, 0.98],
+        y: [0, -18, 9, 0],
+        x: [0, 10, -7, 0],
+        rotate: [rotate, rotate + 9, rotate - 6, rotate],
       }}
       transition={{
         opacity: { duration: 6 + delay, repeat: Infinity, ease: "easeInOut", delay },
@@ -284,7 +284,17 @@ function FloatingFlowerIcon({ className = "", size = 64, delay = 0, rotate = 0 }
         rotate: { duration: 9 + delay, repeat: Infinity, ease: "easeInOut", delay },
       }}
     >
-      <svg viewBox="0 0 146 145.989" fill="none" style={{ width: size, height: size }}>
+      <svg
+        viewBox="0 0 146 145.989"
+        fill="none"
+        style={{
+          width: size,
+          height: size,
+          filter: isDark
+            ? `drop-shadow(0 0 22px rgba(${ACCENT_RGB},0.42)) drop-shadow(0 0 6px rgba(255,255,255,0.18))`
+            : `drop-shadow(0 10px 24px rgba(35,19,50,0.16))`,
+        }}
+      >
         <path d={svgPaths.p2e03cf00} fill={isDark ? "#fff" : DARK_PURPLE} />
       </svg>
     </motion.div>
@@ -313,6 +323,12 @@ function HeroSection() {
             : `radial-gradient(ellipse 60% 50% at 50% 45%, rgba(${ACCENT_RGB},0.1) 0%, transparent 70%)`,
         }}
       />
+
+      <FloatingFlowerIcon className="right-[7%] top-[20%]" size={138} delay={0.1} rotate={-15} />
+      <FloatingFlowerIcon className="right-[17%] top-[50%]" size={104} delay={0.35} rotate={18} />
+      <FloatingFlowerIcon className="right-[28%] bottom-[15%]" size={76} delay={0.6} rotate={-8} />
+      <FloatingFlowerIcon className="left-[9%] top-[36%]" size={98} delay={0.2} rotate={12} />
+      <FloatingFlowerIcon className="left-[22%] bottom-[18%]" size={66} delay={0.5} rotate={-18} />
 
       <motion.div className="relative z-10 flex flex-col items-center" style={{ scale: logoScale, opacity: logoOpacity }}>
         {/* Small label */}
@@ -820,15 +836,15 @@ function FinalSection() {
   const navigate = useNavigate();
 
   return (
-    <section className="relative overflow-hidden px-6 md:px-16 py-24">
-      <FloatingFlowerIcon className="left-[22%] top-[18%]" size={98} delay={0.1} rotate={-16} />
-      <FloatingFlowerIcon className="right-[22%] top-[14%]" size={112} delay={0.25} rotate={12} />
-      <FloatingFlowerIcon className="left-[31%] bottom-[30%]" size={72} delay={0.4} rotate={9} />
-      <FloatingFlowerIcon className="right-[31%] bottom-[30%]" size={78} delay={0.55} rotate={-10} />
-      <FloatingFlowerIcon className="left-[15%] bottom-[18%]" size={62} delay={0.7} rotate={20} />
-      <FloatingFlowerIcon className="right-[15%] bottom-[18%]" size={66} delay={0.85} rotate={-22} />
-      <FloatingFlowerIcon className="left-[43%] top-[8%]" size={48} delay={1} rotate={18} />
-      <FloatingFlowerIcon className="right-[43%] bottom-[16%]" size={46} delay={1.15} rotate={-14} />
+    <section className="relative min-h-[58vh] overflow-hidden px-6 md:px-16 py-28">
+      <FloatingFlowerIcon className="left-[10%] top-[16%]" size={116} delay={0.1} rotate={-16} />
+      <FloatingFlowerIcon className="right-[10%] top-[12%]" size={132} delay={0.25} rotate={12} />
+      <FloatingFlowerIcon className="left-[25%] top-[38%]" size={86} delay={0.4} rotate={9} />
+      <FloatingFlowerIcon className="right-[25%] top-[42%]" size={92} delay={0.55} rotate={-10} />
+      <FloatingFlowerIcon className="left-[14%] bottom-[16%]" size={74} delay={0.7} rotate={20} />
+      <FloatingFlowerIcon className="right-[14%] bottom-[16%]" size={78} delay={0.85} rotate={-22} />
+      <FloatingFlowerIcon className="left-[39%] top-[7%]" size={58} delay={1} rotate={18} />
+      <FloatingFlowerIcon className="right-[39%] bottom-[12%]" size={58} delay={1.15} rotate={-14} />
 
       <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center">
         <FadeIn className="mb-12">
