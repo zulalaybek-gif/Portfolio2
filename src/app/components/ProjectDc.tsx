@@ -10,10 +10,6 @@ import { ImageWithFallback } from "./figma/ImageWithFallback";
 import svgPaths from "../../imports/svg-t7oxiwk9z2";
 import logoSvgPaths from "../../imports/svg-m9u3nftpad";
 
-// Logos
-import imgLogoNoir from "figma:asset/5c90a72b6b6a65866efbceb3835fae1f1cdf9561.png";
-import imgLogoBlanc from "figma:asset/e8e6d85e718d6e14b46015f5f68cf8cea509223d.png";
-
 // Signalétique — entrée étages
 import imgSign1 from "../../assets/digital-campus/01.signaletique.png";
 import imgSign2 from "../../assets/digital-campus/02.signaletique.png";
@@ -538,6 +534,14 @@ function DcShape({ path, fill, size = 80 }: { path: string; fill: string; size?:
   );
 }
 
+function DigitalCampusLogo({ fill }: { fill: string }) {
+  return (
+    <svg viewBox="0 0 1500 605.27" fill="none" aria-label="Digital Campus" className="w-full h-auto">
+      <path d={logoSvgPaths.p10bc1a00} fill={fill} />
+    </svg>
+  );
+}
+
 /* ══════════════════════════════════════════
    MAIN PAGE
    ═══════════════════════════════════════════ */
@@ -563,7 +567,7 @@ export function ProjectDc() {
 
           {/* DC Logo */}
           <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2, delay: 0.5 }} className="w-[200px] md:w-[280px] mb-8">
-            <ImageWithFallback src={isDark ? imgLogoBlanc : imgLogoNoir} alt="Digital Campus" className="w-full h-auto" />
+            <DigitalCampusLogo fill={isDark ? "#FFFFFF" : "#0E1726"} />
           </motion.div>
 
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.9 }} className="mt-4 text-center max-w-xl" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", lineHeight: 1.7, color: r(0.35) }}>
