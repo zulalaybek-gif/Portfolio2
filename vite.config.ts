@@ -51,8 +51,8 @@ function figmaAssetResolver() {
 
 function sharpImageOptimizer() {
   const rasterExtensions = new Set(['.gif', '.jpg', '.jpeg', '.png', '.webp'])
-  const maxWidth = 2560
-  const maxHeight = 2560
+  const maxWidth = 1920
+  const maxHeight = 1920
   const cache = new Map<string, Promise<{ source: Buffer; fileName: string }>>()
 
   function cleanId(id: string) {
@@ -88,8 +88,8 @@ function sharpImageOptimizer() {
 
     const webp = await pipeline
       .webp({
-        quality: metadata.hasAlpha ? 90 : 84,
-        alphaQuality: 100,
+        quality: metadata.hasAlpha ? 86 : 80,
+        alphaQuality: 96,
         effort: 5,
         smartSubsample: true,
       })

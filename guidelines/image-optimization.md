@@ -4,10 +4,10 @@ This project keeps original source images in `src/assets` and optimizes delivery
 
 ## What Happens Automatically
 
-- Raster imports from `src/assets` (`.jpg`, `.jpeg`, `.png`, `.webp`) are processed by the `sharp-image-optimizer` Vite plugin.
-- Large images are converted to WebP during production builds.
-- Very large images are capped to `2560px` on their longest side.
-- Small images, invalid images, or images where WebP is not meaningfully smaller are emitted unchanged.
+- Raster imports from `src/assets` (`.gif`, `.jpg`, `.jpeg`, `.png`, `.webp`) are processed by the `sharp-image-optimizer` Vite plugin.
+- Images are converted to WebP during production builds, including future images added under `src/assets` and imported by components.
+- Very large images are capped to `1920px` on their longest side.
+- Invalid images are emitted unchanged as a fallback.
 - Original source files are never overwritten.
 
 ## Adding New Images
