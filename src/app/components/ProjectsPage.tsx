@@ -550,10 +550,26 @@ function ProjectModal({ project, onClose, onNext, onViewCase }: { project: Proje
   }, []);
 
   useEffect(() => {
+    const scrollY = window.scrollY;
     const previousOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+    const previousPosition = document.body.style.position;
+    const previousTop = document.body.style.top;
+    const previousWidth = document.body.style.width;
+
+    document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = "100%";
+
     return () => {
+      document.documentElement.style.overflow = previousHtmlOverflow;
       document.body.style.overflow = previousOverflow;
+      document.body.style.position = previousPosition;
+      document.body.style.top = previousTop;
+      document.body.style.width = previousWidth;
+      window.scrollTo(0, scrollY);
     };
   }, []);
 
@@ -573,6 +589,8 @@ function ProjectModal({ project, onClose, onNext, onViewCase }: { project: Proje
       className="fixed inset-0 z-[9999] flex items-center justify-center p-0 md:p-6"
       style={{ background: pal.modalOverlay, backdropFilter: "blur(30px)" }}
       onClick={onClose}
+      onWheel={(e) => e.preventDefault()}
+      onTouchMove={(e) => e.preventDefault()}
     >
       <motion.div
         role="dialog"
@@ -609,7 +627,7 @@ function ProjectModal({ project, onClose, onNext, onViewCase }: { project: Proje
           </button>
         </div>
 
-        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain md:overflow-hidden">
+        <div className="min-h-0 flex-1 overflow-hidden overscroll-none">
           <div className="grid min-h-full md:h-full md:grid-cols-[1fr_0.92fr]">
             <div className="relative min-h-[230px] overflow-hidden md:min-h-0">
               <ImageWithFallback src={project.image} alt={project.title} className="h-full w-full object-cover" />
@@ -617,7 +635,7 @@ function ProjectModal({ project, onClose, onNext, onViewCase }: { project: Proje
               <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse at 50% 86%, rgba(${project.accent},0.16) 0%, transparent 62%)` }} />
             </div>
 
-          <div className="relative flex min-h-0 flex-col px-6 py-7 md:overflow-y-auto md:px-8 md:py-8">
+          <div className="relative flex min-h-0 flex-col overflow-hidden px-6 py-7 md:px-8 md:py-8">
             <motion.h2 id={`project-modal-${project.id}`} initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.14 }} className="mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, lineHeight: 0.96, letterSpacing: "-0.03em", color: pal.text }}>
               {project.title}
             </motion.h2>
