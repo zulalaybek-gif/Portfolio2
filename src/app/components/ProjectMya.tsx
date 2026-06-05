@@ -37,9 +37,9 @@ interface FloatingFlowerData {
   rotateBase: number;
 }
 const FLOWERS: FloatingFlowerData[] = [
-  { id: 0, size: 64, baseX: 88, baseY: 28, driftAmpX: 2.5, driftAmpY: 3.5, driftSpeed: 8, rotateBase: -5 },
-  { id: 1, size: 44, baseX: 8, baseY: 52, driftAmpX: 2, driftAmpY: 3, driftSpeed: 10, rotateBase: 12 },
-  { id: 2, size: 52, baseX: 92, baseY: 72, driftAmpX: 3, driftAmpY: 2.5, driftSpeed: 9, rotateBase: -8 },
+  { id: 0, size: 76, baseX: 88, baseY: 28, driftAmpX: 2.5, driftAmpY: 3.5, driftSpeed: 8, rotateBase: -5 },
+  { id: 1, size: 54, baseX: 8, baseY: 52, driftAmpX: 2, driftAmpY: 3, driftSpeed: 10, rotateBase: 12 },
+  { id: 2, size: 62, baseX: 92, baseY: 72, driftAmpX: 3, driftAmpY: 2.5, driftSpeed: 9, rotateBase: -8 },
 ];
 
 /* ── Single floating flower — flees from cursor ── */
@@ -64,9 +64,7 @@ function SingleFlower({
 
   // Scroll-based opacity
   const maxOpacity = isDark ? 0.75 : 0.6;
-  let opacityVal = maxOpacity;
-  if (scrollPct > 0.88 && scrollPct < 0.95) opacityVal = ((0.95 - scrollPct) / 0.07) * maxOpacity;
-  else if (scrollPct >= 0.95) opacityVal = 0;
+  const opacityVal = scrollPct > 0.9 ? maxOpacity * 0.9 : maxOpacity;
 
   // Calculate repulsion from cursor
   useEffect(() => {
@@ -800,44 +798,12 @@ function FinalSection() {
   return (
     <section className="px-6 md:px-16 py-24">
       <div className="max-w-5xl mx-auto flex flex-col items-center">
-        <FadeIn className="mb-6">
-          <SectionLabel>{t("mya.final.label")}</SectionLabel>
-        </FadeIn>
-
-        {/* Final logo + small image */}
-        <FadeIn className="w-full max-w-[22rem]">
-          <div
-            className="w-full rounded-2xl mb-10 transition-all duration-700 flex flex-col items-center justify-center"
-            style={{
-              aspectRatio: "1 / 1",
-              background: isDark
-                ? `linear-gradient(180deg, ${DARK_PURPLE} 0%, #0d0818 100%)`
-                : `linear-gradient(180deg, #f3eaf5 0%, #ece2ef 100%)`,
-            }}
-          >
-            <div className="w-[100px] md:w-[120px] mb-6">
-              <svg viewBox="0 0 146 145.989" fill="none" className="w-full">
-                <path d={svgPaths.p2e03cf00} fill={isDark ? "#fff" : DARK_PURPLE} />
-              </svg>
-            </div>
-            <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.5rem", fontWeight: 700, letterSpacing: "0.15em", color: isDark ? "#fff" : DARK_PURPLE }}>
-              MYA
-            </span>
+        <FadeIn className="mb-12">
+          <div className="w-[120px] md:w-[150px]">
+            <svg viewBox="0 0 146 145.989" fill="none" className="w-full">
+              <path d={svgPaths.p2e03cf00} fill={isDark ? "#fff" : DARK_PURPLE} />
+            </svg>
           </div>
-        </FadeIn>
-
-        <FadeIn>
-          <p
-            className="text-center max-w-md mb-12"
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: "0.85rem",
-              lineHeight: 2,
-              color: r(0.3),
-            }}
-          >
-            {t("mya.final.text")}
-          </p>
         </FadeIn>
 
         {/* Back button */}
