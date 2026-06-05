@@ -1,5 +1,6 @@
 import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
 import { useState, useRef, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { ArrowUpRight, ArrowRight, X, MoveRight } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { ParticleDivider } from "./ParticleDivider";
@@ -542,6 +543,19 @@ function HorizontalReel({ onSelect }: { onSelect: (p: Project) => void }) {
 function ProjectModal({ project, onClose, onNext, onViewCase }: { project: Project; onClose: () => void; onNext: () => void; onViewCase: () => void }) {
   const { t } = useI18n();
   const { p: pal, r, isDark } = useTheme();
+  const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setPortalRoot(document.body);
+  }, []);
+
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, []);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -552,20 +566,23 @@ function ProjectModal({ project, onClose, onNext, onViewCase }: { project: Proje
     return () => window.removeEventListener("keydown", handler);
   }, [onClose, onNext]);
 
-  return (
+  const modal = (
     <motion.div
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
       transition={{ duration: 0.35 }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 md:p-8"
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-0 md:p-6"
       style={{ background: pal.modalOverlay, backdropFilter: "blur(30px)" }}
       onClick={onClose}
     >
       <motion.div
-        initial={{ opacity: 0, y: 50, scale: 0.92 }}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={`project-modal-${project.id}`}
+        initial={{ opacity: 0, y: 50, scale: 0.96 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: 30, scale: 0.95 }}
+        exit={{ opacity: 0, y: 30, scale: 0.98 }}
         transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-        className="relative w-full max-w-5xl max-h-[92vh] overflow-hidden rounded-[2rem]"
+        className="relative flex h-[92dvh] max-h-[92dvh] w-full max-w-[900px] flex-col overflow-hidden rounded-t-[1.6rem] md:h-[640px] md:max-h-[86dvh] md:rounded-[1.8rem]"
         style={{
           background: pal.modalBg,
           border: `1px solid ${r(0.06)}`,
@@ -573,74 +590,85 @@ function ProjectModal({ project, onClose, onNext, onViewCase }: { project: Proje
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between p-5 md:p-6">
-          <div className="flex items-center gap-3">
-            <span className="w-2 h-2 rounded-full" style={{ background: project.color }} />
-            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.7rem", letterSpacing: "0.05em", color: r(0.3) }}>
+        <div
+          className="relative z-20 flex shrink-0 items-center justify-between gap-4 px-5 py-4 md:px-6"
+          style={{
+            background: isDark ? "rgba(9, 12, 18, 0.72)" : "rgba(255, 255, 255, 0.72)",
+            borderBottom: `1px solid ${r(0.06)}`,
+            backdropFilter: "blur(18px)",
+          }}
+        >
+          <div className="flex min-w-0 items-center gap-3">
+            <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: project.color }} />
+            <span className="truncate" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.7rem", letterSpacing: "0.05em", color: r(0.38) }}>
               {t(catI18nMap[project.category])} &mdash; {project.year}
             </span>
           </div>
-          <button onClick={onClose} className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:rotate-90" style={{ background: r(0.05), border: `1px solid ${r(0.08)}` }}>
+          <button aria-label="Fermer l'aperçu" onClick={onClose} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-colors duration-300" style={{ background: r(0.05), border: `1px solid ${r(0.08)}` }}>
             <X size={16} style={{ color: r(0.5) }} />
           </button>
         </div>
 
-        <div className="overflow-y-auto max-h-[92vh]">
-          <div className="relative w-full aspect-[16/8] overflow-hidden">
-            <ImageWithFallback src={project.image} alt={project.title} className="w-full h-full object-cover" />
-            <div className="absolute inset-0" style={{ background: isDark ? "linear-gradient(180deg, rgba(22,22,22,0.3) 0%, transparent 30%, rgba(10,10,10,1) 100%)" : "linear-gradient(180deg, rgba(255,255,255,0.3) 0%, transparent 30%, rgba(255,255,255,1) 100%)" }} />
-            <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse at 50% 100%, rgba(${project.accent},0.1) 0%, transparent 60%)` }} />
-          </div>
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain md:overflow-hidden">
+          <div className="grid min-h-full md:h-full md:grid-cols-[1fr_0.92fr]">
+            <div className="relative min-h-[230px] overflow-hidden md:min-h-0">
+              <ImageWithFallback src={project.image} alt={project.title} className="h-full w-full object-cover" />
+              <div className="absolute inset-0" style={{ background: isDark ? "linear-gradient(90deg, rgba(10,10,10,0.08) 0%, transparent 42%, rgba(10,10,10,0.75) 100%)" : "linear-gradient(90deg, rgba(255,255,255,0.05) 0%, transparent 45%, rgba(255,255,255,0.75) 100%)" }} />
+              <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse at 50% 86%, rgba(${project.accent},0.16) 0%, transparent 62%)` }} />
+            </div>
 
-          <div className="relative px-6 md:px-12 pb-10 -mt-20">
-            <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 700, lineHeight: 1, letterSpacing: "-0.03em", color: pal.text }}>
+          <div className="relative flex min-h-0 flex-col px-6 py-7 md:overflow-y-auto md:px-8 md:py-8">
+            <motion.h2 id={`project-modal-${project.id}`} initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.14 }} className="mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, lineHeight: 0.96, letterSpacing: "-0.03em", color: pal.text }}>
               {project.title}
             </motion.h2>
 
-            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="max-w-xl mb-8" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", lineHeight: 1.8, color: r(0.35) }}>
+            <motion.p initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mb-6 max-w-xl" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", lineHeight: 1.75, color: r(0.42) }}>
               {t(project.descKey)}
             </motion.p>
 
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }} className="flex flex-wrap gap-3 mb-10">
+            <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }} className="mb-6 flex flex-wrap gap-2">
               {project.tagKeys.map((tagKey) => (
-                <span key={tagKey} className="px-4 py-2 rounded-full" style={{ fontSize: "0.78rem", fontFamily: "'Inter', sans-serif", border: `1px solid ${r(0.07)}`, background: r(0.02), color: r(0.4) }}>
+                <span key={tagKey} className="rounded-full px-3 py-1.5" style={{ fontSize: "0.72rem", fontFamily: "'Inter', sans-serif", border: `1px solid ${r(0.07)}`, background: r(0.02), color: r(0.45) }}>
                   {t(tagKey)}
                 </span>
               ))}
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="grid grid-cols-3 gap-6 mb-10 p-6 rounded-2xl" style={{ background: r(0.02), border: `1px solid ${r(0.04)}` }}>
+            <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="mb-7 grid grid-cols-1 gap-3 rounded-2xl p-4 sm:grid-cols-3" style={{ background: r(0.02), border: `1px solid ${r(0.04)}` }}>
               {[
                 { label: t("projects.duration"), value: t("projects.durationVal") },
                 { label: t("projects.deliverables"), value: `${project.tagKeys.length + 3}+` },
                 { label: t("projects.year"), value: project.year },
               ].map((stat) => (
-                <div key={stat.label} className="text-center">
-                  <div className="mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.3rem", fontWeight: 600, color: pal.text }}>{stat.value}</div>
-                  <div style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.7rem", textTransform: "uppercase", letterSpacing: "0.1em", color: r(0.2) }}>{stat.label}</div>
+                <div key={stat.label} className="rounded-xl px-2 py-2 text-center sm:py-0">
+                  <div className="mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.15rem", fontWeight: 600, color: pal.text }}>{stat.value}</div>
+                  <div style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.63rem", textTransform: "uppercase", letterSpacing: "0.09em", color: r(0.25) }}>{stat.label}</div>
                 </div>
               ))}
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }} className="flex items-center gap-4">
+            <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }} className="mt-auto flex flex-col gap-3 sm:flex-row sm:items-center">
               <button
                 onClick={onViewCase}
-                className="group flex items-center gap-3 px-7 py-3.5 rounded-full transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
+                className="group flex items-center justify-center gap-3 rounded-full px-7 py-3.5 transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98]"
                 style={{ background: `linear-gradient(135deg, ${project.color}, ${project.color}cc)`, fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", fontWeight: 500, color: isDark ? "#0a0a0a" : "#fff", boxShadow: `0 8px 30px rgba(${project.accent},0.2)` }}
               >
                 {t("projects.viewCase")}
                 <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </button>
-              <button onClick={(e) => { e.stopPropagation(); onNext(); }} className="px-7 py-3.5 rounded-full transition-all duration-300 flex items-center gap-2" style={{ border: `1px solid ${r(0.08)}`, color: r(0.4), fontFamily: "'Inter', sans-serif", fontSize: "0.85rem" }}>
+              <button onClick={(e) => { e.stopPropagation(); onNext(); }} className="flex items-center justify-center gap-2 rounded-full px-7 py-3.5 transition-colors duration-300" style={{ border: `1px solid ${r(0.08)}`, color: r(0.45), fontFamily: "'Inter', sans-serif", fontSize: "0.85rem" }}>
                 {t("projects.next")}
                 <ArrowRight size={14} />
               </button>
             </motion.div>
           </div>
+          </div>
         </div>
       </motion.div>
     </motion.div>
   );
+
+  return portalRoot ? createPortal(modal, portalRoot) : modal;
 }
 
 /* ═══════════════════════════════════════════
