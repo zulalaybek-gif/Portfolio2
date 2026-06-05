@@ -15,6 +15,7 @@ import imgPhoto3 from "../../assets/roma/04-roma-photo-fontaine.png";
 import imgPoster1 from "../../assets/roma/05-roma-poster-saint-sulpice.png";
 import imgPoster2 from "../../assets/roma/06-roma-poster-institut.png";
 import imgPoster3 from "../../assets/roma/07-roma-poster-fontaine.png";
+import logoParis from "../../assets/roma/logo/01.logo-paris.svg";
 
 /* -- Helpers -- */
 const ACCENT = "#B8A88A";
@@ -112,6 +113,23 @@ function HeroSection() {
       />
 
       <motion.div className="relative z-10 w-full max-w-4xl" style={{ scale: imgScale, opacity: imgOpacity }}>
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
+          className="mb-7 flex justify-center"
+        >
+          <img
+            src={logoParis}
+            alt="Ville de Paris"
+            className="h-8 w-auto md:h-10"
+            style={{
+              filter: isDark ? "invert(1)" : "none",
+              opacity: isDark ? 0.92 : 0.85,
+            }}
+          />
+        </motion.div>
+
         {/* Small label */}
         <motion.div
           initial={{ opacity: 0 }}
