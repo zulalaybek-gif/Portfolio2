@@ -692,6 +692,7 @@ function ProcessSection() {
 function MockupsSection() {
   const { t } = useI18n();
   const { r, isDark } = useTheme();
+  const jewelryImages = [img1, img2, img3, img4];
 
   return (
     <section className="px-6 md:px-16 py-20">
@@ -700,16 +701,32 @@ function MockupsSection() {
           <SectionLabel>{t("mya.mockups.label")}</SectionLabel>
         </FadeIn>
 
-        {/* Jewelry photo grid */}
-        <div className="mx-auto grid max-w-3xl grid-cols-2 gap-3 mb-3">
-          {[img1, img2, img3, img4].map((src, i) => (
-            <FadeIn key={i} delay={i * 0.08}>
-              <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-                <img src={src} alt={`Jewelry ${i + 1}`} className="w-full object-contain" />
-              </div>
-            </FadeIn>
-          ))}
-        </div>
+        {/* Jewelry carousel */}
+        <FadeIn className="mb-5">
+          <div
+            className="relative mx-auto max-w-4xl overflow-hidden py-1"
+            style={{
+              WebkitMaskImage: "linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%)",
+              maskImage: "linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%)",
+            }}
+          >
+            <motion.div
+              className="flex w-max gap-3"
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ duration: 26, repeat: Infinity, ease: "linear" }}
+            >
+              {[...jewelryImages, ...jewelryImages].map((src, i) => (
+                <div
+                  key={`${src}-${i}`}
+                  className="w-[210px] shrink-0 overflow-hidden rounded-xl md:w-[260px]"
+                  style={{ border: `1px solid ${r(0.04)}` }}
+                >
+                  <img src={src} alt={`Jewelry ${(i % jewelryImages.length) + 1}`} className="aspect-[4/3] w-full object-contain" />
+                </div>
+              ))}
+            </motion.div>
+          </div>
+        </FadeIn>
 
         {/* Box mockups — side by side in a single white block */}
         <FadeIn delay={0.1} className="mb-3">
