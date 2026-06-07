@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef, useEffect, useState, useCallback } from "react";
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ArrowLeft, ExternalLink, Play } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useI18n, type TranslationKey } from "./i18n";
 import { useTheme } from "./theme";
@@ -21,6 +21,8 @@ import imgBentoMockup from "../../assets/kittyhub/10-mockup-bento.jpg";
 import imgSituation from "../../assets/kittyhub/11-mise-en-situation.png";
 import imgMockup1 from "../../assets/kittyhub/12-MOCKUP-1.png";
 import imgMockup2 from "../../assets/kittyhub/13-MOCKUP-2.png";
+import imgPikatchu from "../../assets/kittyhub/14-pikatchu.png";
+import videoIpadAnimation from "../../assets/kittyhub/15-animation-interface-ipad.mp4";
 
 /* -- Helpers -- */
 const ACCENT = "#FD6235";
@@ -652,6 +654,7 @@ function IPadPrototypeSection() {
   const { t } = useI18n();
   const { r, isDark } = useTheme();
   const body = useBodyStyle();
+  const [isAnimationPlaying, setIsAnimationPlaying] = useState(false);
 
   return (
     <section className="px-6 md:px-16 py-16">
@@ -677,6 +680,23 @@ function IPadPrototypeSection() {
               aspectRatio: "4/3",
             }}
           >
+            <motion.img
+              src={imgPikatchu}
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none absolute right-4 top-4 z-20 w-16 md:right-8 md:top-8 md:w-24 lg:w-28"
+              initial={{ opacity: 0, y: 12, rotate: 8 }}
+              whileInView={{ opacity: 1, y: 0, rotate: -4 }}
+              viewport={{ once: true, margin: "120px 0px" }}
+              transition={{ duration: 0.9, ease: "easeOut", delay: 0.25 }}
+              animate={{
+                y: [0, -8, 0],
+                rotate: [-4, 3, -4],
+              }}
+              style={{
+                filter: isDark ? "drop-shadow(0 12px 30px rgba(136,35,247,0.35))" : "drop-shadow(0 14px 28px rgba(136,35,247,0.22))",
+              }}
+            />
             {/* iPad bezel */}
             <div className="absolute inset-0 flex items-center justify-center p-6 md:p-10">
               <div
@@ -691,8 +711,44 @@ function IPadPrototypeSection() {
                 <img
                   src={imgIpadApplication}
                   alt="KittyHub iPad application"
-                  className="w-full h-full object-cover"
+                  className={`w-full h-full object-cover transition-opacity duration-500 ${isAnimationPlaying ? "opacity-0" : "opacity-100"}`}
                 />
+                {isAnimationPlaying && (
+                  <motion.video
+                    src={videoIpadAnimation}
+                    className="absolute inset-0 h-full w-full object-cover"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    controls
+                    initial={{ opacity: 0, scale: 1.015 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.45, ease: "easeOut" }}
+                  />
+                )}
+                {!isAnimationPlaying && (
+                  <button
+                    type="button"
+                    onClick={() => setIsAnimationPlaying(true)}
+                    className="group absolute left-1/2 top-1/2 z-30 flex -translate-x-1/2 -translate-y-1/2 items-center gap-3 rounded-full px-5 py-3 transition-all duration-300 hover:scale-[1.04] active:scale-[0.98]"
+                    style={{
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: "0.78rem",
+                      fontWeight: 700,
+                      color: "#fff",
+                      background: "linear-gradient(135deg, rgba(253,98,53,0.95), rgba(136,35,247,0.9))",
+                      border: "1px solid rgba(255,255,255,0.24)",
+                      boxShadow: "0 18px 50px rgba(136,35,247,0.38), 0 10px 35px rgba(253,98,53,0.24)",
+                    }}
+                    aria-label={isDark ? "Lancer l'animation KittyHub" : "Lancer l'animation KittyHub"}
+                  >
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/18 transition-transform group-hover:scale-110">
+                      <Play size={15} fill="currentColor" />
+                    </span>
+                    Play
+                  </button>
+                )}
               </div>
             </div>
           </div>
