@@ -9,6 +9,7 @@ import { ImageWithFallback } from "./figma/ImageWithFallback";
 /* ── Assets ── */
 import svgPaths from "../../imports/svg-t7oxiwk9z2";
 import logoSvgPaths from "../../imports/svg-m9u3nftpad";
+import imgLogoDcBlack from "../../assets/digital-campus/logos/01.dc-logo-complet-noir.svg";
 
 // Signalétique — entrée étages
 import imgSign1 from "../../assets/digital-campus/01.signaletique.png";
@@ -542,6 +543,17 @@ function DigitalCampusLogo({ fill }: { fill: string }) {
   );
 }
 
+function DigitalCampusLogoImage({ isDark, className = "" }: { isDark: boolean; className?: string }) {
+  return (
+    <ImageWithFallback
+      src={imgLogoDcBlack}
+      alt="Digital Campus"
+      className={className}
+      style={{ filter: isDark ? "invert(1)" : undefined }}
+    />
+  );
+}
+
 /* ══════════════════════════════════════════
    MAIN PAGE
    ═══════════════════════════════════════════ */
@@ -567,7 +579,7 @@ export function ProjectDc() {
 
           {/* DC Logo */}
           <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2, delay: 0.5 }} className="w-[200px] md:w-[280px] mb-8">
-            <DigitalCampusLogo fill={isDark ? "#FFFFFF" : "#0E1726"} />
+            <DigitalCampusLogoImage isDark={isDark} className="w-full h-auto" />
           </motion.div>
 
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.9 }} className="mt-4 text-center max-w-xl" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", lineHeight: 1.7, color: r(0.35) }}>
@@ -1005,7 +1017,7 @@ export function ProjectDc() {
         {/* ─── CLOSING ─── */}
         <FadeIn className="text-center py-16">
           <div className="w-16 h-[1px] mx-auto mb-8" style={{ background: `linear-gradient(90deg, transparent, ${ACCENT}, transparent)` }} />
-          <ImageWithFallback src={isDark ? imgLogoBlanc : imgLogoNoir} alt="DC" className="w-32 mx-auto mb-6 opacity-20" />
+          <DigitalCampusLogoImage isDark={isDark} className="w-32 h-auto mx-auto mb-6 opacity-20" />
           <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", lineHeight: 1.7, color: r(0.25), maxWidth: 500, margin: "0 auto" }}>
             {lang === "fr"
               ? "Digital Campus — une sélection de réalisations conçues dans le cadre de mon poste de chargée de communication et graphiste."
