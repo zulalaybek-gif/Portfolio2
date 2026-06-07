@@ -787,10 +787,10 @@ function MockupsSection() {
               {[...jewelryImages, ...jewelryImages].map((src, i) => (
                 <div
                   key={`${src}-${i}`}
-                  className="w-[210px] shrink-0 overflow-hidden rounded-xl md:w-[260px]"
+                  className="w-[170px] shrink-0 overflow-hidden rounded-xl md:w-[220px]"
                   style={{ border: `1px solid ${r(0.04)}` }}
                 >
-                  <img src={src} alt={`Jewelry ${(i % jewelryImages.length) + 1}`} className="aspect-[4/3] w-full object-contain" />
+                  <img src={src} alt={`Jewelry ${(i % jewelryImages.length) + 1}`} className="block h-auto w-full" />
                 </div>
               ))}
             </motion.div>
