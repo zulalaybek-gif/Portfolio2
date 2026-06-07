@@ -587,13 +587,16 @@ export function ProjectNrtv() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: [0, -6, 0] }}
             transition={{ opacity: { duration: 0.8, delay: 0.5 }, y: { duration: 4, delay: 1.3, repeat: Infinity, ease: "easeInOut" } }}
-            className="mb-6"
+            className="mb-6 rounded-[28px] p-3 md:p-4"
+            style={{
+              background: isDark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.03)",
+              boxShadow: isDark ? "0 24px 80px rgba(0,0,0,0.25)" : "0 24px 80px rgba(0,0,0,0.08)",
+            }}
           >
             <ImageWithFallback
               src={heroLogo}
               alt="Narratiiv"
-              className="h-16 w-auto"
-              style={{ filter: isDark ? "invert(1)" : undefined }}
+              className="h-16 md:h-20 w-auto"
             />
           </motion.div>
 
@@ -679,19 +682,18 @@ export function ProjectNrtv() {
             </span>
             <div className="grid grid-cols-2 gap-4 max-w-md">
               {[
-                { src: imgLogoBlack, label: "Logo noir", bg: "#f5f5f5", invert: false },
-                { src: imgLogoBlack, label: "Logo blanc", bg: "#09090b", invert: true },
+                { src: imgLogoBlack, label: "Logo principal", bg: "#f5f5f5" },
+                { src: imgLogoBlack, label: "Logo sur fond sombre", bg: "#09090b" },
               ].map((logo, i) => (
                 <div
                   key={i}
-                  className="rounded-xl p-6 flex items-center justify-center"
+                  className="rounded-xl p-5 flex items-center justify-center"
                   style={{ background: logo.bg, border: `1px solid ${r(0.06)}` }}
                 >
                   <ImageWithFallback
                     src={logo.src}
                     alt={logo.label}
-                    className="max-h-14 w-auto"
-                    style={{ filter: logo.invert ? "invert(1)" : undefined }}
+                    className="max-h-16 w-auto"
                   />
                 </div>
               ))}
@@ -872,7 +874,6 @@ export function ProjectNrtv() {
             src={heroLogo}
             alt="Narratiiv"
             className="h-8 w-auto mx-auto mb-6 opacity-25"
-            style={{ filter: isDark ? "invert(1)" : undefined }}
           />
           <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", lineHeight: 1.7, color: r(0.25), maxWidth: 500, margin: "0 auto" }}>
             {lang === "fr"
