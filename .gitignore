@@ -1,2 +1,15 @@
 node_modules
 src/assets/narratiiv/vidéos/*.zip
+
+# Fichiers système macOS
+.DS_Store
+**/.DS_Store
+
+# Dossiers générés localement
+/dist/
+
+# Archives inutiles au site
+*.zip
+
+# Fichier local créé par erreur
+/main

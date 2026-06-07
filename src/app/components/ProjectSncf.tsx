@@ -21,8 +21,16 @@ import imgSpotifyLight from "../../assets/sncf-connect/12.playlist-spotify-clair
 import imgSpotifyMain from "../../assets/sncf-connect/13.playlist-spotify.png";
 import videoMain from "../../assets/sncf-connect/14.video-finale-workshop.mp4";
 import lineAsset from "../../assets/sncf-connect/assets/03.line.svg";
+import lineAssetWide from "../../assets/sncf-connect/assets/04.line.svg";
+import lineAssetLoop from "../../assets/sncf-connect/assets/05.line.svg";
+import lineAssetLong from "../../assets/sncf-connect/assets/06.line.svg";
 import trainAsset from "../../assets/sncf-connect/assets/07.train.svg";
+import ampouleAsset from "../../assets/sncf-connect/assets/08.ampoule.svg";
 import vehiculesAsset from "../../assets/sncf-connect/assets/10.vehicules.svg";
+import maisonAsset from "../../assets/sncf-connect/assets/11.picto-maison.svg";
+import horlogeAsset from "../../assets/sncf-connect/assets/12.picto-horloge.svg";
+import trajetAsset from "../../assets/sncf-connect/assets/16.picto-trajet.svg";
+import traficAsset from "../../assets/sncf-connect/assets/17.picto-trafic.svg";
 
 const ACCENT = "#8DE8FE";
 const ACCENT_RGB = "141,232,254";
@@ -38,13 +46,6 @@ const BENTO_ICONS = [
   { viewBox: "0 0 56 45", paths: [svgSlideIcons.p3aac2980, svgSlideIcons.p1f184100] },
   { viewBox: "0 0 64 56", paths: [svgSlideIcons.p1d8fc600, svgSlideIcons.p1f53cf00, svgSlideIcons.p12371f00] },
   { viewBox: "0 0 64 38", path: svgSlideIcons.p76cf280 },
-];
-
-const ONBOARDING_PHONES = [
-  { src: imgPhone1, label: "Splash Screen" },
-  { src: imgPhone2, label: "Créez vos routines" },
-  { src: imgPhone3, label: "Personnalisez l'accueil" },
-  { src: imgPhone4, label: "Paramétrage" },
 ];
 
 const UGC_URL = "https://www.youtube.com/embed/_AJf2dtOLtQ";
@@ -241,90 +242,60 @@ function HeroSection() {
   );
 }
 
-function SectionTitle({ title, align = "left" }: { title: string; align?: "left" | "center" }) {
-  const { r } = useTheme();
+function SceneName({ children, className = "" }: { children: string; className?: string }) {
   return (
-    <motion.h2
-      initial={{ opacity: 0, y: 20 }}
+    <motion.span
+      initial={{ opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "120px 0px" }}
-      transition={{ duration: 0.65, ease: "easeOut" }}
-      className={align === "center" ? "text-center" : ""}
-      style={{
-        fontFamily: "'Space Grotesk', sans-serif",
-        fontSize: "clamp(2rem, 5vw, 4.4rem)",
-        fontWeight: 700,
-        color: r(0.72),
-        letterSpacing: "-0.045em",
-        lineHeight: 0.92,
-      }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
+      className={`pointer-events-none absolute z-20 uppercase tracking-[0.34em] ${className}`}
+      style={{ color: "rgba(141,232,254,0.72)", fontFamily: "'Inter', sans-serif", fontSize: "0.66rem", fontWeight: 700 }}
     >
-      {title}
-    </motion.h2>
+      {children}
+    </motion.span>
   );
 }
 
-function AmbientLine({ className = "", flip = false }: { className?: string; flip?: boolean }) {
+function StructuralLine({
+  src = lineAssetWide,
+  className = "",
+  flip = false,
+  rotate = 0,
+  opacity = 0.42,
+}: {
+  src?: string;
+  className?: string;
+  flip?: boolean;
+  rotate?: number;
+  opacity?: number;
+}) {
   return (
     <motion.img
-      src={lineAsset}
+      src={src}
       alt=""
       aria-hidden="true"
-      className={`pointer-events-none absolute ${className}`}
-      style={{ transform: flip ? "scaleX(-1)" : undefined }}
-      animate={{ x: [0, 22, 0], opacity: [0.12, 0.35, 0.12] }}
-      transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      className={`pointer-events-none absolute max-w-none select-none ${className}`}
+      style={{
+        opacity,
+        transform: `${flip ? "scaleX(-1) " : ""}rotate(${rotate}deg)`,
+        filter: "drop-shadow(0 0 18px rgba(141,232,254,0.34))",
+      }}
+      animate={{ x: [0, 34, 0], y: [0, -10, 0] }}
+      transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
     />
   );
 }
 
-function PageParticleField({ active = false }: { active?: boolean }) {
-  const dots = Array.from({ length: active ? 86 : 34 });
+function GlobalParticleField({ active = false, mood = "cyan" }: { active?: boolean; mood?: "cyan" | "pink" | "blue" }) {
+  const color = mood === "pink" ? "#FF72B8" : mood === "blue" ? "#2D8CFF" : ACCENT;
+  const dots = Array.from({ length: active ? 150 : 72 });
   return (
-    <div className="pointer-events-none fixed inset-0 z-[1] overflow-hidden">
-      {dots.map((_, i) => {
-        const left = (i * 41) % 100;
-        const top = (i * 67) % 100;
-        const size = 1.4 + (i % 4) * 0.7;
-        return (
-          <motion.span
-            key={i}
-            className="absolute rounded-full"
-            style={{
-              left: `${left}%`,
-              top: `${top}%`,
-              width: size,
-              height: size,
-              background: i % 5 === 0 ? ACCENT : "rgba(255,255,255,0.64)",
-              boxShadow: `0 0 ${active ? 20 : 8}px rgba(${ACCENT_RGB},${active ? 0.36 : 0.16})`,
-            }}
-            animate={{
-              x: active ? [0, i % 2 ? 52 : -44, 0] : [0, i % 2 ? 8 : -8, 0],
-              y: active ? [0, -64 - (i % 8) * 8, 8, 0] : [0, -12, 0],
-              opacity: active ? [0.08, 0.62, 0.18] : [0.05, 0.22, 0.05],
-              scale: active ? [0.7, 1.6, 0.8] : [0.75, 1, 0.75],
-            }}
-            transition={{
-              duration: active ? 3.4 + (i % 5) * 0.28 : 8 + (i % 5),
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: (i % 13) * 0.08,
-            }}
-          />
-        );
-      })}
-    </div>
-  );
-}
-
-function SectionParticleField({ active = false, color = ACCENT }: { active?: boolean; color?: string }) {
-  const dots = Array.from({ length: active ? 48 : 22 });
-  return (
-    <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
+    <div className="pointer-events-none absolute inset-0 z-[2] overflow-hidden">
       {dots.map((_, i) => {
         const left = (i * 37) % 100;
-        const top = (i * 53) % 100;
-        const size = 1.6 + (i % 5) * 0.75;
+        const top = (i * 61) % 100;
+        const size = 1.2 + (i % 5) * 0.55;
         return (
           <motion.span
             key={i}
@@ -334,20 +305,20 @@ function SectionParticleField({ active = false, color = ACCENT }: { active?: boo
               top: `${top}%`,
               width: size,
               height: size,
-              background: i % 4 === 0 ? color : "rgba(255,255,255,0.62)",
-              boxShadow: `0 0 ${active ? 24 : 10}px ${color}${active ? "80" : "38"}`,
+              background: i % 4 === 0 ? color : "rgba(255,255,255,0.64)",
+              boxShadow: `0 0 ${active ? 22 : 9}px ${color}${active ? "80" : "3f"}`,
             }}
             animate={{
-              x: active ? [0, i % 2 ? 42 : -36, 0] : [0, i % 2 ? 10 : -10, 0],
-              y: active ? [0, -56 - (i % 6) * 8, 0] : [0, -12, 0],
-              opacity: active ? [0.12, 0.7, 0.16] : [0.08, 0.24, 0.08],
-              scale: active ? [0.8, 1.55, 0.9] : [0.8, 1, 0.8],
+              x: active ? [0, i % 2 ? 62 : -54, 0] : [0, i % 2 ? 12 : -12, 0],
+              y: active ? [0, -72 - (i % 9) * 10, 16, 0] : [0, -14, 0],
+              opacity: active ? [0.08, 0.58, 0.12] : [0.04, 0.2, 0.04],
+              scale: active ? [0.7, 1.65, 0.85] : [0.7, 1, 0.7],
             }}
             transition={{
-              duration: active ? 3.2 + (i % 5) * 0.3 : 7 + (i % 5),
+              duration: active ? 3.2 + (i % 5) * 0.34 : 9 + (i % 7),
               repeat: Infinity,
               ease: "easeInOut",
-              delay: (i % 11) * 0.08,
+              delay: (i % 17) * 0.07,
             }}
           />
         );
@@ -361,339 +332,258 @@ function FloatingMockup({ src, alt, className = "", delay = 0 }: { src: string; 
     <motion.img
       src={src}
       alt={alt}
-      className={`relative z-10 select-none ${className}`}
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "100px 0px" }}
-      transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
-      animate={{ y: [0, -10, 0] }}
-      style={{ filter: `drop-shadow(0 34px 48px rgba(0,0,0,0.28)) drop-shadow(0 0 28px rgba(${ACCENT_RGB},0.12))` }}
+      className={`select-none ${className}`}
+      initial={{ opacity: 0, y: 70, scale: 0.94, filter: "blur(10px)" }}
+      whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+      viewport={{ once: true, margin: "120px 0px" }}
+      transition={{ duration: 0.9, delay, ease: [0.22, 1, 0.36, 1] }}
+      style={{ filter: `drop-shadow(0 42px 62px rgba(0,0,0,0.38)) drop-shadow(0 0 30px rgba(${ACCENT_RGB},0.16))` }}
     />
   );
 }
 
-function OnboardingSection() {
-  const { r, isDark } = useTheme();
-  const [active, setActive] = useState(0);
-
-  useEffect(() => {
-    const timer = window.setInterval(() => setActive((value) => (value + 1) % ONBOARDING_PHONES.length), 2800);
-    return () => window.clearInterval(timer);
-  }, []);
-
+function FloatingIcon({ src, className = "", delay = 0 }: { src: string; className?: string; delay?: number }) {
   return (
-    <section className="relative px-6 md:px-12 py-24 overflow-hidden">
-      <AmbientLine className="left-[-18rem] top-28 h-56 w-[46rem] opacity-30" />
-      <AmbientLine className="right-[-18rem] bottom-8 h-64 w-[48rem] opacity-25" flip />
-      <motion.div
-        className="absolute left-1/2 top-[46%] h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
-        style={{ background: `rgba(${ACCENT_RGB},${isDark ? 0.13 : 0.2})` }}
-        animate={{ scale: [1, 1.14, 1], opacity: [0.45, 0.85, 0.45] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <div className="relative z-10 max-w-6xl mx-auto">
-        <SectionTitle title="Onboarding" />
-        <div className="relative mt-14 min-h-[42rem] lg:min-h-[48rem]">
-          <div className="absolute left-0 right-0 top-1/2 h-[1px]" style={{ background: `linear-gradient(90deg, transparent, rgba(${ACCENT_RGB},0.75), transparent)` }} />
-          {ONBOARDING_PHONES.map((phone, i) => {
-            const isActive = active === i;
-            const positions = [
-              "left-0 top-16 lg:w-[18rem] rotate-[-3deg]",
-              "left-[24%] top-2 lg:w-[19rem] rotate-[2deg]",
-              "right-[22%] top-24 lg:w-[18rem] rotate-[-2deg]",
-              "right-0 top-8 lg:w-[18rem] rotate-[3deg]",
-            ];
-            return (
-              <motion.button
-                key={phone.label}
-                type="button"
-                onClick={() => setActive(i)}
-                className={`absolute hidden lg:block ${positions[i]}`}
-                initial={{ opacity: 0, y: 70 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: i * 0.08 }}
-                animate={{ scale: isActive ? 1.06 : 0.9, opacity: isActive ? 1 : 0.56, y: isActive ? -16 : 0, zIndex: isActive ? 10 : 2 }}
-              >
-                <img src={phone.src} alt={phone.label} className="w-full" style={{ filter: `drop-shadow(0 34px 48px rgba(0,0,0,0.24)) drop-shadow(0 0 26px rgba(${ACCENT_RGB},0.16))` }} />
-              </motion.button>
-            );
-          })}
+    <motion.img
+      src={src}
+      alt=""
+      aria-hidden="true"
+      className={`pointer-events-none absolute select-none ${className}`}
+      initial={{ opacity: 0, scale: 0.86 }}
+      whileInView={{ opacity: 0.32, scale: 1 }}
+      viewport={{ once: true }}
+      animate={{ y: [0, -16, 0], rotate: [0, 3, 0] }}
+      transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay }}
+      style={{ filter: `drop-shadow(0 0 16px rgba(${ACCENT_RGB},0.26))` }}
+    />
+  );
+}
 
-          <div className="relative flex min-h-[38rem] items-center justify-center lg:hidden">
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={active}
-                src={ONBOARDING_PHONES[active].src}
-                alt={ONBOARDING_PHONES[active].label}
-                className="w-[min(17rem,78vw)]"
-                initial={{ opacity: 0, x: 80 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -80 }}
-                transition={{ duration: 0.45 }}
-              />
-            </AnimatePresence>
-          </div>
+function SceneGlow({ className = "", color = ACCENT_RGB, opacity = 0.18 }: { className?: string; color?: string; opacity?: number }) {
+  return (
+    <motion.div
+      aria-hidden="true"
+      className={`pointer-events-none absolute rounded-full blur-3xl ${className}`}
+      style={{ background: `rgba(${color},${opacity})` }}
+      animate={{ scale: [1, 1.12, 1], opacity: [0.45, 0.78, 0.45] }}
+      transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+    />
+  );
+}
 
-          <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center gap-4">
-            {ONBOARDING_PHONES.map((phone, i) => (
-              <button
-                key={phone.label}
-                type="button"
-                aria-label={`Afficher ${phone.label}`}
-                onClick={() => setActive(i)}
-                className="h-1.5 rounded-full"
-                style={{ width: active === i ? 54 : 18, background: active === i ? ACCENT : r(0.14) }}
-              />
-            ))}
-          </div>
-        </div>
+function OnboardingScene() {
+  return (
+    <section className="relative min-h-[110vh] overflow-hidden px-6 py-24 md:px-12 lg:py-32">
+      <SceneName className="left-8 top-24 md:left-14">Onboarding</SceneName>
+      <SceneGlow className="left-1/2 top-[45%] h-[38rem] w-[38rem] -translate-x-1/2 -translate-y-1/2" opacity={0.17} />
+      <StructuralLine src={lineAssetWide} className="left-[-18vw] top-[35%] w-[135vw]" />
+      <StructuralLine src={lineAsset} className="bottom-[12%] left-[-16vw] w-[130vw]" rotate={-5} opacity={0.28} />
+
+      <div className="relative z-10 mx-auto min-h-[52rem] max-w-7xl">
+        <FloatingMockup src={imgPhone1} alt="Splash screen SNCF Connect" className="absolute left-[32%] top-[14%] z-20 w-[min(20rem,28vw)] lg:w-[22rem]" />
+        <FloatingMockup src={imgPhone2} alt="Créer vos routines" className="absolute left-[2%] top-[4%] z-10 w-[min(17rem,24vw)] -rotate-3" delay={0.08} />
+        <FloatingMockup src={imgPhone3} alt="Personnaliser l'accueil" className="absolute right-[7%] top-[10%] z-10 w-[min(18rem,25vw)] rotate-2" delay={0.16} />
+        <FloatingMockup src={imgPhone4} alt="Paramétrage" className="absolute bottom-[3%] right-[23%] z-10 w-[min(17rem,24vw)] rotate-3" delay={0.24} />
       </div>
     </section>
   );
 }
 
-function RoutineSection() {
-  const { r } = useTheme();
+function RoutineScene() {
   return (
-    <section className="relative px-6 md:px-12 py-24 overflow-hidden">
-      <AmbientLine className="left-[8%] top-12 h-44 w-[34rem] opacity-20" />
-      <div className="relative z-10 max-w-6xl mx-auto">
-        <SectionTitle title="Connect Routine" />
-        <div className="relative mt-12 min-h-[40rem]">
-          <FloatingMockup src={imgRoutineCreate} alt="Création de routine" className="absolute left-0 top-0 w-[min(42rem,76vw)] rounded-[2rem]" />
-          <FloatingMockup src={imgRoutineList} alt="Mes routines" className="absolute right-0 bottom-0 w-[min(24rem,44vw)] rounded-[1.6rem]" delay={0.12} />
-          <motion.div
-            className="absolute left-[42%] top-[48%] hidden -translate-x-1/2 -translate-y-1/2 items-center gap-3 lg:flex"
-            initial={{ opacity: 0, scale: 0.92 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <img src={trainAsset} alt="" className="h-10 w-10 opacity-80" />
-            <span style={{ fontFamily: "'Space Grotesk', sans-serif", color: r(0.58), fontSize: "1.1rem", fontWeight: 650 }}>créer → retrouver</span>
-          </motion.div>
-        </div>
+    <section className="relative min-h-[110vh] overflow-hidden px-6 py-24 md:px-12 lg:py-28">
+      <SceneName className="right-8 top-24 md:right-14">Connect Routine</SceneName>
+      <SceneGlow className="left-[28%] top-[42%] h-[34rem] w-[42rem]" opacity={0.12} />
+      <StructuralLine src={lineAssetLong} className="left-[-22vw] top-[48%] w-[132vw]" opacity={0.5} />
+      <StructuralLine src={lineAssetLoop} className="right-[-24vw] bottom-[13%] w-[80vw]" rotate={-8} opacity={0.3} />
+      <FloatingIcon src={trainAsset} className="left-[45%] top-[25%] h-12 w-12" />
+      <FloatingIcon src={trajetAsset} className="left-[53%] top-[55%] h-10 w-10" delay={0.6} />
+      <FloatingIcon src={horlogeAsset} className="right-[10%] top-[18%] h-10 w-10" delay={1.1} />
+      <FloatingIcon src={traficAsset} className="left-[8%] bottom-[12%] h-9 w-9" delay={0.35} />
+
+      <div className="relative z-10 mx-auto min-h-[52rem] max-w-7xl">
+        <FloatingMockup src={imgRoutineCreate} alt="Création de routine" className="absolute left-[-7%] top-[7%] z-20 w-[min(48rem,58vw)] -rotate-2" />
+        <FloatingMockup src={imgRoutineList} alt="Mes routines" className="absolute bottom-[5%] right-[-2%] z-30 w-[min(28rem,35vw)] rotate-2" delay={0.18} />
       </div>
     </section>
   );
 }
 
-function NewsletterSection() {
-  const { r, isDark } = useTheme();
+function NewsletterScene() {
   const ribbons = [
-    { word: "Trajets", top: "14%", left: "8%", rotate: -8, delay: 0 },
-    { word: "Personnalisés", top: "38%", right: "5%", rotate: 7, delay: 0.15 },
-    { word: "Simplifiés", bottom: "12%", left: "12%", rotate: 4, delay: 0.3 },
+    { word: "Trajets", className: "left-[12%] top-[18%] -rotate-6" },
+    { word: "Personnalisés", className: "right-[7%] top-[39%] rotate-6" },
+    { word: "Simplifiés", className: "left-[16%] bottom-[19%] rotate-3" },
   ];
-
   return (
-    <section className="relative px-6 md:px-12 py-24 overflow-hidden">
-      <motion.div
-        className="absolute left-1/2 top-1/2 h-[40rem] w-[40rem] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
-        style={{ background: `rgba(${ACCENT_RGB},${isDark ? 0.15 : 0.25})` }}
-        animate={{ scale: [1, 1.12, 1], opacity: [0.45, 0.8, 0.45] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <div className="relative z-10 max-w-6xl mx-auto">
-        <SectionTitle title="Newsletter" align="center" />
-        <div className="relative mt-8 min-h-[48rem] flex items-center justify-center">
-          {ribbons.map((item) => (
-            <motion.div
-              key={item.word}
-              className="absolute hidden rounded-full px-8 py-4 backdrop-blur-xl lg:block"
-              style={{
-                top: item.top,
-                left: item.left,
-                right: item.right,
-                bottom: item.bottom,
-                rotate: `${item.rotate}deg`,
-                background: isDark ? "rgba(141,232,254,0.1)" : "rgba(255,255,255,0.74)",
-                border: `1px solid rgba(${ACCENT_RGB},0.28)`,
-                color: item.word === "Personnalisés" ? ACCENT : r(0.58),
-                fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: "clamp(1.4rem,3vw,2.6rem)",
-                fontWeight: 700,
-                letterSpacing: "-0.04em",
-              }}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: item.delay }}
-              animate={{ y: [0, -12, 0] }}
-            >
-              {item.word}
-            </motion.div>
-          ))}
-          <motion.img
-            src={imgNewsletter}
-            alt="Newsletter Connect Routine complète"
-            className="relative z-10 max-h-[42rem] w-auto max-w-[72vw]"
-            initial={{ opacity: 0, y: 60, rotate: -2 }}
-            whileInView={{ opacity: 1, y: 0, rotate: -1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.85 }}
-            animate={{ y: [0, -10, 0] }}
-            style={{ filter: `drop-shadow(0 40px 58px rgba(0,0,0,0.28)) drop-shadow(0 0 34px rgba(${ACCENT_RGB},0.16))` }}
-          />
-        </div>
+    <section className="relative min-h-[105vh] overflow-hidden px-6 py-24 md:px-12 lg:py-28">
+      <SceneName className="left-8 top-24 md:left-14">Newsletter</SceneName>
+      <SceneGlow className="left-1/2 top-1/2 h-[42rem] w-[42rem] -translate-x-1/2 -translate-y-1/2" opacity={0.2} />
+      <StructuralLine src={lineAssetWide} className="left-[-28vw] top-[29%] w-[150vw]" rotate={-7} opacity={0.32} />
+      <StructuralLine src={lineAssetLoop} className="bottom-[15%] left-[-6vw] w-[62vw]" rotate={7} opacity={0.28} />
+      {ribbons.map((item, index) => (
+        <motion.div
+          key={item.word}
+          className={`pointer-events-none absolute z-20 hidden whitespace-nowrap rounded-full border border-cyan-200/20 px-8 py-3 text-white/90 backdrop-blur-xl lg:block ${item.className}`}
+          style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(1.8rem,3.8vw,4rem)", fontWeight: 700, letterSpacing: "-0.05em" }}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          animate={{ y: [0, index % 2 ? 14 : -14, 0] }}
+          transition={{ duration: 7 + index, repeat: Infinity, ease: "easeInOut", delay: index * 0.15 }}
+        >
+          {item.word}
+        </motion.div>
+      ))}
+      <div className="relative z-10 flex min-h-[50rem] items-center justify-center">
+        <FloatingMockup src={imgNewsletter} alt="Newsletter Connect Routine" className="max-h-[78vh] w-auto max-w-[min(30rem,72vw)] -rotate-1" />
       </div>
     </section>
   );
 }
 
-function ActivationSection() {
-  const { r, isDark } = useTheme();
+function CommunicationScene({ setParticleMood }: { setParticleMood: (mood: "cyan" | "pink" | "blue") => void }) {
   const [variant, setVariant] = useState<"blue" | "pink">("pink");
   const config =
     variant === "blue"
-      ? { image: imgCampaignBlue, color: "#2D8CFF", soft: "45,140,255", opposite: "#8DE8FE" }
-      : { image: imgCampaignPink, color: "#FF72B8", soft: "255,114,184", opposite: "#BA7CFF" };
+      ? { image: imgCampaignBlue, color: "#2D8CFF", rgb: "45,140,255", accent: "#8DE8FE", line: lineAssetWide }
+      : { image: imgCampaignPink, color: "#FF72B8", rgb: "255,114,184", accent: "#BA7CFF", line: lineAssetLoop };
+
+  const handleVariant = (next: "blue" | "pink") => {
+    setVariant(next);
+    setParticleMood(next);
+  };
 
   return (
-    <section className="relative px-6 md:px-12 py-24 overflow-hidden">
+    <section className="relative min-h-[118vh] overflow-hidden px-6 py-24 md:px-12 lg:py-32">
+      <SceneName className="left-8 top-24 md:left-14">Communication</SceneName>
       <motion.div
         className="absolute inset-0"
         animate={{
-          background: isDark
-            ? `radial-gradient(circle at 50% 42%, rgba(${config.soft},0.22), transparent 28%), radial-gradient(circle at 18% 70%, rgba(${ACCENT_RGB},0.1), transparent 24%)`
-            : `radial-gradient(circle at 50% 42%, rgba(${config.soft},0.25), transparent 28%), radial-gradient(circle at 18% 70%, rgba(${ACCENT_RGB},0.16), transparent 24%)`,
+          background: `radial-gradient(circle at 50% 45%, rgba(${config.rgb},0.28), transparent 28%), radial-gradient(circle at 14% 70%, rgba(${ACCENT_RGB},0.13), transparent 22%), radial-gradient(circle at 82% 24%, rgba(${config.rgb},0.18), transparent 24%)`,
         }}
-        transition={{ duration: 0.55 }}
+        transition={{ duration: 0.7 }}
       />
-      <AmbientLine className="left-[-18rem] top-1/3 h-64 w-[52rem] opacity-25" />
-      <AmbientLine className="right-[-16rem] bottom-16 h-64 w-[52rem] opacity-25" flip />
-      <div className="relative z-10 max-w-6xl mx-auto">
-        <SectionTitle title="Communication" align="center" />
-        <div className="relative mt-10 min-h-[48rem] flex flex-col items-center justify-center">
-          <motion.div className="absolute h-[34rem] w-[34rem] rounded-full blur-3xl" animate={{ background: `rgba(${config.soft},0.28)`, scale: [1, 1.12, 1] }} transition={{ background: { duration: 0.5 }, scale: { duration: 4.5, repeat: Infinity } }} />
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={variant}
-              src={config.image}
-              alt={`Instagram ${variant === "blue" ? "bleu" : "rose"}`}
-              className="relative z-10 w-[min(22rem,76vw)]"
-              initial={{ opacity: 0, y: 40, scale: 0.92, filter: "blur(8px)" }}
-              animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-              exit={{ opacity: 0, y: -36, scale: 0.94, filter: "blur(8px)" }}
-              transition={{ duration: 0.55, ease: "easeOut" }}
-              style={{ filter: `drop-shadow(0 42px 62px rgba(${config.soft},0.32)) drop-shadow(0 0 40px rgba(${config.soft},0.24))` }}
-            />
-          </AnimatePresence>
+      <StructuralLine src={config.line} className="left-[-26vw] top-[30%] w-[152vw]" rotate={variant === "blue" ? 2 : -8} opacity={0.45} />
+      <StructuralLine src={variant === "blue" ? lineAssetLong : lineAssetWide} className="right-[-28vw] bottom-[17%] w-[140vw]" flip={variant === "pink"} opacity={0.34} />
+      <FloatingIcon src={variant === "blue" ? trainAsset : ampouleAsset} className="left-[13%] top-[28%] h-16 w-16" />
+      <FloatingIcon src={variant === "blue" ? vehiculesAsset : maisonAsset} className="right-[12%] bottom-[18%] h-20 w-20" delay={0.7} />
 
-          {Array.from({ length: 18 }).map((_, i) => (
-            <motion.span
-              key={`${variant}-${i}`}
-              className="absolute rounded-full"
-              style={{
-                left: `${8 + ((i * 17) % 84)}%`,
-                top: `${12 + ((i * 23) % 74)}%`,
-                width: 4 + (i % 4),
-                height: 4 + (i % 4),
-                background: i % 2 ? config.color : config.opposite,
-                boxShadow: `0 0 18px ${config.color}`,
-              }}
-              animate={{ x: [0, i % 2 ? 24 : -24, 0], y: [0, -28, 0], opacity: [0.18, 0.72, 0.18] }}
-              transition={{ duration: 3 + (i % 4) * 0.35, repeat: Infinity, ease: "easeInOut" }}
-            />
+      <div className="relative z-10 flex min-h-[54rem] flex-col items-center justify-center">
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={variant}
+            src={config.image}
+            alt={`Instagram SNCF Connect ${variant === "blue" ? "bleu" : "rose"}`}
+            className="w-[min(25rem,78vw)] select-none"
+            initial={{ opacity: 0, y: 46, scale: 0.92, filter: "blur(12px)" }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: -42, scale: 0.94, filter: "blur(12px)" }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            style={{ filter: `drop-shadow(0 46px 76px rgba(${config.rgb},0.34)) drop-shadow(0 0 48px rgba(${config.rgb},0.26))` }}
+          />
+        </AnimatePresence>
+
+        <div className="mt-9 flex items-center gap-6">
+          {[
+            { id: "blue" as const, color: "#2D8CFF", label: "Version bleue" },
+            { id: "pink" as const, color: "#FF72B8", label: "Version rose" },
+          ].map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              aria-label={item.label}
+              onClick={() => handleVariant(item.id)}
+              className="relative h-14 w-14 rounded-full"
+              style={{ background: item.color, boxShadow: `0 0 ${variant === item.id ? 46 : 18}px ${item.color}99` }}
+            >
+              <motion.span className="absolute inset-3 rounded-full border border-white/80" animate={{ scale: variant === item.id ? [1, 1.22, 1] : 1 }} transition={{ duration: 1.4, repeat: variant === item.id ? Infinity : 0 }} />
+            </button>
           ))}
-
-          <div className="relative z-20 mt-8 flex items-center gap-5">
-            {[
-              { id: "blue" as const, color: "#2D8CFF", label: "Version bleue" },
-              { id: "pink" as const, color: "#FF72B8", label: "Version rose" },
-            ].map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                aria-label={item.label}
-                onClick={() => setVariant(item.id)}
-                className="relative h-14 w-14 rounded-full"
-                style={{ background: item.color, boxShadow: `0 0 ${variant === item.id ? 42 : 18}px ${item.color}99` }}
-              >
-                <motion.span className="absolute inset-3 rounded-full border border-white/75" animate={{ scale: variant === item.id ? [1, 1.18, 1] : 1 }} transition={{ duration: 1.4, repeat: variant === item.id ? Infinity : 0 }} />
-              </button>
-            ))}
-          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function SpotifyExperienceSection({ playing, setPlaying }: { playing: boolean; setPlaying: (value: boolean) => void }) {
+function SpotifyScene({ playing, setPlaying }: { playing: boolean; setPlaying: (value: boolean) => void }) {
   const [mode, setMode] = useState<"dark" | "light">("dark");
   const cover = mode === "dark" ? imgSpotifyDark : imgSpotifyLight;
 
   return (
-    <section className="relative px-6 md:px-12 py-24 overflow-hidden">
-      <div className="relative z-10 max-w-6xl mx-auto">
-        <SectionTitle title="Playlist Spotify" />
-        <div className="relative mt-10 min-h-[44rem] flex items-center justify-center">
-          <SectionParticleField active={playing} color={ACCENT} />
-          <motion.img
-            src={imgSpotifyMain}
-            alt="Mockup Spotify avec téléphone dans le désert"
-            className="relative z-10 w-full max-w-5xl"
-            animate={{ scale: playing ? 1.018 : 1 }}
-            transition={{ duration: 0.8 }}
-            style={{ filter: `drop-shadow(0 44px 70px rgba(0,0,0,0.45))` }}
-          />
-          <motion.div
-            className="absolute bottom-0 z-20 flex w-[min(54rem,90vw)] items-center gap-5 rounded-full px-5 py-4 backdrop-blur-2xl"
-            style={{ background: "rgba(7,13,22,0.72)", border: "1px solid rgba(255,255,255,0.14)" }}
-          >
-            <AnimatePresence mode="wait">
-              <motion.img key={mode} src={cover} alt="Déclinaison playlist" className="h-16 w-16 rounded-2xl" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.92 }} transition={{ duration: 0.45 }} />
-            </AnimatePresence>
-            <div className="min-w-0 flex-1">
-              <div style={{ fontFamily: "'Space Grotesk', sans-serif", color: "white", fontWeight: 700 }}>Votre playlist du quotidien</div>
-              <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/12">
-                <motion.div className="h-full rounded-full" style={{ background: ACCENT }} animate={{ width: playing ? ["10%", "90%"] : "18%" }} transition={playing ? { duration: 5.2, repeat: Infinity, ease: "linear" } : { duration: 0.35 }} />
-              </div>
+    <section className="relative min-h-[115vh] overflow-hidden px-6 py-24 md:px-12 lg:py-32">
+      <SceneName className="right-8 top-24 md:right-14">Playlist Spotify</SceneName>
+      <motion.div
+        className="absolute inset-0"
+        animate={{ background: playing ? "radial-gradient(circle at 50% 44%, rgba(141,232,254,0.2), transparent 32%)" : "radial-gradient(circle at 50% 44%, rgba(141,232,254,0.08), transparent 34%)" }}
+        transition={{ duration: 0.8 }}
+      />
+      <StructuralLine src={lineAssetWide} className="left-[-20vw] top-[18%] w-[140vw]" rotate={4} opacity={playing ? 0.38 : 0.2} />
+      <div className="relative z-10 mx-auto flex min-h-[54rem] max-w-7xl items-center justify-center">
+        <motion.img
+          src={imgSpotifyMain}
+          alt="Playlist Spotify dans un univers de particules"
+          className="w-[min(76rem,106vw)] select-none"
+          animate={{ scale: playing ? 1.025 : 1, y: playing ? -8 : 0 }}
+          transition={{ duration: 0.85, ease: "easeOut" }}
+          style={{ filter: `drop-shadow(0 52px 90px rgba(0,0,0,0.54)) drop-shadow(0 0 ${playing ? 54 : 24}px rgba(${ACCENT_RGB},${playing ? 0.24 : 0.12}))` }}
+        />
+
+        <motion.div className="absolute bottom-[8%] left-1/2 z-20 flex w-[min(48rem,88vw)] -translate-x-1/2 items-center gap-4 rounded-full border border-white/12 bg-black/56 px-4 py-3 backdrop-blur-2xl">
+          <AnimatePresence mode="wait">
+            <motion.img key={mode} src={cover} alt="État playlist" className="h-14 w-14 rounded-2xl" initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.92 }} transition={{ duration: 0.45 }} />
+          </AnimatePresence>
+          <div className="min-w-0 flex-1">
+            <div style={{ color: "white", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700 }}>Votre playlist du quotidien</div>
+            <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/14">
+              <motion.div className="h-full rounded-full" style={{ background: ACCENT }} animate={{ width: playing ? ["8%", "92%"] : "18%" }} transition={playing ? { duration: 5.6, repeat: Infinity, ease: "linear" } : { duration: 0.35 }} />
             </div>
-            <div className="hidden rounded-full bg-white/10 p-1 sm:flex">
-              {(["dark", "light"] as const).map((item) => (
-                <button key={item} type="button" onClick={() => setMode(item)} className="rounded-full px-3 py-2" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.72rem", color: mode === item ? BG_DARK : "rgba(255,255,255,0.65)", background: mode === item ? ACCENT : "transparent" }}>
-                  {item === "dark" ? "Sombre" : "Clair"}
-                </button>
-              ))}
-            </div>
-            <button type="button" onClick={() => setPlaying(!playing)} className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full" style={{ background: ACCENT, color: BG_DARK, boxShadow: `0 0 36px rgba(${ACCENT_RGB},0.5)` }} aria-label={playing ? "Pause" : "Play"}>
-              {playing ? <Pause size={22} fill={BG_DARK} /> : <Play size={22} fill={BG_DARK} />}
-            </button>
-          </motion.div>
-        </div>
+          </div>
+          <div className="hidden items-center rounded-full bg-white/10 p-1 sm:flex">
+            {(["dark", "light"] as const).map((item) => (
+              <button key={item} type="button" onClick={() => setMode(item)} className="rounded-full px-3 py-2" style={{ color: mode === item ? BG_DARK : "rgba(255,255,255,0.66)", background: mode === item ? ACCENT : "transparent", fontFamily: "'Inter', sans-serif", fontSize: "0.72rem" }}>
+                {item === "dark" ? "Sombre" : "Clair"}
+              </button>
+            ))}
+          </div>
+          <button type="button" onClick={() => setPlaying(!playing)} className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full p-4" style={{ background: ACCENT, color: BG_DARK, boxShadow: `0 0 ${playing ? 48 : 28}px rgba(${ACCENT_RGB},0.55)` }} aria-label={playing ? "Pause" : "Play"}>
+            {playing ? <Pause size={20} fill={BG_DARK} /> : <Play size={20} fill={BG_DARK} />}
+          </button>
+        </motion.div>
       </div>
     </section>
   );
 }
 
-function VideoSection() {
-  const { isDark } = useTheme();
+function VideoScene() {
   return (
-    <section className="relative px-6 md:px-12 py-24 overflow-hidden">
-      <motion.div className="absolute left-1/2 top-1/2 h-[38rem] w-[56rem] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl" style={{ background: `rgba(${ACCENT_RGB},${isDark ? 0.14 : 0.22})` }} animate={{ scale: [1, 1.08, 1] }} transition={{ duration: 6, repeat: Infinity }} />
-      <div className="relative z-10 max-w-6xl mx-auto">
-        <SectionTitle title="Vidéos" />
-        <div className="relative mt-12">
-          <video src={videoMain} controls playsInline preload="metadata" className="block w-full rounded-[2rem]" style={{ boxShadow: "0 42px 110px rgba(0,0,0,0.38)" }} />
-        </div>
-        <div className="mt-20 grid gap-12 lg:grid-cols-[0.8fr_1fr] items-center">
-          <div className="relative mx-auto w-[min(22rem,76vw)]">
-            <div className="relative overflow-hidden rounded-[2.4rem] bg-black p-2" style={{ boxShadow: "0 36px 90px rgba(0,0,0,0.32)" }}>
-              <div className="absolute left-1/2 top-3 z-10 h-4 w-20 -translate-x-1/2 rounded-full bg-black/80" />
-              <div className="aspect-[9/16] overflow-hidden rounded-[1.75rem] bg-black">
-                <iframe src={UGC_URL} title="Vidéo UGC SNCF Connect" className="h-full w-full" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
-              </div>
-            </div>
-          </div>
-          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
-            <span style={{ fontFamily: "'Space Grotesk', sans-serif", color: ACCENT, fontSize: "clamp(1.7rem,4vw,3.4rem)", fontWeight: 700, letterSpacing: "-0.04em" }}>UGC</span>
-            <p className="mt-4 max-w-md" style={{ fontFamily: "'Inter', sans-serif", color: "rgba(255,255,255,0.58)", lineHeight: 1.75 }}>
-              Un format plus social, vertical et spontané, traité différemment du film principal.
-            </p>
-            <img src={vehiculesAsset} alt="" className="mt-8 h-14 w-14 opacity-50" />
+    <section className="relative min-h-[105vh] overflow-hidden px-6 py-24 md:px-12 lg:py-32">
+      <SceneName className="left-8 top-24 md:left-14">Vidéos</SceneName>
+      <SceneGlow className="left-1/2 top-[42%] h-[44rem] w-[62rem] -translate-x-1/2 -translate-y-1/2" opacity={0.18} />
+      <StructuralLine src={lineAssetLong} className="left-[-22vw] top-[26%] w-[140vw]" opacity={0.28} />
+      <div className="relative z-10 mx-auto max-w-6xl">
+        <motion.video
+          src={videoMain}
+          controls
+          playsInline
+          preload="metadata"
+          className="block w-full rounded-[1.6rem]"
+          initial={{ opacity: 0, y: 42, filter: "blur(10px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: true, margin: "120px 0px" }}
+          transition={{ duration: 0.9 }}
+          style={{ boxShadow: `0 50px 120px rgba(0,0,0,0.5), 0 0 60px rgba(${ACCENT_RGB},0.14)` }}
+        />
+        <div className="mt-28 flex min-h-[34rem] items-center justify-center">
+          <motion.div
+            className="relative aspect-[9/16] w-[min(21rem,74vw)] overflow-hidden rounded-[2rem]"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            style={{ boxShadow: "0 38px 90px rgba(0,0,0,0.36)" }}
+          >
+            <iframe src={UGC_URL} title="Vidéo UGC SNCF Connect" className="h-full w-full" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
           </motion.div>
         </div>
       </div>
@@ -734,21 +624,31 @@ function ClosingSection() {
 /* ── Main Export ── */
 export function ProjectSncf() {
   const [spotifyPlaying, setSpotifyPlaying] = useState(false);
+  const [particleMood, setParticleMood] = useState<"cyan" | "pink" | "blue">("cyan");
 
   return (
-    <div className="relative w-full overflow-hidden">
-      <PageParticleField active={spotifyPlaying} />
-      <div className="relative z-10">
-        <HeroSection />
-        <OnboardingSection />
-        <RoutineSection />
-        <NewsletterSection />
-        <ActivationSection />
-        <SpotifyExperienceSection playing={spotifyPlaying} setPlaying={setSpotifyPlaying} />
-        <VideoSection />
+    <div className="relative w-full">
+      <HeroSection />
+      <main
+        className="relative overflow-hidden"
+        style={{
+          background:
+            "radial-gradient(circle at 50% 4%, rgba(141,232,254,0.12), transparent 24%), linear-gradient(180deg, #08111f 0%, #050a13 38%, #080d16 100%)",
+        }}
+      >
+        <GlobalParticleField active={spotifyPlaying} mood={particleMood} />
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-[3] h-[1px]" style={{ background: `linear-gradient(90deg, transparent, rgba(${ACCENT_RGB},0.8), transparent)` }} />
+        <div className="relative z-10">
+          <OnboardingScene />
+          <RoutineScene />
+          <NewsletterScene />
+          <CommunicationScene setParticleMood={setParticleMood} />
+          <SpotifyScene playing={spotifyPlaying} setPlaying={setSpotifyPlaying} />
+          <VideoScene />
+        </div>
         <ClosingSection />
         <div className="h-24" />
-      </div>
+      </main>
     </div>
   );
 }
