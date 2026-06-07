@@ -24,6 +24,7 @@ import imgPrototypeMobile from "../../assets/collectif-haiti-de-france/26.notre-
 import imgOldLogo from "../../assets/collectif-haiti-de-france/27.ancien-logo.JPG";
 import imgOldWebsite from "../../assets/collectif-haiti-de-france/28.ancien-site-web.png";
 import videoHaiti from "../../assets/collectif-haiti-de-france/29.collectif-haiti-france.mp4";
+import imgVideoCover from "../../assets/collectif-haiti-de-france/assets/12.img-de-couverture.png";
 
 /* ── Story SVGs ── */
 import svgStoryGreen from "../../imports/svg-5ll5yqgwlz";
@@ -1753,7 +1754,8 @@ function VideoSection() {
               <video
                 className="absolute inset-0 h-full w-full object-cover"
                 controls
-                preload="metadata"
+                poster={imgVideoCover}
+                preload="none"
                 playsInline
               >
                 <source src={videoHaiti} type="video/mp4" />
