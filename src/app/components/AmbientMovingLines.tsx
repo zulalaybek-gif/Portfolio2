@@ -1,4 +1,5 @@
-import { motion } from "motion/react";
+import { useEffect, useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import { useTheme } from "./theme";
 
 function rgbaFromHex(hex: string, alpha: number) {
@@ -28,9 +29,21 @@ export function AmbientMovingLines({
   height = "100%",
 }: AmbientMovingLinesProps) {
   const { isDark } = useTheme();
+  const reduceMotion = useReducedMotion();
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const shouldReduce = reduceMotion || isSmallScreen;
   const lineAccent = accent ?? (isDark ? "#7FD6FF" : "#5DA9FF");
   const lineSecondary = secondary ?? (isDark ? "#5DA9FF" : "#7B2D52");
   const lineText = text ?? (isDark ? "#F4F5F7" : "#0D1B2A");
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const query = window.matchMedia("(max-width: 767px)");
+    const update = () => setIsSmallScreen(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
 
   return (
     <div
@@ -63,9 +76,9 @@ export function AmbientMovingLines({
             strokeWidth={item === 1 ? 2 : 1.25}
             strokeLinecap="round"
             strokeDasharray="14 22"
-            initial={{ pathLength: 0, pathOffset: 0.2 }}
-            animate={{ pathLength: [0.2, 1, 0.2], pathOffset: [0.2, 0, 0.2] }}
-            transition={{ duration: 16 + item * 3, repeat: Infinity, ease: "easeInOut" }}
+            initial={shouldReduce ? false : { pathLength: 0, pathOffset: 0.2 }}
+            animate={shouldReduce ? { pathLength: 0.72, pathOffset: 0 } : { pathLength: [0.2, 1, 0.2], pathOffset: [0.2, 0, 0.2] }}
+            transition={shouldReduce ? { duration: 0.4 } : { duration: 16 + item * 3, repeat: Infinity, ease: "easeInOut" }}
           />
         ))}
         <motion.path
@@ -75,8 +88,8 @@ export function AmbientMovingLines({
           strokeWidth="1"
           strokeLinecap="round"
           strokeDasharray="2 18"
-          animate={{ pathOffset: [0, 1] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+          animate={shouldReduce ? { pathOffset: 0 } : { pathOffset: [0, 1] }}
+          transition={shouldReduce ? { duration: 0.4 } : { duration: 18, repeat: Infinity, ease: "linear" }}
         />
       </motion.svg>
     </div>

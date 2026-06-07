@@ -721,6 +721,7 @@ function IPadPrototypeSection() {
                     muted
                     loop
                     playsInline
+                    preload="metadata"
                     controls
                     initial={{ opacity: 0, scale: 1.015 }}
                     animate={{ opacity: 1, scale: 1 }}

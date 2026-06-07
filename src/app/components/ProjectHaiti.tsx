@@ -1751,12 +1751,14 @@ function VideoSection() {
           >
             <div className="relative w-full aspect-video" style={{ background: isDark ? r(0.02) : "#fff" }}>
               <video
-                src={videoHaiti}
                 className="absolute inset-0 h-full w-full object-cover"
                 controls
                 preload="metadata"
                 playsInline
-              />
+              >
+                <source src={videoHaiti} type="video/mp4" />
+                Votre navigateur ne peut pas lire cette vidéo.
+              </video>
             </div>
             <div className="p-6">
               <a

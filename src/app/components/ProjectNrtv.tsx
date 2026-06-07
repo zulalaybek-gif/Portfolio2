@@ -330,11 +330,14 @@ function VideoCard({ url, src, title, aspect }: { url?: string; src?: string; ti
     >
       {src ? (
         <video
-          src={src}
           controls
           preload="metadata"
+          playsInline
           className="absolute inset-0 w-full h-full object-cover"
-        />
+        >
+          <source src={src} type="video/mp4" />
+          Votre navigateur ne peut pas lire cette vidéo.
+        </video>
       ) : playing ? (
         <iframe
           src={`https://www.youtube.com/embed/${id}?autoplay=1&rel=0`}

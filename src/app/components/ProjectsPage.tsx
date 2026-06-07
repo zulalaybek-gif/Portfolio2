@@ -324,11 +324,27 @@ function ProjectIndex({ activeCategory, setActiveCategory, onSelect }: {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [viewMode, setViewMode] = useState<ViewMode>("standard");
   const listRef = useRef<HTMLDivElement>(null);
+  const mouseFrame = useRef<number | null>(null);
+  const latestMouse = useRef({ x: 0, y: 0 });
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     if (!listRef.current) return;
     const rect = listRef.current.getBoundingClientRect();
-    setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    latestMouse.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+
+    if (mouseFrame.current !== null) return;
+    mouseFrame.current = window.requestAnimationFrame(() => {
+      setMousePos(latestMouse.current);
+      mouseFrame.current = null;
+    });
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (mouseFrame.current !== null) {
+        window.cancelAnimationFrame(mouseFrame.current);
+      }
+    };
   }, []);
 
   /* Filter by category first, then by view mode */

@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from "react";
+import { useAnimationActive } from "./useAnimationActive";
 
 /**
  * ParticleOverlay — OPTIMIZED foreground ember layer
@@ -28,12 +29,13 @@ export function ParticleOverlay() {
   const mouse = useRef({ x: -9999, y: -9999, active: false });
   const containerRef = useRef({ w: 0, h: 0 });
   const time = useRef(0);
+  const isAnimationActive = useAnimationActive(canvasRef, "160px 0px");
 
   // Skip on mobile for performance
   const [isMobile] = useState(() => window.innerWidth < 768);
 
   useEffect(() => {
-    if (isMobile) return;
+    if (isMobile || !isAnimationActive) return;
     const cvs = canvasRef.current;
     if (!cvs) return;
     const ctx = cvs.getContext("2d");
@@ -171,7 +173,7 @@ export function ParticleOverlay() {
       parent.removeEventListener("mouseleave", onLeave);
       document.removeEventListener("visibilitychange", onVisibilityChange);
     };
-  }, [isMobile]);
+  }, [isMobile, isAnimationActive]);
 
   if (isMobile) return null;
 

@@ -563,7 +563,6 @@ function VideoScene() {
       <StructuralLine src={lineAssetLong} className="left-[-22vw] top-[26%] w-[140vw]" opacity={0.28} />
       <div className="relative z-10 mx-auto max-w-6xl">
         <motion.video
-          src={videoMain}
           controls
           playsInline
           preload="metadata"
@@ -573,7 +572,10 @@ function VideoScene() {
           viewport={{ once: true, margin: "120px 0px" }}
           transition={{ duration: 0.9 }}
           style={{ boxShadow: `0 50px 120px rgba(0,0,0,0.5), 0 0 60px rgba(${ACCENT_RGB},0.14)` }}
-        />
+        >
+          <source src={videoMain} type="video/mp4" />
+          Votre navigateur ne peut pas lire cette vidéo.
+        </motion.video>
         <div className="mt-28 flex min-h-[34rem] items-center justify-center">
           <motion.div
             className="relative aspect-[9/16] w-[min(21rem,74vw)] overflow-hidden rounded-[2rem]"
