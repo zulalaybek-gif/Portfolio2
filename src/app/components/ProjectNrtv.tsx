@@ -7,8 +7,8 @@ import { useTheme } from "./theme";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 /* ── Assets — Logos ── */
-import imgLogo1 from "figma:asset/1fb2477e9f6842dce8d7fb8348c8af0515635cf5.png";
-import imgLogo2 from "figma:asset/3e77f851ca2067ed4c3ee254fba4784b62cc2e8c.png";
+import imgLogoBlack from "../../assets/narratiiv/assets/01.logo-noir.svg";
+import imgLogoWhite from "../../assets/narratiiv/assets/02.logo-blanc.svg";
 
 /* ── Signage / Stands ── */
 import imgStandsRentree from "../../assets/narratiiv/01.stands-de-rentee.png";
@@ -203,8 +203,16 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 function ImgCard({ src, alt, aspect = "16/9", className = "" }: { src: string; alt: string; aspect?: string; className?: string }) {
   const { r, isDark } = useTheme();
   return (
-    <div className={`overflow-hidden rounded-xl ${className}`} style={{ border: `1px solid ${r(0.06)}`, boxShadow: isDark ? "0 4px 20px rgba(0,0,0,0.3)" : "0 4px 20px rgba(0,0,0,0.06)" }}>
-      <ImageWithFallback src={src} alt={alt} loading="lazy" className="w-full h-auto block" style={{ aspectRatio: aspect, objectFit: "cover" }} />
+    <div
+      className={`overflow-hidden rounded-xl relative ${className}`}
+      style={{
+        aspectRatio: aspect,
+        border: `1px solid ${r(0.06)}`,
+        background: isDark ? "rgba(255,255,255,0.025)" : "rgba(0,0,0,0.025)",
+        boxShadow: isDark ? "0 4px 20px rgba(0,0,0,0.3)" : "0 4px 20px rgba(0,0,0,0.06)",
+      }}
+    >
+      <ImageWithFallback src={src} alt={alt} loading="lazy" className="absolute inset-0 h-full w-full object-contain" />
     </div>
   );
 }
@@ -452,10 +460,11 @@ function PrintGallery() {
                   width: "clamp(180px, 22vw, 280px)",
                   aspectRatio: "7/10",
                   border: `1px solid ${r(0.06)}`,
+                  background: isDark ? "rgba(255,255,255,0.025)" : "rgba(0,0,0,0.025)",
                   boxShadow: isDark ? "0 6px 30px rgba(0,0,0,0.35)" : "0 6px 30px rgba(0,0,0,0.08)",
                 }}
               >
-                <ImageWithFallback src={page} alt={`Page ${i + 1}`} loading="lazy" className="w-full h-full object-cover" />
+                <ImageWithFallback src={page} alt={`Page ${i + 1}`} loading="lazy" className="w-full h-full object-contain" />
                 <div className="absolute bottom-2 right-3">
                   <span className="px-2 py-0.5 rounded-full backdrop-blur-md" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.55rem", background: isDark ? "rgba(0,0,0,0.4)" : "rgba(255,255,255,0.7)", color: r(0.35) }}>
                     {i + 1}
@@ -554,6 +563,7 @@ export function ProjectNrtv() {
   const { t, lang } = useI18n();
   const { p, r, isDark } = useTheme();
   const navigate = useNavigate();
+  const heroLogo = isDark ? imgLogoWhite : imgLogoBlack;
 
   const SOCIAL_BATCH_1 = [imgPost11, imgPost21, imgPost31, imgPost41, imgPost51, imgPost61, imgPost71, imgPost81];
   const SOCIAL_BATCH_2 = [imgPost12, imgPost22, imgPost32, imgPost42, imgPost52, imgPost62, imgPost72];
@@ -580,12 +590,12 @@ export function ProjectNrtv() {
             transition={{ opacity: { duration: 0.8, delay: 0.5 }, y: { duration: 4, delay: 1.3, repeat: Infinity, ease: "easeInOut" } }}
             className="mb-6"
           >
-            <ImageWithFallback src={imgLogo1} alt="Narratiiv" className="h-16 w-auto" style={{ filter: isDark ? "none" : "invert(1)" }} />
+            <ImageWithFallback src={heroLogo} alt="Narratiiv" className="h-16 w-auto" />
           </motion.div>
 
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.7 }} className="text-center max-w-xl" style={{ fontFamily: "'Inter', sans-serif", fontSize: "clamp(0.85rem, 1.5vw, 1rem)", lineHeight: 1.7, color: r(0.35) }}>
             {lang === "fr"
-              ? "Deploiement d'une nouvelle direction artistique et production de contenus pour un etablissement d'enseignement superieur"
+              ? "Déploiement d'une nouvelle direction artistique et production de contenus pour un établissement d'enseignement supérieur"
               : "Deployment of a new artistic direction and content production for a higher education institution"}
           </motion.p>
 
@@ -610,7 +620,7 @@ export function ProjectNrtv() {
           <SectionLabel>{lang === "fr" ? "Contexte de la mission" : "Mission Context"}</SectionLabel>
           <p className="mt-6" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", lineHeight: 1.8, color: r(0.4), maxWidth: 700 }}>
             {lang === "fr"
-              ? "Chez Narratiiv, j'ai occupe les fonctions de Community Manager et Brand Content Manager au moment ou l'ecole venait d'emmenager dans de nouveaux locaux et d'adopter une nouvelle direction artistique. Si cette identite venait d'etre definie, aucun contenu n'avait encore ete produit a partir de celle-ci. Mon role a donc consiste a la faire exister concretement a travers les differentes prises de parole de l'ecole."
+              ? "Chez Narratiiv, j'ai occupé les fonctions de Community Manager et Brand Content Manager au moment où l'école venait d'emménager dans de nouveaux locaux et d'adopter une nouvelle direction artistique. Si cette identité venait d'être définie, aucun contenu n'avait encore été produit à partir de celle-ci. Mon rôle a donc consisté à la faire exister concrètement à travers les différentes prises de parole de l'école."
               : "At Narratiiv, I served as Community Manager and Brand Content Manager when the school had just moved into new premises and adopted a new artistic direction. While this identity had just been defined, no content had yet been produced from it. My role was therefore to bring it to life through the school's various communications."}
           </p>
         </FadeIn>
@@ -620,12 +630,12 @@ export function ProjectNrtv() {
           {([
             {
               labelFr: "Cadre du projet", labelEn: "Project Context",
-              textFr: "Cette mission recouvrait un ensemble large de productions destinees a des contextes varies : reseaux sociaux, communication institutionnelle, supports digitaux, visuels evenementiels, presentations, signaletique et contenus audiovisuels. Le travail s'inscrivait dans une logique de production continue, avec des besoins quotidiens et des formats multiples a concevoir et a adapter.",
+              textFr: "Cette mission recouvrait un ensemble large de productions destinées à des contextes variés : réseaux sociaux, communication institutionnelle, supports digitaux, visuels événementiels, présentations, signalétique et contenus audiovisuels. Le travail s'inscrivait dans une logique de production continue, avec des besoins quotidiens et des formats multiples à concevoir et à adapter.",
               textEn: "This mission covered a broad range of productions for varied contexts: social media, institutional communication, digital materials, event visuals, presentations, signage, and audiovisual content. The work followed a continuous production logic, with daily needs and multiple formats to design and adapt.",
             },
             {
               labelFr: "Enjeu du projet", labelEn: "Project Challenge",
-              textFr: "L'enjeu principal etait de transformer une charte graphique nouvellement posee en un systeme de communication reellement vivant, coherent et identifiable. Il fallait non seulement respecter cette nouvelle identite, mais surtout lui donner une presence concrete et durable sur l'ensemble des supports de l'ecole.",
+              textFr: "L'enjeu principal était de transformer une charte graphique nouvellement posée en un système de communication réellement vivant, cohérent et identifiable. Il fallait non seulement respecter cette nouvelle identité, mais surtout lui donner une présence concrète et durable sur l'ensemble des supports de l'école.",
               textEn: "The main challenge was to transform a newly established visual identity into a truly living, coherent, and recognizable communication system. It was necessary not only to respect this new identity but above all to give it a concrete and lasting presence across all the school's media.",
             },
             {
@@ -634,8 +644,8 @@ export function ProjectNrtv() {
               textEn: "My work consisted of adapting this new artistic direction across a wide variety of formats, while ensuring coherence, readability, and visual effectiveness. This mission required strong adaptability, both in content production and in their prioritization and adjustment according to use cases.",
             },
             {
-              labelFr: "Productions realisees", labelEn: "Completed Work",
-              textFr: "Les realisations presentees dans ce projet regroupent une selection de contenus concus dans ce cadre : visuels pour les reseaux sociaux, contenus de marque, supports institutionnels, affichage, signaletique, presentations, videos, tournages, montages et autres productions developpees selon les besoins de communication de l'ecole.",
+              labelFr: "Productions réalisées", labelEn: "Completed Work",
+              textFr: "Les réalisations présentées dans ce projet regroupent une sélection de contenus conçus dans ce cadre : visuels pour les réseaux sociaux, contenus de marque, supports institutionnels, affichage, signalétique, présentations, vidéos, tournages, montages et autres productions développées selon les besoins de communication de l'école.",
               textEn: "The work presented in this project includes a selection of content designed in this context: social media visuals, brand content, institutional materials, posters, signage, presentations, videos, shoots, edits, and other productions developed according to the school's communication needs.",
             },
           ] as const).map((item, i) => (
@@ -654,7 +664,7 @@ export function ProjectNrtv() {
           </h2>
           <p className="mb-8" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", lineHeight: 1.7, color: r(0.35), maxWidth: 600 }}>
             {lang === "fr"
-              ? "La nouvelle identite visuelle de Narratiiv repose sur une palette dynamique et un systeme de logos declinables. Voici les elements fondateurs de cette charte."
+              ? "La nouvelle identité visuelle de Narratiiv repose sur une palette dynamique et un système de logos déclinables. Voici les éléments fondateurs de cette charte."
               : "Narratiiv's new visual identity is built on a dynamic palette and a system of adaptable logos. Here are the founding elements of this brand identity."}
           </p>
 
@@ -664,8 +674,15 @@ export function ProjectNrtv() {
               {lang === "fr" ? "Logotypes" : "Logotypes"}
             </span>
             <div className="grid grid-cols-2 gap-4 max-w-md">
-              {[{ src: imgLogo1, label: "Logo principal" }, { src: imgLogo2, label: "Logo secondaire" }].map((logo, i) => (
-                <div key={i} className="rounded-xl p-6 flex items-center justify-center" style={{ background: isDark ? "rgba(255,255,255,0.03)" : "#f5f5f5", border: `1px solid ${r(0.06)}` }}>
+              {[
+                { src: imgLogoBlack, label: "Logo noir", bg: "#f5f5f5" },
+                { src: imgLogoWhite, label: "Logo blanc", bg: "#09090b" },
+              ].map((logo, i) => (
+                <div
+                  key={i}
+                  className="rounded-xl p-6 flex items-center justify-center"
+                  style={{ background: logo.bg, border: `1px solid ${r(0.06)}` }}
+                >
                   <ImageWithFallback src={logo.src} alt={logo.label} className="max-h-14 w-auto" />
                 </div>
               ))}
@@ -734,13 +751,13 @@ export function ProjectNrtv() {
 
         {/* ─── SIGNALETIQUE / STANDS ─── */}
         <FadeIn>
-          <SectionLabel>{lang === "fr" ? "Signaletique & Affichage" : "Signage & Display"}</SectionLabel>
+          <SectionLabel>{lang === "fr" ? "Signalétique & Affichage" : "Signage & Display"}</SectionLabel>
           <h2 className="mt-3 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(1.6rem, 4vw, 2.4rem)", fontWeight: 700, letterSpacing: "-0.03em", color: p.text }}>
-            {lang === "fr" ? "Stands de rentree" : "Back-to-School Stands"}
+            {lang === "fr" ? "Stands de rentrée" : "Back-to-School Stands"}
           </h2>
           <p className="mb-8" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", lineHeight: 1.7, color: r(0.35), maxWidth: 600 }}>
             {lang === "fr"
-              ? "Affichage concu pour les stands d'accueil lors de la rentree scolaire, declinant la nouvelle identite visuelle de l'ecole."
+              ? "Affichage conçu pour les stands d'accueil lors de la rentrée scolaire, déclinant la nouvelle identité visuelle de l'école."
               : "Display materials designed for welcome stands during back-to-school, adapting the school's new visual identity."}
           </p>
           <ImgCard src={imgStandsRentree} alt="Stands de rentree" aspect="16/9" />
@@ -754,7 +771,7 @@ export function ProjectNrtv() {
           </h2>
           <p className="mb-8" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", lineHeight: 1.7, color: r(0.35), maxWidth: 600 }}>
             {lang === "fr"
-              ? "Visuels grand format concus pour l'affichage interne et externe de l'ecole."
+              ? "Visuels grand format conçus pour l'affichage interne et externe de l'école."
               : "Large-format visuals designed for the school's internal and external display."}
           </p>
           <ScrollRow fullBleed>
@@ -768,13 +785,13 @@ export function ProjectNrtv() {
 
         {/* ─── RESEAUX SOCIAUX ─── */}
         <FadeIn>
-          <SectionLabel>{lang === "fr" ? "Reseaux sociaux" : "Social Media"}</SectionLabel>
+          <SectionLabel>{lang === "fr" ? "Réseaux sociaux" : "Social Media"}</SectionLabel>
           <h2 className="mt-3 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(1.6rem, 4vw, 2.4rem)", fontWeight: 700, letterSpacing: "-0.03em", color: p.text }}>
-            {lang === "fr" ? "Contenus pour les reseaux" : "Social Media Content"}
+            {lang === "fr" ? "Contenus pour les réseaux" : "Social Media Content"}
           </h2>
           <p className="mb-8" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", lineHeight: 1.7, color: r(0.35), maxWidth: 600 }}>
             {lang === "fr"
-              ? "Posts et carrousels concus pour les reseaux sociaux de l'ecole, declinant l'identite visuelle sur differents formats et thematiques."
+              ? "Posts et carrousels conçus pour les réseaux sociaux de l'école, déclinant l'identité visuelle sur différents formats et thématiques."
               : "Posts and carousels designed for the school's social media, adapting the visual identity across various formats and topics."}
           </p>
 
@@ -828,7 +845,7 @@ export function ProjectNrtv() {
           </h2>
           <p className="mb-8" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", lineHeight: 1.7, color: r(0.35), maxWidth: 600 }}>
             {lang === "fr"
-              ? "Infographie realisee pour le magazine IA de l'ecole, synthetisant des donnees complexes en format visuel accessible."
+              ? "Infographie réalisée pour le magazine IA de l'école, synthétisant des données complexes en format visuel accessible."
               : "Infographic created for the school's AI magazine, synthesizing complex data into an accessible visual format."}
           </p>
           <div className="max-w-xl overflow-hidden rounded-xl" style={{ border: `1px solid ${r(0.06)}`, boxShadow: isDark ? "0 4px 20px rgba(0,0,0,0.3)" : "0 4px 20px rgba(0,0,0,0.06)" }}>
@@ -842,10 +859,10 @@ export function ProjectNrtv() {
         {/* ─── CLOSING ─── */}
         <FadeIn className="text-center py-16">
           <div className="w-16 h-[1px] mx-auto mb-8" style={{ background: `linear-gradient(90deg, transparent, ${ACCENT}, transparent)` }} />
-          <ImageWithFallback src={imgLogo1} alt="Narratiiv" className="h-8 w-auto mx-auto mb-6 opacity-20" style={{ filter: isDark ? "none" : "invert(1)" }} />
+          <ImageWithFallback src={heroLogo} alt="Narratiiv" className="h-8 w-auto mx-auto mb-6 opacity-25" />
           <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", lineHeight: 1.7, color: r(0.25), maxWidth: 500, margin: "0 auto" }}>
             {lang === "fr"
-              ? "Narratiiv — une selection de realisations concues dans le cadre de mes fonctions de Community Manager et Brand Content Manager."
+              ? "Narratiiv — une sélection de réalisations conçues dans le cadre de mes fonctions de Community Manager et Brand Content Manager."
               : "Narratiiv — a selection of works created during my role as Community Manager and Brand Content Manager."}
           </p>
         </FadeIn>
