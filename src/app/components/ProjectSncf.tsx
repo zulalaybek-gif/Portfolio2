@@ -565,7 +565,7 @@ function VideoScene() {
         <motion.video
           controls
           playsInline
-          preload="metadata"
+          preload="none"
           className="block w-full rounded-[1.6rem]"
           initial={{ opacity: 0, y: 42, filter: "blur(10px)" }}
           whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}

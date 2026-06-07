@@ -262,7 +262,7 @@ function FeaturedProject({ onSelect }: { onSelect: (p: Project) => void }) {
         >
           <div className="relative w-full aspect-[21/9] overflow-hidden">
             <motion.div className="absolute inset-[-15%]" style={{ y: imgY }}>
-              <ImageWithFallback src={featured.image} alt={featured.title} className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105" />
+              <ImageWithFallback src={featured.image} alt={featured.title} loading="eager" fetchPriority="high" className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105" />
             </motion.div>
             <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, ${pal.imgOverlayTop} 0%, ${pal.imgOverlayMid} 50%, ${pal.imgOverlayBot} 100%)` }} />
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ background: `radial-gradient(circle at 50% 100%, rgba(${featured.accent},0.15) 0%, transparent 60%)` }} />

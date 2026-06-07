@@ -331,7 +331,7 @@ function VideoCard({ url, src, title, aspect }: { url?: string; src?: string; ti
       {src ? (
         <video
           controls
-          preload="metadata"
+          preload="none"
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
         >
@@ -353,6 +353,8 @@ function VideoCard({ url, src, title, aspect }: { url?: string; src?: string; ti
             alt={title}
             className="absolute inset-0 w-full h-full object-cover"
             onError={() => setThumbError((e) => Math.min(e + 1, thumbs.length - 1))}
+            loading="lazy"
+            decoding="async"
           />
           <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors flex items-center justify-center">
             <div className="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">

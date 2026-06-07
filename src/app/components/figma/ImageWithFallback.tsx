@@ -18,6 +18,8 @@ export function ImageWithFallback(props: React.ImgHTMLAttributes<HTMLImageElemen
     loading = 'lazy',
     decoding = 'async',
     referrerPolicy = 'strict-origin-when-cross-origin',
+    // @ts-ignore - fetchPriority is supported in modern browsers but not yet in all @types/react versions
+    fetchPriority,
     ...rest
   } = props
 
@@ -27,10 +29,10 @@ export function ImageWithFallback(props: React.ImgHTMLAttributes<HTMLImageElemen
       style={style}
     >
       <div className="flex items-center justify-center w-full h-full">
-        <img src={ERROR_IMG_SRC} alt="Error loading image" loading={loading} decoding={decoding} referrerPolicy={referrerPolicy} {...rest} data-original-url={src} />
+        <img src={ERROR_IMG_SRC} alt="Error loading image" loading={loading} decoding={decoding} referrerPolicy={referrerPolicy} fetchPriority={fetchPriority} {...rest} data-original-url={src} />
       </div>
     </div>
   ) : (
-    <img src={src} alt={alt} className={className} style={style} loading={loading} decoding={decoding} referrerPolicy={referrerPolicy} {...rest} onError={handleError} />
+    <img src={src} alt={alt} className={className} style={style} loading={loading} decoding={decoding} referrerPolicy={referrerPolicy} fetchPriority={fetchPriority} {...rest} onError={handleError} />
   )
 }

@@ -368,6 +368,8 @@ function PropositionBlock({
                   src={src}
                   alt={`${t(titleKey)} poster ${i + 1}`}
                   className="w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
                 />
               </motion.div>
             ))}
@@ -455,6 +457,8 @@ function PropositionBlock({
               src={mockup}
               alt={`${t(titleKey)} mockup`}
               className="w-full object-cover"
+              loading="lazy"
+              decoding="async"
             />
           </div>
         </FadeIn>
