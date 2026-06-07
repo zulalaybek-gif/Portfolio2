@@ -8,13 +8,16 @@ import { FloatingSquares } from "./FloatingSquares";
 import { ProjectBackButton } from "./ProjectBackButton";
 
 /* -- Assets -- */
-import svgPaths from "../../imports/svg-u09fl664kx";
 import imgPage1 from "../../assets/snatsh/01-brochure.png";
 import imgPage2 from "../../assets/snatsh/02-brochure.png";
 import imgPage3 from "../../assets/snatsh/03-brochure.png";
 import imgPage4 from "../../assets/snatsh/04-brochure.png";
 import imgPage5 from "../../assets/snatsh/05-brochure.png";
 import imgMockup from "../../assets/snatsh/06-mockup.png";
+import logoIconTxtBlack from "../../assets/snatsh/assets/01.logo-icon-txt-b.svg";
+import logoIconTxtWhite from "../../assets/snatsh/assets/02.logo-icon-txt-w.svg";
+import logoIconBlack from "../../assets/snatsh/assets/03.logo-icon-b.svg";
+import logoIconWhite from "../../assets/snatsh/assets/04.logo-icon-w.svg";
 
 /* -- Helpers -- */
 const ACCENT = "#c0c1a4";
@@ -118,16 +121,11 @@ function HeroSection() {
           transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
           className="w-[280px] md:w-[400px]"
         >
-          <svg className="w-full" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="0 0 435 114">
-            <path d={svgPaths.p35cb0880} fill={isDark ? "white" : DARK_BG} />
-            <path d={svgPaths.p145b7300} fill={isDark ? "white" : DARK_BG} />
-            <path d={svgPaths.p2764e8c0} fill={isDark ? "white" : DARK_BG} />
-            <path d={svgPaths.p309f1280} fill={isDark ? "white" : DARK_BG} />
-            <path d={svgPaths.p3daf4e70} fill={isDark ? "white" : DARK_BG} />
-            <path d={svgPaths.pb788d80} fill={isDark ? "white" : DARK_BG} />
-            <path d={svgPaths.p2af89c00} fill={isDark ? "white" : DARK_BG} />
-            <path d={svgPaths.p38313e00} fill={isDark ? "white" : DARK_BG} />
-          </svg>
+          <img
+            src={isDark ? logoIconTxtWhite : logoIconTxtBlack}
+            alt="SNATSH"
+            className="w-full"
+          />
         </motion.div>
       </motion.div>
     </section>
@@ -300,10 +298,7 @@ function LogoSection() {
                 border: `1px solid ${r(0.05)}`,
               }}
             >
-              <svg className="w-full max-w-[80px]" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 213">
-                <path d={svgPaths.p6a86200} fill="white" />
-                <path d={svgPaths.p19ec880} fill="white" />
-              </svg>
+              <img src={logoIconWhite} alt="SNATSH icon" className="w-full max-w-[80px]" />
             </div>
           </FadeIn>
 
@@ -318,10 +313,7 @@ function LogoSection() {
                 border: `1px solid ${r(0.05)}`,
               }}
             >
-              <svg className="w-full max-w-[80px]" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 213">
-                <path d={svgPaths.p6a86200} fill="black" />
-                <path d={svgPaths.p19ec880} fill="black" />
-              </svg>
+              <img src={logoIconBlack} alt="SNATSH icon" className="w-full max-w-[80px]" />
             </div>
           </FadeIn>
 
@@ -336,16 +328,7 @@ function LogoSection() {
                 border: `1px solid ${r(0.05)}`,
               }}
             >
-              <svg className="w-full max-w-[140px]" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="0 0 435 114">
-                <path d={svgPaths.p35cb0880} fill="white" />
-                <path d={svgPaths.p145b7300} fill="white" />
-                <path d={svgPaths.p2764e8c0} fill="white" />
-                <path d={svgPaths.p309f1280} fill="white" />
-                <path d={svgPaths.p3daf4e70} fill="white" />
-                <path d={svgPaths.pb788d80} fill="white" />
-                <path d={svgPaths.p2af89c00} fill="white" />
-                <path d={svgPaths.p38313e00} fill="white" />
-              </svg>
+              <img src={logoIconTxtWhite} alt="SNATSH" className="w-full max-w-[140px]" />
             </div>
           </FadeIn>
 
@@ -360,16 +343,7 @@ function LogoSection() {
                 border: `1px solid ${r(0.05)}`,
               }}
             >
-              <svg className="w-full max-w-[140px]" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="0 0 435 114">
-                <path d={svgPaths.p35cb0880} fill="black" />
-                <path d={svgPaths.p145b7300} fill="black" />
-                <path d={svgPaths.p2764e8c0} fill="black" />
-                <path d={svgPaths.p309f1280} fill="black" />
-                <path d={svgPaths.p3daf4e70} fill="black" />
-                <path d={svgPaths.pb788d80} fill="black" />
-                <path d={svgPaths.p2af89c00} fill="black" />
-                <path d={svgPaths.p38313e00} fill="black" />
-              </svg>
+              <img src={logoIconTxtBlack} alt="SNATSH" className="w-full max-w-[140px]" />
             </div>
           </FadeIn>
         </div>
@@ -854,10 +828,7 @@ function FinalSection() {
                   : `0 30px 80px rgba(${ACCENT_RGB},0.15)`,
               }}
             >
-              <svg className="w-[55%]" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 213">
-                <path d={svgPaths.p6a86200} fill="white" />
-                <path d={svgPaths.p19ec880} fill="white" />
-              </svg>
+              <img src={logoIconWhite} alt="SNATSH" className="w-[55%]" />
             </div>
           </div>
         </FadeIn>

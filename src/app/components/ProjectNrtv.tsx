@@ -8,7 +8,6 @@ import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 /* ── Assets — Logos ── */
 import imgLogoBlack from "../../assets/narratiiv/assets/01.logo-noir.svg";
-import imgLogoWhite from "../../assets/narratiiv/assets/02.logo-blanc.svg";
 
 /* ── Signage / Stands ── */
 import imgStandsRentree from "../../assets/narratiiv/01.stands-de-rentee.png";
@@ -563,7 +562,7 @@ export function ProjectNrtv() {
   const { t, lang } = useI18n();
   const { p, r, isDark } = useTheme();
   const navigate = useNavigate();
-  const heroLogo = isDark ? imgLogoWhite : imgLogoBlack;
+  const heroLogo = imgLogoBlack;
 
   const SOCIAL_BATCH_1 = [imgPost11, imgPost21, imgPost31, imgPost41, imgPost51, imgPost61, imgPost71, imgPost81];
   const SOCIAL_BATCH_2 = [imgPost12, imgPost22, imgPost32, imgPost42, imgPost52, imgPost62, imgPost72];
@@ -590,7 +589,12 @@ export function ProjectNrtv() {
             transition={{ opacity: { duration: 0.8, delay: 0.5 }, y: { duration: 4, delay: 1.3, repeat: Infinity, ease: "easeInOut" } }}
             className="mb-6"
           >
-            <ImageWithFallback src={heroLogo} alt="Narratiiv" className="h-16 w-auto" />
+            <ImageWithFallback
+              src={heroLogo}
+              alt="Narratiiv"
+              className="h-16 w-auto"
+              style={{ filter: isDark ? "invert(1)" : undefined }}
+            />
           </motion.div>
 
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.7 }} className="text-center max-w-xl" style={{ fontFamily: "'Inter', sans-serif", fontSize: "clamp(0.85rem, 1.5vw, 1rem)", lineHeight: 1.7, color: r(0.35) }}>
@@ -675,15 +679,20 @@ export function ProjectNrtv() {
             </span>
             <div className="grid grid-cols-2 gap-4 max-w-md">
               {[
-                { src: imgLogoBlack, label: "Logo noir", bg: "#f5f5f5" },
-                { src: imgLogoWhite, label: "Logo blanc", bg: "#09090b" },
+                { src: imgLogoBlack, label: "Logo noir", bg: "#f5f5f5", invert: false },
+                { src: imgLogoBlack, label: "Logo blanc", bg: "#09090b", invert: true },
               ].map((logo, i) => (
                 <div
                   key={i}
                   className="rounded-xl p-6 flex items-center justify-center"
                   style={{ background: logo.bg, border: `1px solid ${r(0.06)}` }}
                 >
-                  <ImageWithFallback src={logo.src} alt={logo.label} className="max-h-14 w-auto" />
+                  <ImageWithFallback
+                    src={logo.src}
+                    alt={logo.label}
+                    className="max-h-14 w-auto"
+                    style={{ filter: logo.invert ? "invert(1)" : undefined }}
+                  />
                 </div>
               ))}
             </div>
@@ -859,7 +868,12 @@ export function ProjectNrtv() {
         {/* ─── CLOSING ─── */}
         <FadeIn className="text-center py-16">
           <div className="w-16 h-[1px] mx-auto mb-8" style={{ background: `linear-gradient(90deg, transparent, ${ACCENT}, transparent)` }} />
-          <ImageWithFallback src={heroLogo} alt="Narratiiv" className="h-8 w-auto mx-auto mb-6 opacity-25" />
+          <ImageWithFallback
+            src={heroLogo}
+            alt="Narratiiv"
+            className="h-8 w-auto mx-auto mb-6 opacity-25"
+            style={{ filter: isDark ? "invert(1)" : undefined }}
+          />
           <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", lineHeight: 1.7, color: r(0.25), maxWidth: 500, margin: "0 auto" }}>
             {lang === "fr"
               ? "Narratiiv — une sélection de réalisations conçues dans le cadre de mes fonctions de Community Manager et Brand Content Manager."
