@@ -1,6 +1,6 @@
 import { motion, useReducedMotion } from "motion/react";
 import { useState, useEffect, useRef } from "react";
-import { ArrowLeft, Pause, Play, Volume2 } from "lucide-react";
+import { ArrowLeft, Clapperboard, Pause, Play, Smartphone, Users, Volume2 } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useI18n } from "./i18n";
 import { useTheme } from "./theme";
@@ -46,7 +46,7 @@ const BENTO_ICONS = [
   { viewBox: "0 0 64 38", path: svgSlideIcons.p76cf280 },
 ];
 
-const UGC_URL = "https://www.youtube.com/embed/_AJf2dtOLtQ";
+const UGC_VIDEO_URL = "https://www.youtube.com/shorts/_AJf2dtOLtQ";
 
 /* ── Hero Section ── */
 function HeroSection() {
@@ -1758,38 +1758,176 @@ function SpotifyScene({ playing, setPlaying }: { playing: boolean; setPlaying: (
 }
 
 function VideoScene() {
+  const { isDark } = useTheme();
+  const shouldReduceMotion = useReducedMotion();
+  const textColor = isDark ? "#F8FAFC" : "#071426";
+  const mutedColor = isDark ? "rgba(235,242,250,0.72)" : "rgba(7,20,38,0.68)";
+  const cardBorder = isDark ? "rgba(141,232,254,0.26)" : "rgba(0,44,76,0.16)";
+  const infoBorder = isDark ? "rgba(141,232,254,0.16)" : "rgba(0,44,76,0.12)";
+  const videoCards = [
+    {
+      title: "Vidéo du projet",
+      duration: "01:24",
+      description: "Découvrez le concept, les objectifs et les étapes clés de la réalisation du projet.",
+      thumbnail: imgCampaignPink,
+      url: videoMain,
+    },
+    {
+      title: "Vidéo UGC",
+      duration: "00:45",
+      description: "Format court destiné aux réseaux sociaux pour présenter l'opération et générer de l'engagement.",
+      thumbnail: imgCampaignBlue,
+      url: UGC_VIDEO_URL,
+    },
+  ];
+  const infoItems = [
+    {
+      icon: Clapperboard,
+      title: "Un storytelling clair",
+      text: "Un message structuré pour présenter le projet et ses enjeux.",
+    },
+    {
+      icon: Smartphone,
+      title: "Un format engageant",
+      text: "Des vidéos pensées pour capter l'attention et maximiser l'impact.",
+    },
+    {
+      icon: Users,
+      title: "Adapté à chaque canal",
+      text: "Des contenus optimisés selon les usages et les plateformes.",
+    },
+  ];
+
+  const openVideo = (url: string) => {
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
   return (
-    <section className="relative min-h-[105vh] overflow-hidden px-6 py-24 md:px-12 lg:py-32">
-      <SceneName className="left-8 top-24 md:left-14">Vidéos</SceneName>
-      <SceneGlow className="left-1/2 top-[42%] h-[44rem] w-[62rem] -translate-x-1/2 -translate-y-1/2" opacity={0.18} />
-      <StructuralLine src={lineAssetLong} className="left-[-22vw] top-[26%] w-[140vw]" opacity={0.28} />
-      <div className="relative z-10 mx-auto max-w-6xl">
-        <motion.video
-          controls
-          playsInline
-          preload="none"
-          className="block w-full rounded-[1.6rem]"
-          initial={{ opacity: 0, y: 42, filter: "blur(10px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          viewport={{ once: true, margin: "120px 0px" }}
-          transition={{ duration: 0.9 }}
-          style={{ boxShadow: `0 50px 120px rgba(0,0,0,0.5), 0 0 60px rgba(${ACCENT_RGB},0.14)` }}
-        >
-          <source src={videoMain} type="video/mp4" />
-          Votre navigateur ne peut pas lire cette vidéo.
-        </motion.video>
-        <div className="mt-28 flex min-h-[34rem] items-center justify-center">
+    <section className="relative overflow-hidden px-6 py-24 md:px-12 lg:py-32">
+      <div className="pointer-events-none absolute inset-0 opacity-45 md:opacity-55" aria-hidden="true">
+        <SpotifySandscape playing={false} isDark={isDark} shouldReduceMotion={shouldReduceMotion} />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-[92rem]">
+        <div className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
           <motion.div
-            className="relative aspect-[9/16] w-[min(21rem,74vw)] overflow-hidden rounded-[2rem]"
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 26 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            style={{ boxShadow: "0 38px 90px rgba(0,0,0,0.36)" }}
+            viewport={{ once: true, margin: "120px 0px" }}
+            transition={{ duration: 0.72, ease: "easeOut" }}
           >
-            <iframe src={UGC_URL} title="Vidéo UGC SNCF Connect" className="h-full w-full" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
+            <div className="mb-12 flex items-center gap-4">
+              <span
+                className="rounded-full border px-6 py-3 text-xs font-bold uppercase tracking-[0.16em]"
+                style={{
+                  color: ACCENT,
+                  borderColor: `rgba(${ACCENT_RGB},0.52)`,
+                  boxShadow: `0 0 18px rgba(${ACCENT_RGB},0.12)`,
+                  fontFamily: "'Space Grotesk', sans-serif",
+                }}
+              >
+                07. Vidéos
+              </span>
+              <span className="h-px w-20 md:w-32" style={{ background: `linear-gradient(90deg, rgba(${ACCENT_RGB},0.58), rgba(${ACCENT_RGB},0.08))` }} />
+              <span className="h-2.5 w-2.5 rounded-full" style={{ background: ACCENT, boxShadow: `0 0 16px rgba(${ACCENT_RGB},0.65)` }} />
+            </div>
+
+            <h2
+              className="max-w-xl text-[2.55rem] font-black leading-[1.08] tracking-[-0.03em] md:text-[4.4rem] lg:text-[4.7rem]"
+              style={{ color: textColor, fontFamily: "'Space Grotesk', sans-serif" }}
+            >
+              Des vidéos qui racontent, <span style={{ color: ACCENT }}>inspirent</span> et engagent.
+            </h2>
+            <p className="mt-8 max-w-md text-lg leading-8 md:text-xl" style={{ color: mutedColor, fontFamily: "'Inter', sans-serif" }}>
+              Deux formats vidéo pensés pour valoriser le projet et renforcer son impact sur les réseaux sociaux.
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="grid gap-7 md:grid-cols-2"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "120px 0px" }}
+            transition={{ duration: 0.78, ease: "easeOut", delay: 0.08 }}
+          >
+            {videoCards.map((card) => (
+              <article key={card.title} className="group">
+                <button
+                  type="button"
+                  onClick={() => openVideo(card.url)}
+                  className="relative block aspect-[1.07/1] w-full overflow-hidden rounded-[1.45rem] text-left outline-none transition-transform duration-500 hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-[#8DE8FE]"
+                  style={{ border: `1px solid ${cardBorder}` }}
+                  aria-label={`Lire ${card.title}`}
+                >
+                  <img
+                    src={card.thumbnail}
+                    alt=""
+                    className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.045]"
+                    loading="lazy"
+                  />
+                  <span className="absolute inset-0 bg-[#06101c]/28 opacity-80 transition-opacity duration-500 group-hover:opacity-55" />
+                  <span className="absolute inset-0 flex items-center justify-center opacity-0 transition duration-500 group-hover:opacity-100">
+                    <span
+                      className="flex h-20 w-20 items-center justify-center rounded-full border bg-black/24 backdrop-blur-md"
+                      style={{
+                        borderColor: "rgba(255,255,255,0.74)",
+                        boxShadow: "0 18px 45px rgba(0,0,0,0.32)",
+                      }}
+                    >
+                      <Play className="ml-1 h-8 w-8 text-white" fill="currentColor" strokeWidth={1.8} />
+                    </span>
+                  </span>
+                </button>
+
+                <div className="px-2 pt-6">
+                  <div className="flex items-baseline justify-between gap-4">
+                    <h3 className="text-2xl font-black md:text-3xl" style={{ color: textColor, fontFamily: "'Space Grotesk', sans-serif" }}>
+                      {card.title}
+                    </h3>
+                    <span className="text-sm font-bold" style={{ color: ACCENT, fontFamily: "'Inter', sans-serif" }}>
+                      {card.duration}
+                    </span>
+                  </div>
+                  <p className="mt-4 max-w-md text-base leading-7" style={{ color: mutedColor, fontFamily: "'Inter', sans-serif" }}>
+                    {card.description}
+                  </p>
+                </div>
+              </article>
+            ))}
           </motion.div>
         </div>
+
+        <motion.div
+          className="mt-16 grid gap-8 rounded-[1.45rem] border p-7 md:grid-cols-3 md:p-9"
+          initial={{ opacity: 0, y: 26 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "120px 0px" }}
+          transition={{ duration: 0.74, ease: "easeOut", delay: 0.08 }}
+          style={{
+            borderColor: infoBorder,
+            background: isDark ? "rgba(7,17,29,0.22)" : "rgba(255,255,255,0.24)",
+            backdropFilter: "blur(10px)",
+          }}
+        >
+          {infoItems.map(({ icon: Icon, title, text }) => (
+            <div key={title} className="flex gap-5">
+              <span
+                className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border"
+                style={{ borderColor: `rgba(${ACCENT_RGB},0.38)`, color: ACCENT }}
+              >
+                <Icon className="h-7 w-7" strokeWidth={1.7} />
+              </span>
+              <span>
+                <h3 className="text-xl font-black" style={{ color: textColor, fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {title}
+                </h3>
+                <p className="mt-2 text-sm leading-6 md:text-base" style={{ color: mutedColor, fontFamily: "'Inter', sans-serif" }}>
+                  {text}
+                </p>
+              </span>
+            </div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );
