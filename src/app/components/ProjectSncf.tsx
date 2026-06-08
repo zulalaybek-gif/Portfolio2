@@ -429,22 +429,8 @@ function OnboardingScene() {
         </defs>
       </motion.svg>
 
-      <motion.div
-        aria-hidden="true"
-        className="pointer-events-none absolute left-0 top-[48%] h-px w-full"
-        initial={{ opacity: 0, scaleX: 0 }}
-        whileInView={{ opacity: 1, scaleX: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.4, ease: "easeOut" }}
-        style={{
-          transformOrigin: "left",
-          background: `linear-gradient(90deg, transparent, rgba(${ACCENT_RGB},0.18), rgba(141,232,254,0.5), transparent)`,
-          boxShadow: `0 0 28px rgba(${ACCENT_RGB},0.25)`,
-        }}
-      />
-
       <div className="relative z-10 mx-auto max-w-7xl">
-        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+        <div className="grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
           <motion.div
             initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -482,17 +468,15 @@ function OnboardingScene() {
               style={{
                 color: textColor,
                 fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: "clamp(2.4rem, 5.2vw, 4.85rem)",
+                fontSize: "clamp(2.35rem, 5vw, 4.55rem)",
                 fontWeight: 750,
-                lineHeight: 0.95,
+                lineHeight: 1.02,
                 letterSpacing: "-0.055em",
+                maxWidth: "58rem",
               }}
             >
-              Un onboarding
-              <br />
-              pensé pour <span style={{ color: ACCENT, textShadow: `0 0 24px rgba(${ACCENT_RGB},0.28)` }}>guider</span>
-              <br />
-              et <span style={{ color: ACCENT, textShadow: `0 0 24px rgba(${ACCENT_RGB},0.28)` }}>inspirer</span>
+              Un onboarding pensé pour <span style={{ color: ACCENT, textShadow: `0 0 24px rgba(${ACCENT_RGB},0.28)` }}>guider</span> et{" "}
+              <span style={{ color: ACCENT, textShadow: `0 0 24px rgba(${ACCENT_RGB},0.28)` }}>inspirer</span>
             </h2>
             <p
               className="mt-8 max-w-[24rem]"
@@ -539,7 +523,7 @@ function OnboardingScene() {
 
           <div className="relative mx-auto mt-16 max-w-6xl">
             <motion.div
-              className="absolute left-[9%] right-[9%] top-5 h-px"
+              className="absolute left-[calc(12.5%-1rem)] right-[calc(12.5%-1rem)] top-4 hidden h-px lg:block"
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
               viewport={{ once: true, margin: "120px 0px" }}
@@ -561,7 +545,7 @@ function OnboardingScene() {
                   transition={{ duration: 0.62, delay: 0.18 + index * 0.12, ease: "easeOut" }}
                 >
                   <span
-                    className="mx-auto mb-5 block h-8 w-8 rounded-full"
+                    className="relative z-10 mx-auto mb-5 block h-8 w-8 rounded-full"
                     style={{
                       border: `2px solid ${index === 0 ? ACCENT : index === 3 ? "#D15CFD" : "#686CFF"}`,
                       background: isDark ? "#07101d" : "#f7fbff",
@@ -704,15 +688,14 @@ function RoutineScene() {
               style={{
                 color: textColor,
                 fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: "clamp(2.3rem, 4.5vw, 4.45rem)",
+                fontSize: "clamp(2.35rem, 4.25vw, 4.25rem)",
                 fontWeight: 750,
-                lineHeight: 1.02,
+                lineHeight: 1.05,
                 letterSpacing: "-0.052em",
+                maxWidth: "48rem",
               }}
             >
-              Connect Routine,
-              <br />
-              votre <span style={{ color: ACCENT }}>compagnon</span>
+              Connect Routine, votre <span style={{ color: ACCENT }}>compagnon</span>
               <br />
               de route <span style={{ color: ACCENT }}>intelligent</span>
             </h2>
@@ -755,27 +738,15 @@ function RoutineScene() {
           <div className="relative min-h-[36rem] lg:min-h-[44rem]">
             <motion.img
               src={imgRoutineList}
-              alt="Connect Routine - écran principal"
+              alt="Connect Routine - écran Mes routines"
               loading="lazy"
               decoding="async"
-              className="absolute left-[10%] top-[2%] z-20 w-[min(18rem,45vw)] select-none md:left-[18%] md:w-[20rem] lg:left-[12%] lg:w-[22rem]"
-              initial={{ opacity: 0, y: 70, rotate: -4, filter: "blur(10px)" }}
-              whileInView={{ opacity: 1, y: 0, rotate: -3, filter: "blur(0px)" }}
+              className="absolute left-1/2 top-[2%] z-20 w-[min(21rem,68vw)] -translate-x-1/2 select-none md:w-[23rem] lg:w-[25rem]"
+              initial={{ opacity: 0, y: 70, x: "-50%", rotate: -2.5, filter: "blur(10px)" }}
+              whileInView={{ opacity: 1, y: 0, x: "-50%", rotate: -2.5, filter: "blur(0px)" }}
               viewport={{ once: true, margin: "120px 0px" }}
               transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
               style={{ filter: "drop-shadow(0 46px 58px rgba(0,0,0,0.42)) drop-shadow(0 0 34px rgba(141,232,254,0.18))" }}
-            />
-            <motion.img
-              src={imgRoutineList}
-              alt="Connect Routine - aperçu secondaire"
-              loading="lazy"
-              decoding="async"
-              className="absolute right-[4%] top-[12%] z-10 w-[min(16rem,39vw)] select-none md:right-[13%] md:w-[18rem] lg:right-[8%] lg:w-[20rem]"
-              initial={{ opacity: 0, y: 80, rotate: 8, filter: "blur(10px)" }}
-              whileInView={{ opacity: 1, y: 0, rotate: 5, filter: "blur(0px)" }}
-              viewport={{ once: true, margin: "120px 0px" }}
-              transition={{ duration: 0.9, delay: 0.14, ease: [0.22, 1, 0.36, 1] }}
-              style={{ filter: "drop-shadow(0 42px 54px rgba(0,0,0,0.38)) drop-shadow(0 0 38px rgba(150,90,255,0.22))" }}
             />
             <motion.div
               aria-hidden="true"
