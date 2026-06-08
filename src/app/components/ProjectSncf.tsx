@@ -602,20 +602,338 @@ function OnboardingScene() {
 }
 
 function RoutineScene() {
-  return (
-    <section className="relative min-h-[110vh] overflow-hidden px-6 py-24 md:px-12 lg:py-28">
-      <SceneName className="right-8 top-24 md:right-14">Connect Routine</SceneName>
-      <SceneGlow className="left-[28%] top-[42%] h-[34rem] w-[42rem]" opacity={0.12} />
-      <StructuralLine src={lineAssetLong} className="left-[-22vw] top-[48%] w-[132vw]" opacity={0.5} />
-      <StructuralLine src={lineAssetLoop} className="right-[-24vw] bottom-[13%] w-[80vw]" rotate={-8} opacity={0.3} />
-      <FloatingIcon src={trainAsset} className="left-[45%] top-[25%] h-12 w-12" />
-      <FloatingIcon src={trajetAsset} className="left-[53%] top-[55%] h-10 w-10" delay={0.6} />
-      <FloatingIcon src={horlogeAsset} className="right-[10%] top-[18%] h-10 w-10" delay={1.1} />
-      <FloatingIcon src={traficAsset} className="left-[8%] bottom-[12%] h-9 w-9" delay={0.35} />
+  const { isDark, r } = useTheme();
+  const textColor = isDark ? "#F6FAFF" : "#071322";
+  const mutedColor = isDark ? "rgba(230,240,255,0.66)" : "rgba(7,19,34,0.62)";
+  const panelBg = isDark ? "rgba(7,16,30,0.58)" : "rgba(255,255,255,0.58)";
+  const panelBorder = isDark ? "rgba(141,232,254,0.13)" : "rgba(0,44,76,0.12)";
+  const essentials = [
+    { icon: trajetAsset, title: "Itinéraires\npersonnalisés" },
+    { icon: traficAsset, title: "Infos trafic\nen temps réel" },
+    { icon: trainAsset, title: "Titres &\nabonnements" },
+    { icon: maisonAsset, title: "Prochains\ndéparts" },
+    { icon: horlogeAsset, title: "Alertes\nperturbations" },
+    { icon: ampouleAsset, title: "Favoris &\nraccourcis" },
+  ];
+  const benefits = [
+    { icon: trajetAsset, title: "Un accueil sur mesure", text: "qui évolue avec vous" },
+    { icon: horlogeAsset, title: "Des routines intelligentes", text: "pour gagner du temps" },
+    { icon: ampouleAsset, title: "Des informations fiables", text: "au moment clé" },
+  ];
+  const transportDots = ["#ee5b95", "#ffd048", "#7a6dff", "#f29428", "#37ce7d"];
 
-      <div className="relative z-10 mx-auto min-h-[52rem] max-w-7xl">
-        <FloatingMockup src={imgRoutineCreate} alt="Création de routine" className="absolute left-[-7%] top-[7%] z-20 w-[min(48rem,58vw)] -rotate-2" />
-        <FloatingMockup src={imgRoutineList} alt="Mes routines" className="absolute bottom-[5%] right-[-2%] z-30 w-[min(28rem,35vw)] rotate-2" delay={0.18} />
+  return (
+    <section className="relative overflow-hidden px-6 py-24 md:px-12 lg:py-32">
+      <motion.svg
+        aria-hidden="true"
+        className="pointer-events-none absolute left-0 top-0 hidden h-52 w-full lg:block"
+        viewBox="0 0 1200 210"
+        fill="none"
+      >
+        <motion.path
+          d="M0 24 H392 C478 24 474 144 562 148 H820 C900 148 886 26 978 24 H1200"
+          stroke="url(#routine-top-line)"
+          strokeWidth="2"
+          strokeLinecap="round"
+          initial={{ pathLength: 0, opacity: 0 }}
+          whileInView={{ pathLength: 1, opacity: 1 }}
+          viewport={{ once: true, margin: "120px 0px" }}
+          animate={{ d: ["M0 24 H392 C478 24 474 144 562 148 H820 C900 148 886 26 978 24 H1200", "M0 24 H392 C482 24 470 136 562 140 H820 C904 140 884 30 978 24 H1200", "M0 24 H392 C478 24 474 144 562 148 H820 C900 148 886 26 978 24 H1200"] }}
+          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <defs>
+          <linearGradient id="routine-top-line" x1="0" y1="24" x2="1200" y2="148" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#8DE8FE" stopOpacity={isDark ? "0.26" : "0.38"} />
+            <stop offset="0.52" stopColor="#726BFF" stopOpacity={isDark ? "0.86" : "0.58"} />
+            <stop offset="1" stopColor="#BA4CFF" stopOpacity={isDark ? "0.76" : "0.48"} />
+          </linearGradient>
+        </defs>
+      </motion.svg>
+
+      <SceneGlow className="left-[48%] top-[34%] h-[30rem] w-[34rem]" color="130,80,255" opacity={0.12} />
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-[-8vw] top-[48%] h-px w-[116vw]"
+        initial={{ scaleX: 0, opacity: 0 }}
+        whileInView={{ scaleX: 1, opacity: 1 }}
+        viewport={{ once: true, margin: "120px 0px" }}
+        transition={{ duration: 1.6, ease: "easeOut" }}
+        style={{
+          transformOrigin: "left",
+          background: "linear-gradient(90deg, transparent, rgba(141,232,254,0.72), rgba(148,85,255,0.6), transparent)",
+          boxShadow: "0 0 28px rgba(141,232,254,0.25)",
+        }}
+      />
+
+      <div className="relative z-10 mx-auto max-w-7xl">
+        <div className="grid gap-14 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "120px 0px" }}
+            transition={{ duration: 0.75, ease: "easeOut" }}
+          >
+            <div className="mb-10 flex items-center gap-4">
+              <span
+                className="rounded-full px-4 py-1.5 uppercase tracking-[0.16em]"
+                style={{
+                  border: `1px solid rgba(${ACCENT_RGB},${isDark ? 0.42 : 0.58})`,
+                  color: ACCENT,
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: "0.68rem",
+                  fontWeight: 800,
+                  boxShadow: `0 0 22px rgba(${ACCENT_RGB},${isDark ? 0.12 : 0.16})`,
+                }}
+              >
+                02. Connect Routine
+              </span>
+              <motion.span
+                className="hidden h-px w-40 sm:block"
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9, delay: 0.2, ease: "easeOut" }}
+                style={{
+                  transformOrigin: "left",
+                  background: `linear-gradient(90deg, rgba(${ACCENT_RGB},0.86), rgba(${ACCENT_RGB},0.15))`,
+                }}
+              />
+              <span className="hidden h-1.5 w-1.5 rounded-full sm:block" style={{ background: ACCENT, boxShadow: `0 0 14px rgba(${ACCENT_RGB},0.8)` }} />
+            </div>
+            <h2
+              style={{
+                color: textColor,
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: "clamp(2.3rem, 4.5vw, 4.45rem)",
+                fontWeight: 750,
+                lineHeight: 1.02,
+                letterSpacing: "-0.052em",
+              }}
+            >
+              Connect Routine,
+              <br />
+              votre <span style={{ color: ACCENT }}>compagnon</span>
+              <br />
+              de route <span style={{ color: ACCENT }}>intelligent</span>
+            </h2>
+            <p
+              className="mt-7 max-w-[25rem]"
+              style={{ color: mutedColor, fontFamily: "'Inter', sans-serif", fontSize: "1rem", lineHeight: 1.72 }}
+            >
+              Connect Routine vous accompagne au quotidien grâce à des routines personnalisées et un accueil sur mesure qui anticipe, organise et simplifie chaque trajet.
+            </p>
+
+            <div className="mt-12 space-y-7">
+              {benefits.map((benefit, index) => (
+                <motion.div
+                  key={benefit.title}
+                  className="flex items-center gap-6"
+                  initial={{ opacity: 0, x: -24 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+                >
+                  <span
+                    className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full"
+                    style={{
+                      border: `1px solid ${index === 2 ? "rgba(150,90,255,0.45)" : `rgba(${ACCENT_RGB},0.28)`}`,
+                      background: isDark ? "rgba(7,16,30,0.26)" : "rgba(255,255,255,0.34)",
+                      boxShadow: `0 0 20px ${index === 2 ? "rgba(150,90,255,0.16)" : "rgba(141,232,254,0.13)"}`,
+                    }}
+                  >
+                    <img src={benefit.icon} alt="" aria-hidden="true" className="h-7 w-7 opacity-80" />
+                  </span>
+                  <span>
+                    <strong style={{ color: textColor, fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.02rem" }}>{benefit.title}</strong>
+                    <span className="block" style={{ color: mutedColor, fontFamily: "'Inter', sans-serif", fontSize: "0.92rem" }}>{benefit.text}</span>
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          <div className="relative min-h-[36rem] lg:min-h-[44rem]">
+            <motion.img
+              src={imgRoutineList}
+              alt="Connect Routine - écran principal"
+              className="absolute left-[10%] top-[2%] z-20 w-[min(18rem,45vw)] select-none md:left-[18%] md:w-[20rem] lg:left-[12%] lg:w-[22rem]"
+              initial={{ opacity: 0, y: 70, rotate: -4, filter: "blur(10px)" }}
+              whileInView={{ opacity: 1, y: 0, rotate: -3, filter: "blur(0px)" }}
+              viewport={{ once: true, margin: "120px 0px" }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+              style={{ filter: "drop-shadow(0 46px 58px rgba(0,0,0,0.42)) drop-shadow(0 0 34px rgba(141,232,254,0.18))" }}
+            />
+            <motion.img
+              src={imgRoutineList}
+              alt="Connect Routine - aperçu secondaire"
+              className="absolute right-[4%] top-[12%] z-10 w-[min(16rem,39vw)] select-none md:right-[13%] md:w-[18rem] lg:right-[8%] lg:w-[20rem]"
+              initial={{ opacity: 0, y: 80, rotate: 8, filter: "blur(10px)" }}
+              whileInView={{ opacity: 1, y: 0, rotate: 5, filter: "blur(0px)" }}
+              viewport={{ once: true, margin: "120px 0px" }}
+              transition={{ duration: 0.9, delay: 0.14, ease: [0.22, 1, 0.36, 1] }}
+              style={{ filter: "drop-shadow(0 42px 54px rgba(0,0,0,0.38)) drop-shadow(0 0 38px rgba(150,90,255,0.22))" }}
+            />
+            <motion.div
+              aria-hidden="true"
+              className="absolute bottom-[18%] left-[6%] h-px w-[90%]"
+              initial={{ scaleX: 0, opacity: 0 }}
+              whileInView={{ scaleX: 1, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.2, delay: 0.25, ease: "easeOut" }}
+              style={{
+                transformOrigin: "left",
+                background: "linear-gradient(90deg, rgba(141,232,254,0.1), rgba(141,232,254,0.85), rgba(151,85,255,0.78), rgba(141,232,254,0.12))",
+                boxShadow: "0 0 26px rgba(141,232,254,0.22)",
+              }}
+            />
+          </div>
+        </div>
+
+        <motion.div
+          className="mt-20 text-center"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+        >
+          <h3
+            style={{
+              color: textColor,
+              fontFamily: "'Space Grotesk', sans-serif",
+              fontSize: "clamp(1.55rem,2.2vw,2.15rem)",
+              fontWeight: 720,
+              letterSpacing: "-0.03em",
+            }}
+          >
+            Vos <span style={{ color: ACCENT }}>essentiels</span>, réunis au même endroit
+          </h3>
+          <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
+            {essentials.map((item, index) => (
+              <motion.div
+                key={item.title}
+                className="flex min-h-[9.8rem] flex-col items-center justify-center rounded-2xl px-4 text-center"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.55, delay: index * 0.06, ease: "easeOut" }}
+                style={{
+                  border: `1px solid ${panelBorder}`,
+                  background: panelBg,
+                  boxShadow: isDark ? "inset 0 1px 0 rgba(255,255,255,0.03)" : "0 16px 36px rgba(0,44,76,0.06)",
+                  backdropFilter: "blur(10px)",
+                }}
+              >
+                <img src={item.icon} alt="" aria-hidden="true" className="mb-5 h-8 w-8 opacity-80" />
+                <span className="whitespace-pre-line" style={{ color: textColor, fontFamily: "'Inter', sans-serif", fontSize: "0.92rem", lineHeight: 1.45 }}>
+                  {item.title}
+                </span>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="relative mt-16 grid gap-10 overflow-hidden rounded-[2rem] p-8 md:grid-cols-[0.95fr_1.05fr] md:p-12"
+          initial={{ opacity: 0, y: 36 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "120px 0px" }}
+          transition={{ duration: 0.75, ease: "easeOut" }}
+          style={{
+            border: `1px solid ${panelBorder}`,
+            background: panelBg,
+            backdropFilter: "blur(12px)",
+          }}
+        >
+          <motion.div
+            aria-hidden="true"
+            className="absolute bottom-10 left-0 h-px w-full"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.2, delay: 0.25, ease: "easeOut" }}
+            style={{
+              transformOrigin: "left",
+              background: "linear-gradient(90deg, rgba(141,232,254,0.86), rgba(151,85,255,0.72), transparent)",
+              boxShadow: "0 0 24px rgba(141,232,254,0.2)",
+            }}
+          />
+          <div className="relative z-10">
+            <h3 style={{ color: textColor, fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(1.8rem,2.5vw,2.5rem)", fontWeight: 720, letterSpacing: "-0.04em" }}>
+              Des <span style={{ color: ACCENT }}>routines</span> créées pour vous
+            </h3>
+            <p className="mt-5 max-w-md" style={{ color: mutedColor, fontFamily: "'Inter', sans-serif", fontSize: "1rem", lineHeight: 1.7 }}>
+              Définissez vos trajets réguliers, horaires et préférences. Connect Routine s’occupe du reste.
+            </p>
+            <div className="mt-12 flex h-16 w-16 items-center justify-center rounded-full" style={{ border: `1px solid rgba(${ACCENT_RGB},0.36)`, boxShadow: "0 0 26px rgba(141,232,254,0.18)" }}>
+              <img src={trajetAsset} alt="" aria-hidden="true" className="h-8 w-8 opacity-80" />
+            </div>
+          </div>
+
+          <div
+            className="relative z-10 rounded-2xl p-5"
+            style={{
+              border: `1px solid ${panelBorder}`,
+              background: isDark ? "rgba(4,10,20,0.54)" : "rgba(255,255,255,0.48)",
+            }}
+          >
+            <div className="mb-4 flex items-center justify-between">
+              <strong style={{ color: textColor, fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.1rem" }}>Mes routines</strong>
+              <span style={{ color: mutedColor, fontSize: "1.4rem", lineHeight: 1 }}>+</span>
+            </div>
+            {["Maison → Travail", "Travail → Maison"].map((name, index) => (
+              <div
+                key={name}
+                className="mb-3 flex items-center gap-3 rounded-xl p-3"
+                style={{ border: `1px solid ${panelBorder}`, background: isDark ? "rgba(10,19,33,0.56)" : "rgba(255,255,255,0.5)" }}
+              >
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg" style={{ background: `rgba(${ACCENT_RGB},0.15)` }}>
+                  <img src={maisonAsset} alt="" aria-hidden="true" className="h-5 w-5 opacity-80" />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <strong className="block" style={{ color: textColor, fontFamily: "'Inter', sans-serif", fontSize: "0.9rem" }}>{name}</strong>
+                  <span className="block" style={{ color: mutedColor, fontFamily: "'Inter', sans-serif", fontSize: "0.73rem" }}>
+                    Lun, Mar, Mer, Jeu, Ven
+                  </span>
+                  <span className="block" style={{ color: mutedColor, fontFamily: "'Inter', sans-serif", fontSize: "0.73rem" }}>
+                    {index === 0 ? "08:01 · Gare de Lyon" : "18:01 · Gare de Lyon"}
+                  </span>
+                </span>
+                <span className="hidden items-center gap-1 sm:flex">
+                  {transportDots.map((color, dotIndex) => (
+                    <span key={color} className="flex h-4 w-4 items-center justify-center rounded-full text-[0.55rem] font-bold text-white" style={{ background: color }}>
+                      {dotIndex === 3 ? "C" : dotIndex === 4 ? "D" : dotIndex + 8}
+                    </span>
+                  ))}
+                </span>
+              </div>
+            ))}
+            <button
+              className="mt-1 flex w-full items-center gap-2 rounded-xl px-4 py-3 text-left"
+              style={{ border: `1px solid ${panelBorder}`, color: textColor, fontFamily: "'Inter', sans-serif", fontSize: "0.86rem", background: "transparent" }}
+            >
+              <span className="flex h-5 w-5 items-center justify-center rounded-full" style={{ border: `1px solid rgba(${ACCENT_RGB},0.42)`, color: ACCENT }}>+</span>
+              Ajouter une routine
+            </button>
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="relative mt-10 grid items-center gap-6 overflow-hidden rounded-[1.5rem] px-8 py-7 md:grid-cols-[0.36fr_1px_1fr_0.34fr]"
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          style={{ border: `1px solid ${panelBorder}`, background: panelBg, backdropFilter: "blur(12px)" }}
+        >
+          <img src={ampouleAsset} alt="" aria-hidden="true" className="h-14 w-14 opacity-85" />
+          <span className="hidden h-14 w-px md:block" style={{ background: panelBorder }} />
+          <p style={{ color: textColor, fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(1.25rem,1.8vw,1.8rem)", fontWeight: 700, lineHeight: 1.2 }}>
+            Plus qu’une application,
+            <br />
+            <span style={{ color: ACCENT }}>un compagnon de route</span>
+          </p>
+          <img src={vehiculesAsset} alt="" aria-hidden="true" className="ml-auto hidden h-20 w-auto opacity-70 md:block" />
+        </motion.div>
       </div>
     </section>
   );
