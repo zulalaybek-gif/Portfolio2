@@ -1217,15 +1217,22 @@ function CommunicationScene({ setParticleMood: _setParticleMood }: { setParticle
   );
 }
 
-const spotifyDust = Array.from({ length: 78 }, (_, index) => ({
+const spotifyDust = Array.from({ length: 180 }, (_, index) => ({
   id: index,
-  left: 18 + ((index * 37) % 74),
-  top: 16 + ((index * 23) % 62),
-  size: 1 + ((index * 7) % 4) * 0.45,
+  left: 4 + ((index * 37) % 94),
+  top: 12 + ((index * 23) % 72),
+  size: 0.8 + ((index * 7) % 5) * 0.42,
   delay: (index % 9) * 0.18,
-  distance: 8 + (index % 7) * 5,
-  duration: 6 + (index % 8) * 0.7,
+  distance: 10 + (index % 9) * 5,
+  duration: 7 + (index % 10) * 0.65,
 }));
+
+const spotifyWavePaths = [
+  "M-40 280 C140 222 260 334 420 262 C596 182 704 212 860 286 C1018 362 1132 246 1280 274",
+  "M-60 358 C128 302 272 386 446 330 C636 268 742 312 892 384 C1050 460 1148 348 1300 368",
+  "M-20 452 C160 402 302 512 478 448 C642 388 760 420 912 496 C1066 574 1198 480 1330 504",
+  "M-80 542 C112 476 274 608 462 542 C654 476 770 524 934 610 C1108 700 1218 574 1370 610",
+];
 
 function SpotifyScene({ playing, setPlaying }: { playing: boolean; setPlaying: (value: boolean) => void }) {
   const { isDark } = useTheme();
@@ -1343,23 +1350,87 @@ function SpotifyScene({ playing, setPlaying }: { playing: boolean; setPlaying: (
 
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
         <motion.div
-          className="absolute left-[5%] top-[34%] h-[32rem] w-[95vw] -rotate-6"
-          animate={shouldReduceMotion ? undefined : { x: playing ? [0, 16, -8, 0] : [0, 4, 0], y: playing ? [0, -10, 8, 0] : [0, -3, 0] }}
-          transition={{ duration: playing ? 8 : 13, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute inset-x-[-12vw] bottom-[-20%] h-[34rem] md:h-[42rem] lg:h-[52rem]"
+          animate={shouldReduceMotion ? undefined : { x: playing ? [0, -22, 18, 0] : [0, -6, 0], y: playing ? [0, -18, 10, 0] : [0, -5, 0] }}
+          transition={{ duration: playing ? 9 : 16, repeat: Infinity, ease: "easeInOut" }}
         >
           <motion.div
             className="h-full w-full"
-            animate={{ opacity: playing ? 0.58 : 0.28, filter: playing ? "blur(0px)" : "blur(0.4px)" }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
+            animate={{ opacity: playing ? (isDark ? 0.82 : 0.42) : isDark ? 0.58 : 0.28, filter: playing ? "blur(0px)" : "blur(0.5px)" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             style={{
-              background:
-                "radial-gradient(ellipse at 22% 52%, rgba(255,255,255,0.72) 0 1px, transparent 1.7px), radial-gradient(ellipse at 46% 42%, rgba(255,255,255,0.58) 0 1px, transparent 1.8px), radial-gradient(ellipse at 68% 55%, rgba(141,232,254,0.52) 0 1px, transparent 1.8px)",
-              backgroundSize: playing ? "16px 14px, 22px 18px, 28px 20px" : "28px 24px, 34px 30px, 42px 34px",
-              maskImage: "linear-gradient(90deg, transparent, black 16%, black 82%, transparent), linear-gradient(180deg, transparent, black 12%, black 86%, transparent)",
+              background: [
+                "radial-gradient(ellipse at 18% 72%, rgba(255,255,255,0.72) 0 1px, transparent 1.7px)",
+                "radial-gradient(ellipse at 32% 58%, rgba(255,255,255,0.58) 0 1px, transparent 1.7px)",
+                `radial-gradient(ellipse at 56% 64%, rgba(${ACCENT_RGB},0.58) 0 1px, transparent 1.8px)`,
+                "radial-gradient(ellipse at 72% 52%, rgba(255,255,255,0.66) 0 1px, transparent 1.7px)",
+                "radial-gradient(ellipse at 86% 70%, rgba(255,255,255,0.5) 0 1px, transparent 1.8px)",
+                "linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.08) 46%, rgba(255,255,255,0.22) 72%, transparent 100%)",
+              ].join(", "),
+              backgroundSize: playing ? "12px 11px, 18px 15px, 22px 18px, 15px 13px, 28px 22px, 100% 100%" : "18px 16px, 26px 22px, 34px 28px, 24px 20px, 42px 34px, 100% 100%",
+              maskImage:
+                "radial-gradient(ellipse at 50% 76%, black 0%, black 46%, transparent 73%), linear-gradient(180deg, transparent 0%, black 18%, black 92%, transparent 100%)",
               WebkitMaskComposite: "source-in",
             }}
           />
         </motion.div>
+
+        <motion.svg
+          className="absolute left-[-12vw] top-[30%] h-[36rem] w-[128vw] overflow-visible md:top-[27%] lg:top-[24%]"
+          viewBox="0 0 1280 720"
+          fill="none"
+          animate={shouldReduceMotion ? undefined : { x: playing ? [0, 18, -14, 0] : [0, 7, 0], y: playing ? [0, -12, 8, 0] : [0, -4, 0] }}
+          transition={{ duration: playing ? 8.5 : 15, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <defs>
+            <filter id="spotify-wave-glow" x="-20%" y="-40%" width="140%" height="180%">
+              <feGaussianBlur stdDeviation="6" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+            <linearGradient id="spotify-wave-gradient" x1="0" y1="0" x2="1280" y2="0" gradientUnits="userSpaceOnUse">
+              <stop stopColor="white" stopOpacity="0" />
+              <stop offset="0.22" stopColor="white" stopOpacity={isDark ? "0.6" : "0.32"} />
+              <stop offset="0.5" stopColor="#DDEBFF" stopOpacity={isDark ? "0.86" : "0.42"} />
+              <stop offset="0.68" stopColor="#8DE8FE" stopOpacity={isDark ? "0.58" : "0.36"} />
+              <stop offset="1" stopColor="white" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          {spotifyWavePaths.map((path, index) => (
+            <motion.path
+              key={path}
+              d={path}
+              stroke="url(#spotify-wave-gradient)"
+              strokeWidth={index === 2 ? 2.2 : 1.5}
+              strokeLinecap="round"
+              filter="url(#spotify-wave-glow)"
+              initial={{ pathLength: 0.72, opacity: 0 }}
+              whileInView={{ pathLength: 1, opacity: playing ? 0.95 - index * 0.12 : 0.58 - index * 0.08 }}
+              viewport={{ once: true, margin: "160px 0px" }}
+              animate={{
+                pathLength: playing && !shouldReduceMotion ? [0.72, 1, 0.86] : 1,
+                opacity: playing ? [0.48, 0.96 - index * 0.1, 0.58] : 0.48 - index * 0.06,
+              }}
+              transition={{ duration: playing ? 5.5 + index * 0.55 : 1.2, repeat: playing && !shouldReduceMotion ? Infinity : 0, ease: "easeInOut" }}
+            />
+          ))}
+        </motion.svg>
+
+        <motion.div
+          className="absolute left-[-8vw] top-[25%] h-[30rem] w-[120vw]"
+          animate={shouldReduceMotion ? undefined : { x: playing ? [0, -10, 16, 0] : [0, 4, 0], y: playing ? [0, 10, -8, 0] : [0, 3, 0] }}
+          transition={{ duration: playing ? 10 : 18, repeat: Infinity, ease: "easeInOut" }}
+          style={{
+            opacity: playing ? (isDark ? 0.76 : 0.32) : isDark ? 0.42 : 0.18,
+            background:
+              "radial-gradient(ellipse at 18% 58%, rgba(255,255,255,0.55) 0 1px, transparent 1.6px), radial-gradient(ellipse at 46% 44%, rgba(255,255,255,0.45) 0 1px, transparent 1.6px), radial-gradient(ellipse at 72% 52%, rgba(255,255,255,0.5) 0 1px, transparent 1.6px)",
+            backgroundSize: playing ? "13px 13px, 19px 16px, 25px 19px" : "24px 22px, 34px 28px, 44px 36px",
+            maskImage: "linear-gradient(90deg, transparent, black 9%, black 92%, transparent), radial-gradient(ellipse at 58% 62%, black 0%, black 58%, transparent 78%)",
+            WebkitMaskComposite: "source-in",
+          }}
+        />
 
         {spotifyDust.map((particle) => (
           <motion.span
