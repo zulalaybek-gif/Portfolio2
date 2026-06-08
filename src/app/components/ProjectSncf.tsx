@@ -372,18 +372,233 @@ function SceneGlow({ className = "", color = ACCENT_RGB, opacity = 0.18 }: { cla
 }
 
 function OnboardingScene() {
-  return (
-    <section className="relative min-h-[110vh] overflow-hidden px-6 py-24 md:px-12 lg:py-32">
-      <SceneName className="left-8 top-24 md:left-14">Onboarding</SceneName>
-      <SceneGlow className="left-1/2 top-[45%] h-[38rem] w-[38rem] -translate-x-1/2 -translate-y-1/2" opacity={0.17} />
-      <StructuralLine src={lineAssetWide} className="left-[-18vw] top-[35%] w-[135vw]" />
-      <StructuralLine src={lineAsset} className="bottom-[12%] left-[-16vw] w-[130vw]" rotate={-5} opacity={0.28} />
+  const { isDark, r } = useTheme();
+  const onboardingScreens = [
+    {
+      src: imgPhone1,
+      alt: "Splash screen SNCF Connect",
+      step: "01",
+      label: "Découvrir\nla fonctionnalité",
+    },
+    {
+      src: imgPhone2,
+      alt: "Créer vos routines",
+      step: "02",
+      label: "Comprendre\nles bénéfices",
+    },
+    {
+      src: imgPhone3,
+      alt: "Personnaliser l'accueil",
+      step: "03",
+      label: "Se projeter\ndans son usage",
+    },
+    {
+      src: imgPhone4,
+      alt: "Paramétrage",
+      step: "04",
+      label: "Personnaliser\ndès le départ",
+    },
+  ];
+  const sectionBg = isDark
+    ? "radial-gradient(circle at 82% 12%, rgba(128,86,210,0.22), transparent 28%), radial-gradient(circle at 50% 54%, rgba(141,232,254,0.12), transparent 44%), linear-gradient(180deg, #07101d 0%, #050b15 100%)"
+    : "radial-gradient(circle at 82% 12%, rgba(128,86,210,0.12), transparent 28%), radial-gradient(circle at 50% 54%, rgba(141,232,254,0.22), transparent 44%), linear-gradient(180deg, #f7fbff 0%, #edf7fb 100%)";
+  const textColor = isDark ? "#F6FAFF" : "#071322";
+  const mutedColor = isDark ? "rgba(230,240,255,0.68)" : "rgba(7,19,34,0.62)";
+  const lineBase = isDark ? "rgba(141,232,254,0.24)" : "rgba(0,44,76,0.14)";
 
-      <div className="relative z-10 mx-auto min-h-[52rem] max-w-7xl">
-        <FloatingMockup src={imgPhone1} alt="Splash screen SNCF Connect" className="absolute left-[32%] top-[14%] z-20 w-[min(20rem,28vw)] lg:w-[22rem]" />
-        <FloatingMockup src={imgPhone2} alt="Créer vos routines" className="absolute left-[2%] top-[4%] z-10 w-[min(17rem,24vw)] -rotate-3" delay={0.08} />
-        <FloatingMockup src={imgPhone3} alt="Personnaliser l'accueil" className="absolute right-[7%] top-[10%] z-10 w-[min(18rem,25vw)] rotate-2" delay={0.16} />
-        <FloatingMockup src={imgPhone4} alt="Paramétrage" className="absolute bottom-[3%] right-[23%] z-10 w-[min(17rem,24vw)] rotate-3" delay={0.24} />
+  return (
+    <section className="relative overflow-hidden px-6 py-24 md:px-12 lg:py-32" style={{ background: sectionBg }}>
+      <motion.svg
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-10 top-0 hidden h-56 w-[58vw] max-w-[58rem] lg:block"
+        viewBox="0 0 900 240"
+        fill="none"
+        initial={{ opacity: 0, pathLength: 0 }}
+        whileInView={{ opacity: 1, pathLength: 1 }}
+        viewport={{ once: true, margin: "120px 0px" }}
+      >
+        <motion.path
+          d="M0 42 H560 C642 42 621 152 702 164 C782 176 800 66 900 46"
+          stroke="url(#onboarding-curve)"
+          strokeWidth="2"
+          strokeLinecap="round"
+          animate={{ d: ["M0 42 H560 C642 42 621 152 702 164 C782 176 800 66 900 46", "M0 42 H555 C640 42 624 142 705 156 C790 171 806 72 900 48", "M0 42 H560 C642 42 621 152 702 164 C782 176 800 66 900 46"] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <defs>
+          <linearGradient id="onboarding-curve" x1="0" y1="42" x2="900" y2="164" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#8DE8FE" stopOpacity={isDark ? "0.22" : "0.36"} />
+            <stop offset="0.72" stopColor="#8DE8FE" stopOpacity={isDark ? "0.9" : "0.62"} />
+            <stop offset="1" stopColor="#9E55FF" stopOpacity={isDark ? "0.9" : "0.52"} />
+          </linearGradient>
+        </defs>
+      </motion.svg>
+
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-0 top-[48%] h-px w-full"
+        initial={{ opacity: 0, scaleX: 0 }}
+        whileInView={{ opacity: 1, scaleX: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.4, ease: "easeOut" }}
+        style={{
+          transformOrigin: "left",
+          background: `linear-gradient(90deg, transparent, rgba(${ACCENT_RGB},0.18), rgba(141,232,254,0.5), transparent)`,
+          boxShadow: `0 0 28px rgba(${ACCENT_RGB},0.25)`,
+        }}
+      />
+
+      <div className="relative z-10 mx-auto max-w-7xl">
+        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "120px 0px" }}
+            transition={{ duration: 0.75, ease: "easeOut" }}
+          >
+            <div className="mb-10 flex items-center gap-4">
+              <span
+                className="rounded-full px-4 py-1.5 uppercase tracking-[0.16em]"
+                style={{
+                  border: `1px solid rgba(${ACCENT_RGB},${isDark ? 0.42 : 0.58})`,
+                  color: ACCENT,
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: "0.68rem",
+                  fontWeight: 800,
+                  boxShadow: `0 0 22px rgba(${ACCENT_RGB},${isDark ? 0.12 : 0.16})`,
+                }}
+              >
+                01. Onboarding
+              </span>
+              <motion.span
+                className="hidden h-px w-36 sm:block"
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9, delay: 0.2, ease: "easeOut" }}
+                style={{
+                  transformOrigin: "left",
+                  background: `linear-gradient(90deg, rgba(${ACCENT_RGB},0.9), rgba(${ACCENT_RGB},0.18))`,
+                }}
+              />
+              <span className="hidden h-1.5 w-1.5 rounded-full sm:block" style={{ background: ACCENT, boxShadow: `0 0 14px rgba(${ACCENT_RGB},0.8)` }} />
+            </div>
+            <h2
+              style={{
+                color: textColor,
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: "clamp(2.4rem, 5.2vw, 4.85rem)",
+                fontWeight: 750,
+                lineHeight: 0.95,
+                letterSpacing: "-0.055em",
+              }}
+            >
+              Un onboarding
+              <br />
+              pensé pour <span style={{ color: ACCENT, textShadow: `0 0 24px rgba(${ACCENT_RGB},0.28)` }}>guider</span>
+              <br />
+              et <span style={{ color: ACCENT, textShadow: `0 0 24px rgba(${ACCENT_RGB},0.28)` }}>inspirer</span>
+            </h2>
+            <p
+              className="mt-8 max-w-[24rem]"
+              style={{
+                color: mutedColor,
+                fontFamily: "'Inter', sans-serif",
+                fontSize: "1rem",
+                lineHeight: 1.75,
+              }}
+            >
+              Un parcours progressif pour expliquer la valeur des routines et donner envie de personnaliser son expérience dès le premier lancement.
+            </p>
+          </motion.div>
+        </div>
+
+        <div className="relative mt-14 lg:mt-20">
+          <div
+            aria-hidden="true"
+            className="absolute left-0 right-0 top-[48%] hidden h-px md:block"
+            style={{
+              background: `linear-gradient(90deg, transparent, rgba(${ACCENT_RGB},0.16), rgba(112,93,255,0.18), transparent)`,
+              boxShadow: `0 0 28px rgba(${ACCENT_RGB},0.18)`,
+            }}
+          />
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
+            {onboardingScreens.map((screen, index) => (
+              <motion.img
+                key={screen.src}
+                src={screen.src}
+                alt={screen.alt}
+                className="relative z-10 mx-auto w-[min(17rem,76vw)] select-none sm:w-[16rem] lg:w-full"
+                initial={{ opacity: 0, y: 46, filter: "blur(8px)" }}
+                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                viewport={{ once: true, margin: "120px 0px" }}
+                transition={{ duration: 0.78, delay: index * 0.12, ease: [0.22, 1, 0.36, 1] }}
+                style={{
+                  filter: `drop-shadow(0 34px 50px rgba(0,0,0,${isDark ? 0.5 : 0.2})) drop-shadow(0 0 20px rgba(${ACCENT_RGB},${isDark ? 0.15 : 0.2}))`,
+                }}
+              />
+            ))}
+          </div>
+
+          <div className="relative mx-auto mt-16 max-w-6xl">
+            <motion.div
+              className="absolute left-[9%] right-[9%] top-5 h-px"
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true, margin: "120px 0px" }}
+              transition={{ duration: 1.25, ease: "easeOut" }}
+              style={{
+                transformOrigin: "left",
+                background: "linear-gradient(90deg, #8DE8FE 0%, #786BFF 48%, #D15CFD 100%)",
+                boxShadow: `0 0 18px rgba(${ACCENT_RGB},0.26)`,
+              }}
+            />
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+              {onboardingScreens.map((screen, index) => (
+                <motion.div
+                  key={screen.step}
+                  className="relative text-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.62, delay: 0.18 + index * 0.12, ease: "easeOut" }}
+                >
+                  <span
+                    className="mx-auto mb-5 block h-8 w-8 rounded-full"
+                    style={{
+                      border: `2px solid ${index === 0 ? ACCENT : index === 3 ? "#D15CFD" : "#686CFF"}`,
+                      background: isDark ? "#07101d" : "#f7fbff",
+                      boxShadow: `0 0 20px ${index === 0 ? "rgba(141,232,254,0.38)" : "rgba(126,98,255,0.3)"}`,
+                    }}
+                  />
+                  <strong
+                    className="block"
+                    style={{
+                      color: index === 0 ? ACCENT : index === 3 ? "#D15CFD" : "#686CFF",
+                      fontFamily: "'Space Grotesk', sans-serif",
+                      fontSize: "clamp(1.9rem,3vw,2.6rem)",
+                      lineHeight: 1,
+                    }}
+                  >
+                    {screen.step}
+                  </strong>
+                  <span
+                    className="mt-3 block whitespace-pre-line"
+                    style={{
+                      color: isDark ? "rgba(255,255,255,0.84)" : r(0.66),
+                      fontFamily: "'Space Grotesk', sans-serif",
+                      fontSize: "1.05rem",
+                      fontWeight: 700,
+                      lineHeight: 1.22,
+                    }}
+                  >
+                    {screen.label}
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
