@@ -1,6 +1,6 @@
-import { motion, AnimatePresence } from "motion/react";
-import { useState, useEffect } from "react";
-import { ArrowLeft, Pause, Play } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
+import { useState, useEffect, useRef } from "react";
+import { ArrowLeft, Pause, Play, Volume2 } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useI18n } from "./i18n";
 import { useTheme } from "./theme";
@@ -16,9 +16,7 @@ import imgRoutineList from "../../assets/sncf-connect/06.mes-routines.png";
 import imgNewsletter from "../../assets/sncf-connect/07.newsletter.png";
 import imgCampaignPink from "../../assets/sncf-connect/10.jeu-concours-insta-rose.png";
 import imgCampaignBlue from "../../assets/sncf-connect/16.jeu-concours-insta-bleu.png";
-import imgSpotifyDark from "../../assets/sncf-connect/11.playlist-spotify-sombre.png";
-import imgSpotifyLight from "../../assets/sncf-connect/12.playlist-spotify-clair.png";
-import imgSpotifyMain from "../../assets/sncf-connect/13.playlist-spotify.png";
+import imgSpotifyPlayer from "../../assets/sncf-connect/20.player-spotify.png";
 import videoMain from "../../assets/sncf-connect/14.video-finale-workshop.mp4";
 import lineAsset from "../../assets/sncf-connect/assets/03.line.svg";
 import lineAssetWide from "../../assets/sncf-connect/assets/04.line.svg";
@@ -1090,113 +1088,485 @@ function NewsletterScene() {
   );
 }
 
-function CommunicationScene({ setParticleMood }: { setParticleMood: (mood: "cyan" | "pink" | "blue") => void }) {
-  const [variant, setVariant] = useState<"blue" | "pink">("pink");
-  const config =
-    variant === "blue"
-      ? { image: imgCampaignBlue, color: "#2D8CFF", rgb: "45,140,255", accent: "#8DE8FE", line: lineAssetWide }
-      : { image: imgCampaignPink, color: "#FF72B8", rgb: "255,114,184", accent: "#BA7CFF", line: lineAssetLoop };
-
-  const handleVariant = (next: "blue" | "pink") => {
-    setVariant(next);
-    setParticleMood(next);
-  };
+function CommunicationScene({ setParticleMood: _setParticleMood }: { setParticleMood: (mood: "cyan" | "pink" | "blue") => void }) {
+  const { isDark } = useTheme();
+  const textColor = isDark ? "#F6FAFF" : "#071322";
+  const mutedColor = isDark ? "rgba(230,240,255,0.7)" : "rgba(7,19,34,0.62)";
 
   return (
-    <section className="relative min-h-[118vh] overflow-hidden px-6 py-24 md:px-12 lg:py-32">
-      <SceneName className="left-8 top-24 md:left-14">Communication</SceneName>
-      <motion.div
-        className="absolute inset-0"
-        animate={{
-          background: `radial-gradient(circle at 50% 45%, rgba(${config.rgb},0.28), transparent 28%), radial-gradient(circle at 14% 70%, rgba(${ACCENT_RGB},0.13), transparent 22%), radial-gradient(circle at 82% 24%, rgba(${config.rgb},0.18), transparent 24%)`,
-        }}
-        transition={{ duration: 0.7 }}
-      />
-      <StructuralLine src={config.line} className="left-[-26vw] top-[30%] w-[152vw]" rotate={variant === "blue" ? 2 : -8} opacity={0.45} />
-      <StructuralLine src={variant === "blue" ? lineAssetLong : lineAssetWide} className="right-[-28vw] bottom-[17%] w-[140vw]" flip={variant === "pink"} opacity={0.34} />
-      <FloatingIcon src={variant === "blue" ? trainAsset : ampouleAsset} className="left-[13%] top-[28%] h-16 w-16" />
-      <FloatingIcon src={variant === "blue" ? vehiculesAsset : maisonAsset} className="right-[12%] bottom-[18%] h-20 w-20" delay={0.7} />
+    <section className="relative overflow-hidden px-6 py-24 md:px-12 lg:py-32">
+      <StructuralLine src={lineAssetWide} className="bottom-[10%] left-[-22vw] w-[120vw]" rotate={-4} opacity={isDark ? 0.34 : 0.22} />
+      <StructuralLine src={lineAssetLoop} className="bottom-[2%] right-[-26vw] w-[82vw]" rotate={5} opacity={isDark ? 0.3 : 0.2} />
 
-      <div className="relative z-10 flex min-h-[54rem] flex-col items-center justify-center">
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={variant}
-            src={config.image}
-            alt={`Instagram SNCF Connect ${variant === "blue" ? "bleu" : "rose"}`}
-            className="w-[min(25rem,78vw)] select-none"
-            initial={{ opacity: 0, y: 46, scale: 0.92, filter: "blur(12px)" }}
-            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-            exit={{ opacity: 0, y: -42, scale: 0.94, filter: "blur(12px)" }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            style={{ filter: `drop-shadow(0 46px 76px rgba(${config.rgb},0.34)) drop-shadow(0 0 48px rgba(${config.rgb},0.26))` }}
-          />
-        </AnimatePresence>
+      <div className="relative z-10 mx-auto max-w-7xl">
+        <div className="grid items-center gap-16 lg:grid-cols-[0.82fr_1.18fr]">
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "120px 0px" }}
+            transition={{ duration: 0.75, ease: "easeOut" }}
+          >
+            <div className="mb-12 flex items-center gap-4">
+              <span
+                className="rounded-full px-5 py-2 uppercase tracking-[0.16em]"
+                style={{
+                  border: `1px solid rgba(${ACCENT_RGB},${isDark ? 0.48 : 0.58})`,
+                  color: ACCENT,
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: "0.74rem",
+                  fontWeight: 800,
+                  boxShadow: `0 0 22px rgba(${ACCENT_RGB},${isDark ? 0.14 : 0.16})`,
+                }}
+              >
+                05. Communication & réseaux sociaux
+              </span>
+              <motion.span
+                className="hidden h-px w-48 sm:block"
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9, delay: 0.2, ease: "easeOut" }}
+                style={{
+                  transformOrigin: "left",
+                  background: `linear-gradient(90deg, rgba(${ACCENT_RGB},0.86), rgba(${ACCENT_RGB},0.15))`,
+                }}
+              />
+              <span className="hidden h-2 w-2 rounded-full sm:block" style={{ background: ACCENT, boxShadow: `0 0 18px rgba(${ACCENT_RGB},0.9)` }} />
+            </div>
 
-        <div className="mt-9 flex items-center gap-6">
-          {[
-            { id: "blue" as const, color: "#2D8CFF", label: "Version bleue" },
-            { id: "pink" as const, color: "#FF72B8", label: "Version rose" },
-          ].map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              aria-label={item.label}
-              onClick={() => handleVariant(item.id)}
-              className="relative h-14 w-14 rounded-full"
-              style={{ background: item.color, boxShadow: `0 0 ${variant === item.id ? 46 : 18}px ${item.color}99` }}
+            <h2
+              style={{
+                color: textColor,
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: "clamp(2.45rem, 4.6vw, 4.7rem)",
+                fontWeight: 750,
+                lineHeight: 1.04,
+                letterSpacing: "-0.055em",
+              }}
             >
-              <motion.span className="absolute inset-3 rounded-full border border-white/80" animate={{ scale: variant === item.id ? [1, 1.22, 1] : 1 }} transition={{ duration: 1.4, repeat: variant === item.id ? Infinity : 0 }} />
-            </button>
-          ))}
+              Une communication pensée
+              <br />
+              pour prolonger <span style={{ color: ACCENT }}>l’expérience.</span>
+            </h2>
+
+            <p
+              className="mt-8 max-w-[30rem]"
+              style={{ color: mutedColor, fontFamily: "'Inter', sans-serif", fontSize: "1.04rem", lineHeight: 1.75 }}
+            >
+              Déclinaison de concepts créatifs imaginés pour les réseaux sociaux afin d’accompagner les temps forts du projet et renforcer sa visibilité.
+            </p>
+          </motion.div>
+
+          <div className="relative min-h-[38rem] lg:min-h-[48rem]">
+            <motion.div
+              aria-hidden="true"
+              className="pointer-events-none absolute left-[12%] top-[18%] h-[22rem] w-[22rem] rounded-full blur-3xl"
+              initial={{ opacity: 0, scale: 0.88 }}
+              whileInView={{ opacity: isDark ? 0.24 : 0.18, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              style={{ background: "rgba(255,114,184,0.75)" }}
+            />
+            <motion.div
+              aria-hidden="true"
+              className="pointer-events-none absolute right-[2%] top-[12%] h-[22rem] w-[22rem] rounded-full blur-3xl"
+              initial={{ opacity: 0, scale: 0.88 }}
+              whileInView={{ opacity: isDark ? 0.22 : 0.16, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.12, ease: "easeOut" }}
+              style={{ background: "rgba(45,140,255,0.72)" }}
+            />
+            <motion.div
+              aria-hidden="true"
+              className="pointer-events-none absolute left-[8%] right-[2%] top-[48%] h-px"
+              initial={{ scaleX: 0, opacity: 0 }}
+              whileInView={{ scaleX: 1, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.25, ease: "easeOut" }}
+              style={{
+                transformOrigin: "left",
+                background: "linear-gradient(90deg, rgba(255,114,184,0.14), rgba(141,232,254,0.56), rgba(45,140,255,0.2))",
+                boxShadow: "0 0 24px rgba(141,232,254,0.22)",
+              }}
+            />
+
+            <motion.img
+              src={imgCampaignPink}
+              alt="Communication Instagram SNCF Connect rose"
+              className="relative z-20 mx-auto mt-8 block w-[min(20rem,78vw)] select-none lg:absolute lg:left-[9%] lg:top-[0%] lg:mt-0 lg:w-[min(24rem,32vw)]"
+              initial={{ opacity: 0, y: 56, x: -18, rotate: -1.2 }}
+              whileInView={{ opacity: 1, y: 0, x: 0, rotate: -1.2 }}
+              viewport={{ once: true, margin: "120px 0px" }}
+              transition={{ duration: 0.85, ease: "easeOut" }}
+              style={{ filter: "drop-shadow(0 40px 78px rgba(255,114,184,0.24)) drop-shadow(0 0 30px rgba(255,114,184,0.12))" }}
+            />
+            <motion.img
+              src={imgCampaignBlue}
+              alt="Communication Instagram SNCF Connect bleue"
+              className="relative z-10 mx-auto mt-8 block w-[min(19rem,78vw)] select-none lg:absolute lg:right-[4%] lg:top-[3%] lg:mt-0 lg:w-[min(23rem,31vw)]"
+              initial={{ opacity: 0, y: 48, x: 24, rotate: 1.5 }}
+              whileInView={{ opacity: 0.92, y: 0, x: 0, rotate: 1.5 }}
+              viewport={{ once: true, margin: "120px 0px" }}
+              transition={{ duration: 0.75, delay: 0.16, ease: "easeOut" }}
+              style={{ filter: "drop-shadow(0 34px 70px rgba(45,140,255,0.22))" }}
+            />
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
+const spotifyDust = Array.from({ length: 78 }, (_, index) => ({
+  id: index,
+  left: 18 + ((index * 37) % 74),
+  top: 16 + ((index * 23) % 62),
+  size: 1 + ((index * 7) % 4) * 0.45,
+  delay: (index % 9) * 0.18,
+  distance: 8 + (index % 7) * 5,
+  duration: 6 + (index % 8) * 0.7,
+}));
+
 function SpotifyScene({ playing, setPlaying }: { playing: boolean; setPlaying: (value: boolean) => void }) {
-  const [mode, setMode] = useState<"dark" | "light">("dark");
-  const cover = mode === "dark" ? imgSpotifyDark : imgSpotifyLight;
+  const { isDark } = useTheme();
+  const shouldReduceMotion = useReducedMotion();
+  const [volume, setVolume] = useState(0.28);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const masterGainRef = useRef<GainNode | null>(null);
+  const audioPulseRef = useRef<number | null>(null);
+  const textColor = isDark ? "#F6FAFF" : "#071322";
+  const mutedColor = isDark ? "rgba(230,240,255,0.7)" : "rgba(7,19,34,0.62)";
+
+  const ensureAudioContext = async () => {
+    if (!audioContextRef.current) {
+      const AudioCtor = window.AudioContext || (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+      if (!AudioCtor) return null;
+      const context = new AudioCtor();
+      const masterGain = context.createGain();
+      masterGain.gain.value = volume;
+      masterGain.connect(context.destination);
+      audioContextRef.current = context;
+      masterGainRef.current = masterGain;
+    }
+
+    if (audioContextRef.current.state === "suspended") {
+      await audioContextRef.current.resume();
+    }
+
+    return audioContextRef.current;
+  };
+
+  const playTone = (frequency: number, start: number, duration: number, peak: number, type: OscillatorType = "sine") => {
+    const context = audioContextRef.current;
+    const master = masterGainRef.current;
+    if (!context || !master) return;
+
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
+    const filter = context.createBiquadFilter();
+    oscillator.type = type;
+    oscillator.frequency.setValueAtTime(frequency, start);
+    filter.type = "lowpass";
+    filter.frequency.setValueAtTime(2600, start);
+    gain.gain.setValueAtTime(0.0001, start);
+    gain.gain.exponentialRampToValueAtTime(peak, start + 0.035);
+    gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+    oscillator.connect(filter);
+    filter.connect(gain);
+    gain.connect(master);
+    oscillator.start(start);
+    oscillator.stop(start + duration + 0.03);
+  };
+
+  const playSoundDesign = async () => {
+    const context = await ensureAudioContext();
+    if (!context) return;
+
+    const now = context.currentTime;
+    playTone(392, now, 0.42, 0.1, "triangle");
+    playTone(523.25, now + 0.08, 0.34, 0.075, "sine");
+    playTone(659.25, now + 0.16, 0.32, 0.055, "sine");
+    playTone(117.5, now + 0.02, 0.58, 0.025, "sine");
+  };
+
+  const togglePlayback = async () => {
+    if (playing) {
+      setPlaying(false);
+      return;
+    }
+
+    await playSoundDesign();
+    setPlaying(true);
+  };
+
+  useEffect(() => {
+    if (masterGainRef.current) {
+      masterGainRef.current.gain.setTargetAtTime(volume, audioContextRef.current?.currentTime ?? 0, 0.08);
+    }
+  }, [volume]);
+
+  useEffect(() => {
+    if (!playing) {
+      if (audioPulseRef.current) window.clearInterval(audioPulseRef.current);
+      audioPulseRef.current = null;
+      return;
+    }
+
+    audioPulseRef.current = window.setInterval(() => {
+      void playSoundDesign();
+    }, 2200);
+
+    return () => {
+      if (audioPulseRef.current) window.clearInterval(audioPulseRef.current);
+      audioPulseRef.current = null;
+    };
+  }, [playing]);
+
+  const presentationItems = [
+    ["Expérience sonore", "Un sound design doux pour accompagner la navigation."],
+    ["Identité du projet", "Une extension audio discrète de l’univers SNCF Connect."],
+    ["Immersion interactive", "La matière visuelle réagit quand le player s’active."],
+  ];
 
   return (
-    <section className="relative min-h-[115vh] overflow-hidden px-6 py-24 md:px-12 lg:py-32">
-      <SceneName className="right-8 top-24 md:right-14">Playlist Spotify</SceneName>
-      <motion.div
-        className="absolute inset-0"
-        animate={{ background: playing ? "radial-gradient(circle at 50% 44%, rgba(141,232,254,0.2), transparent 32%)" : "radial-gradient(circle at 50% 44%, rgba(141,232,254,0.08), transparent 34%)" }}
-        transition={{ duration: 0.8 }}
-      />
-      <StructuralLine src={lineAssetWide} className="left-[-20vw] top-[18%] w-[140vw]" rotate={4} opacity={playing ? 0.38 : 0.2} />
-      <div className="relative z-10 mx-auto flex min-h-[54rem] max-w-7xl items-center justify-center">
-        <motion.img
-          src={imgSpotifyMain}
-          alt="Playlist Spotify dans un univers de particules"
-          className="w-[min(76rem,106vw)] select-none"
-          animate={{ scale: playing ? 1.025 : 1, y: playing ? -8 : 0 }}
-          transition={{ duration: 0.85, ease: "easeOut" }}
-          style={{ filter: `drop-shadow(0 52px 90px rgba(0,0,0,0.54)) drop-shadow(0 0 ${playing ? 54 : 24}px rgba(${ACCENT_RGB},${playing ? 0.24 : 0.12}))` }}
-        />
+    <section className="relative overflow-hidden px-6 py-24 md:px-12 lg:py-32">
+      <StructuralLine src={lineAssetWide} className="left-[-28vw] top-[47%] w-[150vw]" rotate={-3} opacity={playing ? 0.36 : 0.2} />
+      <StructuralLine src={lineAssetLong} className="right-[-24vw] top-[22%] w-[92vw]" rotate={5} opacity={playing ? 0.24 : 0.13} />
 
-        <motion.div className="absolute bottom-[8%] left-1/2 z-20 flex w-[min(48rem,88vw)] -translate-x-1/2 items-center gap-4 rounded-full border border-white/12 bg-black/56 px-4 py-3 backdrop-blur-2xl">
-          <AnimatePresence mode="wait">
-            <motion.img key={mode} src={cover} alt="État playlist" className="h-14 w-14 rounded-2xl" initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.92 }} transition={{ duration: 0.45 }} />
-          </AnimatePresence>
-          <div className="min-w-0 flex-1">
-            <div style={{ color: "white", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700 }}>Votre playlist du quotidien</div>
-            <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/14">
-              <motion.div className="h-full rounded-full" style={{ background: ACCENT }} animate={{ width: playing ? ["8%", "92%"] : "18%" }} transition={playing ? { duration: 5.6, repeat: Infinity, ease: "linear" } : { duration: 0.35 }} />
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-[18%] top-[28%] h-[28rem] w-[78vw] rounded-full blur-3xl"
+        animate={{ opacity: playing ? (isDark ? 0.18 : 0.12) : isDark ? 0.08 : 0.05, scale: playing ? 1.08 : 1 }}
+        transition={{ duration: 0.9, ease: "easeOut" }}
+        style={{ background: `radial-gradient(circle, rgba(${ACCENT_RGB},0.46), transparent 68%)` }}
+      />
+
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+        <motion.div
+          className="absolute left-[5%] top-[34%] h-[32rem] w-[95vw] -rotate-6"
+          animate={shouldReduceMotion ? undefined : { x: playing ? [0, 16, -8, 0] : [0, 4, 0], y: playing ? [0, -10, 8, 0] : [0, -3, 0] }}
+          transition={{ duration: playing ? 8 : 13, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <motion.div
+            className="h-full w-full"
+            animate={{ opacity: playing ? 0.58 : 0.28, filter: playing ? "blur(0px)" : "blur(0.4px)" }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            style={{
+              background:
+                "radial-gradient(ellipse at 22% 52%, rgba(255,255,255,0.72) 0 1px, transparent 1.7px), radial-gradient(ellipse at 46% 42%, rgba(255,255,255,0.58) 0 1px, transparent 1.8px), radial-gradient(ellipse at 68% 55%, rgba(141,232,254,0.52) 0 1px, transparent 1.8px)",
+              backgroundSize: playing ? "16px 14px, 22px 18px, 28px 20px" : "28px 24px, 34px 30px, 42px 34px",
+              maskImage: "linear-gradient(90deg, transparent, black 16%, black 82%, transparent), linear-gradient(180deg, transparent, black 12%, black 86%, transparent)",
+              WebkitMaskComposite: "source-in",
+            }}
+          />
+        </motion.div>
+
+        {spotifyDust.map((particle) => (
+          <motion.span
+            key={particle.id}
+            className="absolute rounded-full"
+            style={{
+              left: `${particle.left}%`,
+              top: `${particle.top}%`,
+              width: particle.size,
+              height: particle.size,
+              background: particle.id % 5 === 0 ? ACCENT : "rgba(255,255,255,0.82)",
+              boxShadow: particle.id % 5 === 0 ? `0 0 12px rgba(${ACCENT_RGB},0.55)` : "0 0 9px rgba(255,255,255,0.35)",
+            }}
+            animate={
+              shouldReduceMotion
+                ? { opacity: playing ? 0.42 : 0.24 }
+                : {
+                    opacity: playing ? [0.22, 0.85, 0.34] : [0.08, 0.28, 0.12],
+                    x: playing ? [0, particle.distance, -particle.distance * 0.5, 0] : [0, particle.distance * 0.25, 0],
+                    y: playing ? [0, -particle.distance * 0.7, particle.distance * 0.45, 0] : [0, -particle.distance * 0.18, 0],
+                    scale: playing ? [1, 1.7, 1] : [0.9, 1.1, 0.9],
+                  }
+            }
+            transition={{ duration: playing ? particle.duration * 0.62 : particle.duration, delay: particle.delay, repeat: Infinity, ease: "easeInOut" }}
+          />
+        ))}
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-7xl">
+        <div className="grid items-center gap-16 lg:grid-cols-[0.84fr_1.16fr]">
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "120px 0px" }}
+            transition={{ duration: 0.75, ease: "easeOut" }}
+          >
+            <div className="mb-12 flex items-center gap-4">
+              <span
+                className="rounded-full px-5 py-2 uppercase tracking-[0.16em]"
+                style={{
+                  border: `1px solid rgba(${ACCENT_RGB},${isDark ? 0.5 : 0.6})`,
+                  color: ACCENT,
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: "0.74rem",
+                  fontWeight: 800,
+                  boxShadow: `0 0 22px rgba(${ACCENT_RGB},${isDark ? 0.14 : 0.16})`,
+                }}
+              >
+                06. Playlist Spotify
+              </span>
+              <motion.span
+                className="hidden h-px w-48 sm:block"
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9, delay: 0.2, ease: "easeOut" }}
+                style={{ transformOrigin: "left", background: `linear-gradient(90deg, rgba(${ACCENT_RGB},0.86), rgba(${ACCENT_RGB},0.15))` }}
+              />
+              <span className="hidden h-2 w-2 rounded-full sm:block" style={{ background: ACCENT, boxShadow: `0 0 18px rgba(${ACCENT_RGB},0.9)` }} />
             </div>
-          </div>
-          <div className="hidden items-center rounded-full bg-white/10 p-1 sm:flex">
-            {(["dark", "light"] as const).map((item) => (
-              <button key={item} type="button" onClick={() => setMode(item)} className="rounded-full px-3 py-2" style={{ color: mode === item ? BG_DARK : "rgba(255,255,255,0.66)", background: mode === item ? ACCENT : "transparent", fontFamily: "'Inter', sans-serif", fontSize: "0.72rem" }}>
-                {item === "dark" ? "Sombre" : "Clair"}
-              </button>
-            ))}
-          </div>
-          <button type="button" onClick={() => setPlaying(!playing)} className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full p-4" style={{ background: ACCENT, color: BG_DARK, boxShadow: `0 0 ${playing ? 48 : 28}px rgba(${ACCENT_RGB},0.55)` }} aria-label={playing ? "Pause" : "Play"}>
-            {playing ? <Pause size={20} fill={BG_DARK} /> : <Play size={20} fill={BG_DARK} />}
-          </button>
+
+            <h2
+              style={{
+                color: textColor,
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: "clamp(2.7rem, 5vw, 5rem)",
+                fontWeight: 750,
+                lineHeight: 1.04,
+                letterSpacing: "-0.055em",
+              }}
+            >
+              Votre playlist
+              <br />
+              <span style={{ color: ACCENT }}>du quotidien.</span>
+            </h2>
+
+            <p className="mt-8 max-w-[27rem]" style={{ color: mutedColor, fontFamily: "'Inter', sans-serif", fontSize: "1.04rem", lineHeight: 1.75 }}>
+              Une expérience sonore pensée pour accompagner les trajets et prolonger l’univers SNCF Connect.
+            </p>
+
+            <motion.div
+              className="mt-10 w-full max-w-[30rem] rounded-[1.4rem] border p-4 backdrop-blur-2xl"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "120px 0px" }}
+              transition={{ duration: 0.72, delay: 0.08, ease: "easeOut" }}
+              style={{
+                borderColor: isDark ? "rgba(141,232,254,0.22)" : "rgba(0,44,76,0.12)",
+                background: isDark ? "rgba(5,14,25,0.52)" : "rgba(255,255,255,0.52)",
+                boxShadow: playing ? `0 0 42px rgba(${ACCENT_RGB},0.18)` : `0 24px 70px rgba(0,0,0,${isDark ? 0.2 : 0.08})`,
+              }}
+            >
+              <div className="flex items-center gap-4">
+                <div
+                  className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl"
+                  style={{ background: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,44,76,0.06)" }}
+                >
+                  <img src={imgSpotifyPlayer} alt="" className="h-full w-full object-cover object-top" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div style={{ color: textColor, fontFamily: "'Space Grotesk', sans-serif", fontWeight: 800 }}>Siesta sur les rails</div>
+                  <div className="mt-0.5" style={{ color: mutedColor, fontFamily: "'Inter', sans-serif", fontSize: "0.78rem" }}>
+                    Sound design SNCF Connect
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={togglePlayback}
+                  className="flex h-13 w-13 shrink-0 items-center justify-center rounded-full p-4 transition-transform hover:scale-105"
+                  style={{ background: ACCENT, color: BG_DARK, boxShadow: `0 0 ${playing ? 44 : 24}px rgba(${ACCENT_RGB},0.55)` }}
+                  aria-label={playing ? "Mettre en pause" : "Lancer le sound design"}
+                >
+                  {playing ? <Pause size={19} fill={BG_DARK} /> : <Play size={19} fill={BG_DARK} />}
+                </button>
+              </div>
+
+              <div className="mt-5 flex items-end gap-1.5">
+                {Array.from({ length: 36 }, (_, index) => (
+                  <motion.span
+                    key={index}
+                    className="w-1 rounded-full"
+                    style={{ background: index % 5 === 0 ? "#B870FF" : ACCENT }}
+                    animate={shouldReduceMotion ? { height: 10 + (index % 6) * 3, opacity: 0.7 } : { height: playing ? [8, 18 + ((index * 7) % 34), 9 + ((index * 3) % 16)] : 9 + (index % 6) * 3, opacity: playing ? [0.58, 1, 0.72] : 0.46 }}
+                    transition={{ duration: 0.75 + (index % 6) * 0.08, repeat: playing && !shouldReduceMotion ? Infinity : 0, ease: "easeInOut" }}
+                  />
+                ))}
+              </div>
+
+              <div className="mt-4 h-1.5 overflow-hidden rounded-full" style={{ background: isDark ? "rgba(255,255,255,0.12)" : "rgba(0,44,76,0.1)" }}>
+                <motion.div
+                  className="h-full rounded-full"
+                  style={{ background: `linear-gradient(90deg, ${ACCENT}, #B870FF)` }}
+                  animate={{ width: playing ? ["8%", "96%"] : "18%" }}
+                  transition={playing && !shouldReduceMotion ? { duration: 8, repeat: Infinity, ease: "linear" } : { duration: 0.35 }}
+                />
+              </div>
+
+              <div className="mt-5 flex items-center gap-3">
+                <Volume2 size={16} color={isDark ? "rgba(255,255,255,0.66)" : "rgba(7,19,34,0.55)"} />
+                <input
+                  aria-label="Volume du sound design"
+                  type="range"
+                  min="0"
+                  max="0.55"
+                  step="0.01"
+                  value={volume}
+                  onChange={(event) => setVolume(Number(event.target.value))}
+                  className="h-1.5 w-full accent-[#8DE8FE]"
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+
+          <motion.div
+            className="relative min-h-[40rem] lg:min-h-[54rem]"
+            initial={{ opacity: 0, y: 42 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "120px 0px" }}
+            transition={{ duration: 0.85, ease: "easeOut" }}
+          >
+            <motion.div
+              aria-hidden="true"
+              className="pointer-events-none absolute left-[6%] top-[12%] h-[36rem] w-[36rem] rounded-full blur-3xl"
+              animate={{ opacity: playing ? 0.28 : 0.13, scale: playing ? 1.08 : 0.98 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              style={{ background: `rgba(${ACCENT_RGB},0.5)` }}
+            />
+            <motion.img
+              src={imgSpotifyPlayer}
+              alt="Playlist Spotify SNCF Connect"
+              className="relative z-10 mx-auto w-[min(43rem,92vw)] select-none lg:w-[min(54rem,56vw)]"
+              animate={shouldReduceMotion ? undefined : { scale: playing ? 1.025 : 1, y: playing ? -8 : 0 }}
+              transition={{ duration: 0.85, ease: "easeOut" }}
+              style={{
+                filter: `drop-shadow(0 56px 96px rgba(0,0,0,${isDark ? 0.54 : 0.22})) drop-shadow(0 0 ${playing ? 58 : 26}px rgba(${ACCENT_RGB},${playing ? 0.26 : 0.12}))`,
+              }}
+            />
+          </motion.div>
+        </div>
+
+        <motion.div
+          className="mt-14 grid gap-8 border-t pt-9 md:grid-cols-3"
+          initial={{ opacity: 0, y: 22 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "120px 0px" }}
+          transition={{ duration: 0.72, ease: "easeOut" }}
+          style={{ borderColor: isDark ? "rgba(141,232,254,0.16)" : "rgba(0,44,76,0.12)" }}
+        >
+          {presentationItems.map(([title, text]) => (
+            <div key={title} className="flex gap-4">
+              <span
+                className="mt-1 flex h-12 w-12 shrink-0 items-center justify-center rounded-full"
+                style={{
+                  border: `1px solid rgba(${ACCENT_RGB},${isDark ? 0.38 : 0.48})`,
+                  boxShadow: `0 0 20px rgba(${ACCENT_RGB},${playing ? 0.24 : 0.12})`,
+                }}
+              >
+                <span className="h-2 w-2 rounded-full" style={{ background: ACCENT }} />
+              </span>
+              <div>
+                <h3 style={{ color: textColor, fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.02rem", fontWeight: 800 }}>{title}</h3>
+                <p className="mt-2" style={{ color: mutedColor, fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", lineHeight: 1.65 }}>
+                  {text}
+                </p>
+              </div>
+            </div>
+          ))}
         </motion.div>
       </div>
     </section>
