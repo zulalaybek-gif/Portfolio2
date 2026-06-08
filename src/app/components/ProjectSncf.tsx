@@ -940,33 +940,145 @@ function RoutineScene() {
 }
 
 function NewsletterScene() {
-  const ribbons = [
-    { word: "Trajets", className: "left-[12%] top-[18%] -rotate-6" },
-    { word: "Personnalisés", className: "right-[7%] top-[39%] rotate-6" },
-    { word: "Simplifiés", className: "left-[16%] bottom-[19%] rotate-3" },
+  const { isDark } = useTheme();
+  const textColor = isDark ? "#F6FAFF" : "#071322";
+  const mutedColor = isDark ? "rgba(230,240,255,0.7)" : "rgba(7,19,34,0.62)";
+  const panelBorder = isDark ? "rgba(141,232,254,0.16)" : "rgba(0,44,76,0.14)";
+  const newsletterItems = [
+    {
+      icon: traficAsset,
+      title: "Actualités",
+      text: "Les dernières nouvelles de Connect Routine.",
+    },
+    {
+      icon: horlogeAsset,
+      title: "Conseils & astuces",
+      text: "Des idées pour optimiser vos déplacements.",
+    },
+    {
+      icon: ampouleAsset,
+      title: "Nouveautés",
+      text: "Les nouvelles fonctionnalités expliquées simplement.",
+    },
   ];
   return (
-    <section className="relative min-h-[105vh] overflow-hidden px-6 py-24 md:px-12 lg:py-28">
-      <SceneName className="left-8 top-24 md:left-14">Newsletter</SceneName>
-      <SceneGlow className="left-1/2 top-1/2 h-[42rem] w-[42rem] -translate-x-1/2 -translate-y-1/2" opacity={0.2} />
-      <StructuralLine src={lineAssetWide} className="left-[-28vw] top-[29%] w-[150vw]" rotate={-7} opacity={0.32} />
-      <StructuralLine src={lineAssetLoop} className="bottom-[15%] left-[-6vw] w-[62vw]" rotate={7} opacity={0.28} />
-      {ribbons.map((item, index) => (
-        <motion.div
-          key={item.word}
-          className={`pointer-events-none absolute z-20 hidden whitespace-nowrap rounded-full border border-cyan-200/20 px-8 py-3 text-white/90 backdrop-blur-xl lg:block ${item.className}`}
-          style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(1.8rem,3.8vw,4rem)", fontWeight: 700, letterSpacing: "-0.05em" }}
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          animate={{ y: [0, index % 2 ? 14 : -14, 0] }}
-          transition={{ duration: 7 + index, repeat: Infinity, ease: "easeInOut", delay: index * 0.15 }}
-        >
-          {item.word}
-        </motion.div>
-      ))}
-      <div className="relative z-10 flex min-h-[50rem] items-center justify-center">
-        <FloatingMockup src={imgNewsletter} alt="Newsletter Connect Routine" className="max-h-[78vh] w-auto max-w-[min(30rem,72vw)] -rotate-1" />
+    <section className="relative overflow-hidden px-6 py-24 md:px-12 lg:py-32">
+      <StructuralLine src={lineAssetLong} className="bottom-[8%] left-[-14vw] w-[82vw]" rotate={-8} opacity={isDark ? 0.32 : 0.22} />
+      <StructuralLine src={lineAssetLoop} className="bottom-[3%] right-[-24vw] w-[70vw]" rotate={8} opacity={isDark ? 0.28 : 0.2} />
+
+      <div className="relative z-10 mx-auto max-w-7xl">
+        <div className="grid gap-16 lg:grid-cols-[0.86fr_1.14fr] lg:items-start">
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "120px 0px" }}
+            transition={{ duration: 0.75, ease: "easeOut" }}
+          >
+            <div className="mb-12 flex items-center gap-4">
+              <span
+                className="rounded-full px-5 py-2 uppercase tracking-[0.16em]"
+                style={{
+                  border: `1px solid rgba(${ACCENT_RGB},${isDark ? 0.48 : 0.58})`,
+                  color: ACCENT,
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: "0.74rem",
+                  fontWeight: 800,
+                  boxShadow: `0 0 22px rgba(${ACCENT_RGB},${isDark ? 0.14 : 0.16})`,
+                }}
+              >
+                04. Newsletter
+              </span>
+              <motion.span
+                className="hidden h-px w-52 sm:block"
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9, delay: 0.2, ease: "easeOut" }}
+                style={{
+                  transformOrigin: "left",
+                  background: `linear-gradient(90deg, rgba(${ACCENT_RGB},0.86), rgba(${ACCENT_RGB},0.15))`,
+                }}
+              />
+              <span className="hidden h-2 w-2 rounded-full sm:block" style={{ background: ACCENT, boxShadow: `0 0 18px rgba(${ACCENT_RGB},0.9)` }} />
+            </div>
+
+            <h2
+              style={{
+                color: textColor,
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: "clamp(2.6rem, 5.1vw, 5rem)",
+                fontWeight: 750,
+                lineHeight: 1.04,
+                letterSpacing: "-0.055em",
+              }}
+            >
+              Une newsletter pensée
+              <br />
+              pour <span style={{ color: ACCENT, textShadow: `0 0 24px rgba(${ACCENT_RGB},0.26)` }}>vous accompagner.</span>
+            </h2>
+
+            <p
+              className="mt-9 max-w-[27rem]"
+              style={{ color: mutedColor, fontFamily: "'Inter', sans-serif", fontSize: "1.08rem", lineHeight: 1.75 }}
+            >
+              Chaque mois, recevez des contenus utiles pour vos trajets quotidiens.
+            </p>
+
+            <div className="mt-16 space-y-10">
+              {newsletterItems.map((item, index) => (
+                <motion.div
+                  key={item.title}
+                  className="flex items-center gap-7"
+                  initial={{ opacity: 0, x: -24 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+                >
+                  <span
+                    className="flex h-[5.5rem] w-[5.5rem] shrink-0 items-center justify-center rounded-full"
+                    style={{
+                      border: `1px solid ${index === 1 ? "rgba(150,90,255,0.42)" : `rgba(${ACCENT_RGB},0.36)`}`,
+                      background: "transparent",
+                      boxShadow: `0 0 24px ${index === 1 ? "rgba(150,90,255,0.15)" : "rgba(141,232,254,0.14)"}`,
+                    }}
+                  >
+                    <img src={item.icon} alt="" aria-hidden="true" className="h-9 w-9 opacity-90" />
+                  </span>
+                  <span>
+                    <strong style={{ color: textColor, fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.45rem", lineHeight: 1.2 }}>
+                      {item.title}
+                    </strong>
+                    <span className="mt-2 block max-w-[17rem]" style={{ color: mutedColor, fontFamily: "'Inter', sans-serif", fontSize: "1rem", lineHeight: 1.65 }}>
+                      {item.text}
+                    </span>
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div
+            className="relative pt-4 lg:pt-[14rem]"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "120px 0px" }}
+            transition={{ duration: 0.85, ease: "easeOut" }}
+          >
+            <div className="relative ml-auto w-full max-w-[46rem]">
+              <img
+                src={imgNewsletter}
+                alt="Newsletter Connect Routine"
+                className="h-auto w-full rounded-[1.35rem] object-contain"
+                style={{
+                  border: `1px solid ${panelBorder}`,
+                  boxShadow: isDark
+                    ? `0 34px 90px rgba(0,0,0,0.28), 0 0 46px rgba(${ACCENT_RGB},0.08)`
+                    : "0 34px 90px rgba(0,44,76,0.12)",
+                }}
+              />
+            </div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
