@@ -1042,7 +1042,13 @@ function NewsletterScene() {
                       boxShadow: `0 0 24px ${index === 1 ? "rgba(150,90,255,0.15)" : "rgba(141,232,254,0.14)"}`,
                     }}
                   >
-                    <img src={item.icon} alt="" aria-hidden="true" className="h-9 w-9 opacity-90" />
+                    <img
+                      src={item.icon}
+                      alt=""
+                      aria-hidden="true"
+                      className="h-9 w-9 opacity-90"
+                      style={{ filter: isDark ? "brightness(0) invert(1)" : undefined }}
+                    />
                   </span>
                   <span>
                     <strong style={{ color: textColor, fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.45rem", lineHeight: 1.2 }}>
@@ -1064,7 +1070,7 @@ function NewsletterScene() {
             viewport={{ once: true, margin: "120px 0px" }}
             transition={{ duration: 0.85, ease: "easeOut" }}
           >
-            <div className="relative ml-auto w-full max-w-[46rem]">
+            <div className="relative ml-auto w-full max-w-[38rem]">
               <img
                 src={imgNewsletter}
                 alt="Newsletter Connect Routine"
