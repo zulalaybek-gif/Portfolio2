@@ -1217,22 +1217,198 @@ function CommunicationScene({ setParticleMood: _setParticleMood }: { setParticle
   );
 }
 
-const spotifyDust = Array.from({ length: 180 }, (_, index) => ({
-  id: index,
-  left: 4 + ((index * 37) % 94),
-  top: 12 + ((index * 23) % 72),
-  size: 0.8 + ((index * 7) % 5) * 0.42,
-  delay: (index % 9) * 0.18,
-  distance: 10 + (index % 9) * 5,
-  duration: 7 + (index % 10) * 0.65,
-}));
+function SpotifySandscape({
+  playing,
+  isDark,
+  shouldReduceMotion,
+}: {
+  playing: boolean;
+  isDark: boolean;
+  shouldReduceMotion: boolean | null;
+}) {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const playingRef = useRef(playing);
+  const themeRef = useRef(isDark);
 
-const spotifyWavePaths = [
-  "M-40 280 C140 222 260 334 420 262 C596 182 704 212 860 286 C1018 362 1132 246 1280 274",
-  "M-60 358 C128 302 272 386 446 330 C636 268 742 312 892 384 C1050 460 1148 348 1300 368",
-  "M-20 452 C160 402 302 512 478 448 C642 388 760 420 912 496 C1066 574 1198 480 1330 504",
-  "M-80 542 C112 476 274 608 462 542 C654 476 770 524 934 610 C1108 700 1218 574 1370 610",
-];
+  useEffect(() => {
+    playingRef.current = playing;
+  }, [playing]);
+
+  useEffect(() => {
+    themeRef.current = isDark;
+  }, [isDark]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const context = canvas.getContext("2d", { alpha: true });
+    if (!context) return;
+
+    let animationFrame = 0;
+    let time = 0;
+    let lastWidth = 0;
+    let lastHeight = 0;
+    let pixelRatio = 1;
+
+    const hash = (value: number) => {
+      const x = Math.sin(value * 12.9898) * 43758.5453;
+      return x - Math.floor(x);
+    };
+
+    const resizeCanvas = () => {
+      const rect = canvas.getBoundingClientRect();
+      const nextRatio = Math.min(window.devicePixelRatio || 1, 1.6);
+      const nextWidth = Math.max(1, Math.floor(rect.width));
+      const nextHeight = Math.max(1, Math.floor(rect.height));
+
+      if (nextWidth !== lastWidth || nextHeight !== lastHeight || nextRatio !== pixelRatio) {
+        lastWidth = nextWidth;
+        lastHeight = nextHeight;
+        pixelRatio = nextRatio;
+        canvas.width = Math.floor(nextWidth * pixelRatio);
+        canvas.height = Math.floor(nextHeight * pixelRatio);
+        context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      }
+    };
+
+    const drawRidge = (
+      width: number,
+      height: number,
+      base: number,
+      amplitude: number,
+      frequency: number,
+      offset: number,
+      density: number,
+      alpha: number,
+      glow: number
+    ) => {
+      context.save();
+      context.globalCompositeOperation = "lighter";
+      context.shadowColor = `rgba(218,238,255,${alpha * 0.85})`;
+      context.shadowBlur = glow;
+
+      for (let x = -80; x <= width + 80; x += density) {
+        const wave =
+          Math.sin(x * frequency + offset) * amplitude +
+          Math.sin(x * frequency * 0.42 + offset * 1.45) * amplitude * 0.72 +
+          Math.sin(x * frequency * 1.85 - offset * 0.6) * amplitude * 0.28;
+        const ridgeY = base + wave;
+        const cluster = 2 + Math.floor(hash(x + base) * 7);
+
+        for (let i = 0; i < cluster; i += 1) {
+          const scatter = (hash(x * 3.1 + i * 19 + base) - 0.5) * (34 + amplitude * 0.5);
+          const lift = hash(x * 4.7 + i * 7) * (42 + amplitude * 0.9);
+          const y = ridgeY + scatter - lift;
+          const size = 0.45 + hash(x * 6.3 + i * 31) * 1.35;
+          const localAlpha = alpha * (0.3 + hash(x * 2.2 + i * 11) * 0.9);
+          context.fillStyle = `rgba(238,247,255,${localAlpha})`;
+          context.beginPath();
+          context.arc(x + (hash(i + x) - 0.5) * 9, y, size, 0, Math.PI * 2);
+          context.fill();
+        }
+      }
+
+      context.lineWidth = 0.8;
+      context.strokeStyle = `rgba(238,247,255,${alpha * 0.45})`;
+      context.beginPath();
+      for (let x = -80; x <= width + 80; x += 8) {
+        const y =
+          base +
+          Math.sin(x * frequency + offset) * amplitude +
+          Math.sin(x * frequency * 0.42 + offset * 1.45) * amplitude * 0.72;
+        if (x === -80) context.moveTo(x, y);
+        else context.lineTo(x, y);
+      }
+      context.stroke();
+      context.restore();
+    };
+
+    const draw = () => {
+      resizeCanvas();
+
+      const width = lastWidth;
+      const height = lastHeight;
+      const active = playingRef.current ? 1 : 0;
+      const dark = themeRef.current;
+      const visibility = dark ? 1 : 0.58;
+      const motionAmp = shouldReduceMotion ? 0 : active;
+      time += shouldReduceMotion ? 0 : 0.008 + active * 0.01;
+
+      context.clearRect(0, 0, width, height);
+
+      const mist = context.createRadialGradient(width * 0.72, height * 0.52, 0, width * 0.72, height * 0.52, width * 0.58);
+      mist.addColorStop(0, `rgba(141,232,254,${0.16 * visibility + active * 0.05})`);
+      mist.addColorStop(0.42, `rgba(210,230,255,${0.08 * visibility + active * 0.04})`);
+      mist.addColorStop(1, "rgba(210,230,255,0)");
+      context.fillStyle = mist;
+      context.fillRect(0, 0, width, height);
+
+      const phoneHalo = context.createRadialGradient(width * 0.74, height * 0.64, 0, width * 0.74, height * 0.64, width * 0.34);
+      phoneHalo.addColorStop(0, `rgba(255,255,255,${0.16 * visibility + active * 0.08})`);
+      phoneHalo.addColorStop(0.22, `rgba(141,232,254,${0.14 * visibility + active * 0.08})`);
+      phoneHalo.addColorStop(1, "rgba(141,232,254,0)");
+      context.fillStyle = phoneHalo;
+      context.fillRect(0, 0, width, height);
+
+      // Back atmospheric dust: sparse depth, never the main structure.
+      context.save();
+      context.globalCompositeOperation = "lighter";
+      for (let i = 0; i < 760; i += 1) {
+        const seed = i * 17.17;
+        const x = hash(seed) * width;
+        const y = height * (0.18 + hash(seed + 3) * 0.58);
+        const drift = Math.sin(time * (0.5 + hash(seed + 9)) + seed) * (3 + active * 10);
+        const size = 0.35 + hash(seed + 11) * 1.1;
+        const alpha = (0.05 + hash(seed + 4) * 0.22 + active * 0.13) * visibility;
+        context.fillStyle = `rgba(235,246,255,${alpha})`;
+        context.beginPath();
+        context.arc(x + drift, y + Math.cos(time + seed) * (1 + active * 4), size, 0, Math.PI * 2);
+        context.fill();
+      }
+      context.restore();
+
+      // Luminous frequency waves: several dense particle ribbons crossing the section.
+      drawRidge(width, height, height * 0.5, 42 + active * 10, 0.008, time * (0.8 + motionAmp), 2.8, 0.12 * visibility + active * 0.05, 8 + active * 5);
+      drawRidge(width, height, height * 0.58, 58 + active * 16, 0.006, time * (1.15 + motionAmp), 2.4, 0.16 * visibility + active * 0.08, 12 + active * 7);
+      drawRidge(width, height, height * 0.68, 50 + active * 12, 0.007, time * (0.95 + motionAmp), 2.6, 0.15 * visibility + active * 0.07, 10 + active * 6);
+
+      // Foreground dunes: dense lower relief, valleys and crests.
+      drawRidge(width, height, height * 0.76, 66 + active * 12, 0.0058, time * (0.75 + motionAmp), 1.9, 0.2 * visibility + active * 0.08, 14 + active * 8);
+      drawRidge(width, height, height * 0.84, 76 + active * 15, 0.0048, time * (0.68 + motionAmp), 1.7, 0.26 * visibility + active * 0.1, 18 + active * 9);
+      drawRidge(width, height, height * 0.94, 58 + active * 10, 0.0068, time * (0.9 + motionAmp), 1.45, 0.28 * visibility + active * 0.12, 20 + active * 10);
+
+      // Dark valley overlays carve volume into the particle mass.
+      const valley = context.createLinearGradient(0, height * 0.38, 0, height);
+      valley.addColorStop(0, "rgba(4,9,17,0)");
+      valley.addColorStop(0.44, dark ? "rgba(4,9,17,0.16)" : "rgba(246,250,255,0.08)");
+      valley.addColorStop(0.78, dark ? "rgba(4,9,17,0.34)" : "rgba(246,250,255,0.12)");
+      valley.addColorStop(1, dark ? "rgba(4,9,17,0.62)" : "rgba(246,250,255,0.2)");
+      context.fillStyle = valley;
+      context.fillRect(0, height * 0.32, width, height * 0.72);
+
+      if (!shouldReduceMotion) {
+        animationFrame = requestAnimationFrame(draw);
+      }
+    };
+
+    draw();
+    window.addEventListener("resize", draw);
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      window.removeEventListener("resize", draw);
+    };
+  }, [shouldReduceMotion]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      aria-hidden="true"
+      className="absolute inset-x-[-10vw] bottom-[-10%] top-[4%] h-[112%] w-[120vw]"
+    />
+  );
+}
 
 function SpotifyScene({ playing, setPlaying }: { playing: boolean; setPlaying: (value: boolean) => void }) {
   const { isDark } = useTheme();
@@ -1349,114 +1525,7 @@ function SpotifyScene({ playing, setPlaying }: { playing: boolean; setPlaying: (
       />
 
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-        <motion.div
-          className="absolute inset-x-[-12vw] bottom-[-20%] h-[34rem] md:h-[42rem] lg:h-[52rem]"
-          animate={shouldReduceMotion ? undefined : { x: playing ? [0, -22, 18, 0] : [0, -6, 0], y: playing ? [0, -18, 10, 0] : [0, -5, 0] }}
-          transition={{ duration: playing ? 9 : 16, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <motion.div
-            className="h-full w-full"
-            animate={{ opacity: playing ? (isDark ? 0.82 : 0.42) : isDark ? 0.58 : 0.28, filter: playing ? "blur(0px)" : "blur(0.5px)" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            style={{
-              background: [
-                "radial-gradient(ellipse at 18% 72%, rgba(255,255,255,0.72) 0 1px, transparent 1.7px)",
-                "radial-gradient(ellipse at 32% 58%, rgba(255,255,255,0.58) 0 1px, transparent 1.7px)",
-                `radial-gradient(ellipse at 56% 64%, rgba(${ACCENT_RGB},0.58) 0 1px, transparent 1.8px)`,
-                "radial-gradient(ellipse at 72% 52%, rgba(255,255,255,0.66) 0 1px, transparent 1.7px)",
-                "radial-gradient(ellipse at 86% 70%, rgba(255,255,255,0.5) 0 1px, transparent 1.8px)",
-                "linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.08) 46%, rgba(255,255,255,0.22) 72%, transparent 100%)",
-              ].join(", "),
-              backgroundSize: playing ? "12px 11px, 18px 15px, 22px 18px, 15px 13px, 28px 22px, 100% 100%" : "18px 16px, 26px 22px, 34px 28px, 24px 20px, 42px 34px, 100% 100%",
-              maskImage:
-                "radial-gradient(ellipse at 50% 76%, black 0%, black 46%, transparent 73%), linear-gradient(180deg, transparent 0%, black 18%, black 92%, transparent 100%)",
-              WebkitMaskComposite: "source-in",
-            }}
-          />
-        </motion.div>
-
-        <motion.svg
-          className="absolute left-[-12vw] top-[30%] h-[36rem] w-[128vw] overflow-visible md:top-[27%] lg:top-[24%]"
-          viewBox="0 0 1280 720"
-          fill="none"
-          animate={shouldReduceMotion ? undefined : { x: playing ? [0, 18, -14, 0] : [0, 7, 0], y: playing ? [0, -12, 8, 0] : [0, -4, 0] }}
-          transition={{ duration: playing ? 8.5 : 15, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <defs>
-            <filter id="spotify-wave-glow" x="-20%" y="-40%" width="140%" height="180%">
-              <feGaussianBlur stdDeviation="6" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-            <linearGradient id="spotify-wave-gradient" x1="0" y1="0" x2="1280" y2="0" gradientUnits="userSpaceOnUse">
-              <stop stopColor="white" stopOpacity="0" />
-              <stop offset="0.22" stopColor="white" stopOpacity={isDark ? "0.6" : "0.32"} />
-              <stop offset="0.5" stopColor="#DDEBFF" stopOpacity={isDark ? "0.86" : "0.42"} />
-              <stop offset="0.68" stopColor="#8DE8FE" stopOpacity={isDark ? "0.58" : "0.36"} />
-              <stop offset="1" stopColor="white" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-          {spotifyWavePaths.map((path, index) => (
-            <motion.path
-              key={path}
-              d={path}
-              stroke="url(#spotify-wave-gradient)"
-              strokeWidth={index === 2 ? 2.2 : 1.5}
-              strokeLinecap="round"
-              filter="url(#spotify-wave-glow)"
-              initial={{ pathLength: 0.72, opacity: 0 }}
-              whileInView={{ pathLength: 1, opacity: playing ? 0.95 - index * 0.12 : 0.58 - index * 0.08 }}
-              viewport={{ once: true, margin: "160px 0px" }}
-              animate={{
-                pathLength: playing && !shouldReduceMotion ? [0.72, 1, 0.86] : 1,
-                opacity: playing ? [0.48, 0.96 - index * 0.1, 0.58] : 0.48 - index * 0.06,
-              }}
-              transition={{ duration: playing ? 5.5 + index * 0.55 : 1.2, repeat: playing && !shouldReduceMotion ? Infinity : 0, ease: "easeInOut" }}
-            />
-          ))}
-        </motion.svg>
-
-        <motion.div
-          className="absolute left-[-8vw] top-[25%] h-[30rem] w-[120vw]"
-          animate={shouldReduceMotion ? undefined : { x: playing ? [0, -10, 16, 0] : [0, 4, 0], y: playing ? [0, 10, -8, 0] : [0, 3, 0] }}
-          transition={{ duration: playing ? 10 : 18, repeat: Infinity, ease: "easeInOut" }}
-          style={{
-            opacity: playing ? (isDark ? 0.76 : 0.32) : isDark ? 0.42 : 0.18,
-            background:
-              "radial-gradient(ellipse at 18% 58%, rgba(255,255,255,0.55) 0 1px, transparent 1.6px), radial-gradient(ellipse at 46% 44%, rgba(255,255,255,0.45) 0 1px, transparent 1.6px), radial-gradient(ellipse at 72% 52%, rgba(255,255,255,0.5) 0 1px, transparent 1.6px)",
-            backgroundSize: playing ? "13px 13px, 19px 16px, 25px 19px" : "24px 22px, 34px 28px, 44px 36px",
-            maskImage: "linear-gradient(90deg, transparent, black 9%, black 92%, transparent), radial-gradient(ellipse at 58% 62%, black 0%, black 58%, transparent 78%)",
-            WebkitMaskComposite: "source-in",
-          }}
-        />
-
-        {spotifyDust.map((particle) => (
-          <motion.span
-            key={particle.id}
-            className="absolute rounded-full"
-            style={{
-              left: `${particle.left}%`,
-              top: `${particle.top}%`,
-              width: particle.size,
-              height: particle.size,
-              background: particle.id % 5 === 0 ? ACCENT : "rgba(255,255,255,0.82)",
-              boxShadow: particle.id % 5 === 0 ? `0 0 12px rgba(${ACCENT_RGB},0.55)` : "0 0 9px rgba(255,255,255,0.35)",
-            }}
-            animate={
-              shouldReduceMotion
-                ? { opacity: playing ? 0.42 : 0.24 }
-                : {
-                    opacity: playing ? [0.22, 0.85, 0.34] : [0.08, 0.28, 0.12],
-                    x: playing ? [0, particle.distance, -particle.distance * 0.5, 0] : [0, particle.distance * 0.25, 0],
-                    y: playing ? [0, -particle.distance * 0.7, particle.distance * 0.45, 0] : [0, -particle.distance * 0.18, 0],
-                    scale: playing ? [1, 1.7, 1] : [0.9, 1.1, 0.9],
-                  }
-            }
-            transition={{ duration: playing ? particle.duration * 0.62 : particle.duration, delay: particle.delay, repeat: Infinity, ease: "easeInOut" }}
-          />
-        ))}
+        <SpotifySandscape playing={playing} isDark={isDark} shouldReduceMotion={shouldReduceMotion} />
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl">
