@@ -843,13 +843,7 @@ export function ProjectSncf() {
   return (
     <div className="relative w-full">
       <HeroSection />
-      <main
-        className="relative overflow-hidden"
-        style={{
-          background:
-            "radial-gradient(circle at 50% 4%, rgba(141,232,254,0.12), transparent 24%), linear-gradient(180deg, #08111f 0%, #050a13 38%, #080d16 100%)",
-        }}
-      >
+      <main className="relative overflow-hidden">
         <GlobalParticleField active={spotifyPlaying} mood={particleMood} />
         <div className="pointer-events-none absolute inset-x-0 top-0 z-[3] h-[1px]" style={{ background: `linear-gradient(90deg, transparent, rgba(${ACCENT_RGB},0.8), transparent)` }} />
         <div className="relative z-10">
