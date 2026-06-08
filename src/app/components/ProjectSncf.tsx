@@ -523,6 +523,8 @@ function OnboardingScene() {
                 key={screen.src}
                 src={screen.src}
                 alt={screen.alt}
+                loading="lazy"
+                decoding="async"
                 className="relative z-10 mx-auto w-[min(17rem,76vw)] select-none sm:w-[16rem] lg:w-full"
                 initial={{ opacity: 0, y: 46, filter: "blur(8px)" }}
                 whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -754,6 +756,8 @@ function RoutineScene() {
             <motion.img
               src={imgRoutineList}
               alt="Connect Routine - écran principal"
+              loading="lazy"
+              decoding="async"
               className="absolute left-[10%] top-[2%] z-20 w-[min(18rem,45vw)] select-none md:left-[18%] md:w-[20rem] lg:left-[12%] lg:w-[22rem]"
               initial={{ opacity: 0, y: 70, rotate: -4, filter: "blur(10px)" }}
               whileInView={{ opacity: 1, y: 0, rotate: -3, filter: "blur(0px)" }}
@@ -764,6 +768,8 @@ function RoutineScene() {
             <motion.img
               src={imgRoutineList}
               alt="Connect Routine - aperçu secondaire"
+              loading="lazy"
+              decoding="async"
               className="absolute right-[4%] top-[12%] z-10 w-[min(16rem,39vw)] select-none md:right-[13%] md:w-[18rem] lg:right-[8%] lg:w-[20rem]"
               initial={{ opacity: 0, y: 80, rotate: 8, filter: "blur(10px)" }}
               whileInView={{ opacity: 1, y: 0, rotate: 5, filter: "blur(0px)" }}
@@ -1072,6 +1078,8 @@ function NewsletterScene() {
               <img
                 src={imgNewsletter}
                 alt="Newsletter Connect Routine"
+                loading="lazy"
+                decoding="async"
                 className="h-auto w-full rounded-[1.35rem] object-contain"
                 style={{
                   border: `1px solid ${panelBorder}`,
@@ -1193,6 +1201,8 @@ function CommunicationScene({ setParticleMood: _setParticleMood }: { setParticle
             <motion.img
               src={imgCampaignPink}
               alt="Communication Instagram SNCF Connect rose"
+              loading="lazy"
+              decoding="async"
               className="relative z-20 mx-auto mt-8 block w-[min(20rem,78vw)] select-none lg:absolute lg:left-[9%] lg:top-[0%] lg:mt-0 lg:w-[min(24rem,32vw)]"
               initial={{ opacity: 0, y: 56, x: -18, rotate: -1.2 }}
               whileInView={{ opacity: 1, y: 0, x: 0, rotate: -1.2 }}
@@ -1203,6 +1213,8 @@ function CommunicationScene({ setParticleMood: _setParticleMood }: { setParticle
             <motion.img
               src={imgCampaignBlue}
               alt="Communication Instagram SNCF Connect bleue"
+              loading="lazy"
+              decoding="async"
               className="relative z-10 mx-auto mt-8 block w-[min(19rem,78vw)] select-none lg:absolute lg:right-[4%] lg:top-[3%] lg:mt-0 lg:w-[min(23rem,31vw)]"
               initial={{ opacity: 0, y: 48, x: 24, rotate: 1.5 }}
               whileInView={{ opacity: 0.92, y: 0, x: 0, rotate: 1.5 }}
@@ -1229,6 +1241,7 @@ function SpotifySandscape({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const playingRef = useRef(playing);
   const themeRef = useRef(isDark);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     playingRef.current = playing;
@@ -1239,6 +1252,26 @@ function SpotifySandscape({
   }, [isDark]);
 
   useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { rootMargin: "520px 0px" }
+    );
+
+    observer.observe(canvas);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -1443,7 +1476,7 @@ function SpotifySandscape({
       cancelAnimationFrame(animationFrame);
       window.removeEventListener("resize", draw);
     };
-  }, [shouldReduceMotion]);
+  }, [shouldReduceMotion, isVisible]);
 
   return (
     <canvas
@@ -1641,7 +1674,7 @@ function SpotifyScene({ playing, setPlaying }: { playing: boolean; setPlaying: (
                   className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl"
                   style={{ background: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,44,76,0.06)" }}
                 >
-                  <img src={imgSpotifyPlayer} alt="" className="h-full w-full object-cover object-top" />
+                  <img src={imgSpotifyPlayer} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover object-top" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <div style={{ color: textColor, fontFamily: "'Space Grotesk', sans-serif", fontWeight: 800 }}>Siesta sur les rails</div>
@@ -1714,6 +1747,8 @@ function SpotifyScene({ playing, setPlaying }: { playing: boolean; setPlaying: (
             <motion.img
               src={imgSpotifyPlayer}
               alt="Playlist Spotify SNCF Connect"
+              loading="lazy"
+              decoding="async"
               className="relative z-10 mx-auto w-[min(43rem,92vw)] select-none lg:w-[min(54rem,56vw)]"
               animate={shouldReduceMotion ? undefined : { scale: playing ? 1.025 : 1, y: playing ? -8 : 0 }}
               transition={{ duration: 0.85, ease: "easeOut" }}
@@ -1864,6 +1899,7 @@ function VideoScene() {
                     alt=""
                     className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.045]"
                     loading="lazy"
+                    decoding="async"
                   />
                   <span className="absolute inset-0 bg-[#06101c]/28 opacity-80 transition-opacity duration-500 group-hover:opacity-55" />
                   <span className="absolute inset-0 flex items-center justify-center opacity-0 transition duration-500 group-hover:opacity-100">
