@@ -399,15 +399,12 @@ function OnboardingScene() {
       label: "Personnaliser\ndès le départ",
     },
   ];
-  const sectionBg = isDark
-    ? "radial-gradient(circle at 82% 12%, rgba(128,86,210,0.22), transparent 28%), radial-gradient(circle at 50% 54%, rgba(141,232,254,0.12), transparent 44%), linear-gradient(180deg, #07101d 0%, #050b15 100%)"
-    : "radial-gradient(circle at 82% 12%, rgba(128,86,210,0.12), transparent 28%), radial-gradient(circle at 50% 54%, rgba(141,232,254,0.22), transparent 44%), linear-gradient(180deg, #f7fbff 0%, #edf7fb 100%)";
   const textColor = isDark ? "#F6FAFF" : "#071322";
   const mutedColor = isDark ? "rgba(230,240,255,0.68)" : "rgba(7,19,34,0.62)";
   const lineBase = isDark ? "rgba(141,232,254,0.24)" : "rgba(0,44,76,0.14)";
 
   return (
-    <section className="relative overflow-hidden px-6 py-24 md:px-12 lg:py-32" style={{ background: sectionBg }}>
+    <section className="relative overflow-hidden px-6 py-24 md:px-12 lg:py-32">
       <motion.svg
         aria-hidden="true"
         className="pointer-events-none absolute -right-10 top-0 hidden h-56 w-[58vw] max-w-[58rem] lg:block"
