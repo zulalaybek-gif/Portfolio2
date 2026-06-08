@@ -1070,7 +1070,7 @@ function NewsletterScene() {
             viewport={{ once: true, margin: "120px 0px" }}
             transition={{ duration: 0.85, ease: "easeOut" }}
           >
-            <div className="relative ml-auto w-full max-w-[38rem]">
+            <div className="relative ml-auto w-full max-w-[27rem]">
               <img
                 src={imgNewsletter}
                 alt="Newsletter Connect Routine"
