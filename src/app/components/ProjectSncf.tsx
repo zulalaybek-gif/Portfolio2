@@ -982,14 +982,14 @@ function NewsletterScene() {
           </motion.div>
 
           <motion.div
-            className="relative pt-4 lg:pt-0"
+            className="relative pt-4 lg:self-center lg:pt-8"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "120px 0px" }}
             transition={{ duration: 0.85, ease: "easeOut" }}
           >
             <div
-              className="relative mx-auto h-[34rem] w-full max-w-[25rem] overflow-y-auto rounded-[1.35rem] md:h-[38rem] lg:ml-4 lg:mr-auto lg:h-[42rem] xl:ml-8"
+              className="relative mx-auto h-[34rem] w-full max-w-[24rem] overflow-y-auto rounded-[1.35rem] md:h-[38rem] lg:ml-4 lg:mr-auto lg:h-[38rem] xl:ml-8"
               style={{
                 border: `1px solid ${panelBorder}`,
                 boxShadow: isDark
@@ -1081,7 +1081,7 @@ function CommunicationScene() {
             </p>
           </motion.div>
 
-          <div className="relative min-h-[25rem] lg:min-h-[28rem]">
+          <div className="relative min-h-[25rem] overflow-hidden lg:min-h-[32rem]">
             <motion.div
               aria-hidden="true"
               className="pointer-events-none absolute left-[24%] top-[22%] h-[13rem] w-[13rem] rounded-full blur-3xl"
@@ -1119,7 +1119,7 @@ function CommunicationScene() {
               alt="Communication Instagram SNCF Connect bleue"
               loading="lazy"
               decoding="async"
-              className="relative z-20 mx-auto mt-8 block w-[min(12.5rem,62vw)] select-none lg:absolute lg:right-[28%] lg:top-[4%] lg:mt-0 lg:w-[min(12.75rem,16vw)]"
+              className="relative z-20 mx-auto mt-8 block w-[min(12.5rem,62vw)] select-none lg:absolute lg:right-[25%] lg:top-[8%] lg:mt-0 lg:w-[min(12.75rem,16vw)]"
               initial={{ opacity: 0, y: 56, x: 18, rotate: 1.1 }}
               whileInView={{ opacity: 1, y: 0, x: 0, rotate: 1.1 }}
               viewport={{ once: true, margin: "120px 0px" }}
@@ -1131,7 +1131,7 @@ function CommunicationScene() {
               alt="Communication Instagram SNCF Connect rose"
               loading="lazy"
               decoding="async"
-              className="relative z-10 mx-auto mt-8 block w-[min(12rem,60vw)] select-none lg:absolute lg:left-[28%] lg:top-[13%] lg:mt-0 lg:w-[min(12.1rem,15.5vw)]"
+              className="relative z-10 mx-auto mt-8 block w-[min(12rem,60vw)] select-none lg:absolute lg:left-[25%] lg:top-[18%] lg:mt-0 lg:w-[min(12.1rem,15.5vw)]"
               initial={{ opacity: 0, y: 48, x: -20, rotate: -1.4 }}
               whileInView={{ opacity: 0.9, y: 0, x: 0, rotate: -1.4 }}
               viewport={{ once: true, margin: "120px 0px" }}
@@ -1385,7 +1385,7 @@ function SpotifyScene({ playing, setPlaying }: { playing: boolean; setPlaying: (
           </motion.div>
 
           <motion.div
-            className="relative min-h-[34rem] pt-8 lg:min-h-[45rem] lg:pt-32"
+            className="relative min-h-[34rem] pt-8 lg:min-h-[41rem] lg:pt-24"
             initial={{ opacity: 0, y: 42 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "120px 0px" }}
@@ -1403,7 +1403,7 @@ function SpotifyScene({ playing, setPlaying }: { playing: boolean; setPlaying: (
               alt="Playlist Spotify SNCF Connect"
               loading="lazy"
               decoding="async"
-              className="relative z-10 mx-auto w-[min(34rem,86vw)] select-none lg:w-[min(42rem,44vw)]"
+              className="relative z-10 mx-auto w-[min(34rem,86vw)] select-none lg:w-[min(38rem,40vw)]"
               animate={shouldReduceMotion ? undefined : { scale: playing ? 1.025 : 1, y: playing ? -8 : 0 }}
               transition={{ duration: 0.85, ease: "easeOut" }}
               style={{
