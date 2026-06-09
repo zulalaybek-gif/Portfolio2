@@ -1024,7 +1024,7 @@ function CommunicationScene() {
       <StructuralLine src={lineAssetLoop} className="bottom-[2%] right-[-26vw] w-[82vw]" rotate={5} opacity={isDark ? 0.3 : 0.2} />
 
       <div className="relative z-10 mx-auto max-w-7xl">
-        <div className="grid items-center gap-16 lg:grid-cols-[0.82fr_1.18fr]">
+        <div className="grid items-center gap-16 lg:grid-cols-[0.95fr_1.05fr]">
           <motion.div
             initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -1063,7 +1063,7 @@ function CommunicationScene() {
               style={{
                 color: textColor,
                 fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: "clamp(2.25rem, 4.05vw, 4.05rem)",
+                fontSize: "clamp(2.25rem, 3.45vw, 3.55rem)",
                 fontWeight: 750,
                 lineHeight: 1.04,
                 letterSpacing: "-0.052em",
