@@ -7,6 +7,8 @@ import { useTheme } from "./theme";
 import svgLogoSncf from "../../imports/svg-xsk7542b73";
 import svgSlideIcons from "../../imports/svg-8lle55gqj4";
 
+import { SNCFFlowSystem } from "./SNCFFlowSystem";
+
 import imgPhone1 from "../../assets/sncf-connect/01.splash-screen.png";
 import imgPhone2 from "../../assets/sncf-connect/02.creez-vos-routines.png";
 import imgPhone3 from "../../assets/sncf-connect/03.personnalisez-l-accueil.png";
@@ -282,46 +284,6 @@ function StructuralLine({
       animate={{ x: [0, 34, 0], y: [0, -10, 0] }}
       transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
     />
-  );
-}
-
-function GlobalParticleField({ active = false, mood = "cyan" }: { active?: boolean; mood?: "cyan" | "pink" | "blue" }) {
-  const color = mood === "pink" ? "#FF72B8" : mood === "blue" ? "#2D8CFF" : ACCENT;
-  const dots = Array.from({ length: active ? 150 : 72 });
-  return (
-    <div className="pointer-events-none absolute inset-0 z-[2] overflow-hidden">
-      {dots.map((_, i) => {
-        const left = (i * 37) % 100;
-        const top = (i * 61) % 100;
-        const size = 1.2 + (i % 5) * 0.55;
-        return (
-          <motion.span
-            key={i}
-            className="absolute rounded-full"
-            style={{
-              left: `${left}%`,
-              top: `${top}%`,
-              width: size,
-              height: size,
-              background: i % 4 === 0 ? color : "rgba(255,255,255,0.64)",
-              boxShadow: `0 0 ${active ? 22 : 9}px ${color}${active ? "80" : "3f"}`,
-            }}
-            animate={{
-              x: active ? [0, i % 2 ? 62 : -54, 0] : [0, i % 2 ? 12 : -12, 0],
-              y: active ? [0, -72 - (i % 9) * 10, 16, 0] : [0, -14, 0],
-              opacity: active ? [0.08, 0.58, 0.12] : [0.04, 0.2, 0.04],
-              scale: active ? [0.7, 1.65, 0.85] : [0.7, 1, 0.7],
-            }}
-            transition={{
-              duration: active ? 3.2 + (i % 5) * 0.34 : 9 + (i % 7),
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: (i % 17) * 0.07,
-            }}
-          />
-        );
-      })}
-    </div>
   );
 }
 
@@ -1067,7 +1029,7 @@ function NewsletterScene() {
   );
 }
 
-function CommunicationScene({ setParticleMood: _setParticleMood }: { setParticleMood: (mood: "cyan" | "pink" | "blue") => void }) {
+function CommunicationScene() {
   const { isDark } = useTheme();
   const textColor = isDark ? "#F6FAFF" : "#071322";
   const mutedColor = isDark ? "rgba(230,240,255,0.7)" : "rgba(7,19,34,0.62)";
@@ -1200,264 +1162,6 @@ function CommunicationScene({ setParticleMood: _setParticleMood }: { setParticle
   );
 }
 
-function SpotifySandscape({
-  playing,
-  isDark,
-  shouldReduceMotion,
-}: {
-  playing: boolean;
-  isDark: boolean;
-  shouldReduceMotion: boolean | null;
-}) {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const playingRef = useRef(playing);
-  const themeRef = useRef(isDark);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    playingRef.current = playing;
-  }, [playing]);
-
-  useEffect(() => {
-    themeRef.current = isDark;
-  }, [isDark]);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
-      { rootMargin: "520px 0px" }
-    );
-
-    observer.observe(canvas);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!isVisible) return;
-
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const context = canvas.getContext("2d", { alpha: true });
-    if (!context) return;
-
-    type Particle = {
-      x: number;
-      wave: number;
-      layer: "soft" | "medium" | "micro";
-      spread: number;
-      lift: number;
-      size: number;
-      alpha: number;
-      phase: number;
-      speed: number;
-      color: "white" | "cyan" | "violet";
-    };
-
-    let animationFrame = 0;
-    let time = 0;
-    let lastWidth = 0;
-    let lastHeight = 0;
-    let pixelRatio = 1;
-    let particles: Particle[] = [];
-
-    const hash = (value: number) => {
-      const x = Math.sin(value * 12.9898) * 43758.5453;
-      return x - Math.floor(x);
-    };
-
-    const waveBases = [0.44, 0.54, 0.65, 0.76, 0.86, 0.96];
-
-    const waveY = (xNorm: number, wave: number, width: number, height: number, currentTime: number) => {
-      const x = xNorm * width;
-      const base = height * waveBases[wave % waveBases.length];
-      const depth = wave / (waveBases.length - 1);
-      const amplitude = height * (0.035 + depth * 0.055);
-      return (
-        base +
-        Math.sin(x * (0.006 + wave * 0.0009) + currentTime * (0.48 + wave * 0.08) + wave * 1.7) * amplitude +
-        Math.sin(x * (0.0028 + wave * 0.00055) - currentTime * (0.34 + wave * 0.04) + wave * 2.3) * amplitude * 1.22 +
-        Math.sin(x * (0.011 + wave * 0.0007) + currentTime * 0.18) * amplitude * 0.35
-      );
-    };
-
-    const createParticles = () => {
-      const nextParticles: Particle[] = [];
-      const specs = [
-        { layer: "soft" as const, count: 4200, size: [1.5, 3.8], alpha: [0.035, 0.16], spread: 58, lift: 72 },
-        { layer: "medium" as const, count: 10500, size: [0.65, 1.65], alpha: [0.06, 0.26], spread: 34, lift: 54 },
-        { layer: "micro" as const, count: 18500, size: [0.3, 0.9], alpha: [0.09, 0.44], spread: 18, lift: 42 },
-      ];
-
-      specs.forEach((spec, specIndex) => {
-        for (let i = 0; i < spec.count; i += 1) {
-          const seed = i * 43.13 + specIndex * 101.7;
-          const lowerBias = hash(seed + 4) ** 0.38;
-          const wave = Math.min(waveBases.length - 1, Math.floor(lowerBias * waveBases.length));
-          const phoneBias = hash(seed + 9) < 0.38;
-          const xRaw = hash(seed + 1);
-          const phoneCluster = 0.58 + hash(seed + 19) * 0.38;
-          const x = phoneBias ? phoneCluster : xRaw;
-          const colorRoll = hash(seed + 13);
-          const color = colorRoll < 0.8 ? "white" : colorRoll < 0.95 ? "cyan" : "violet";
-          const depthBoost = 0.55 + (wave / (waveBases.length - 1)) * 0.8;
-          const phoneBoost = phoneBias ? 1.25 : 1;
-
-          nextParticles.push({
-            x,
-            wave,
-            layer: spec.layer,
-            spread: (hash(seed + 2) - 0.5) * spec.spread,
-            lift: -hash(seed + 3) * spec.lift * depthBoost,
-            size: spec.size[0] + hash(seed + 5) * (spec.size[1] - spec.size[0]),
-            alpha: (spec.alpha[0] + hash(seed + 6) * (spec.alpha[1] - spec.alpha[0])) * depthBoost * phoneBoost,
-            phase: hash(seed + 7) * Math.PI * 2,
-            speed: 0.08 + hash(seed + 8) * 0.34,
-            color,
-          });
-        }
-      });
-
-      particles = nextParticles;
-    };
-
-    const resizeCanvas = () => {
-      const rect = canvas.getBoundingClientRect();
-      const nextRatio = Math.min(window.devicePixelRatio || 1, 1.25);
-      const nextWidth = Math.max(1, Math.floor(rect.width));
-      const nextHeight = Math.max(1, Math.floor(rect.height));
-
-      if (nextWidth !== lastWidth || nextHeight !== lastHeight || nextRatio !== pixelRatio) {
-        lastWidth = nextWidth;
-        lastHeight = nextHeight;
-        pixelRatio = nextRatio;
-        canvas.width = Math.floor(nextWidth * pixelRatio);
-        canvas.height = Math.floor(nextHeight * pixelRatio);
-        context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-        createParticles();
-      }
-    };
-
-    const draw = () => {
-      resizeCanvas();
-
-      const width = lastWidth;
-      const height = lastHeight;
-      const active = playingRef.current ? 1 : 0;
-      const dark = themeRef.current;
-      const visibility = dark ? 1 : 0.72;
-      time += shouldReduceMotion ? 0 : 0.006 + active * 0.012;
-
-      context.clearRect(0, 0, width, height);
-
-      const darkVeil = context.createLinearGradient(0, 0, 0, height);
-      darkVeil.addColorStop(0, dark ? "rgba(3,8,15,0.52)" : "rgba(245,249,255,0.2)");
-      darkVeil.addColorStop(0.48, dark ? "rgba(3,8,15,0.22)" : "rgba(245,249,255,0.08)");
-      darkVeil.addColorStop(1, dark ? "rgba(3,8,15,0.78)" : "rgba(245,249,255,0.28)");
-      context.fillStyle = darkVeil;
-      context.fillRect(0, 0, width, height);
-
-      const mist = context.createRadialGradient(width * 0.72, height * 0.5, 0, width * 0.72, height * 0.5, width * 0.62);
-      mist.addColorStop(0, `rgba(141,232,254,${0.13 * visibility + active * 0.08})`);
-      mist.addColorStop(0.44, `rgba(210,230,255,${0.08 * visibility + active * 0.04})`);
-      mist.addColorStop(1, "rgba(210,230,255,0)");
-      context.fillStyle = mist;
-      context.fillRect(0, 0, width, height);
-
-      context.save();
-      context.globalCompositeOperation = "lighter";
-
-      const drawLayer = (layer: Particle["layer"]) => {
-        const blur = layer === "soft" ? 14 + active * 5 : layer === "medium" ? 4 + active * 2 : 0;
-        context.shadowBlur = blur;
-        context.shadowColor = layer === "soft" ? "rgba(218,236,255,0.28)" : "rgba(236,247,255,0.42)";
-
-        particles.forEach((particle) => {
-          if (particle.layer !== layer) return;
-
-          const speed = shouldReduceMotion ? 0 : particle.speed * (1 + active * 1.35);
-          const travel = time * speed + particle.phase;
-          const horizontalDrift = Math.sin(travel) * (layer === "micro" ? 10 : layer === "medium" ? 16 : 24) * (0.45 + active * 0.9);
-          const verticalDrift = Math.cos(travel * 0.82) * (layer === "micro" ? 4 : layer === "medium" ? 7 : 11) * (0.4 + active * 0.7);
-          const x = particle.x * width + horizontalDrift;
-          const y = waveY(particle.x, particle.wave, width, height, time) + particle.spread + particle.lift + verticalDrift;
-          const phoneDistance = Math.hypot((particle.x - 0.72) * 1.35, y / height - 0.62);
-          const lowerMatter = Math.max(0, (y / height - 0.42) / 0.58);
-          const phoneAura = Math.max(0, 1 - phoneDistance * 2.1);
-          const alpha = particle.alpha * visibility * (0.62 + lowerMatter * 0.82 + phoneAura * 0.72 + active * 0.38);
-
-          if (alpha <= 0.01 || y < -40 || y > height + 90) return;
-
-          const color =
-            particle.color === "cyan"
-              ? `rgba(141,232,254,${alpha})`
-              : particle.color === "violet"
-                ? `rgba(178,96,255,${alpha * 0.82})`
-                : `rgba(238,247,255,${alpha})`;
-
-          context.fillStyle = color;
-          if (layer === "micro") {
-            context.fillRect(x, y, particle.size, particle.size);
-          } else {
-            context.beginPath();
-            context.arc(x, y, particle.size, 0, Math.PI * 2);
-            context.fill();
-          }
-        });
-      };
-
-      drawLayer("soft");
-      drawLayer("medium");
-      drawLayer("micro");
-      context.restore();
-
-      // Dark valley overlays carve volume into the particle mass.
-      const valley = context.createLinearGradient(0, height * 0.38, 0, height);
-      valley.addColorStop(0, "rgba(4,9,17,0)");
-      valley.addColorStop(0.42, dark ? "rgba(4,9,17,0.08)" : "rgba(246,250,255,0.03)");
-      valley.addColorStop(0.72, dark ? "rgba(4,9,17,0.22)" : "rgba(246,250,255,0.08)");
-      valley.addColorStop(1, dark ? "rgba(4,9,17,0.48)" : "rgba(246,250,255,0.16)");
-      context.fillStyle = valley;
-      context.fillRect(0, height * 0.32, width, height * 0.72);
-
-      const phoneHalo = context.createRadialGradient(width * 0.74, height * 0.64, 0, width * 0.74, height * 0.64, width * 0.28);
-      phoneHalo.addColorStop(0, `rgba(255,255,255,${0.12 * visibility + active * 0.08})`);
-      phoneHalo.addColorStop(0.2, `rgba(141,232,254,${0.12 * visibility + active * 0.08})`);
-      phoneHalo.addColorStop(1, "rgba(141,232,254,0)");
-      context.fillStyle = phoneHalo;
-      context.fillRect(0, 0, width, height);
-
-      if (!shouldReduceMotion) {
-        animationFrame = requestAnimationFrame(draw);
-      }
-    };
-
-    draw();
-    window.addEventListener("resize", draw);
-
-    return () => {
-      cancelAnimationFrame(animationFrame);
-      window.removeEventListener("resize", draw);
-    };
-  }, [shouldReduceMotion, isVisible]);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      aria-hidden="true"
-      className="absolute inset-x-[-10vw] bottom-[-10%] top-[4%] h-[112%] w-[120vw]"
-    />
-  );
-}
-
 function SpotifyScene({ playing, setPlaying }: { playing: boolean; setPlaying: (value: boolean) => void }) {
   const { isDark } = useTheme();
   const shouldReduceMotion = useReducedMotion();
@@ -1560,7 +1264,7 @@ function SpotifyScene({ playing, setPlaying }: { playing: boolean; setPlaying: (
   ];
 
   return (
-    <section className="relative overflow-hidden px-6 py-24 md:px-12 lg:py-32">
+    <section id="sncf-spotify-scene" className="relative overflow-hidden px-6 py-24 md:px-12 lg:py-32">
       <StructuralLine src={lineAssetWide} className="left-[-28vw] top-[47%] w-[150vw]" rotate={-3} opacity={playing ? 0.36 : 0.2} />
       <StructuralLine src={lineAssetLong} className="right-[-24vw] top-[22%] w-[92vw]" rotate={5} opacity={playing ? 0.24 : 0.13} />
 
@@ -1571,10 +1275,6 @@ function SpotifyScene({ playing, setPlaying }: { playing: boolean; setPlaying: (
         transition={{ duration: 0.9, ease: "easeOut" }}
         style={{ background: `radial-gradient(circle, rgba(${ACCENT_RGB},0.46), transparent 68%)` }}
       />
-
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-        <SpotifySandscape playing={playing} isDark={isDark} shouldReduceMotion={shouldReduceMotion} />
-      </div>
 
       <div className="relative z-10 mx-auto max-w-7xl">
         <div className="grid items-center gap-16 lg:grid-cols-[0.84fr_1.16fr]">
@@ -1765,7 +1465,6 @@ function SpotifyScene({ playing, setPlaying }: { playing: boolean; setPlaying: (
 
 function VideoScene() {
   const { isDark } = useTheme();
-  const shouldReduceMotion = useReducedMotion();
   const textColor = isDark ? "#F8FAFC" : "#071426";
   const mutedColor = isDark ? "rgba(235,242,250,0.72)" : "rgba(7,20,38,0.68)";
   const cardBorder = isDark ? "rgba(141,232,254,0.26)" : "rgba(0,44,76,0.16)";
@@ -1810,10 +1509,6 @@ function VideoScene() {
 
   return (
     <section className="relative overflow-hidden px-6 py-24 md:px-12 lg:py-32">
-      <div className="pointer-events-none absolute inset-0 opacity-45 md:opacity-55" aria-hidden="true">
-        <SpotifySandscape playing={false} isDark={isDark} shouldReduceMotion={shouldReduceMotion} />
-      </div>
-
       <div className="relative z-10 mx-auto max-w-[92rem]">
         <div className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
           <motion.div
@@ -1973,19 +1668,18 @@ function ClosingSection() {
 /* ── Main Export ── */
 export function ProjectSncf() {
   const [spotifyPlaying, setSpotifyPlaying] = useState(false);
-  const [particleMood, setParticleMood] = useState<"cyan" | "pink" | "blue">("cyan");
 
   return (
     <div className="relative w-full">
       <HeroSection />
       <main className="relative overflow-hidden">
-        <GlobalParticleField active={spotifyPlaying} mood={particleMood} />
+        <SNCFFlowSystem spotifyActive={spotifyPlaying} />
         <div className="pointer-events-none absolute inset-x-0 top-0 z-[3] h-[1px]" style={{ background: `linear-gradient(90deg, transparent, rgba(${ACCENT_RGB},0.8), transparent)` }} />
         <div className="relative z-10">
           <OnboardingScene />
           <RoutineScene />
           <NewsletterScene />
-          <CommunicationScene setParticleMood={setParticleMood} />
+          <CommunicationScene />
           <SpotifyScene playing={spotifyPlaying} setPlaying={setSpotifyPlaying} />
           <VideoScene />
         </div>
