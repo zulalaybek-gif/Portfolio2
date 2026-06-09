@@ -1113,10 +1113,10 @@ function CommunicationScene() {
             </p>
           </motion.div>
 
-          <div className="relative min-h-[32rem] lg:min-h-[38rem]">
+          <div className="relative min-h-[28rem] lg:min-h-[32rem]">
             <motion.div
               aria-hidden="true"
-              className="pointer-events-none absolute left-[12%] top-[18%] h-[22rem] w-[22rem] rounded-full blur-3xl"
+              className="pointer-events-none absolute left-[18%] top-[20%] h-[16rem] w-[16rem] rounded-full blur-3xl"
               initial={{ opacity: 0, scale: 0.88 }}
               whileInView={{ opacity: isDark ? 0.24 : 0.18, scale: 1 }}
               viewport={{ once: true }}
@@ -1125,7 +1125,7 @@ function CommunicationScene() {
             />
             <motion.div
               aria-hidden="true"
-              className="pointer-events-none absolute right-[2%] top-[12%] h-[22rem] w-[22rem] rounded-full blur-3xl"
+              className="pointer-events-none absolute right-[18%] top-[16%] h-[17rem] w-[17rem] rounded-full blur-3xl"
               initial={{ opacity: 0, scale: 0.88 }}
               whileInView={{ opacity: isDark ? 0.22 : 0.16, scale: 1 }}
               viewport={{ once: true }}
@@ -1151,7 +1151,7 @@ function CommunicationScene() {
               alt="Communication Instagram SNCF Connect bleue"
               loading="lazy"
               decoding="async"
-              className="relative z-20 mx-auto mt-8 block w-[min(17rem,76vw)] select-none lg:absolute lg:right-[18%] lg:top-[4%] lg:mt-0 lg:w-[min(19rem,25vw)]"
+              className="relative z-20 mx-auto mt-8 block w-[min(14.5rem,68vw)] select-none lg:absolute lg:right-[22%] lg:top-[4%] lg:mt-0 lg:w-[min(15rem,19vw)]"
               initial={{ opacity: 0, y: 56, x: 18, rotate: 1.1 }}
               whileInView={{ opacity: 1, y: 0, x: 0, rotate: 1.1 }}
               viewport={{ once: true, margin: "120px 0px" }}
@@ -1163,7 +1163,7 @@ function CommunicationScene() {
               alt="Communication Instagram SNCF Connect rose"
               loading="lazy"
               decoding="async"
-              className="relative z-10 mx-auto mt-8 block w-[min(16rem,74vw)] select-none lg:absolute lg:left-[12%] lg:top-[10%] lg:mt-0 lg:w-[min(18rem,24vw)]"
+              className="relative z-10 mx-auto mt-8 block w-[min(13.75rem,66vw)] select-none lg:absolute lg:left-[22%] lg:top-[13%] lg:mt-0 lg:w-[min(14.25rem,18vw)]"
               initial={{ opacity: 0, y: 48, x: -20, rotate: -1.4 }}
               whileInView={{ opacity: 0.9, y: 0, x: 0, rotate: -1.4 }}
               viewport={{ once: true, margin: "120px 0px" }}
