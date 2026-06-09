@@ -43,7 +43,6 @@ import lineAssetLoop from "../../assets/sncf-connect/assets/05.line.svg";
 import lineAssetLong from "../../assets/sncf-connect/assets/06.line.svg";
 import trainAsset from "../../assets/sncf-connect/assets/07.train.svg";
 import ampouleAsset from "../../assets/sncf-connect/assets/08.ampoule.svg";
-import vehiculesAsset from "../../assets/sncf-connect/assets/10.vehicules.svg";
 import maisonAsset from "../../assets/sncf-connect/assets/11.picto-maison.svg";
 import horlogeAsset from "../../assets/sncf-connect/assets/12.picto-horloge.svg";
 import trajetAsset from "../../assets/sncf-connect/assets/16.picto-trajet.svg";
@@ -795,19 +794,6 @@ function RoutineScene() {
             backdropFilter: "blur(12px)",
           }}
         >
-          <motion.div
-            aria-hidden="true"
-            className="absolute bottom-10 left-0 h-px w-full"
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.2, delay: 0.25, ease: "easeOut" }}
-            style={{
-              transformOrigin: "left",
-              background: "linear-gradient(90deg, rgba(141,232,254,0.86), rgba(151,85,255,0.72), transparent)",
-              boxShadow: "0 0 24px rgba(141,232,254,0.2)",
-            }}
-          />
           <div className="relative z-10">
             <h3 style={{ color: textColor, fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(1.8rem,2.5vw,2.5rem)", fontWeight: 720, letterSpacing: "-0.04em" }}>
               Des <span style={{ color: ACCENT }}>routines</span> créées pour vous
@@ -866,24 +852,6 @@ function RoutineScene() {
               Ajouter une routine
             </button>
           </div>
-        </motion.div>
-
-        <motion.div
-          className="relative mt-10 grid items-center gap-6 overflow-hidden rounded-[1.5rem] px-8 py-7 md:grid-cols-[0.36fr_1px_1fr_0.34fr]"
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          style={{ border: `1px solid ${panelBorder}`, background: panelBg, backdropFilter: "blur(12px)" }}
-        >
-          <SncfLineIcon icon={Brain} size={54} />
-          <span className="hidden h-14 w-px md:block" style={{ background: panelBorder }} />
-          <p style={{ color: textColor, fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(1.25rem,1.8vw,1.8rem)", fontWeight: 700, lineHeight: 1.2 }}>
-            Plus qu’une application,
-            <br />
-            <span style={{ color: ACCENT }}>un compagnon de route</span>
-          </p>
-          <img src={vehiculesAsset} alt="" aria-hidden="true" className="ml-auto hidden h-20 w-auto opacity-70 md:block" />
         </motion.div>
       </div>
     </section>
