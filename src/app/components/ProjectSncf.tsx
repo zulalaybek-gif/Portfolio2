@@ -36,6 +36,8 @@ import imgNewsletter from "../../assets/sncf-connect/07.newsletter.png";
 import imgCampaignPink from "../../assets/sncf-connect/10.jeu-concours-insta-rose.png";
 import imgCampaignBlue from "../../assets/sncf-connect/16.jeu-concours-insta-bleu.png";
 import imgSpotifyPlayer from "../../assets/sncf-connect/20.player-spotify.png";
+import imgVideoCover1 from "../../assets/sncf-connect/21.image-de-couverture-video-1.png";
+import imgVideoCover2 from "../../assets/sncf-connect/22.image-de-couverture-video-2.png";
 import videoMain from "../../assets/sncf-connect/14.video-finale-workshop.mp4";
 import lineAsset from "../../assets/sncf-connect/assets/03.line.svg";
 import lineAssetWide from "../../assets/sncf-connect/assets/04.line.svg";
@@ -1457,14 +1459,14 @@ function VideoScene() {
       title: "Vidéo du projet",
       duration: "01:24",
       description: "Découvrez le concept, les objectifs et les étapes clés de la réalisation du projet.",
-      thumbnail: imgCampaignPink,
+      thumbnail: imgVideoCover1,
       url: videoMain,
     },
     {
       title: "Vidéo UGC",
       duration: "00:45",
       description: "Format court destiné aux réseaux sociaux pour présenter l'opération et générer de l'engagement.",
-      thumbnail: imgCampaignBlue,
+      thumbnail: imgVideoCover2,
       url: UGC_VIDEO_URL,
     },
   ];
