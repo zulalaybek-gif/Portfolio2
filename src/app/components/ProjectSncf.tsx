@@ -1385,7 +1385,7 @@ function SpotifyScene({ playing, setPlaying }: { playing: boolean; setPlaying: (
           </motion.div>
 
           <motion.div
-            className="relative min-h-[34rem] pt-8 lg:min-h-[45rem] lg:pt-16"
+            className="relative min-h-[34rem] pt-8 lg:min-h-[45rem] lg:pt-32"
             initial={{ opacity: 0, y: 42 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "120px 0px" }}
