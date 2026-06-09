@@ -918,7 +918,7 @@ function NewsletterScene() {
       <StructuralLine src={lineAssetLoop} className="bottom-[3%] right-[-24vw] w-[70vw]" rotate={8} opacity={isDark ? 0.28 : 0.2} />
 
       <div className="relative z-10 mx-auto max-w-7xl">
-        <div className="grid gap-16 lg:grid-cols-[0.86fr_1.14fr] lg:items-start">
+        <div className="grid gap-12 lg:grid-cols-[1fr_0.92fr] lg:items-start xl:gap-10">
           <motion.div
             initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -1021,7 +1021,7 @@ function NewsletterScene() {
             transition={{ duration: 0.85, ease: "easeOut" }}
           >
             <div
-              className="relative ml-auto h-[34rem] w-full max-w-[25rem] overflow-y-auto rounded-[1.35rem] md:h-[38rem] lg:h-[42rem]"
+              className="relative mx-auto h-[34rem] w-full max-w-[25rem] overflow-y-auto rounded-[1.35rem] md:h-[38rem] lg:ml-4 lg:mr-auto lg:h-[42rem] xl:ml-8"
               style={{
                 border: `1px solid ${panelBorder}`,
                 boxShadow: isDark
