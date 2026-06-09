@@ -1,6 +1,23 @@
 import { motion, useReducedMotion } from "motion/react";
 import { useState, useEffect, useRef } from "react";
-import { ArrowLeft, Clapperboard, Pause, Play, Smartphone, Users, Volume2 } from "lucide-react";
+import {
+  ArrowLeft,
+  Bell,
+  Brain,
+  Clapperboard,
+  Clock,
+  Home,
+  MapPin,
+  Navigation,
+  Pause,
+  Play,
+  Smartphone,
+  Star,
+  Ticket,
+  Train,
+  Users,
+  Volume2,
+} from "lucide-react";
 import { useNavigate } from "react-router";
 import { useI18n } from "./i18n";
 import { useTheme } from "./theme";
@@ -331,6 +348,11 @@ function SceneGlow({ className = "", color = ACCENT_RGB, opacity = 0.18 }: { cla
   );
 }
 
+function SncfLineIcon({ icon: Icon, size = 28 }: { icon: typeof MapPin; size?: number }) {
+  const { isDark } = useTheme();
+  return <Icon size={size} strokeWidth={1.55} color={isDark ? "#FFFFFF" : "#002c4c"} />;
+}
+
 function OnboardingScene() {
   const { isDark, r } = useTheme();
   const onboardingScreens = [
@@ -430,7 +452,7 @@ function OnboardingScene() {
               style={{
                 color: textColor,
                 fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: "clamp(2.35rem, 5vw, 4.55rem)",
+                fontSize: "clamp(2.25rem, 4.35vw, 4.15rem)",
                 fontWeight: 750,
                 lineHeight: 1.02,
                 letterSpacing: "-0.055em",
@@ -455,14 +477,6 @@ function OnboardingScene() {
         </div>
 
         <div className="relative mt-14 lg:mt-20">
-          <div
-            aria-hidden="true"
-            className="absolute left-0 right-0 top-[48%] hidden h-px md:block"
-            style={{
-              background: `linear-gradient(90deg, transparent, rgba(${ACCENT_RGB},0.16), rgba(112,93,255,0.18), transparent)`,
-              boxShadow: `0 0 28px rgba(${ACCENT_RGB},0.18)`,
-            }}
-          />
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
             {onboardingScreens.map((screen, index) => (
               <motion.img
@@ -554,17 +568,17 @@ function RoutineScene() {
   const panelBg = isDark ? "rgba(7,16,30,0.58)" : "rgba(255,255,255,0.58)";
   const panelBorder = isDark ? "rgba(141,232,254,0.13)" : "rgba(0,44,76,0.12)";
   const essentials = [
-    { icon: trajetAsset, title: "Itinéraires\npersonnalisés" },
-    { icon: traficAsset, title: "Infos trafic\nen temps réel" },
-    { icon: trainAsset, title: "Titres &\nabonnements" },
-    { icon: maisonAsset, title: "Prochains\ndéparts" },
-    { icon: horlogeAsset, title: "Alertes\nperturbations" },
-    { icon: ampouleAsset, title: "Favoris &\nraccourcis" },
+    { icon: Navigation, title: "Itinéraires\npersonnalisés" },
+    { icon: Clock, title: "Infos trafic\nen temps réel" },
+    { icon: Ticket, title: "Titres &\nabonnements" },
+    { icon: MapPin, title: "Prochains\ndéparts" },
+    { icon: Bell, title: "Alertes\nperturbations" },
+    { icon: Star, title: "Favoris &\nraccourcis" },
   ];
   const benefits = [
-    { icon: trajetAsset, title: "Un accueil sur mesure", text: "qui évolue avec vous" },
-    { icon: horlogeAsset, title: "Des routines intelligentes", text: "pour gagner du temps" },
-    { icon: ampouleAsset, title: "Des informations fiables", text: "au moment clé" },
+    { icon: MapPin, title: "Un accueil sur mesure", text: "qui évolue avec vous" },
+    { icon: Bell, title: "Des routines intelligentes", text: "pour gagner du temps" },
+    { icon: Brain, title: "Des informations fiables", text: "au moment clé" },
   ];
   const transportDots = ["#ee5b95", "#ffd048", "#7a6dff", "#f29428", "#37ce7d"];
 
@@ -650,16 +664,14 @@ function RoutineScene() {
               style={{
                 color: textColor,
                 fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: "clamp(2.35rem, 4.25vw, 4.25rem)",
+                fontSize: "clamp(2.25rem, 3.85vw, 3.95rem)",
                 fontWeight: 750,
                 lineHeight: 1.05,
                 letterSpacing: "-0.052em",
-                maxWidth: "48rem",
+                maxWidth: "54rem",
               }}
             >
-              Connect Routine, votre <span style={{ color: ACCENT }}>compagnon</span>
-              <br />
-              de route <span style={{ color: ACCENT }}>intelligent</span>
+              Connect Routine, votre <span style={{ color: ACCENT }}>compagnon</span> de route <span style={{ color: ACCENT }}>intelligent</span>
             </h2>
             <p
               className="mt-7 max-w-[25rem]"
@@ -686,7 +698,7 @@ function RoutineScene() {
                       boxShadow: `0 0 20px ${index === 2 ? "rgba(150,90,255,0.16)" : "rgba(141,232,254,0.13)"}`,
                     }}
                   >
-                    <img src={benefit.icon} alt="" aria-hidden="true" className="h-7 w-7 opacity-80" />
+                    <SncfLineIcon icon={benefit.icon} size={28} />
                   </span>
                   <span>
                     <strong style={{ color: textColor, fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.02rem" }}>{benefit.title}</strong>
@@ -697,13 +709,13 @@ function RoutineScene() {
             </div>
           </motion.div>
 
-          <div className="relative min-h-[36rem] lg:min-h-[44rem]">
+          <div className="relative min-h-[38rem] lg:min-h-[48rem]">
             <motion.img
               src={imgRoutineList}
               alt="Connect Routine - écran Mes routines"
               loading="lazy"
               decoding="async"
-              className="absolute left-1/2 top-[2%] z-20 w-[min(21rem,68vw)] -translate-x-1/2 select-none md:w-[23rem] lg:w-[25rem]"
+              className="absolute left-1/2 top-[1%] z-20 w-[min(23rem,74vw)] -translate-x-1/2 select-none md:w-[26rem] lg:w-[29rem]"
               initial={{ opacity: 0, y: 70, x: "-50%", rotate: -2.5, filter: "blur(10px)" }}
               whileInView={{ opacity: 1, y: 0, x: "-50%", rotate: -2.5, filter: "blur(0px)" }}
               viewport={{ once: true, margin: "120px 0px" }}
@@ -760,7 +772,9 @@ function RoutineScene() {
                   backdropFilter: "blur(10px)",
                 }}
               >
-                <img src={item.icon} alt="" aria-hidden="true" className="mb-5 h-8 w-8 opacity-80" />
+                <span className="mb-5 flex h-9 w-9 items-center justify-center">
+                  <SncfLineIcon icon={item.icon} size={30} />
+                </span>
                 <span className="whitespace-pre-line" style={{ color: textColor, fontFamily: "'Inter', sans-serif", fontSize: "0.92rem", lineHeight: 1.45 }}>
                   {item.title}
                 </span>
@@ -802,7 +816,7 @@ function RoutineScene() {
               Définissez vos trajets réguliers, horaires et préférences. Connect Routine s’occupe du reste.
             </p>
             <div className="mt-12 flex h-16 w-16 items-center justify-center rounded-full" style={{ border: `1px solid rgba(${ACCENT_RGB},0.36)`, boxShadow: "0 0 26px rgba(141,232,254,0.18)" }}>
-              <img src={trajetAsset} alt="" aria-hidden="true" className="h-8 w-8 opacity-80" />
+              <SncfLineIcon icon={MapPin} size={32} />
             </div>
           </div>
 
@@ -824,7 +838,7 @@ function RoutineScene() {
                 style={{ border: `1px solid ${panelBorder}`, background: isDark ? "rgba(10,19,33,0.56)" : "rgba(255,255,255,0.5)" }}
               >
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg" style={{ background: `rgba(${ACCENT_RGB},0.15)` }}>
-                  <img src={maisonAsset} alt="" aria-hidden="true" className="h-5 w-5 opacity-80" />
+                  <SncfLineIcon icon={index === 0 ? Home : Train} size={20} />
                 </span>
                 <span className="min-w-0 flex-1">
                   <strong className="block" style={{ color: textColor, fontFamily: "'Inter', sans-serif", fontSize: "0.9rem" }}>{name}</strong>
@@ -862,7 +876,7 @@ function RoutineScene() {
           transition={{ duration: 0.7, ease: "easeOut" }}
           style={{ border: `1px solid ${panelBorder}`, background: panelBg, backdropFilter: "blur(12px)" }}
         >
-          <img src={ampouleAsset} alt="" aria-hidden="true" className="h-14 w-14 opacity-85" />
+          <SncfLineIcon icon={Brain} size={54} />
           <span className="hidden h-14 w-px md:block" style={{ background: panelBorder }} />
           <p style={{ color: textColor, fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(1.25rem,1.8vw,1.8rem)", fontWeight: 700, lineHeight: 1.2 }}>
             Plus qu’une application,
@@ -943,15 +957,14 @@ function NewsletterScene() {
               style={{
                 color: textColor,
                 fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: "clamp(2.6rem, 5.1vw, 5rem)",
+                fontSize: "clamp(2.35rem, 4.3vw, 4.35rem)",
                 fontWeight: 750,
                 lineHeight: 1.04,
-                letterSpacing: "-0.055em",
+                letterSpacing: "-0.052em",
+                maxWidth: "42rem",
               }}
             >
-              Une newsletter pensée
-              <br />
-              pour <span style={{ color: ACCENT, textShadow: `0 0 24px rgba(${ACCENT_RGB},0.26)` }}>vous accompagner.</span>
+              Une newsletter pensée pour <span style={{ color: ACCENT, textShadow: `0 0 24px rgba(${ACCENT_RGB},0.26)` }}>vous accompagner.</span>
             </h2>
 
             <p
@@ -1007,19 +1020,23 @@ function NewsletterScene() {
             viewport={{ once: true, margin: "120px 0px" }}
             transition={{ duration: 0.85, ease: "easeOut" }}
           >
-            <div className="relative ml-auto w-full max-w-[27rem]">
+            <div
+              className="relative ml-auto h-[34rem] w-full max-w-[25rem] overflow-y-auto rounded-[1.35rem] md:h-[38rem] lg:h-[42rem]"
+              style={{
+                border: `1px solid ${panelBorder}`,
+                boxShadow: isDark
+                  ? `0 34px 90px rgba(0,0,0,0.28), 0 0 46px rgba(${ACCENT_RGB},0.08)`
+                  : "0 34px 90px rgba(0,44,76,0.12)",
+                scrollbarColor: `${ACCENT} transparent`,
+                scrollbarWidth: "thin",
+              }}
+            >
               <img
                 src={imgNewsletter}
                 alt="Newsletter Connect Routine"
                 loading="lazy"
                 decoding="async"
-                className="h-auto w-full rounded-[1.35rem] object-contain"
-                style={{
-                  border: `1px solid ${panelBorder}`,
-                  boxShadow: isDark
-                    ? `0 34px 90px rgba(0,0,0,0.28), 0 0 46px rgba(${ACCENT_RGB},0.08)`
-                    : "0 34px 90px rgba(0,44,76,0.12)",
-                }}
+                className="block h-auto w-full object-contain"
               />
             </div>
           </motion.div>
@@ -1036,7 +1053,6 @@ function CommunicationScene() {
 
   return (
     <section className="relative overflow-hidden px-6 py-24 md:px-12 lg:py-32">
-      <StructuralLine src={lineAssetWide} className="bottom-[10%] left-[-22vw] w-[120vw]" rotate={-4} opacity={isDark ? 0.34 : 0.22} />
       <StructuralLine src={lineAssetLoop} className="bottom-[2%] right-[-26vw] w-[82vw]" rotate={5} opacity={isDark ? 0.3 : 0.2} />
 
       <div className="relative z-10 mx-auto max-w-7xl">
@@ -1079,15 +1095,14 @@ function CommunicationScene() {
               style={{
                 color: textColor,
                 fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: "clamp(2.45rem, 4.6vw, 4.7rem)",
+                fontSize: "clamp(2.25rem, 4.05vw, 4.05rem)",
                 fontWeight: 750,
                 lineHeight: 1.04,
-                letterSpacing: "-0.055em",
+                letterSpacing: "-0.052em",
+                maxWidth: "48rem",
               }}
             >
-              Une communication pensée
-              <br />
-              pour prolonger <span style={{ color: ACCENT }}>l’expérience.</span>
+              Une communication pensée pour prolonger <span style={{ color: ACCENT }}>l’expérience.</span>
             </h2>
 
             <p
@@ -1098,7 +1113,7 @@ function CommunicationScene() {
             </p>
           </motion.div>
 
-          <div className="relative min-h-[38rem] lg:min-h-[48rem]">
+          <div className="relative min-h-[32rem] lg:min-h-[38rem]">
             <motion.div
               aria-hidden="true"
               className="pointer-events-none absolute left-[12%] top-[18%] h-[22rem] w-[22rem] rounded-full blur-3xl"
@@ -1132,28 +1147,28 @@ function CommunicationScene() {
             />
 
             <motion.img
-              src={imgCampaignPink}
-              alt="Communication Instagram SNCF Connect rose"
-              loading="lazy"
-              decoding="async"
-              className="relative z-20 mx-auto mt-8 block w-[min(20rem,78vw)] select-none lg:absolute lg:left-[9%] lg:top-[0%] lg:mt-0 lg:w-[min(24rem,32vw)]"
-              initial={{ opacity: 0, y: 56, x: -18, rotate: -1.2 }}
-              whileInView={{ opacity: 1, y: 0, x: 0, rotate: -1.2 }}
-              viewport={{ once: true, margin: "120px 0px" }}
-              transition={{ duration: 0.85, ease: "easeOut" }}
-              style={{ filter: "drop-shadow(0 40px 78px rgba(255,114,184,0.24)) drop-shadow(0 0 30px rgba(255,114,184,0.12))" }}
-            />
-            <motion.img
               src={imgCampaignBlue}
               alt="Communication Instagram SNCF Connect bleue"
               loading="lazy"
               decoding="async"
-              className="relative z-10 mx-auto mt-8 block w-[min(19rem,78vw)] select-none lg:absolute lg:right-[4%] lg:top-[3%] lg:mt-0 lg:w-[min(23rem,31vw)]"
-              initial={{ opacity: 0, y: 48, x: 24, rotate: 1.5 }}
-              whileInView={{ opacity: 0.92, y: 0, x: 0, rotate: 1.5 }}
+              className="relative z-20 mx-auto mt-8 block w-[min(17rem,76vw)] select-none lg:absolute lg:right-[18%] lg:top-[4%] lg:mt-0 lg:w-[min(19rem,25vw)]"
+              initial={{ opacity: 0, y: 56, x: 18, rotate: 1.1 }}
+              whileInView={{ opacity: 1, y: 0, x: 0, rotate: 1.1 }}
+              viewport={{ once: true, margin: "120px 0px" }}
+              transition={{ duration: 0.85, ease: "easeOut" }}
+              style={{ filter: "drop-shadow(0 34px 70px rgba(45,140,255,0.24)) drop-shadow(0 0 26px rgba(45,140,255,0.12))" }}
+            />
+            <motion.img
+              src={imgCampaignPink}
+              alt="Communication Instagram SNCF Connect rose"
+              loading="lazy"
+              decoding="async"
+              className="relative z-10 mx-auto mt-8 block w-[min(16rem,74vw)] select-none lg:absolute lg:left-[12%] lg:top-[10%] lg:mt-0 lg:w-[min(18rem,24vw)]"
+              initial={{ opacity: 0, y: 48, x: -20, rotate: -1.4 }}
+              whileInView={{ opacity: 0.9, y: 0, x: 0, rotate: -1.4 }}
               viewport={{ once: true, margin: "120px 0px" }}
               transition={{ duration: 0.75, delay: 0.16, ease: "easeOut" }}
-              style={{ filter: "drop-shadow(0 34px 70px rgba(45,140,255,0.22))" }}
+              style={{ filter: "drop-shadow(0 34px 70px rgba(255,114,184,0.2))" }}
             />
           </div>
         </div>
@@ -1265,8 +1280,8 @@ function SpotifyScene({ playing, setPlaying }: { playing: boolean; setPlaying: (
 
   return (
     <section id="sncf-spotify-scene" className="relative overflow-hidden px-6 py-24 md:px-12 lg:py-32">
-      <StructuralLine src={lineAssetWide} className="left-[-28vw] top-[47%] w-[150vw]" rotate={-3} opacity={playing ? 0.36 : 0.2} />
-      <StructuralLine src={lineAssetLong} className="right-[-24vw] top-[22%] w-[92vw]" rotate={5} opacity={playing ? 0.24 : 0.13} />
+      <StructuralLine src={lineAssetWide} className="left-[-42vw] top-[56%] w-[118vw]" rotate={-3} opacity={playing ? 0.36 : 0.2} />
+      <StructuralLine src={lineAssetLong} className="right-[-44vw] top-[30%] w-[112vw]" rotate={5} opacity={playing ? 0.24 : 0.13} />
 
       <motion.div
         aria-hidden="true"
@@ -1313,10 +1328,10 @@ function SpotifyScene({ playing, setPlaying }: { playing: boolean; setPlaying: (
               style={{
                 color: textColor,
                 fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: "clamp(2.7rem, 5vw, 5rem)",
+                fontSize: "clamp(2.35rem, 4.25vw, 4.25rem)",
                 fontWeight: 750,
                 lineHeight: 1.04,
-                letterSpacing: "-0.055em",
+                letterSpacing: "-0.052em",
               }}
             >
               Votre playlist
@@ -1402,7 +1417,7 @@ function SpotifyScene({ playing, setPlaying }: { playing: boolean; setPlaying: (
           </motion.div>
 
           <motion.div
-            className="relative min-h-[40rem] lg:min-h-[54rem]"
+            className="relative min-h-[40rem] pt-8 lg:min-h-[54rem] lg:pt-16"
             initial={{ opacity: 0, y: 42 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "120px 0px" }}
@@ -1534,7 +1549,7 @@ function VideoScene() {
             </div>
 
             <h2
-              className="max-w-xl text-[2.55rem] font-black leading-[1.08] tracking-[-0.03em] md:text-[4.4rem] lg:text-[4.7rem]"
+              className="max-w-2xl text-[2.35rem] font-black leading-[1.08] tracking-[-0.03em] md:text-[3.8rem] lg:text-[4.15rem]"
               style={{ color: textColor, fontFamily: "'Space Grotesk', sans-serif" }}
             >
               Des vidéos qui racontent, <span style={{ color: ACCENT }}>inspirent</span> et engagent.
