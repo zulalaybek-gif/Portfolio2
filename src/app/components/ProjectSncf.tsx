@@ -709,13 +709,13 @@ function RoutineScene() {
             </div>
           </motion.div>
 
-          <div className="relative min-h-[38rem] lg:min-h-[48rem]">
+          <div className="relative min-h-[34rem] lg:min-h-[43rem]">
             <motion.img
               src={imgRoutineList}
               alt="Connect Routine - écran Mes routines"
               loading="lazy"
               decoding="async"
-              className="absolute left-1/2 top-[1%] z-20 w-[min(23rem,74vw)] -translate-x-1/2 select-none md:w-[26rem] lg:w-[29rem]"
+              className="absolute left-[58%] top-[8%] z-20 w-[min(22rem,70vw)] -translate-x-1/2 select-none md:w-[24rem] lg:left-[60%] lg:top-[10%] lg:w-[26.5rem]"
               initial={{ opacity: 0, y: 70, x: "-50%", rotate: -2.5, filter: "blur(10px)" }}
               whileInView={{ opacity: 1, y: 0, x: "-50%", rotate: -2.5, filter: "blur(0px)" }}
               viewport={{ once: true, margin: "120px 0px" }}
@@ -724,7 +724,7 @@ function RoutineScene() {
             />
             <motion.div
               aria-hidden="true"
-              className="absolute bottom-[18%] left-[6%] h-px w-[90%]"
+              className="absolute bottom-[18%] left-[12%] h-px w-[82%]"
               initial={{ scaleX: 0, opacity: 0 }}
               whileInView={{ scaleX: 1, opacity: 1 }}
               viewport={{ once: true }}
@@ -1113,10 +1113,10 @@ function CommunicationScene() {
             </p>
           </motion.div>
 
-          <div className="relative min-h-[28rem] lg:min-h-[32rem]">
+          <div className="relative min-h-[25rem] lg:min-h-[28rem]">
             <motion.div
               aria-hidden="true"
-              className="pointer-events-none absolute left-[18%] top-[20%] h-[16rem] w-[16rem] rounded-full blur-3xl"
+              className="pointer-events-none absolute left-[24%] top-[22%] h-[13rem] w-[13rem] rounded-full blur-3xl"
               initial={{ opacity: 0, scale: 0.88 }}
               whileInView={{ opacity: isDark ? 0.24 : 0.18, scale: 1 }}
               viewport={{ once: true }}
@@ -1125,7 +1125,7 @@ function CommunicationScene() {
             />
             <motion.div
               aria-hidden="true"
-              className="pointer-events-none absolute right-[18%] top-[16%] h-[17rem] w-[17rem] rounded-full blur-3xl"
+              className="pointer-events-none absolute right-[24%] top-[18%] h-[13.5rem] w-[13.5rem] rounded-full blur-3xl"
               initial={{ opacity: 0, scale: 0.88 }}
               whileInView={{ opacity: isDark ? 0.22 : 0.16, scale: 1 }}
               viewport={{ once: true }}
@@ -1151,7 +1151,7 @@ function CommunicationScene() {
               alt="Communication Instagram SNCF Connect bleue"
               loading="lazy"
               decoding="async"
-              className="relative z-20 mx-auto mt-8 block w-[min(14.5rem,68vw)] select-none lg:absolute lg:right-[22%] lg:top-[4%] lg:mt-0 lg:w-[min(15rem,19vw)]"
+              className="relative z-20 mx-auto mt-8 block w-[min(12.5rem,62vw)] select-none lg:absolute lg:right-[28%] lg:top-[4%] lg:mt-0 lg:w-[min(12.75rem,16vw)]"
               initial={{ opacity: 0, y: 56, x: 18, rotate: 1.1 }}
               whileInView={{ opacity: 1, y: 0, x: 0, rotate: 1.1 }}
               viewport={{ once: true, margin: "120px 0px" }}
@@ -1163,7 +1163,7 @@ function CommunicationScene() {
               alt="Communication Instagram SNCF Connect rose"
               loading="lazy"
               decoding="async"
-              className="relative z-10 mx-auto mt-8 block w-[min(13.75rem,66vw)] select-none lg:absolute lg:left-[22%] lg:top-[13%] lg:mt-0 lg:w-[min(14.25rem,18vw)]"
+              className="relative z-10 mx-auto mt-8 block w-[min(12rem,60vw)] select-none lg:absolute lg:left-[28%] lg:top-[13%] lg:mt-0 lg:w-[min(12.1rem,15.5vw)]"
               initial={{ opacity: 0, y: 48, x: -20, rotate: -1.4 }}
               whileInView={{ opacity: 0.9, y: 0, x: 0, rotate: -1.4 }}
               viewport={{ once: true, margin: "120px 0px" }}
@@ -1417,7 +1417,7 @@ function SpotifyScene({ playing, setPlaying }: { playing: boolean; setPlaying: (
           </motion.div>
 
           <motion.div
-            className="relative min-h-[40rem] pt-8 lg:min-h-[54rem] lg:pt-16"
+            className="relative min-h-[34rem] pt-8 lg:min-h-[45rem] lg:pt-16"
             initial={{ opacity: 0, y: 42 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "120px 0px" }}
@@ -1425,7 +1425,7 @@ function SpotifyScene({ playing, setPlaying }: { playing: boolean; setPlaying: (
           >
             <motion.div
               aria-hidden="true"
-              className="pointer-events-none absolute left-[6%] top-[12%] h-[36rem] w-[36rem] rounded-full blur-3xl"
+              className="pointer-events-none absolute left-[14%] top-[14%] h-[28rem] w-[28rem] rounded-full blur-3xl"
               animate={{ opacity: playing ? 0.28 : 0.13, scale: playing ? 1.08 : 0.98 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
               style={{ background: `rgba(${ACCENT_RGB},0.5)` }}
@@ -1435,7 +1435,7 @@ function SpotifyScene({ playing, setPlaying }: { playing: boolean; setPlaying: (
               alt="Playlist Spotify SNCF Connect"
               loading="lazy"
               decoding="async"
-              className="relative z-10 mx-auto w-[min(43rem,92vw)] select-none lg:w-[min(54rem,56vw)]"
+              className="relative z-10 mx-auto w-[min(34rem,86vw)] select-none lg:w-[min(42rem,44vw)]"
               animate={shouldReduceMotion ? undefined : { scale: playing ? 1.025 : 1, y: playing ? -8 : 0 }}
               transition={{ duration: 0.85, ease: "easeOut" }}
               style={{
