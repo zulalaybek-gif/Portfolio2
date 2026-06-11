@@ -50,12 +50,16 @@ import horlogeAsset from "../../assets/sncf-connect/assets/12.picto-horloge.svg"
 import trajetAsset from "../../assets/sncf-connect/assets/16.picto-trajet.svg";
 import traficAsset from "../../assets/sncf-connect/assets/17.picto-trafic.svg";
 
-const ACCENT = "#8DE8FE";
-const ACCENT_RGB = "141,232,254";
+const ACCENT = "var(--sncf-accent, #8DE8FE)";
+const ACCENT_RGB = "var(--sncf-accent-rgb, 141,232,254)";
+const ACCENT_DARK = "#8DE8FE";
+const ACCENT_DARK_RGB = "141,232,254";
+const ACCENT_LIGHT = "#1689A5";
+const ACCENT_LIGHT_RGB = "22,137,165";
 const BG_DARK = "#0C131F";
 
 /* SNCF Brand palette from slide 11 */
-const PALETTE = ["#002c4c", "#8DE8FE", "#242b35", "#4695a8", "#3b3232"];
+const PALETTE = ["#002c4c", ACCENT, "#242b35", "#4695a8", "#3b3232"];
 
 /* Icon paths from slide 11 bento icons (tickets, home, profile, calendar, notification) */
 const BENTO_ICONS = [
@@ -1650,9 +1654,18 @@ function ClosingSection() {
 /* ── Main Export ── */
 export function ProjectSncf() {
   const [spotifyPlaying, setSpotifyPlaying] = useState(false);
+  const { isDark } = useTheme();
 
   return (
-    <div className="relative w-full">
+    <div
+      className="relative w-full"
+      style={
+        {
+          "--sncf-accent": isDark ? ACCENT_DARK : ACCENT_LIGHT,
+          "--sncf-accent-rgb": isDark ? ACCENT_DARK_RGB : ACCENT_LIGHT_RGB,
+        } as React.CSSProperties
+      }
+    >
       <HeroSection />
       <main className="relative overflow-hidden">
         <SNCFFlowSystem spotifyActive={spotifyPlaying} />
