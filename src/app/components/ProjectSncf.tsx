@@ -1492,7 +1492,7 @@ function VideoScene() {
   return (
     <section className="relative overflow-hidden px-6 py-24 md:px-12 lg:py-32">
       <div className="relative z-10 mx-auto max-w-[92rem]">
-        <div className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
+        <div className="grid gap-12 lg:grid-cols-[0.84fr_1.16fr] lg:items-start">
           <motion.div
             initial={{ opacity: 0, y: 26 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -1516,7 +1516,7 @@ function VideoScene() {
             </div>
 
             <h2
-              className="max-w-2xl text-[2.35rem] font-black leading-[1.08] tracking-[-0.03em] md:text-[3.8rem] lg:text-[4.15rem]"
+              className="max-w-[38rem] text-[2.35rem] font-black leading-[1.08] tracking-[-0.03em] md:text-[3.8rem] lg:text-[3.65rem]"
               style={{ color: textColor, fontFamily: "'Space Grotesk', sans-serif" }}
             >
               Des vidéos qui racontent, <span style={{ color: ACCENT }}>inspirent</span> et engagent.
@@ -1527,7 +1527,7 @@ function VideoScene() {
           </motion.div>
 
           <motion.div
-            className="grid gap-7 md:grid-cols-2"
+            className="grid gap-7 md:grid-cols-2 lg:pt-20"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "120px 0px" }}
