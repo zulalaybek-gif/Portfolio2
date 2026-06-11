@@ -984,7 +984,7 @@ function NewsletterScene() {
           </motion.div>
 
           <motion.div
-            className="relative pt-4 lg:self-center lg:pt-8"
+            className="relative pt-4 lg:self-start lg:pt-28"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "120px 0px" }}
