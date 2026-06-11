@@ -884,9 +884,6 @@ function NewsletterScene() {
   ];
   return (
     <section className="relative overflow-hidden px-6 py-24 md:px-12 lg:py-32">
-      <StructuralLine src={lineAssetLong} className="bottom-[8%] left-[-14vw] w-[82vw]" rotate={-8} opacity={isDark ? 0.32 : 0.22} />
-      <StructuralLine src={lineAssetLoop} className="bottom-[3%] right-[-24vw] w-[70vw]" rotate={8} opacity={isDark ? 0.28 : 0.2} />
-
       <div className="relative z-10 mx-auto max-w-7xl">
         <div className="grid gap-12 lg:grid-cols-[1fr_0.92fr] lg:items-start xl:gap-10">
           <motion.div
