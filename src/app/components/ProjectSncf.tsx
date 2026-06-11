@@ -1541,7 +1541,7 @@ function VideoScene() {
                 <button
                   type="button"
                   onClick={() => openVideo(card.url)}
-                  className="relative block aspect-[1.07/1] w-full overflow-hidden rounded-[1.45rem] text-left outline-none transition-transform duration-500 hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-[#8DE8FE]"
+                  className="relative block aspect-[3/2] w-full overflow-hidden rounded-[1.45rem] text-left outline-none transition-transform duration-500 hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-[#8DE8FE]"
                   style={{ border: `1px solid ${cardBorder}` }}
                   aria-label={`Lire ${card.title}`}
                 >
