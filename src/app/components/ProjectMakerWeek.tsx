@@ -564,8 +564,8 @@ function GallerySection() {
   const firstRow = photos.slice(0, 6);
   const secondRow = photos.slice(6);
   const galleryRows = [
-    { photos: firstRow, direction: "right", duration: 78 },
-    { photos: secondRow, direction: "left", duration: 86 },
+    { photos: firstRow, direction: "right", duration: 150 },
+    { photos: secondRow, direction: "left", duration: 165 },
   ];
 
   return (
@@ -601,7 +601,7 @@ function GallerySection() {
                 return (
                   <motion.div
                     key={row.direction}
-                    className="flex w-max gap-4 md:gap-5"
+                    className="flex w-max gap-3 md:gap-4"
                     animate={{ x: row.direction === "left" ? ["0%", "-50%"] : ["-50%", "0%"] }}
                     transition={{
                       duration: row.duration,
@@ -612,7 +612,7 @@ function GallerySection() {
                     {rowPhotos.map((photo, index) => (
                       <div
                         key={`${row.direction}-${photo.src}-${index}`}
-                        className="w-[72vw] max-w-[420px] shrink-0 overflow-hidden rounded-2xl sm:w-[360px] md:w-[420px] lg:w-[460px]"
+                        className="w-[62vw] max-w-[340px] shrink-0 overflow-hidden rounded-2xl sm:w-[300px] md:w-[340px] lg:w-[380px]"
                         style={{
                           aspectRatio: rowIndex === 0 ? "4 / 3" : "16 / 10",
                           border: `1px solid ${r(0.05)}`,
@@ -625,10 +625,13 @@ function GallerySection() {
                         <img
                           src={photo.src}
                           alt={photo.alt}
-                          className="h-full w-full object-cover"
+                          className="block h-full w-full object-cover"
                           style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
                             objectPosition: photo.position ?? "50% 50%",
-                            transform: "scale(1.08)",
+                            transform: "scale(1.1)",
                           }}
                           loading="lazy"
                         />
