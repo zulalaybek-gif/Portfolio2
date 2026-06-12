@@ -511,17 +511,25 @@ function EventSection() {
           <div className="-mx-6 md:mx-0 overflow-x-auto scroll-smooth pb-3">
             <div className="flex w-max gap-4 px-6 md:px-0 snap-x snap-mandatory">
               {[
-                { src: imgPoster, alt: "Poster — stands" },
-                { src: imgKakemonos, alt: "Kakemonos" },
-                { src: imgSignaletique, alt: "Signalétique ateliers" },
-                { src: imgPhotocall, alt: "Photocall Maker Week" },
+                { src: imgPoster, alt: "Poster — stands", position: "50% 50%", scale: 1.14 },
+                { src: imgKakemonos, alt: "Kakemonos", position: "50% 50%", scale: 1.16 },
+                { src: imgSignaletique, alt: "Signalétique ateliers", position: "50% 50%", scale: 1.08 },
+                { src: imgPhotocall, alt: "Photocall Maker Week", position: "50% 50%", scale: 1.1 },
               ].map((image) => (
                 <div
                   key={image.src}
                   className="w-[82vw] max-w-[560px] md:w-[46vw] md:max-w-[520px] lg:w-[420px] aspect-[4/3] shrink-0 snap-start rounded-2xl overflow-hidden"
                   style={{ border: `1px solid ${r(0.04)}` }}
                 >
-                  <img src={image.src} alt={image.alt} className="w-full h-full object-cover" />
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    className="w-full h-full object-cover"
+                    style={{
+                      objectPosition: image.position,
+                      transform: `scale(${image.scale})`,
+                    }}
+                  />
                 </div>
               ))}
             </div>
