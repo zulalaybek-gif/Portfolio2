@@ -720,7 +720,7 @@ function RoutineScene() {
               alt="Connect Routine - écran Mes routines"
               loading="lazy"
               decoding="async"
-              className="absolute left-[62%] top-[8%] z-20 w-[min(25rem,78vw)] -translate-x-1/2 select-none md:w-[28rem] lg:left-[64%] lg:top-[8%] lg:w-[32rem]"
+              className="absolute left-[68%] top-[8%] z-20 w-[min(25rem,78vw)] -translate-x-1/2 select-none md:w-[28rem] lg:left-[70%] lg:top-[8%] lg:w-[32rem]"
               initial={{ opacity: 0, y: 70, x: "-50%", rotate: -2.5, filter: "blur(10px)" }}
               whileInView={{ opacity: 1, y: 0, x: "-50%", rotate: -2.5, filter: "blur(0px)" }}
               viewport={{ once: true, margin: "120px 0px" }}
