@@ -217,10 +217,10 @@ function ContextSection() {
   const body = useBodyStyle();
 
   return (
-    <section className="px-6 md:px-16 py-16">
-      <div className="max-w-5xl mx-auto">
+    <section className="px-6 md:px-16 py-14">
+      <div className="max-w-4xl mx-auto">
         {/* Label + text */}
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-6 md:gap-10 items-start mb-8 md:mb-10">
           <FadeIn>
             <SectionLabel>{t("mw.context.label")}</SectionLabel>
           </FadeIn>
@@ -249,10 +249,10 @@ function DirectionSection() {
   const body = useBodyStyle();
 
   return (
-    <section className="px-6 md:px-16 py-16">
-      <div className="max-w-5xl mx-auto">
+    <section className="px-6 md:px-16 py-14">
+      <div className="max-w-4xl mx-auto">
         {/* Label + text */}
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-6 md:gap-10 items-start mb-8 md:mb-10">
           <FadeIn>
             <SectionLabel>{t("mw.direction.label")}</SectionLabel>
           </FadeIn>
@@ -287,9 +287,9 @@ function ChoicesSection() {
   const body = useBodyStyle();
 
   return (
-    <section className="px-6 md:px-16 py-16">
-      <div className="max-w-5xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start">
+    <section className="px-6 md:px-16 py-14">
+      <div className="max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-6 md:gap-10 items-start">
           <FadeIn>
             <SectionLabel>{t("mw.choices.label")}</SectionLabel>
           </FadeIn>
@@ -311,8 +311,8 @@ function DepliantSection() {
 
   return (
     <section className="px-6 md:px-16 py-16">
-      <div className="max-w-5xl mx-auto">
-        <FadeIn className="mb-10">
+      <div className="max-w-4xl mx-auto">
+        <FadeIn className="mb-8 md:mb-10">
           <SectionLabel>{t("mw.editorial.label")}</SectionLabel>
         </FadeIn>
         <div className="flex flex-col gap-4">
@@ -341,10 +341,10 @@ function PaletteSection() {
   const body = useBodyStyle();
 
   return (
-    <section className="px-6 md:px-16 py-16">
-      <div className="max-w-5xl mx-auto">
+    <section className="px-6 md:px-16 py-14">
+      <div className="max-w-4xl mx-auto">
         {/* Label + text */}
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-6 md:gap-10 items-start mb-8 md:mb-10">
           <FadeIn>
             <SectionLabel>{t("mw.palette.label")}</SectionLabel>
           </FadeIn>
@@ -395,8 +395,8 @@ function LogoSection() {
 
   return (
     <section className="px-6 md:px-16 py-16">
-      <div className="max-w-5xl mx-auto">
-        <FadeIn className="mb-10">
+      <div className="max-w-4xl mx-auto">
+        <FadeIn className="mb-8 md:mb-10">
           <SectionLabel>{t("mw.logo.label")}</SectionLabel>
         </FadeIn>
 
@@ -495,10 +495,10 @@ function EventSection() {
   const body = useBodyStyle();
 
   return (
-    <section className="px-6 md:px-16 py-16">
-      <div className="max-w-5xl mx-auto">
+    <section className="px-6 md:px-16 py-14">
+      <div className="max-w-4xl mx-auto">
         {/* Label + text */}
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-6 md:gap-10 items-start mb-8 md:mb-10">
           <FadeIn>
             <SectionLabel>{t("mw.event.label")}</SectionLabel>
           </FadeIn>
@@ -562,8 +562,8 @@ function GallerySection() {
   ];
 
   return (
-    <section className="px-5 md:px-10 lg:px-16 py-20 md:py-24">
-      <div className="max-w-[1680px] mx-auto">
+    <section className="px-6 md:px-16 py-20 md:py-24">
+      <div className="max-w-5xl mx-auto">
         <FadeIn className="mb-8 md:mb-10">
           <SectionLabel>{t("mw.gallery.label")}</SectionLabel>
         </FadeIn>
@@ -606,8 +606,8 @@ function FinalSection() {
   const navigate = useNavigate();
 
   return (
-    <section className="px-6 md:px-16 py-24">
-      <div className="max-w-5xl mx-auto flex flex-col items-center">
+    <section className="px-6 md:px-16 py-20">
+      <div className="max-w-4xl mx-auto flex flex-col items-center">
         <FadeIn className="mb-6">
           <SectionLabel>{t("mw.final.label")}</SectionLabel>
         </FadeIn>
