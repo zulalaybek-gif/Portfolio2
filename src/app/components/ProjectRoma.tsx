@@ -262,7 +262,7 @@ function PhotosSection() {
 
   return (
     <section className="px-6 md:px-16 py-20">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-3xl mx-auto">
         <FadeIn className="mb-12">
           <SectionLabel>{t("roma.photos.label")}</SectionLabel>
         </FadeIn>
@@ -281,7 +281,7 @@ function PhotosSection() {
                     alt={photo.alt}
                     borderColor="transparent"
                     className="rounded-none border-0"
-                    aspect="16 / 10"
+                    aspect="16 / 8"
                   />
                 </div>
               ))}
