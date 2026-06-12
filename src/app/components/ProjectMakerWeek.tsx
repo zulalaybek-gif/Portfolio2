@@ -564,8 +564,8 @@ function GallerySection() {
   const firstRow = photos.slice(0, 6);
   const secondRow = photos.slice(6);
   const galleryRows = [
-    { photos: firstRow, direction: "right", duration: 42 },
-    { photos: secondRow, direction: "left", duration: 46 },
+    { photos: firstRow, direction: "right", duration: 78 },
+    { photos: secondRow, direction: "left", duration: 86 },
   ];
 
   return (
@@ -626,7 +626,10 @@ function GallerySection() {
                           src={photo.src}
                           alt={photo.alt}
                           className="h-full w-full object-cover"
-                          style={{ objectPosition: photo.position ?? "50% 50%" }}
+                          style={{
+                            objectPosition: photo.position ?? "50% 50%",
+                            transform: "scale(1.08)",
+                          }}
                           loading="lazy"
                         />
                       </div>
