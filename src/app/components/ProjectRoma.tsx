@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
-import { ArrowLeft } from "lucide-react";
+import { useRef, useState } from "react";
+import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useI18n, type TranslationKey } from "./i18n";
 import { useTheme } from "./theme";
@@ -122,7 +122,7 @@ function HeroSection() {
           <img
             src={logoParis}
             alt="Ville de Paris"
-            className="h-4 w-auto md:h-5"
+            className="h-2.5 w-auto md:h-3"
             style={{
               filter: isDark ? "invert(1)" : "none",
               opacity: isDark ? 0.92 : 0.85,
@@ -242,6 +242,23 @@ function ContextSection() {
 function PhotosSection() {
   const { t } = useI18n();
   const { r } = useTheme();
+  const photos = [
+    {
+      src: imgPhoto1,
+      alt: "Architecture — Institut de France",
+    },
+    {
+      src: imgPhoto2,
+      alt: "Architecture — Saint-Sulpice",
+    },
+    {
+      src: imgPhoto3,
+      alt: "Architecture — Statue detail",
+    },
+  ];
+  const [activePhoto, setActivePhoto] = useState(0);
+  const previousPhoto = () => setActivePhoto((current) => (current - 1 + photos.length) % photos.length);
+  const nextPhoto = () => setActivePhoto((current) => (current + 1) % photos.length);
 
   return (
     <section className="px-6 md:px-16 py-20">
@@ -250,29 +267,71 @@ function PhotosSection() {
           <SectionLabel>{t("roma.photos.label")}</SectionLabel>
         </FadeIn>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <FadeIn>
-            <DriftingPhoto
-              src={imgPhoto1}
-              alt="Architecture — Institut de France"
-              borderColor={r(0.04)}
-            />
-          </FadeIn>
-          <FadeIn delay={0.08}>
-            <DriftingPhoto
-              src={imgPhoto2}
-              alt="Architecture — Saint-Sulpice"
-              borderColor={r(0.04)}
-            />
-          </FadeIn>
-          <FadeIn delay={0.16}>
-            <DriftingPhoto
-              src={imgPhoto3}
-              alt="Architecture — Statue detail"
-              borderColor={r(0.04)}
-            />
-          </FadeIn>
-        </div>
+        <FadeIn>
+          <div className="relative overflow-hidden rounded-xl" style={{ border: `1px solid ${r(0.04)}` }}>
+            <motion.div
+              className="flex"
+              animate={{ x: `${activePhoto * -100}%` }}
+              transition={{ duration: 0.55, ease: "easeInOut" }}
+            >
+              {photos.map((photo) => (
+                <div key={photo.src} className="min-w-full">
+                  <DriftingPhoto
+                    src={photo.src}
+                    alt={photo.alt}
+                    borderColor="transparent"
+                    className="rounded-none border-0"
+                    aspect="16 / 10"
+                  />
+                </div>
+              ))}
+            </motion.div>
+
+            <button
+              type="button"
+              aria-label="Photo précédente"
+              onClick={previousPhoto}
+              className="absolute left-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full transition-opacity hover:opacity-80"
+              style={{
+                background: "rgba(0,0,0,0.42)",
+                color: "#fff",
+                border: `1px solid ${r(0.12)}`,
+              }}
+            >
+              <ChevronLeft size={18} strokeWidth={1.8} />
+            </button>
+
+            <button
+              type="button"
+              aria-label="Photo suivante"
+              onClick={nextPhoto}
+              className="absolute right-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full transition-opacity hover:opacity-80"
+              style={{
+                background: "rgba(0,0,0,0.42)",
+                color: "#fff",
+                border: `1px solid ${r(0.12)}`,
+              }}
+            >
+              <ChevronRight size={18} strokeWidth={1.8} />
+            </button>
+          </div>
+
+          <div className="mt-5 flex justify-center gap-2">
+            {photos.map((photo, index) => (
+              <button
+                key={photo.src}
+                type="button"
+                aria-label={`Afficher la photo ${index + 1}`}
+                onClick={() => setActivePhoto(index)}
+                className="h-2 rounded-full transition-all"
+                style={{
+                  width: activePhoto === index ? "1.75rem" : "0.5rem",
+                  background: activePhoto === index ? `rgba(${ACCENT_RGB},0.9)` : r(0.12),
+                }}
+              />
+            ))}
+          </div>
+        </FadeIn>
       </div>
     </section>
   );
