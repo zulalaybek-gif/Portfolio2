@@ -144,16 +144,6 @@ function HeroSection() {
           <div className="w-8 h-[1px]" style={{ background: r(0.1) }} />
         </motion.div>
 
-        {/* Mockup image */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
-          className="w-full rounded-2xl overflow-hidden"
-          style={{ border: `1px solid ${r(0.05)}` }}
-        >
-          <img src={imgMockup} alt="Gallery mockup — Mairie de Paris posters" className="w-full object-cover" />
-        </motion.div>
       </motion.div>
     </section>
   );
