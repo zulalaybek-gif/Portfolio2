@@ -507,31 +507,24 @@ function EventSection() {
           </FadeIn>
         </div>
 
-        {/* Poster + Kakemonos */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-          <FadeIn delay={0.15}>
-            <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-              <img src={imgPoster} alt="Poster — stands" className="w-full object-cover" />
+        <FadeIn delay={0.15}>
+          <div className="-mx-6 md:mx-0 overflow-x-auto scroll-smooth pb-3">
+            <div className="flex w-max gap-4 px-6 md:px-0 snap-x snap-mandatory">
+              {[
+                { src: imgPoster, alt: "Poster — stands" },
+                { src: imgKakemonos, alt: "Kakemonos" },
+                { src: imgSignaletique, alt: "Signalétique ateliers" },
+                { src: imgPhotocall, alt: "Photocall Maker Week" },
+              ].map((image) => (
+                <div
+                  key={image.src}
+                  className="w-[82vw] max-w-[560px] md:w-[46vw] md:max-w-[520px] lg:w-[420px] shrink-0 snap-start rounded-2xl overflow-hidden"
+                  style={{ border: `1px solid ${r(0.04)}` }}
+                >
+                  <img src={image.src} alt={image.alt} className="w-full object-cover" />
+                </div>
+              ))}
             </div>
-          </FadeIn>
-          <FadeIn delay={0.2}>
-            <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-              <img src={imgKakemonos} alt="Kakemonos" className="w-full object-cover" />
-            </div>
-          </FadeIn>
-        </div>
-
-        {/* Signalétique */}
-        <FadeIn delay={0.25}>
-          <div className="rounded-2xl overflow-hidden mb-4" style={{ border: `1px solid ${r(0.04)}` }}>
-            <img src={imgSignaletique} alt="Signalétique ateliers" className="w-full object-cover" />
-          </div>
-        </FadeIn>
-
-        {/* Photocall */}
-        <FadeIn delay={0.3}>
-          <div className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-            <img src={imgPhotocall} alt="Photocall Maker Week" className="w-full object-cover" />
           </div>
         </FadeIn>
       </div>
@@ -546,46 +539,50 @@ function GallerySection() {
   const { t } = useI18n();
   const { isDark, r } = useTheme();
 
-  const photos: Array<{ src: string; alt: string; position?: string }> = [
-    { src: imgPhoto10, alt: "Photo de groupe Maker Week", position: "50% 42%" },
-    { src: imgPhoto11, alt: "Présentation Maker Week sur scène", position: "50% 42%" },
-    { src: imgPhoto1, alt: "Affichage Design d'interface", position: "50% 50%" },
-    { src: imgPhoto2, alt: "Programme Maker Week imprimé", position: "50% 45%" },
-    { src: imgPhoto9, alt: "Stand Maker Week dans le hall", position: "50% 44%" },
-    { src: imgPhoto12, alt: "Étudiants avec une affiche Maker Week", position: "50% 48%" },
-    { src: imgPhoto3, alt: "Atelier Maker Week en salle", position: "50% 50%" },
-    { src: imgPhoto4, alt: "Signalétique de salle Maker Week", position: "62% 50%" },
-    { src: imgPhoto5, alt: "Kakemono Maker Week dans le hall", position: "50% 50%" },
-    { src: imgPhoto6, alt: "Détail d'un support Maker Week", position: "50% 50%" },
-    { src: imgPhoto7, alt: "Salle de cours Maker Week", position: "52% 50%" },
-    { src: imgPhoto13, alt: "Signalétique de porte Maker Week", position: "50% 50%" },
+  const photos: Array<{ src: string; alt: string; position?: string; fit?: "cover" | "contain"; aspect?: string }> = [
+    { src: imgPhoto10, alt: "Photo de groupe Maker Week", position: "50% 44%", aspect: "4 / 3" },
+    { src: imgPhoto11, alt: "Présentation Maker Week sur scène", position: "50% 45%", aspect: "4 / 3" },
+    { src: imgPhoto1, alt: "Affichage Design d'interface", position: "50% 50%", fit: "contain", aspect: "4 / 3" },
+    { src: imgPhoto2, alt: "Programme Maker Week imprimé", position: "50% 50%", fit: "contain", aspect: "4 / 3" },
+    { src: imgPhoto9, alt: "Stand Maker Week dans le hall", position: "50% 46%", aspect: "4 / 3" },
+    { src: imgPhoto12, alt: "Étudiants avec une affiche Maker Week", position: "50% 50%", aspect: "4 / 3" },
+    { src: imgPhoto3, alt: "Atelier Maker Week en salle", position: "50% 50%", aspect: "4 / 3" },
+    { src: imgPhoto4, alt: "Signalétique de salle Maker Week", position: "56% 50%", fit: "contain", aspect: "4 / 3" },
+    { src: imgPhoto5, alt: "Kakemono Maker Week dans le hall", position: "50% 50%", fit: "contain", aspect: "4 / 3" },
+    { src: imgPhoto6, alt: "Détail d'un support Maker Week", position: "50% 50%", aspect: "4 / 3" },
+    { src: imgPhoto7, alt: "Salle de cours Maker Week", position: "52% 50%", aspect: "4 / 3" },
+    { src: imgPhoto13, alt: "Signalétique de porte Maker Week", position: "50% 50%", fit: "contain", aspect: "4 / 3" },
   ];
 
   return (
     <section className="px-6 md:px-16 py-20 md:py-24">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <FadeIn className="mb-8 md:mb-10">
           <SectionLabel>{t("mw.gallery.label")}</SectionLabel>
         </FadeIn>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
           {photos.map((photo, i) => (
             <FadeIn key={i} delay={i * 0.04}>
               <div
-                className="group aspect-square overflow-hidden rounded-[18px]"
+                className="group overflow-hidden rounded-2xl"
                 style={{
+                  aspectRatio: photo.aspect ?? "4 / 3",
                   border: `1px solid ${r(0.05)}`,
-                  background: isDark ? "rgba(255,255,255,0.03)" : "rgba(10,26,42,0.03)",
+                  background: isDark ? "rgba(255,255,255,0.045)" : "rgba(10,26,42,0.035)",
                   boxShadow: isDark
-                    ? "0 22px 52px rgba(0,0,0,0.38)"
-                    : "0 22px 52px rgba(10,26,42,0.16)",
+                    ? "0 18px 44px rgba(0,0,0,0.34)"
+                    : "0 18px 44px rgba(10,26,42,0.13)",
                 }}
               >
                 <img
                   src={photo.src}
                   alt={photo.alt}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                  style={{ objectPosition: photo.position ?? "50% 50%" }}
+                  className="w-full h-full transition-transform duration-700 group-hover:scale-[1.025]"
+                  style={{
+                    objectFit: photo.fit ?? "cover",
+                    objectPosition: photo.position ?? "50% 50%",
+                  }}
                   loading="lazy"
                 />
               </div>
