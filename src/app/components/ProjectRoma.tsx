@@ -122,7 +122,7 @@ function HeroSection() {
           <img
             src={logoParis}
             alt="Ville de Paris"
-            className="h-8 w-auto md:h-10"
+            className="h-4 w-auto md:h-5"
             style={{
               filter: isDark ? "invert(1)" : "none",
               opacity: isDark ? 0.92 : 0.85,
