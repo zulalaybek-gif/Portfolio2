@@ -214,8 +214,8 @@ function ContextSection() {
   const { r } = useTheme();
 
   return (
-    <section className="px-6 md:px-16 py-12 max-w-5xl mx-auto">
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-8 items-start">
+    <section className="px-6 md:px-16 py-14 max-w-4xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-6 md:gap-10 items-start">
         <FadeIn>
           <SectionLabel>{t("roma.context.label")}</SectionLabel>
         </FadeIn>
@@ -261,9 +261,9 @@ function PhotosSection() {
   const nextPhoto = () => setActivePhoto((current) => (current + 1) % photos.length);
 
   return (
-    <section className="px-6 md:px-16 py-20">
-      <div className="max-w-3xl mx-auto">
-        <FadeIn className="mb-12">
+    <section className="px-6 md:px-16 py-16">
+      <div className="max-w-4xl mx-auto">
+        <FadeIn className="mb-8 md:mb-10">
           <SectionLabel>{t("roma.photos.label")}</SectionLabel>
         </FadeIn>
 
@@ -345,8 +345,8 @@ function DirectionSection() {
   const { r } = useTheme();
 
   return (
-    <section className="px-6 md:px-16 py-16 max-w-5xl mx-auto">
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-8 items-start">
+    <section className="px-6 md:px-16 py-14 max-w-4xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-6 md:gap-10 items-start">
         <FadeIn>
           <SectionLabel>{t("roma.direction.label")}</SectionLabel>
         </FadeIn>
@@ -375,9 +375,9 @@ function PostersSection() {
   const { r } = useTheme();
 
   return (
-    <section className="px-6 md:px-16 py-20">
-      <div className="max-w-5xl mx-auto">
-        <FadeIn className="mb-12">
+    <section className="px-6 md:px-16 py-16">
+      <div className="max-w-4xl mx-auto">
+        <FadeIn className="mb-8 md:mb-10">
           <SectionLabel>{t("roma.posters.label")}</SectionLabel>
         </FadeIn>
 
@@ -406,8 +406,8 @@ function ChoicesSection() {
   const { r } = useTheme();
 
   return (
-    <section className="px-6 md:px-16 py-16 max-w-5xl mx-auto">
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-8 items-start">
+    <section className="px-6 md:px-16 py-14 max-w-4xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-6 md:gap-10 items-start">
         <FadeIn>
           <SectionLabel>{t("roma.choices.label")}</SectionLabel>
         </FadeIn>
@@ -437,8 +437,8 @@ function FinalSection() {
   const navigate = useNavigate();
 
   return (
-    <section className="px-6 md:px-16 py-24">
-      <div className="max-w-5xl mx-auto flex flex-col items-center">
+    <section className="px-6 md:px-16 py-20">
+      <div className="max-w-4xl mx-auto flex flex-col items-center">
         <FadeIn className="mb-6">
           <SectionLabel>{t("roma.final.label")}</SectionLabel>
         </FadeIn>
