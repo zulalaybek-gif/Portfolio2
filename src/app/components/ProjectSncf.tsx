@@ -1084,37 +1084,24 @@ function CommunicationScene() {
             </p>
           </motion.div>
 
-          <div className="relative min-h-[25rem] overflow-hidden lg:min-h-[32rem]">
+          <div className="relative min-h-[26rem] lg:min-h-[34rem]">
             <motion.div
               aria-hidden="true"
-              className="pointer-events-none absolute left-[24%] top-[22%] h-[13rem] w-[13rem] rounded-full blur-3xl"
+              className="pointer-events-none absolute left-[19%] top-[31%] h-[18rem] w-[18rem] rounded-full blur-3xl"
               initial={{ opacity: 0, scale: 0.88 }}
-              whileInView={{ opacity: isDark ? 0.24 : 0.18, scale: 1 }}
+              whileInView={{ opacity: isDark ? 0.2 : 0.13, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              style={{ background: "rgba(255,114,184,0.75)" }}
+              style={{ background: "radial-gradient(circle, rgba(255,114,184,0.46), rgba(255,114,184,0) 70%)" }}
             />
             <motion.div
               aria-hidden="true"
-              className="pointer-events-none absolute right-[24%] top-[18%] h-[13.5rem] w-[13.5rem] rounded-full blur-3xl"
+              className="pointer-events-none absolute right-[16%] top-[27%] h-[19rem] w-[19rem] rounded-full blur-3xl"
               initial={{ opacity: 0, scale: 0.88 }}
-              whileInView={{ opacity: isDark ? 0.22 : 0.16, scale: 1 }}
+              whileInView={{ opacity: isDark ? 0.19 : 0.13, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.12, ease: "easeOut" }}
-              style={{ background: "rgba(45,140,255,0.72)" }}
-            />
-            <motion.div
-              aria-hidden="true"
-              className="pointer-events-none absolute left-[8%] right-[2%] top-[48%] h-px"
-              initial={{ scaleX: 0, opacity: 0 }}
-              whileInView={{ scaleX: 1, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.25, ease: "easeOut" }}
-              style={{
-                transformOrigin: "left",
-                background: "linear-gradient(90deg, rgba(255,114,184,0.14), rgba(141,232,254,0.56), rgba(45,140,255,0.2))",
-                boxShadow: "0 0 24px rgba(141,232,254,0.22)",
-              }}
+              style={{ background: "radial-gradient(circle, rgba(45,140,255,0.42), rgba(45,140,255,0) 72%)" }}
             />
 
             <motion.img
@@ -1122,7 +1109,7 @@ function CommunicationScene() {
               alt="Communication Instagram SNCF Connect bleue"
               loading="lazy"
               decoding="async"
-              className="relative z-20 mx-auto mt-8 block w-[min(12.5rem,62vw)] select-none lg:absolute lg:right-[25%] lg:top-[8%] lg:mt-0 lg:w-[min(12.75rem,16vw)]"
+              className="relative z-20 mx-auto mt-8 block w-[min(12.5rem,62vw)] select-none lg:absolute lg:right-[25%] lg:top-[14%] lg:mt-0 lg:w-[min(12.75rem,16vw)]"
               initial={{ opacity: 0, y: 56, x: 18, rotate: 1.1 }}
               whileInView={{ opacity: 1, y: 0, x: 0, rotate: 1.1 }}
               viewport={{ once: true, margin: "120px 0px" }}
@@ -1134,7 +1121,7 @@ function CommunicationScene() {
               alt="Communication Instagram SNCF Connect rose"
               loading="lazy"
               decoding="async"
-              className="relative z-10 mx-auto mt-8 block w-[min(12rem,60vw)] select-none lg:absolute lg:left-[25%] lg:top-[18%] lg:mt-0 lg:w-[min(12.1rem,15.5vw)]"
+              className="relative z-10 mx-auto mt-8 block w-[min(12rem,60vw)] select-none lg:absolute lg:left-[25%] lg:top-[24%] lg:mt-0 lg:w-[min(12.1rem,15.5vw)]"
               initial={{ opacity: 0, y: 48, x: -20, rotate: -1.4 }}
               whileInView={{ opacity: 0.9, y: 0, x: 0, rotate: -1.4 }}
               viewport={{ once: true, margin: "120px 0px" }}
