@@ -17,7 +17,7 @@ import imgTShirt from "../../assets/mzw/05-tshirt.png";
 import imgMockup1 from "../../assets/mzw/06-mockup.png";
 import imgMockup2 from "../../assets/mzw/07-mockup.png";
 import imgPlayerSplash from "../../assets/mzw/08-player.png";
-import imgPlayerCenter from "../../assets/mzw/09-player.png";
+import imgPlayerCenter from "../../assets/mzw/13-player.png";
 import imgPlayerLibrary from "../../assets/mzw/10-player.png";
 import imgButterfly from "../../assets/mzw/11-papillon.png";
 
@@ -697,26 +697,36 @@ function DecorativeEqualizer({ isDark }: { isDark: boolean }) {
 
 function AnimatedPlayerMockup() {
   return (
-    <div className="relative">
-      <img src={imgPlayerCenter} alt="MZW — lecteur en cours de lecture" className="relative z-10 w-full h-auto object-contain" />
+    <div className="relative mx-auto" style={{ aspectRatio: "785 / 1766" }}>
       <div
-        className="absolute z-20"
+        className="absolute inset-0 rounded-[2.1rem] md:rounded-[3.2rem] p-[2.2%]"
         style={{
-          left: "16.2%",
-          right: "16.2%",
-          top: "67.6%",
-          height: "5.8%",
-          filter: "drop-shadow(0 0 10px rgba(93,71,146,0.5))",
-          mixBlendMode: "screen",
+          background: "linear-gradient(145deg, #19191d 0%, #050507 48%, #2a2b30 100%)",
+          boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.16), inset 0 0 0 3px rgba(0,0,0,0.82)",
         }}
       >
-        <AnimatedWaveform />
+        <div className="relative size-full overflow-hidden rounded-[1.75rem] md:rounded-[2.75rem]" style={{ background: "#090211" }}>
+          <img src={imgPlayerCenter} alt="MZW — lecteur en cours de lecture" className="absolute inset-0 size-full object-cover" />
+          <div
+            className="absolute z-20"
+            style={{
+              left: "8%",
+              right: "8%",
+              top: "70.4%",
+              height: "5%",
+              filter: "drop-shadow(0 0 10px rgba(93,71,146,0.5))",
+              mixBlendMode: "screen",
+            }}
+          >
+            <AnimatedWaveform />
+          </div>
+        </div>
       </div>
       <motion.div
         aria-hidden="true"
         className="absolute left-1/2 z-20 rounded-full"
         style={{
-          bottom: "7.8%",
+          bottom: "7.6%",
           width: "19%",
           aspectRatio: "1 / 1",
           background: "radial-gradient(circle, rgba(255,255,255,0.18), rgba(93,71,146,0.12) 55%, transparent 72%)",
