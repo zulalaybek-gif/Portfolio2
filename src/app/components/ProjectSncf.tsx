@@ -805,15 +805,15 @@ function RoutineScene() {
           }}
         >
           <div className="relative z-10">
+            <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-full" style={{ border: `1px solid rgba(${ACCENT_RGB},0.36)`, boxShadow: "0 0 26px rgba(141,232,254,0.18)" }}>
+              <SncfLineIcon icon={MapPin} size={32} />
+            </div>
             <h3 style={{ color: textColor, fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(1.8rem,2.5vw,2.5rem)", fontWeight: 720, letterSpacing: "-0.04em" }}>
               Des <span style={{ color: ACCENT }}>routines</span> créées pour vous
             </h3>
             <p className="mt-5 max-w-md" style={{ color: mutedColor, fontFamily: "'Inter', sans-serif", fontSize: "1rem", lineHeight: 1.7 }}>
               Définissez vos trajets réguliers, horaires et préférences. Connect Routine s’occupe du reste.
             </p>
-            <div className="mt-12 flex h-16 w-16 items-center justify-center rounded-full" style={{ border: `1px solid rgba(${ACCENT_RGB},0.36)`, boxShadow: "0 0 26px rgba(141,232,254,0.18)" }}>
-              <SncfLineIcon icon={MapPin} size={32} />
-            </div>
           </div>
 
           <div
