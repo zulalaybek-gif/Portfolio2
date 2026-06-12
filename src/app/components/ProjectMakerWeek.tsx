@@ -546,7 +546,6 @@ function EventSection() {
 function GallerySection() {
   const { t } = useI18n();
   const { isDark, r } = useTheme();
-  const [activePhoto, setActivePhoto] = React.useState(0);
 
   const photos: Array<{ src: string; alt: string; position?: string }> = [
     { src: imgPhoto10, alt: "Photo de groupe Maker Week", position: "50% 43%" },
@@ -562,13 +561,12 @@ function GallerySection() {
     { src: imgPhoto7, alt: "Salle de cours Maker Week", position: "52% 50%" },
     { src: imgPhoto13, alt: "Signalétique de porte Maker Week", position: "50% 50%" },
   ];
-  const getPhoto = (index: number) => photos[(index + photos.length) % photos.length];
-  const visibleSlides = [-2, -1, 0, 1, 2].map((offset) => ({
-    offset,
-    photo: getPhoto(activePhoto + offset),
-  }));
-  const previousPhoto = () => setActivePhoto((current) => (current - 1 + photos.length) % photos.length);
-  const nextPhoto = () => setActivePhoto((current) => (current + 1) % photos.length);
+  const firstRow = photos.slice(0, 6);
+  const secondRow = photos.slice(6);
+  const galleryRows = [
+    { photos: firstRow, direction: "right", duration: 42 },
+    { photos: secondRow, direction: "left", duration: 46 },
+  ];
 
   return (
     <section className="px-6 md:px-16 py-20 md:py-24">
@@ -578,116 +576,64 @@ function GallerySection() {
         </FadeIn>
 
         <FadeIn>
-          <div className="relative -mx-6 overflow-hidden px-6 py-3 md:mx-0 md:px-0">
+          <div className="relative -mx-6 overflow-hidden py-2 md:mx-0">
             <div
-              className="relative h-[440px] overflow-hidden rounded-2xl sm:h-[520px] lg:h-[620px]"
+              className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 md:w-28"
               style={{
-                background: isDark ? "rgba(255,255,255,0.035)" : "rgba(10,26,42,0.03)",
+                background: isDark
+                  ? "linear-gradient(90deg, rgba(0,0,0,0.84) 0%, transparent 100%)"
+                  : "linear-gradient(90deg, rgba(255,255,255,0.92) 0%, transparent 100%)",
               }}
-            >
-              {visibleSlides.map(({ offset, photo }) => {
-                const isActive = offset === 0;
-                const depth = Math.abs(offset);
+            />
+            <div
+              className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 md:w-28"
+              style={{
+                background: isDark
+                  ? "linear-gradient(270deg, rgba(0,0,0,0.84) 0%, transparent 100%)"
+                  : "linear-gradient(270deg, rgba(255,255,255,0.92) 0%, transparent 100%)",
+              }}
+            />
+
+            <div className="space-y-4 md:space-y-5">
+              {galleryRows.map((row, rowIndex) => {
+                const rowPhotos = [...row.photos, ...row.photos];
 
                 return (
-                  <motion.button
-                    key={`${photo.src}-${offset}`}
-                    type="button"
-                    aria-label={isActive ? photo.alt : `Afficher ${photo.alt}`}
-                    onClick={() => {
-                      if (offset < 0) previousPhoto();
-                      if (offset > 0) nextPhoto();
-                    }}
-                    className="absolute left-1/2 top-1/2 h-[78%] w-[86%] overflow-hidden rounded-2xl sm:h-[82%] sm:w-[76%] lg:w-[68%]"
-                    initial={false}
-                    animate={{
-                      x: `calc(-50% + ${offset * 63}%)`,
-                      y: "-50%",
-                      scale: isActive ? 1 : depth === 1 ? 0.86 : 0.72,
-                      opacity: isActive ? 1 : depth === 1 ? 0.56 : 0.22,
-                    }}
-                    transition={{ duration: 0.55, ease: "easeOut" }}
-                    style={{
-                      zIndex: 10 - depth,
-                      border: `1px solid ${isActive ? r(0.08) : r(0.04)}`,
-                      boxShadow: isActive
-                        ? isDark
-                          ? "0 30px 80px rgba(0,0,0,0.56)"
-                          : "0 30px 80px rgba(10,26,42,0.2)"
-                        : isDark
-                          ? "0 18px 46px rgba(0,0,0,0.36)"
-                          : "0 18px 46px rgba(10,26,42,0.12)",
+                  <motion.div
+                    key={row.direction}
+                    className="flex w-max gap-4 md:gap-5"
+                    animate={{ x: row.direction === "left" ? ["0%", "-50%"] : ["-50%", "0%"] }}
+                    transition={{
+                      duration: row.duration,
+                      ease: "linear",
+                      repeat: Infinity,
                     }}
                   >
-                    <img
-                      src={photo.src}
-                      alt={photo.alt}
-                      className="h-full w-full object-cover"
-                      style={{ objectPosition: photo.position ?? "50% 50%" }}
-                      loading="lazy"
-                    />
-                    {!isActive && (
+                    {rowPhotos.map((photo, index) => (
                       <div
-                        className="absolute inset-0"
+                        key={`${row.direction}-${photo.src}-${index}`}
+                        className="w-[72vw] max-w-[420px] shrink-0 overflow-hidden rounded-2xl sm:w-[360px] md:w-[420px] lg:w-[460px]"
                         style={{
-                          background: isDark ? "rgba(0,0,0,0.34)" : "rgba(10,26,42,0.18)",
+                          aspectRatio: rowIndex === 0 ? "4 / 3" : "16 / 10",
+                          border: `1px solid ${r(0.05)}`,
+                          background: isDark ? "rgba(255,255,255,0.045)" : "rgba(10,26,42,0.035)",
+                          boxShadow: isDark
+                            ? "0 20px 48px rgba(0,0,0,0.34)"
+                            : "0 20px 48px rgba(10,26,42,0.13)",
                         }}
-                      />
-                    )}
-                  </motion.button>
+                      >
+                        <img
+                          src={photo.src}
+                          alt={photo.alt}
+                          className="h-full w-full object-cover"
+                          style={{ objectPosition: photo.position ?? "50% 50%" }}
+                          loading="lazy"
+                        />
+                      </div>
+                    ))}
+                  </motion.div>
                 );
               })}
-
-              <div
-                className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-1/3"
-                style={{
-                  background: "linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.28) 100%)",
-                }}
-              />
-
-              <button
-                type="button"
-                aria-label="Photo précédente"
-                onClick={previousPhoto}
-                className="absolute left-4 top-1/2 z-30 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full transition-transform hover:scale-105 active:scale-95 md:left-6"
-                style={{
-                  background: "rgba(0,0,0,0.46)",
-                  border: "1px solid rgba(255,255,255,0.2)",
-                  color: "#fff",
-                }}
-              >
-                <ArrowLeft size={18} strokeWidth={1.8} />
-              </button>
-
-              <button
-                type="button"
-                aria-label="Photo suivante"
-                onClick={nextPhoto}
-                className="absolute right-4 top-1/2 z-30 flex h-11 w-11 -translate-y-1/2 rotate-180 items-center justify-center rounded-full transition-transform hover:scale-105 active:scale-95 md:right-6"
-                style={{
-                  background: "rgba(0,0,0,0.46)",
-                  border: "1px solid rgba(255,255,255,0.2)",
-                  color: "#fff",
-                }}
-              >
-                <ArrowLeft size={18} strokeWidth={1.8} />
-              </button>
-
-              <div className="absolute bottom-6 left-1/2 z-30 flex -translate-x-1/2 items-center gap-2">
-                {photos.map((photo, index) => (
-                  <button
-                    key={photo.src}
-                    type="button"
-                    aria-label={`Afficher la photo ${index + 1}`}
-                    onClick={() => setActivePhoto(index)}
-                    className="h-1.5 rounded-full transition-all"
-                    style={{
-                      width: activePhoto === index ? "2rem" : "0.5rem",
-                      background: activePhoto === index ? "#fff" : "rgba(255,255,255,0.42)",
-                    }}
-                  />
-                ))}
-              </div>
             </div>
           </div>
         </FadeIn>
