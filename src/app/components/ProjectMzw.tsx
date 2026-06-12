@@ -146,15 +146,7 @@ function HeroSection() {
           initial={{ opacity: 0, y: 30, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
-          className="w-[180px] md:w-[260px] aspect-square rounded-2xl flex items-center justify-center p-10 md:p-14"
-          style={{
-            background: isDark
-              ? "linear-gradient(160deg, #1a1020 0%, #0f0817 100%)"
-              : "linear-gradient(160deg, #faf7f3 0%, #f0ebe4 100%)",
-            boxShadow: isDark
-              ? `0 40px 100px rgba(${ACCENT_RGB},0.25), 0 0 60px rgba(179,66,138,0.1)`
-              : `0 40px 100px rgba(${ACCENT_RGB},0.15), 0 0 60px rgba(179,66,138,0.08)`,
-          }}
+          className="w-[140px] md:w-[200px]"
         >
           <svg className="w-full" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="0 0 40.9986 36.3546" aria-label="Logo MZW">
             <g>
