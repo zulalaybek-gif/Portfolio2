@@ -676,7 +676,11 @@ function RoutineScene() {
                 maxWidth: "54rem",
               }}
             >
-              Connect Routine, votre <span style={{ color: ACCENT }}>compagnon</span> de route <span style={{ color: ACCENT }}>intelligent</span>
+              Connect Routine,
+              <br />
+              votre <span style={{ color: ACCENT }}>compagnon</span>
+              <br />
+              de route <span style={{ color: ACCENT }}>intelligent</span>
             </h2>
             <p
               className="mt-7 max-w-[25rem]"
