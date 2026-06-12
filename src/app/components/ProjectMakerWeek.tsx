@@ -315,7 +315,7 @@ function DepliantSection() {
         <FadeIn className="mb-8 md:mb-10">
           <SectionLabel>{t("mw.editorial.label")}</SectionLabel>
         </FadeIn>
-        <div className="flex flex-col gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FadeIn delay={0.06}>
             <div className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
               <img src={imgDepliant2} alt="Dépliant Maker Week — recto" className="w-full object-cover" />
