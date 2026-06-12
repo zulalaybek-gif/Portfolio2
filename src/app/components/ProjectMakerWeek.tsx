@@ -412,7 +412,7 @@ function LogoSection() {
                 border: `1px solid ${r(0.05)}`,
               }}
             >
-              <svg className="w-full max-w-[220px]" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="0 0 144.41 92.37">
+              <svg className="w-full max-w-[185px]" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="0 0 144.41 92.37">
                 <g id="Calque 1">
                   <g id="Group">
                     <path d={svgLogoWhite.p331d6500} fill="white" />
@@ -452,7 +452,7 @@ function LogoSection() {
                 border: `1px solid ${r(0.05)}`,
               }}
             >
-              <svg className="w-full max-w-[220px]" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="0 0 143.58 92.37">
+              <svg className="w-full max-w-[185px]" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="0 0 143.58 92.37">
                 <g id="Calque 1">
                   <g id="Group">
                     <path d={svgLogoWhite.p3b7d9440 ?? svgLogoWhite.p331d6500} fill="black" />
