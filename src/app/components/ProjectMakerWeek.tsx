@@ -518,10 +518,10 @@ function EventSection() {
               ].map((image) => (
                 <div
                   key={image.src}
-                  className="w-[82vw] max-w-[560px] md:w-[46vw] md:max-w-[520px] lg:w-[420px] shrink-0 snap-start rounded-2xl overflow-hidden"
+                  className="w-[82vw] max-w-[560px] md:w-[46vw] md:max-w-[520px] lg:w-[420px] aspect-[4/3] shrink-0 snap-start rounded-2xl overflow-hidden"
                   style={{ border: `1px solid ${r(0.04)}` }}
                 >
-                  <img src={image.src} alt={image.alt} className="w-full object-cover" />
+                  <img src={image.src} alt={image.alt} className="w-full h-full object-cover" />
                 </div>
               ))}
             </div>
@@ -539,19 +539,19 @@ function GallerySection() {
   const { t } = useI18n();
   const { isDark, r } = useTheme();
 
-  const photos: Array<{ src: string; alt: string; position?: string; fit?: "cover" | "contain"; aspect?: string }> = [
-    { src: imgPhoto10, alt: "Photo de groupe Maker Week", position: "50% 44%", aspect: "4 / 3" },
-    { src: imgPhoto11, alt: "Présentation Maker Week sur scène", position: "50% 45%", aspect: "4 / 3" },
-    { src: imgPhoto1, alt: "Affichage Design d'interface", position: "50% 50%", fit: "contain", aspect: "4 / 3" },
-    { src: imgPhoto2, alt: "Programme Maker Week imprimé", position: "50% 50%", fit: "contain", aspect: "4 / 3" },
-    { src: imgPhoto9, alt: "Stand Maker Week dans le hall", position: "50% 46%", aspect: "4 / 3" },
-    { src: imgPhoto12, alt: "Étudiants avec une affiche Maker Week", position: "50% 50%", aspect: "4 / 3" },
-    { src: imgPhoto3, alt: "Atelier Maker Week en salle", position: "50% 50%", aspect: "4 / 3" },
-    { src: imgPhoto4, alt: "Signalétique de salle Maker Week", position: "56% 50%", fit: "contain", aspect: "4 / 3" },
-    { src: imgPhoto5, alt: "Kakemono Maker Week dans le hall", position: "50% 50%", fit: "contain", aspect: "4 / 3" },
-    { src: imgPhoto6, alt: "Détail d'un support Maker Week", position: "50% 50%", aspect: "4 / 3" },
-    { src: imgPhoto7, alt: "Salle de cours Maker Week", position: "52% 50%", aspect: "4 / 3" },
-    { src: imgPhoto13, alt: "Signalétique de porte Maker Week", position: "50% 50%", fit: "contain", aspect: "4 / 3" },
+  const photos: Array<{ src: string; alt: string; position?: string }> = [
+    { src: imgPhoto10, alt: "Photo de groupe Maker Week", position: "50% 43%" },
+    { src: imgPhoto11, alt: "Présentation Maker Week sur scène", position: "50% 44%" },
+    { src: imgPhoto1, alt: "Affichage Design d'interface", position: "50% 50%" },
+    { src: imgPhoto2, alt: "Programme Maker Week imprimé", position: "50% 48%" },
+    { src: imgPhoto9, alt: "Stand Maker Week dans le hall", position: "50% 45%" },
+    { src: imgPhoto12, alt: "Étudiants avec une affiche Maker Week", position: "50% 48%" },
+    { src: imgPhoto3, alt: "Atelier Maker Week en salle", position: "50% 50%" },
+    { src: imgPhoto4, alt: "Signalétique de salle Maker Week", position: "58% 50%" },
+    { src: imgPhoto5, alt: "Kakemono Maker Week dans le hall", position: "50% 48%" },
+    { src: imgPhoto6, alt: "Détail d'un support Maker Week", position: "50% 50%" },
+    { src: imgPhoto7, alt: "Salle de cours Maker Week", position: "52% 50%" },
+    { src: imgPhoto13, alt: "Signalétique de porte Maker Week", position: "50% 50%" },
   ];
 
   return (
@@ -567,7 +567,7 @@ function GallerySection() {
               <div
                 className="group overflow-hidden rounded-2xl"
                 style={{
-                  aspectRatio: photo.aspect ?? "4 / 3",
+                  aspectRatio: "4 / 3",
                   border: `1px solid ${r(0.05)}`,
                   background: isDark ? "rgba(255,255,255,0.045)" : "rgba(10,26,42,0.035)",
                   boxShadow: isDark
@@ -580,7 +580,7 @@ function GallerySection() {
                   alt={photo.alt}
                   className="w-full h-full transition-transform duration-700 group-hover:scale-[1.025]"
                   style={{
-                    objectFit: photo.fit ?? "cover",
+                    objectFit: "cover",
                     objectPosition: photo.position ?? "50% 50%",
                   }}
                   loading="lazy"
