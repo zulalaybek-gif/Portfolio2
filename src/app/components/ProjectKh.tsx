@@ -304,8 +304,8 @@ function PaletteSection() {
       role: lang === "fr" ? "Énergie" : "Energy", 
       traits: lang === "fr" ? ["Vibrant", "Chaleureux", "Dynamique"] : ["Vibrant", "Warm", "Dynamic"],
       icon: Zap,
-      rotation: -3,
-      x: 40,
+      rotation: -4,
+      x: 20,
       y: 10,
       zIndex: 40
     },
@@ -315,9 +315,9 @@ function PaletteSection() {
       role: lang === "fr" ? "Créativité" : "Creativity", 
       traits: lang === "fr" ? ["Mystérieux", "Inspirant"] : ["Mysterious", "Inspiring"],
       icon: Sparkles,
-      rotation: 4,
-      x: 190,
-      y: 22,
+      rotation: 3,
+      x: 175,
+      y: 35,
       zIndex: 30
     },
     { 
@@ -326,9 +326,9 @@ function PaletteSection() {
       role: lang === "fr" ? "Confiance" : "Trust", 
       traits: lang === "fr" ? ["Serein", "Fiable", "Clair"] : ["Serene", "Reliable", "Clear"],
       icon: Droplets,
-      rotation: 7,
+      rotation: 6,
       x: 320,
-      y: 52,
+      y: 60,
       zIndex: 20
     },
     { 
@@ -337,34 +337,34 @@ function PaletteSection() {
       role: lang === "fr" ? "Profondeur" : "Depth", 
       traits: lang === "fr" ? ["Stable", "Sophistiqué"] : ["Stable", "Sophisticated"],
       icon: Moon,
-      rotation: 10,
-      x: 450,
-      y: 84,
+      rotation: 9,
+      x: 460,
+      y: 85,
       zIndex: 10
     },
   ];
 
-  // Adjusted mobile positions
+  // Adjusted mobile positions for tighter fan
   const mobileCards = [
-    { ...cards[0], rotation: -8, x: 10, y: 0 },
-    { ...cards[1], rotation: -2, x: 95, y: 16 },
-    { ...cards[2], rotation: 4, x: 170, y: 34 },
-    { ...cards[3], rotation: 10, x: 235, y: 52 },
+    { ...cards[0], rotation: -6, x: 0, y: 0 },
+    { ...cards[1], rotation: -2, x: 80, y: 15 },
+    { ...cards[2], rotation: 4, x: 160, y: 35 },
+    { ...cards[3], rotation: 10, x: 230, y: 55 },
   ];
 
   const currentCards = isMobile ? mobileCards : cards;
 
   return (
-    <section className="px-5 lg:px-[64px] pt-[56px] pb-[64px] lg:py-[96px] overflow-visible">
-      <div className="max-w-[1280px] mx-auto">
-        <div className="flex flex-col lg:flex-row gap-[56px] items-center">
+    <section className="px-6 md:px-12 lg:px-[64px] py-[96px] overflow-visible">
+      <div className="max-w-[1400px] mx-auto">
+        <div className="flex flex-col lg:flex-row gap-[48px] lg:gap-[64px] items-center">
           
-          {/* Text Side (38%) */}
-          <div className="flex flex-col lg:w-[38%] shrink-0 z-50">
+          {/* Text Side (36%) */}
+          <div className="flex flex-col lg:w-[36%] shrink-0 z-50 max-w-[420px]">
             <FadeIn>
               <div 
                 className="inline-flex items-center px-4 rounded-[14px] mb-[28px]" 
-                style={{ height: '40px', background: r(0.05), border: `1px solid ${r(0.08)}` }}
+                style={{ height: '36px', background: r(0.04), border: `1px solid ${r(0.06)}` }}
               >
                 <SectionLabel>{t("kh.palette.label")}</SectionLabel>
               </div>
@@ -374,9 +374,9 @@ function PaletteSection() {
                 className="mb-[24px]"
                 style={{ 
                   fontFamily: "'Space Grotesk', sans-serif", 
-                  fontSize: isMobile ? "42px" : "72px", 
+                  fontSize: isMobile ? "40px" : "62px", 
                   fontWeight: 700, 
-                  lineHeight: isMobile ? 1.1 : 0.95, 
+                  lineHeight: 0.95, 
                   letterSpacing: "-0.03em",
                   color: isDark ? "#fff" : DARK_BG 
                 }}
@@ -394,10 +394,10 @@ function PaletteSection() {
             <FadeIn delay={0.15}>
               <p style={{ 
                 ...body, 
-                fontSize: isMobile ? "17px" : "22px", 
-                maxWidth: "100%", 
+                fontSize: isMobile ? "16px" : "19px", 
                 lineHeight: 1.45,
-                marginBottom: "36px"
+                marginBottom: "36px",
+                color: r(0.4)
               }}>
                 {lang === "fr" 
                   ? "Quatre teintes stratégiques. Une identité cohérente et mémorable. Collectionnez la palette de Kitty Hub et donnez du pouvoir à vos créations."
@@ -405,20 +405,20 @@ function PaletteSection() {
               </p>
             </FadeIn>
             
-            <div className="flex flex-col gap-[18px] max-w-[340px]">
+            <div className="flex flex-col gap-[14px]">
               {[
                 { label: lang === "fr" ? "Identité forte" : "Strong identity", desc: lang === "fr" ? "Couleurs uniques." : "Unique colors.", icon: Star },
                 { label: lang === "fr" ? "Impact visuel" : "Visual impact", desc: lang === "fr" ? "Contrastes captivants." : "Captivating contrasts.", icon: Zap },
                 { label: lang === "fr" ? "Valeur de collection" : "Collector value", desc: lang === "fr" ? "Pensée pour durer." : "Designed to last.", icon: Sparkles },
               ].map((item, i) => (
                 <FadeIn key={i} delay={0.2 + i * 0.1}>
-                  <div className="flex items-center gap-4 p-6 rounded-2xl bg-white/[0.03] border border-white/5 backdrop-blur-sm">
-                    <div className="w-[42px] h-[42px] shrink-0 rounded-full flex items-center justify-center bg-white/5 border border-white/10">
-                      <item.icon size={18} style={{ color: ACCENT }} />
+                  <div className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.02] border border-white/5 backdrop-blur-sm">
+                    <div className="w-[36px] h-[36px] shrink-0 rounded-full flex items-center justify-center bg-white/5 border border-white/10">
+                      <item.icon size={16} style={{ color: ACCENT }} />
                     </div>
                     <div>
-                      <h4 style={{ fontFamily: "'Inter', sans-serif", fontSize: "18px", fontWeight: 700, color: isDark ? "#fff" : DARK_BG }}>{item.label}</h4>
-                      <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "15px", color: r(0.3) }}>{item.desc}</p>
+                      <h4 style={{ fontFamily: "'Inter', sans-serif", fontSize: "16px", fontWeight: 700, color: isDark ? "#fff" : DARK_BG }}>{item.label}</h4>
+                      <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px", color: r(0.3) }}>{item.desc}</p>
                     </div>
                   </div>
                 </FadeIn>
@@ -426,16 +426,16 @@ function PaletteSection() {
             </div>
           </div>
 
-          {/* Visual Side (62%) */}
-          <div className="relative flex items-start lg:w-[62%] h-[440px] md:h-[620px] lg:h-[620px] order-1 lg:order-2">
+          {/* Visual Side (64%) */}
+          <div className="relative flex items-center lg:w-[64%] h-[480px] md:h-[620px] order-1 lg:order-2 px-4 md:px-10 overflow-visible">
             {/* Background Atmosphere */}
             <div className="absolute inset-0 pointer-events-none" style={{
-              background: `radial-gradient(circle at 40% 50%, rgba(${ACCENT_RGB}, 0.15) 0%, transparent 80%)`,
-              filter: "blur(100px)"
+              background: `radial-gradient(circle at 40% 50%, rgba(${ACCENT_RGB}, 0.12) 0%, transparent 80%)`,
+              filter: "blur(120px)"
             }} />
 
             {/* The Cards Group */}
-            <div className="relative w-full h-full">
+            <div className="relative w-full h-full max-w-[840px]">
               {currentCards.map((card, i) => {
                 const Icon = card.icon;
                 return (
@@ -456,38 +456,38 @@ function PaletteSection() {
                       stiffness: 40,
                       damping: 15
                     }}
-                    className="absolute rounded-[24px] md:rounded-[24px] p-5 md:p-6 flex flex-col justify-between cursor-pointer overflow-hidden border border-white/20"
+                    className="absolute rounded-[24px] p-5 md:p-7 flex flex-col justify-between cursor-pointer overflow-hidden border border-white/20"
                     style={{
-                      width: isMobile ? "150px" : "220px",
-                      height: isMobile ? "215px" : "320px",
+                      width: isMobile ? "145px" : "220px",
+                      height: isMobile ? "210px" : "320px",
                       background: `linear-gradient(145deg, ${card.hex} 0%, ${card.hex}dd 100%)`,
                       zIndex: card.zIndex,
-                      boxShadow: `0 30px 60px rgba(0,0,0,0.4), inset 0 0 30px rgba(255,255,255,0.15)`,
-                      borderRadius: isMobile ? "18px" : "24px"
+                      boxShadow: `0 30px 60px rgba(0,0,0,0.4), inset 0 0 40px rgba(255,255,255,0.2)`,
+                      borderRadius: isMobile ? "20px" : "26px"
                     }}
                   >
                     <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
                     
                     <div className="flex justify-between items-start relative z-10">
-                      <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: isMobile ? "0.65rem" : "0.8rem", fontWeight: 800, color: "#fff", textTransform: "uppercase" }}>{card.role}</span>
-                      <Icon size={isMobile ? 16 : 20} color="white" fill="white" className="opacity-90" />
+                      <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: isMobile ? "0.6rem" : "0.75rem", fontWeight: 800, color: "#fff", textTransform: "uppercase", letterSpacing: "0.05em" }}>{card.role}</span>
+                      <Icon size={isMobile ? 14 : 18} color="white" fill="white" className="opacity-90" />
                     </div>
 
-                    <div className="relative flex items-center justify-center flex-1 z-10">
-                      <div className="w-[80%] aspect-square rounded-full border border-white/20 flex items-center justify-center bg-white/5 backdrop-blur-sm">
-                        <Icon size={isMobile ? 32 : 44} className="text-white/50 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" />
+                    <div className="relative flex items-center justify-center flex-1 z-10 my-2">
+                      <div className="w-[85%] aspect-square rounded-full border border-white/15 flex items-center justify-center bg-white/5 backdrop-blur-sm shadow-inner">
+                        <Icon size={isMobile ? 28 : 40} className="text-white/40 drop-shadow-[0_0_12px_rgba(255,255,255,0.3)]" />
                       </div>
                     </div>
 
                     <div className="flex flex-col gap-1 relative z-10">
                       <div className="flex justify-between items-end">
-                        <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: isMobile ? "0.8rem" : "1rem", fontWeight: 700, color: "#fff" }}>{card.hex}</span>
-                        <span style={{ fontFamily: "'Inter', sans-serif", fontSize: isMobile ? "0.7rem" : "0.85rem", color: "#fff", opacity: 0.9 }}>{card.name}</span>
+                        <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: isMobile ? "0.75rem" : "1rem", fontWeight: 700, color: "#fff" }}>{card.hex}</span>
+                        <span style={{ fontFamily: "'Inter', sans-serif", fontSize: isMobile ? "0.65rem" : "0.8rem", color: "#fff", opacity: 0.9 }}>{card.name}</span>
                       </div>
                       <div className="w-full h-[1px] bg-white/20 my-1" />
-                      <div className="flex flex-wrap gap-x-2 overflow-hidden">
+                      <div className="flex flex-wrap gap-x-2">
                         {card.traits.map(trait => (
-                          <span key={trait} style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.6rem", color: "#fff", opacity: 0.8 }}>{trait}</span>
+                          <span key={trait} style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.55rem", fontWeight: 500, color: "#fff", opacity: 0.85 }}>{trait}</span>
                         ))}
                       </div>
                     </div>
@@ -495,37 +495,47 @@ function PaletteSection() {
                 );
               })}
 
-              {/* Booster Pack (Foreground) */}
+              {/* Booster Pack (The real sachet at the bottom) */}
               <motion.div 
-                className="absolute z-[100] pointer-events-none"
-                initial={{ y: 150, x: isMobile ? 72 : 180, opacity: 0, rotate: -6 }}
-                whileInView={{ y: isMobile ? 150 : 220, x: isMobile ? 72 : 180, opacity: 1, rotate: -6 }}
+                className="absolute z-[35] pointer-events-none"
+                initial={{ y: 250, x: isMobile ? 65 : 120, opacity: 0, rotate: -8 }}
+                whileInView={{ y: isMobile ? 140 : 280, x: isMobile ? 65 : 120, opacity: 1, rotate: -8 }}
                 viewport={{ once: true }}
-                transition={{ duration: 1.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 1.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
                 style={{
-                  width: isMobile ? "185px" : "280px",
-                  height: isMobile ? "245px" : "360px",
+                  width: isMobile ? "200px" : "330px",
+                  height: isMobile ? "260px" : "380px",
                 }}
               >
                 <div 
-                  className="w-full h-full rounded-[2.5rem] md:rounded-[3rem] p-8 md:p-10 flex flex-col items-center justify-center relative overflow-hidden"
+                  className="w-full h-full p-8 md:p-12 flex flex-col items-center justify-center relative overflow-hidden"
                   style={{
                     background: "linear-gradient(165deg, #1d122b 0%, #0a0412 100%)",
-                    border: "2px solid rgba(255,255,255,0.15)",
-                    boxShadow: "0 50px 100px rgba(0,0,0,0.9), inset 0 0 60px rgba(142,37,247,0.3)"
+                    border: "2px solid rgba(255,255,255,0.12)",
+                    borderRadius: "3rem 3rem 1.5rem 1.5rem", // Sachet shape: rounder top, tighter bottom
+                    boxShadow: "0 60px 120px rgba(0,0,0,1), inset 0 0 60px rgba(142,37,247,0.3)"
                   }}
                 >
-                  <div className="absolute inset-0 opacity-[0.15] mix-blend-screen" style={{ backgroundImage: "url('https://grainy-gradients.vercel.app/noise.svg')" }} />
+                  {/* Crimped top detail */}
+                  <div className="absolute top-0 left-0 right-0 h-6 flex items-start justify-center opacity-30">
+                    <div className="w-full h-[1px] bg-white/40 mt-1" />
+                    <div className="w-full h-[1px] bg-white/40 mt-2" />
+                  </div>
+
+                  <div className="absolute inset-0 opacity-[0.2] mix-blend-screen" style={{ backgroundImage: "url('https://grainy-gradients.vercel.app/noise.svg')" }} />
                   
                   <div className="flex flex-col items-center gap-2 relative z-10 text-center">
-                    <div className="flex gap-1.5 mb-2">
-                      {[...Array(5)].map((_, i) => <Star key={i} size={isMobile ? 10 : 12} fill="white" className="text-white" />)}
+                    <div className="flex gap-2 mb-3">
+                      {[...Array(5)].map((_, i) => <Star key={i} size={isMobile ? 10 : 13} fill="white" className="text-white opacity-90" />)}
                     </div>
-                    <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: isMobile ? "0.8rem" : "1.1rem", fontWeight: 700, letterSpacing: "0.3em", color: "#fff", opacity: 0.8 }}>KITTY HUB</span>
-                    <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: isMobile ? "1.8rem" : "2.6rem", fontWeight: 800, color: "#fff", lineHeight: 1 }}>PALETTE</h3>
-                    <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.4em", color: "#fff", opacity: 0.4, marginTop: 12 }}>ÉDITION ORIGINALE</p>
+                    <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: isMobile ? "0.85rem" : "1.2rem", fontWeight: 700, letterSpacing: "0.4em", color: "#fff", opacity: 0.9 }}>KITTY HUB</span>
+                    <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: isMobile ? "1.8rem" : "2.8rem", fontWeight: 800, color: "#fff", lineHeight: 1, textShadow: "0 0 20px rgba(136,35,247,0.5)" }}>PALETTE</h3>
+                    <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.6em", color: "#fff", opacity: 0.35, marginTop: 15 }}>ÉDITION ORIGINALE</p>
                   </div>
-                  <div className="absolute top-0 left-0 right-0 h-[40%] bg-gradient-to-b from-white/5 to-transparent" />
+                  
+                  {/* Sachet lighting */}
+                  <div className="absolute top-0 left-0 right-0 h-[30%] bg-gradient-to-b from-white/10 to-transparent" />
+                  <div className="absolute bottom-[-10%] left-[-10%] w-[120%] h-[1.5px] bg-gradient-to-r from-transparent via-white/20 to-transparent rotate-[20deg]" />
                 </div>
               </motion.div>
             </div>
