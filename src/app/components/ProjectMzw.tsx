@@ -872,23 +872,23 @@ function DecorativeEqualizer({ isDark }: { isDark: boolean }) {
 function AnimatedPlayerMockup() {
   return (
     <div className="relative">
-      <div className="relative z-10 w-full" style={{ aspectRatio: "1080 / 1350" }}>
+      <div className="relative z-10 w-full" style={{ aspectRatio: "1080 / 1210" }}>
         <div
           className="absolute left-1/2 top-1/2 w-[54%] max-w-none -translate-x-1/2 -translate-y-1/2 rounded-[2.2rem] p-[1.2%]"
           style={{
-            aspectRatio: "785 / 1766",
+            aspectRatio: "785 / 1545",
             background: "linear-gradient(145deg, #1c1d21 0%, #050507 48%, #2c2d32 100%)",
             boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.18), inset 0 0 0 3px rgba(0,0,0,0.86)",
           }}
         >
           <div className="relative size-full overflow-hidden rounded-[1.85rem]" style={{ background: "#090211" }}>
-            <img src={imgPlayerCenter} alt="MZW — lecteur en cours de lecture" className="absolute inset-0 size-full object-cover" />
+            <img src={imgPlayerCenter} alt="MZW — lecteur en cours de lecture" className="absolute inset-0 size-full object-cover object-top" />
             <div
               className="absolute z-20"
               style={{
                 left: "8%",
                 right: "8%",
-                top: "70.4%",
+                top: "66.8%",
                 height: "5%",
                 filter: "drop-shadow(0 0 10px rgba(93,71,146,0.5))",
                 mixBlendMode: "screen",
@@ -967,14 +967,6 @@ function MobileSection() {
             style={{ width: "clamp(70px, 8vw, 120px)", right: "11%", top: "32%", filter: `drop-shadow(0 0 24px rgba(${ACCENT_RGB},0.45)) brightness(${isDark ? 1.35 : 0.9}) contrast(1.18)` }}
             animate={{ y: [0, -12, 0], rotate: [-4, 5, -4], opacity: [0.7, 1, 0.7] }}
             transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.img
-            src={imgButterfly}
-            alt=""
-            className="hidden md:block absolute z-10 pointer-events-none select-none"
-            style={{ width: "clamp(42px, 4vw, 68px)", right: "4%", bottom: "22%", filter: `drop-shadow(0 0 18px rgba(226,192,73,0.34)) brightness(${isDark ? 1.25 : 0.85}) contrast(1.2)`, transform: "rotate(22deg)" }}
-            animate={{ y: [0, 16, 0], x: [0, -8, 0], opacity: [0.52, 0.9, 0.52] }}
-            transition={{ duration: 7.2, repeat: Infinity, ease: "easeInOut" }}
           />
 
           <div className="relative z-20 flex items-center justify-center min-h-[clamp(500px,64vw,760px)]">
