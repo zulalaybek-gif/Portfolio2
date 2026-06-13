@@ -304,9 +304,9 @@ function PaletteSection() {
       role: lang === "fr" ? "Énergie" : "Energy", 
       traits: lang === "fr" ? ["Vibrant", "Chaleureux", "Dynamique"] : ["Vibrant", "Warm", "Dynamic"],
       icon: Zap,
-      rotation: -14,
-      x: -60,
-      y: 0,
+      rotation: -12,
+      x: -120,
+      y: -40,
       zIndex: 40
     },
     { 
@@ -315,9 +315,9 @@ function PaletteSection() {
       role: lang === "fr" ? "Créativité" : "Creativity", 
       traits: lang === "fr" ? ["Mystérieux", "Inspirant"] : ["Mysterious", "Inspiring"],
       icon: Sparkles,
-      rotation: -5,
-      x: -20,
-      y: 15,
+      rotation: -4,
+      x: -40,
+      y: -10,
       zIndex: 30
     },
     { 
@@ -326,9 +326,9 @@ function PaletteSection() {
       role: lang === "fr" ? "Confiance" : "Trust", 
       traits: lang === "fr" ? ["Serein", "Fiable", "Clair"] : ["Serene", "Reliable", "Clear"],
       icon: Droplets,
-      rotation: 5,
-      x: 20,
-      y: 30,
+      rotation: 6,
+      x: 45,
+      y: 20,
       zIndex: 20
     },
     { 
@@ -337,20 +337,20 @@ function PaletteSection() {
       role: lang === "fr" ? "Profondeur" : "Depth", 
       traits: lang === "fr" ? ["Stable", "Sophistiqué"] : ["Stable", "Sophisticated"],
       icon: Moon,
-      rotation: 14,
-      x: 60,
-      y: 50,
+      rotation: 16,
+      x: 130,
+      y: 60,
       zIndex: 10
     },
   ];
 
   return (
-    <section className="px-6 md:px-16 py-24 md:py-32 overflow-hidden">
-      <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_2fr] gap-12 lg:gap-20 items-center">
+    <section className="px-6 md:px-16 py-24 md:py-40 overflow-hidden">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-12 lg:gap-20 items-center">
           
           {/* Text Side */}
-          <div className="flex flex-col gap-6 order-2 lg:order-1">
+          <div className="flex flex-col gap-6 order-2 lg:order-1 relative z-50">
             <FadeIn>
               <SectionLabel>{t("kh.palette.label")}</SectionLabel>
             </FadeIn>
@@ -358,38 +358,39 @@ function PaletteSection() {
               <h2 
                 style={{ 
                   fontFamily: "'Space Grotesk', sans-serif", 
-                  fontSize: "clamp(2.2rem, 5vw, 3.8rem)", 
+                  fontSize: "clamp(2.4rem, 5.5vw, 4.2rem)", 
                   fontWeight: 700, 
                   lineHeight: 0.95, 
-                  letterSpacing: "-0.02em",
+                  letterSpacing: "-0.03em",
                   color: isDark ? "#fff" : DARK_BG 
                 }}
               >
-                {lang === "fr" ? "Booster Pack Chromatique" : "Chromatic Booster Pack"}
+                {lang === "fr" ? "Booster Pack" : "Chromatic"}<br />
+                <span style={{ color: ACCENT }}>{lang === "fr" ? "Chromatique" : "Booster Pack"}</span>
               </h2>
             </FadeIn>
             <FadeIn delay={0.15}>
-              <p style={{ ...body, fontSize: "1rem", maxWidth: "500px" }}>
+              <p style={{ ...body, fontSize: "1.05rem", maxWidth: "480px", lineHeight: 1.7 }}>
                 {lang === "fr" 
                   ? "Quatre teintes stratégiques. Une identité cohérente et mémorable. Collectionnez la palette de Kitty Hub et donnez du pouvoir à vos créations."
                   : "Four strategic hues. A consistent and memorable identity. Collect the Kitty Hub palette and empower your creations."}
               </p>
             </FadeIn>
             
-            <div className="flex flex-col gap-5 mt-6">
+            <div className="flex flex-col gap-6 mt-6">
               {[
                 { label: lang === "fr" ? "Identité forte" : "Strong identity", desc: lang === "fr" ? "Couleurs uniques et différenciantes." : "Unique and differentiating colors.", icon: Star },
                 { label: lang === "fr" ? "Impact visuel" : "Visual impact", desc: lang === "fr" ? "Des contrastes qui captent l'attention." : "Contrasts that catch the eye.", icon: Zap },
                 { label: lang === "fr" ? "Valeur de collection" : "Collector value", desc: lang === "fr" ? "Une palette pensée pour durer." : "A palette designed to last.", icon: Sparkles },
               ].map((item, i) => (
                 <FadeIn key={i} delay={0.2 + i * 0.1}>
-                  <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 shrink-0 rounded-full flex items-center justify-center bg-white/5 border border-white/10">
-                      <item.icon size={16} style={{ color: ACCENT }} />
+                  <div className="flex items-center gap-5 p-4 rounded-2xl bg-white/[0.03] border border-white/5 backdrop-blur-sm transition-colors hover:bg-white/[0.06]">
+                    <div className="w-11 h-11 shrink-0 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 shadow-inner">
+                      <item.icon size={18} style={{ color: ACCENT }} />
                     </div>
                     <div>
-                      <h4 style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", fontWeight: 700, color: isDark ? "#fff" : DARK_BG }}>{item.label}</h4>
-                      <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.8rem", color: r(0.35) }}>{item.desc}</p>
+                      <h4 style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", fontWeight: 700, color: isDark ? "#fff" : DARK_BG }}>{item.label}</h4>
+                      <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.8rem", color: r(0.3) }}>{item.desc}</p>
                     </div>
                   </div>
                 </FadeIn>
@@ -398,83 +399,85 @@ function PaletteSection() {
           </div>
 
           {/* Visual Side: Fan of Cards + Booster */}
-          <div className="relative flex items-center justify-center min-h-[500px] md:min-h-[640px] order-1 lg:order-2">
+          <div className="relative flex items-center justify-center min-h-[580px] md:min-h-[720px] order-1 lg:order-2 px-10">
             {/* Background Atmosphere */}
             <div className="absolute inset-0 pointer-events-none" style={{
-              background: `radial-gradient(circle at 50% 50%, rgba(${ACCENT_RGB}, 0.1) 0%, transparent 70%)`,
-              filter: "blur(60px)"
+              background: `radial-gradient(circle at 50% 50%, rgba(${ACCENT_RGB}, 0.12) 0%, transparent 70%)`,
+              filter: "blur(80px)"
             }} />
 
             {/* The Cards Fan */}
-            <div className="relative w-full max-w-[400px] aspect-[4/5] z-20">
+            <div className="relative w-full max-w-[440px] aspect-[4/5] z-20 flex items-center justify-center">
               {cards.map((card, i) => (
                 <motion.div
                   key={card.hex}
-                  initial={{ opacity: 0, x: 0, y: 150, rotate: 0 }}
+                  initial={{ opacity: 0, x: 0, y: 100, rotate: 0 }}
                   whileInView={{ 
                     opacity: 1, 
-                    x: isMobile ? card.x * 1.4 : card.x * 2.8,
-                    y: isMobile ? card.y * 1.5 : card.y * 2,
+                    x: isMobile ? card.x * 1.2 : card.x * 2.2,
+                    y: isMobile ? card.y * 1.3 : card.y * 1.8,
                     rotate: card.rotation 
                   }}
-                  viewport={{ once: true, margin: "-100px" }}
+                  viewport={{ once: true, margin: "-50px" }}
                   transition={{ 
-                    duration: 1, 
-                    delay: 0.5 + i * 0.12, 
+                    duration: 1.1, 
+                    delay: 0.4 + i * 0.1, 
                     type: "spring",
-                    stiffness: 40,
-                    damping: 12
+                    stiffness: 45,
+                    damping: 14
                   }}
                   whileHover={{ 
-                    y: (isMobile ? card.y * 1.5 : card.y * 2) - 30, 
-                    scale: 1.05, 
+                    y: (isMobile ? card.y * 1.3 : card.y * 1.8) - 40, 
+                    scale: 1.06, 
                     zIndex: 100,
-                    transition: { duration: 0.3 }
+                    transition: { duration: 0.4, ease: "easeOut" }
                   }}
-                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] md:w-[280px] aspect-[2.2/3.2] rounded-[1.5rem] p-5 md:p-6 flex flex-col justify-between shadow-2xl cursor-pointer overflow-hidden"
+                  className="absolute w-[210px] md:w-[290px] aspect-[2.2/3.2] rounded-[1.8rem] p-6 md:p-7 flex flex-col justify-between shadow-[0_30px_60px_rgba(0,0,0,0.5)] cursor-pointer overflow-hidden border border-white/25"
                   style={{
                     background: `linear-gradient(145deg, ${card.hex} 0%, ${card.hex}dd 100%)`,
                     zIndex: card.zIndex,
-                    border: "1px solid rgba(255,255,255,0.3)",
-                    boxShadow: `0 40px 80px rgba(0,0,0,0.4), inset 0 0 40px rgba(255,255,255,0.15)`
+                    boxShadow: `0 40px 90px rgba(0,0,0,0.45), inset 0 0 50px rgba(255,255,255,0.2)`
                   }}
                 >
-                   {/* Card Shine Overlay */}
+                   {/* Card Shine Effect */}
                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none" />
-
+                   
                   {/* Top: Role + Icon */}
                   <div className="flex justify-between items-start relative z-10">
-                    <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.9rem", fontWeight: 800, color: "#fff", textTransform: "uppercase", letterSpacing: "0.1em" }}>{card.role}</span>
-                    <card.icon size={20} color="white" fill="white" className="opacity-90" />
+                    <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.85rem", fontWeight: 800, color: "#fff", textTransform: "uppercase", letterSpacing: "0.12em" }}>{card.role}</span>
+                    <card.icon size={22} color="white" fill="white" className="opacity-95" />
                   </div>
 
-                  {/* Center: Glowing Sphere + Star Shape */}
-                  <div className="relative flex items-center justify-center flex-1 my-6 relative z-10">
+                  {/* Center: Stylized Element (Circle + Shape) */}
+                  <div className="relative flex items-center justify-center flex-1 my-4 z-10">
                     <motion.div 
-                      animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
-                      transition={{ duration: 3, repeat: Infinity }}
-                      className="absolute w-[90%] aspect-square rounded-full bg-white/20 blur-2xl" 
+                      animate={{ scale: [1, 1.12, 1], opacity: [0.25, 0.45, 0.25] }}
+                      transition={{ duration: 4, repeat: Infinity }}
+                      className="absolute w-full aspect-square rounded-full bg-white/20 blur-3xl" 
                     />
-                    <div className="relative w-[75%] aspect-square rounded-full border border-white/25 flex items-center justify-center bg-white/5 overflow-hidden">
+                    <div className="relative w-[85%] aspect-square rounded-full border border-white/20 flex items-center justify-center bg-white/5 backdrop-blur-sm overflow-hidden">
                         <motion.div 
                           animate={{ rotate: 360 }}
-                          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                          className="absolute inset-0 bg-gradient-to-t from-transparent via-white/15 to-transparent" 
+                          transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+                          className="absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent" 
                         />
-                        <Star size={36} fill="white" className="text-white opacity-50 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />
+                        {/* Unique shape per card */}
+                        <div className="relative z-10">
+                          <item.icon size={48} className="text-white/60 drop-shadow-[0_0_20px_rgba(255,255,255,0.4)]" />
+                        </div>
                     </div>
                   </div>
 
-                  {/* Bottom: Hex + Name + Traits */}
-                  <div className="flex flex-col gap-2.5 relative z-10">
+                  {/* Bottom: Information Section */}
+                  <div className="flex flex-col gap-3 relative z-10">
                     <div className="flex justify-between items-end">
-                      <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1rem", fontWeight: 700, color: "#fff", letterSpacing: "0.02em" }}>{card.hex}</span>
-                      <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", fontWeight: 400, color: "#fff", opacity: 0.95 }}>{card.name}</span>
+                      <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.1rem", fontWeight: 700, color: "#fff", letterSpacing: "0.02em" }}>{card.hex}</span>
+                      <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", fontWeight: 400, color: "#fff", opacity: 0.9 }}>{card.name}</span>
                     </div>
-                    <div className="w-full h-[1px] bg-white/30" />
-                    <div className="flex flex-wrap gap-x-3 gap-y-1">
+                    <div className="w-full h-[1px] bg-white/25" />
+                    <div className="flex flex-wrap gap-x-4 gap-y-1">
                       {card.traits.map(trait => (
-                        <span key={trait} style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", fontWeight: 500, color: "#fff", opacity: 0.8 }}>{trait}</span>
+                        <span key={trait} style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.7rem", fontWeight: 600, color: "#fff", opacity: 0.85, letterSpacing: "0.03em" }}>{trait}</span>
                       ))}
                     </div>
                   </div>
@@ -482,61 +485,62 @@ function PaletteSection() {
               ))}
             </div>
 
-            {/* Booster Pack (The base) */}
+            {/* Booster Pack (The source at the bottom) */}
             <motion.div 
-              className="absolute bottom-[-10%] left-1/2 -translate-x-1/2 z-[45] w-[300px] md:w-[380px] aspect-[3.2/4.2]"
-              initial={{ y: 150, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
+              className="absolute bottom-[-10%] md:bottom-[-15%] left-1/2 -translate-x-1/2 z-[45] w-[320px] md:w-[420px] aspect-[3.2/4.4] pointer-events-none"
+              initial={{ y: 200, opacity: 0, rotate: -5 }}
+              whileInView={{ y: 0, opacity: 1, rotate: -2 }}
               viewport={{ once: true }}
-              transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 1.4, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             >
               <div 
-                className="w-full h-full rounded-[2.5rem] p-8 flex flex-col items-center justify-center gap-6 relative overflow-hidden"
+                className="w-full h-full rounded-[3rem] p-10 flex flex-col items-center justify-center gap-8 relative overflow-hidden"
                 style={{
-                  background: "linear-gradient(165deg, #1a1025 0%, #07020b 100%)",
-                  border: "2px solid rgba(255,255,255,0.12)",
-                  boxShadow: "0 30px 90px rgba(0,0,0,0.9), inset 0 0 40px rgba(142,37,247,0.3)"
+                  background: "linear-gradient(165deg, #1d122b 0%, #0a0412 100%)",
+                  border: "2px solid rgba(255,255,255,0.15)",
+                  boxShadow: "0 40px 100px rgba(0,0,0,0.95), inset 0 0 50px rgba(142,37,247,0.35)"
                 }}
               >
-                {/* Crinkled Metallic Overlay */}
-                <div className="absolute inset-0 opacity-[0.15] pointer-events-none" style={{
-                  backgroundImage: "url('https://grainy-gradients.vercel.app/noise.svg')",
-                  mixBlendMode: "screen"
+                {/* Crinkled Metallic Texture */}
+                <div className="absolute inset-0 opacity-[0.2] mix-blend-screen" style={{
+                  backgroundImage: "url('https://grainy-gradients.vercel.app/noise.svg')"
                 }} />
                 
-                {/* Pack Visual Elements */}
-                <div className="flex flex-col items-center gap-2 relative z-10">
-                   <div className="flex gap-1.5 mb-3">
-                     {[...Array(5)].map((_, i) => <Star key={i} size={11} fill="white" className="text-white opacity-90 drop-shadow-sm" />)}
+                {/* Pack Visual Branding */}
+                <div className="flex flex-col items-center gap-3 relative z-10 text-center">
+                   <div className="flex gap-2 mb-4">
+                     {[...Array(5)].map((_, i) => <Star key={i} size={13} fill="white" className="text-white opacity-95 drop-shadow-md" />)}
                    </div>
-                   <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.1rem", fontWeight: 700, letterSpacing: "0.3em", color: "#fff", opacity: 0.8 }}>KITTY HUB</span>
-                   <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "2.4rem", fontWeight: 800, letterSpacing: "0.08em", color: "#fff", lineHeight: 1, textShadow: "0 0 20px rgba(136,35,247,0.4)" }}>PALETTE</h3>
-                   <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.75rem", fontWeight: 600, letterSpacing: "0.4em", color: "#fff", opacity: 0.4, marginTop: 15 }}>ÉDITION ORIGINALE</p>
+                   <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.25rem", fontWeight: 700, letterSpacing: "0.35em", color: "#fff", opacity: 0.9 }}>KITTY HUB</span>
+                   <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "2.8rem", fontWeight: 800, letterSpacing: "0.1em", color: "#fff", lineHeight: 1, textShadow: "0 0 30px rgba(136,35,247,0.5)" }}>PALETTE</h3>
+                   <div className="w-16 h-[2px] bg-white/20 my-2" />
+                   <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", fontWeight: 700, letterSpacing: "0.5em", color: "#fff", opacity: 0.4 }}>ÉDITION ORIGINALE</p>
                 </div>
 
-                {/* Decorative tear and light */}
-                <div className="absolute top-10 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 h-[60%] bg-gradient-to-t from-black/60 to-transparent" />
+                {/* Lighting effects on pack */}
+                <div className="absolute top-0 left-0 right-0 h-[40%] bg-gradient-to-b from-white/10 to-transparent" />
+                <div className="absolute bottom-10 left-[-20%] w-[140%] h-[1.5px] bg-gradient-to-r from-transparent via-white/20 to-transparent rotate-[15deg]" />
               </div>
             </motion.div>
 
-            {/* Collection Tip (Small card UI) */}
-            <FadeIn delay={1.4} className="absolute bottom-[-15%] right-0 md:right-[-5%] z-[60]">
+            {/* Hint Box (Bottom Right) */}
+            <FadeIn delay={1.6} className="absolute bottom-[-15%] right-[-10%] md:right-[-5%] z-[60] hidden sm:block">
                <motion.div 
-                 whileHover={{ scale: 1.05 }}
-                 className="flex items-center gap-5 bg-white/10 backdrop-blur-xl p-5 rounded-[1.2rem] border border-white/15 shadow-2xl"
+                 whileHover={{ y: -5, scale: 1.05 }}
+                 className="flex items-center gap-6 bg-white/[0.08] backdrop-blur-2xl p-6 rounded-[1.5rem] border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
                >
-                  <div className="flex -space-x-4">
+                  <div className="relative flex -space-x-5">
                      {[...Array(3)].map((_, i) => (
-                       <div key={i} className="w-7 h-10 rounded-sm bg-white/15 border border-white/20 rotate-[-12deg] shadow-lg" />
+                       <div key={i} className="w-8 h-12 rounded-md bg-white/10 border border-white/20 rotate-[-15deg] shadow-xl" 
+                            style={{ background: i === 2 ? ACCENT : "rgba(255,255,255,0.1)" }} />
                      ))}
                   </div>
-                  <div className="flex flex-col gap-0.5">
-                    <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", fontWeight: 700, color: "#fff" }}>
+                  <div className="flex flex-col gap-1">
+                    <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.95rem", fontWeight: 800, color: "#fff" }}>
                       {lang === "fr" ? "Collectionnez." : "Collect."}
                     </p>
-                    <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.7rem", color: r(0.4), fontWeight: 500 }}>
-                      {lang === "fr" ? "Créez sans limites." : "Create without limits."}
+                    <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.75rem", color: r(0.35), fontWeight: 500 }}>
+                      {lang === "fr" ? "Combinez. Créez sans limites." : "Combine. Create without limits."}
                     </p>
                   </div>
                </motion.div>
@@ -548,7 +552,6 @@ function PaletteSection() {
     </section>
   );
 }
-
 /* ===================================
    7. TYPOGRAPHY
    =================================== */
