@@ -324,7 +324,7 @@ function PaletteSection() {
       src: imgPaletteOrange,
       alt: "Kitty Hub orange collector card",
       className:
-        "top-[8px] left-1/2 -translate-x-1/2 w-[165px] max-w-[46vw] md:top-[32px] md:left-[56px] md:translate-x-0 md:w-[205px] md:max-w-none lg:top-[40px] lg:left-[80px] lg:w-[230px]",
+        "top-[8px] left-1/2 -translate-x-1/2 w-[165px] max-w-[46vw] md:top-[32px] md:left-[56px] md:translate-x-0 md:w-[205px] md:max-w-none lg:top-[75px] lg:left-[10px] lg:w-[230px]",
       rotate: "-2deg",
       zIndex: 30,
     },
@@ -333,7 +333,7 @@ function PaletteSection() {
       src: imgPaletteViolet,
       alt: "Kitty Hub violet collector card",
       className:
-        "top-[28px] left-1/2 -translate-x-[calc(50%-28px)] w-[160px] max-w-[44vw] md:top-[46px] md:left-[196px] md:translate-x-0 md:w-[205px] md:max-w-none lg:top-[55px] lg:left-[250px] lg:w-[230px]",
+        "top-[28px] left-1/2 -translate-x-[calc(50%-28px)] w-[160px] max-w-[44vw] md:top-[46px] md:left-[196px] md:translate-x-0 md:w-[205px] md:max-w-none lg:top-[90px] lg:left-[180px] lg:w-[230px]",
       rotate: "1.5deg",
       zIndex: 24,
     },
@@ -342,7 +342,7 @@ function PaletteSection() {
       src: imgPaletteBlue,
       alt: "Kitty Hub blue collector card",
       className:
-        "top-[48px] left-1/2 -translate-x-[calc(50%-54px)] w-[155px] max-w-[42vw] md:top-[64px] md:left-[326px] md:translate-x-0 md:w-[205px] md:max-w-none lg:top-[78px] lg:left-[410px] lg:w-[230px]",
+        "top-[48px] left-1/2 -translate-x-[calc(50%-54px)] w-[155px] max-w-[42vw] md:top-[64px] md:left-[326px] md:translate-x-0 md:w-[205px] md:max-w-none lg:top-[113px] lg:left-[340px] lg:w-[230px]",
       rotate: "2deg",
       zIndex: 18,
     },
@@ -351,7 +351,7 @@ function PaletteSection() {
       src: imgPaletteDark,
       alt: "Kitty Hub dark collector card",
       className:
-        "top-[68px] left-1/2 -translate-x-[calc(50%-76px)] w-[150px] max-w-[40vw] md:top-[88px] md:left-[450px] md:translate-x-0 md:w-[205px] md:max-w-none lg:top-[105px] lg:left-[565px] lg:w-[230px]",
+        "top-[68px] left-1/2 -translate-x-[calc(50%-76px)] w-[150px] max-w-[40vw] md:top-[88px] md:left-[450px] md:translate-x-0 md:w-[205px] md:max-w-none lg:top-[140px] lg:left-[475px] lg:w-[230px]",
       rotate: "3deg",
       zIndex: 12,
     },
@@ -360,7 +360,7 @@ function PaletteSection() {
       src: imgPaletteBooster,
       alt: "Kitty Hub chromatic booster pack",
       className:
-        "top-[220px] left-1/2 -translate-x-1/2 w-[175px] max-w-[52vw] md:top-[270px] md:left-[130px] md:translate-x-0 md:w-[235px] md:max-w-none lg:top-[305px] lg:left-[160px] lg:w-[270px]",
+        "top-[220px] left-1/2 -translate-x-1/2 w-[175px] max-w-[52vw] md:top-[270px] md:left-[130px] md:translate-x-0 md:w-[235px] md:max-w-none lg:top-[260px] lg:left-[185px] lg:w-[270px]",
       rotate: "-6deg",
       zIndex: 40,
     },
