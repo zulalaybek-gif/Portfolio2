@@ -758,7 +758,7 @@ function MerchSection() {
         {/* T-shirt mockup full width */}
         <FadeIn delay={0.15}>
           <div className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-            <img src={imgTShirt} alt="T-Shirt No Sense Mockup" className="w-full object-cover" />
+            <img src={imgTShirt} alt="T-Shirt No Sense Mockup" className="block w-[106%] max-w-none -translate-x-[3%] object-cover" />
           </div>
         </FadeIn>
       </div>
