@@ -77,7 +77,25 @@ function SectionLabel({ children }: { children: string }) {
         letterSpacing: "0.25em",
       }}
     >
-      {children}
+      <span className="mb-3 flex h-5 items-center gap-[3px]" aria-hidden="true">
+        {Array.from({ length: 18 }).map((_, i) => {
+          const height = 5 + ((i * 7) % 13);
+          const color = PALETTE[i % PALETTE.length].hex;
+          return (
+            <span
+              key={i}
+              className="block w-px rounded-full"
+              style={{
+                height,
+                background: color,
+                opacity: 0.18 + (i % 5) * 0.035,
+                boxShadow: `0 0 8px ${color}55`,
+              }}
+            />
+          );
+        })}
+      </span>
+      <span>{children}</span>
     </span>
   );
 }
