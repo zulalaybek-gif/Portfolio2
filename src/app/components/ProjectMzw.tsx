@@ -887,11 +887,11 @@ function DecorativeEqualizer({ isDark }: { isDark: boolean }) {
 function AnimatedPlayerMockup() {
   return (
     <div className="relative">
-      <div className="relative z-10 w-full" style={{ aspectRatio: "1080 / 1210" }}>
+      <div className="relative z-10 w-full" style={{ aspectRatio: "1080 / 1010" }}>
         <div
           className="absolute left-1/2 top-1/2 w-[54%] max-w-none -translate-x-1/2 -translate-y-1/2 rounded-[2.2rem] p-[1.2%]"
           style={{
-            aspectRatio: "785 / 1545",
+            aspectRatio: "785 / 1320",
             background: "linear-gradient(145deg, #1c1d21 0%, #050507 48%, #2c2d32 100%)",
             boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.18), inset 0 0 0 3px rgba(0,0,0,0.86)",
           }}
@@ -903,7 +903,7 @@ function AnimatedPlayerMockup() {
               style={{
                 left: "8%",
                 right: "8%",
-                top: "66.8%",
+                top: "63.8%",
                 height: "5%",
                 filter: "drop-shadow(0 0 10px rgba(93,71,146,0.5))",
                 mixBlendMode: "screen",
@@ -915,7 +915,7 @@ function AnimatedPlayerMockup() {
               aria-hidden="true"
               className="absolute left-1/2 z-20 rounded-full"
               style={{
-                bottom: "7.6%",
+                bottom: "clamp(34px, 11%, 54px)",
                 width: "19%",
                 aspectRatio: "1 / 1",
                 background: "radial-gradient(circle, rgba(255,255,255,0.18), rgba(93,71,146,0.12) 55%, transparent 72%)",
@@ -975,14 +975,6 @@ function MobileSection() {
         >
           <div className="absolute inset-x-0 bottom-0 h-[34%] pointer-events-none" style={{ background: "linear-gradient(180deg, transparent, rgba(0,0,0,0.24))" }} />
           <div className="absolute inset-0 pointer-events-none opacity-[0.18]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)", backgroundSize: "72px 72px" }} />
-          <motion.img
-            src={imgButterfly}
-            alt=""
-            className="hidden md:block absolute z-10 pointer-events-none select-none"
-            style={{ width: "clamp(70px, 8vw, 120px)", right: "11%", top: "32%", filter: `drop-shadow(0 0 24px rgba(${ACCENT_RGB},0.45)) brightness(${isDark ? 1.35 : 0.9}) contrast(1.18)` }}
-            animate={{ y: [0, -12, 0], rotate: [-4, 5, -4], opacity: [0.7, 1, 0.7] }}
-            transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut" }}
-          />
 
           <div className="relative z-20 flex items-center justify-center min-h-[clamp(500px,64vw,760px)]">
             {/* Left phone — smaller and slightly behind */}
@@ -1003,7 +995,7 @@ function MobileSection() {
             {/* Center phone — hero player */}
             <FadeIn delay={0.15} className="relative z-30">
               <motion.div className="relative" initial={{ opacity: 0, y: 70, scale: 0.92 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true }} transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}>
-                <motion.div className="relative" style={{ width: "clamp(290px, 39vw, 540px)" }}
+                <motion.div className="relative" style={{ width: "clamp(280px, 37.5vw, 520px)" }}
                   animate={{ y: [0, -6, 0], filter: [phoneShadow(true), `drop-shadow(0 40px 80px rgba(0,0,0,${isDark ? 0.7 : 0.3})) drop-shadow(0 0 60px rgba(${ACCENT_RGB},${isDark ? 0.35 : 0.18}))`, phoneShadow(true)] }}
                   transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}>
                   <AnimatedPlayerMockup />
