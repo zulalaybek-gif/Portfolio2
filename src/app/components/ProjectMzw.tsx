@@ -27,12 +27,6 @@ const ACCENT_RGB = "93,71,146";
 const DARK_BG = "#0f0817";
 
 const MZW_SWIRL_PATHS_URL = "/assets/mzw-swirl-paths.json";
-const HERO_TOPO_LINES = [
-  "M8 42 C34 32, 54 49, 82 39 S128 37, 154 43 S196 50, 228 39 S270 36, 292 43",
-  "M16 58 C44 49, 62 65, 92 56 S136 52, 166 60 S210 68, 242 56 S274 51, 304 58",
-  "M2 76 C34 67, 58 84, 88 75 S130 70, 160 78 S206 88, 236 75 S274 69, 318 78",
-  "M20 94 C50 86, 72 101, 104 93 S146 88, 178 96 S222 105, 252 94 S286 88, 310 94",
-];
 
 /* Butterfly tap animation generators — each returns randomised values so no two clicks feel the same */
 const TAP_GENERATORS: Array<() => { x: number; y: number; scale: number; rotate: number; opacity: number; dur: number }> = [
@@ -138,102 +132,126 @@ function HeroSection() {
   const { isDark, r } = useTheme();
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
+  const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
   const imgOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
+  // Mouse tracking for Magnetic Light with smooth spring
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
   return (
-    <section ref={ref} className="relative w-full min-h-[85vh] flex flex-col items-center justify-center overflow-hidden px-6 py-20">
-      {/* Background Gradient with smooth transition mask */}
+    <section ref={ref} className="relative w-full min-h-[90vh] flex flex-col items-center justify-center overflow-hidden px-6 py-20">
+      {/* 3. Magnetic Light (Interaction) */}
+      <motion.div
+        className="absolute pointer-events-none z-0 rounded-full"
+        animate={{ x: mousePos.x, y: mousePos.y }}
+        transition={{ type: "spring", damping: 35, stiffness: 50 }}
+        style={{
+          width: "700px",
+          height: "700px",
+          left: "-350px",
+          top: "-350px",
+          background: isDark 
+            ? `radial-gradient(circle, rgba(${ACCENT_RGB}, 0.12) 0%, transparent 70%)`
+            : `radial-gradient(circle, rgba(${ACCENT_RGB}, 0.06) 0%, transparent 70%)`,
+          filter: "blur(60px)",
+          mixBlendMode: isDark ? "screen" : "multiply",
+        }}
+      />
+
+      {/* 4. Deep Background Glow - Smooth transition to the global grid */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background: isDark
-            ? `radial-gradient(ellipse 42% 34% at 50% 48%, rgba(${ACCENT_RGB},0.18) 0%, transparent 72%),
-               radial-gradient(ellipse 78% 58% at 50% 48%, rgba(37,77,155,0.12) 0%, transparent 70%)`
-            : `radial-gradient(ellipse 42% 34% at 50% 48%, rgba(${ACCENT_RGB},0.12) 0%, transparent 72%),
-               radial-gradient(ellipse 78% 58% at 50% 48%, rgba(37,77,155,0.08) 0%, transparent 70%)`,
-          maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
-          WebkitMaskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
-        }}
-      />
-
-      {/* Animated Electro Texture (Fine Grid) */}
-      <motion.div 
-        className="absolute inset-0 pointer-events-none opacity-[0.03] md:opacity-[0.06]"
-        style={{
-          backgroundImage: `radial-gradient(circle, ${ACCENT} 1px, transparent 1px)`,
-          backgroundSize: "32px 32px",
-          maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
-          WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
-        }}
-        animate={{
-          backgroundPosition: ["0px 0px", "32px 32px"]
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "linear"
+            ? `radial-gradient(ellipse 60% 50% at 50% 45%, rgba(${ACCENT_RGB},0.18) 0%, transparent 80%)`
+            : `radial-gradient(ellipse 60% 50% at 50% 45%, rgba(${ACCENT_RGB},0.1) 0%, transparent 80%)`,
+          maskImage: "radial-gradient(circle at center, black 40%, transparent 100%)",
+          WebkitMaskImage: "radial-gradient(circle at center, black 40%, transparent 100%)",
         }}
       />
 
       <motion.div className="relative z-10 flex flex-col items-center" style={{ scale: imgScale, opacity: imgOpacity }}>
+        {/* Eyebrow Label */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.3 }}
-          className="mb-12 flex items-center gap-4 justify-center"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, delay: 0.3 }}
+          className="mb-14 flex items-center gap-8"
         >
-          <div className="w-8 h-[1px]" style={{ background: r(0.15) }} />
-          <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", letterSpacing: "0.25em", textTransform: "uppercase", color: r(0.4) }}>
+          <div className="w-16 h-[1px]" style={{ background: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)" }} />
+          <span style={{ 
+            fontFamily: "'Inter', sans-serif", 
+            fontSize: "0.58rem", 
+            letterSpacing: "0.5em", 
+            textTransform: "uppercase", 
+            color: r(0.28) 
+          }}>
             {t("mzw.hero.label")} — {t("mzw.hero.year")}
           </span>
-          <div className="w-8 h-[1px]" style={{ background: r(0.15) }} />
+          <div className="w-16 h-[1px]" style={{ background: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)" }} />
         </motion.div>
 
-        <div className="relative">
-          {/* Pulsing Musical Aura - Layer 1: Strong Visual Impact */}
+        <div className="relative flex items-center justify-center">
+          {/* Logo Breathing Halo - Corrected: Full circle and better blur to avoid 'square' effect */}
           <motion.div
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
-            style={{
-              width: "220%",
-              height: "220%",
-              background: `radial-gradient(circle, rgba(${ACCENT_RGB}, 0.5) 0%, rgba(${ACCENT_RGB}, 0.1) 40%, transparent 75%)`,
-              filter: "blur(50px)",
-              mixBlendMode: "screen",
+            className="absolute h-[150%] w-[150%] rounded-full blur-[60px]"
+            animate={{ 
+              scale: [1, 1.3, 1],
+              opacity: isDark ? [0.25, 0.45, 0.25] : [0.12, 0.22, 0.12]
             }}
-            animate={{
-              scale: [0.95, 1.15, 0.95],
-              opacity: [0.15, 0.5, 0.15],
-            }}
-            transition={{
-              duration: 3.5,
-              repeat: Infinity,
-              ease: "easeInOut",
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            style={{ 
+              background: `rgba(${ACCENT_RGB}, 0.35)`,
+              borderRadius: "100%", // Explicitly round
             }}
           />
 
-          {/* Logo with clearly perceptible breathing */}
+          {/* Logo Core with Scanner Effect */}
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.96 }}
-            animate={{ 
-              opacity: 1, 
-              y: 0, 
-              scale: [1, 1.05, 1],
-            }}
-            transition={{ 
-              opacity: { duration: 1.2, delay: 0.5 },
-              y: { duration: 1.2, delay: 0.5 },
-              scale: { duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 1.7 }
-            }}
-            className="relative flex w-[110px] items-center justify-center md:w-[160px]"
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.8, ease: "easeOut" }}
+            className="relative z-10 w-[110px] md:w-[160px] overflow-hidden"
+            style={{ borderRadius: "2px" }} // Minimal radius for the 'scanner' crop
           >
-            <svg className="w-full drop-shadow-[0_0_25px_rgba(255,255,255,0.2)]" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="0 0 40.9986 36.3546" aria-label="Logo MZW">
+            {/* The MZW Logo */}
+            <svg className="w-full relative z-10 drop-shadow-[0_0_20px_rgba(255,255,255,0.1)]" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="0 0 40.9986 36.3546" aria-label="Logo MZW">
               <g>
-                <path d={svgPaths.p3c9ec700} fill={isDark ? "white" : "black"} stroke={isDark ? "rgba(255,255,255,0.15)" : "none"} strokeWidth="0.25" strokeLinejoin="round" />
+                <path d={svgPaths.p3c9ec700} fill={isDark ? "white" : "black"} />
               </g>
             </svg>
+
+            {/* 5. Laser Scanner Sweep */}
+            <motion.div 
+              className="absolute inset-0 z-20 pointer-events-none"
+              style={{
+                background: isDark
+                  ? "linear-gradient(110deg, transparent 35%, rgba(255,255,255,0.7) 50%, transparent 65%)"
+                  : "linear-gradient(110deg, transparent 35%, rgba(0,0,0,0.15) 50%, transparent 65%)",
+                mixBlendMode: isDark ? "overlay" : "multiply",
+              }}
+              animate={{ x: ["-150%", "150%"] }}
+              transition={{ duration: 2.8, repeat: Infinity, repeatDelay: 5, ease: [0.45, 0, 0.55, 1] }}
+            />
           </motion.div>
         </div>
+      </motion.div>
+
+      {/* Subtle tech detail at bottom */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.35 }}
+        transition={{ delay: 2.5, duration: 1.5 }}
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center"
+      >
+        <div className="w-[1px] h-14" style={{ background: `linear-gradient(to bottom, ${r(0.25)}, transparent)` }} />
       </motion.div>
     </section>
   );
@@ -1384,15 +1402,27 @@ function MockupsSection() {
    =================================== */
 function FinalSection() {
   const { t } = useI18n();
-  const { r } = useTheme();
+  const { isDark, r } = useTheme();
   const navigate = useNavigate();
 
   return (
-    <section className="px-6 md:px-16 py-24">
-      <div className="max-w-5xl mx-auto flex flex-col items-center">
+    <section className="relative px-6 md:px-16 py-20 overflow-hidden">
+      {/* Footer Grid Recall - Closing the studio aesthetic */}
+      <div className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(${isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.03)"} 1px, transparent 1px), 
+                           linear-gradient(90deg, ${isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.03)"} 1px, transparent 1px)`,
+          backgroundSize: "42px 42px",
+          maskImage: "linear-gradient(to top, black 20%, transparent 90%)",
+          WebkitMaskImage: "linear-gradient(to top, black 20%, transparent 90%)",
+        }}
+      />
+
+      <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
         <FadeIn className="mb-6">
           <SectionLabel>{t("mzw.final.label")}</SectionLabel>
         </FadeIn>
+
 
         <FadeIn>
           <p
@@ -1440,6 +1470,20 @@ export function ProjectMzw() {
 
   return (
     <div ref={containerRef} className="relative w-full">
+      {/* GLOBAL STUDIO LAYERS: Grain & Precision Grid present across the whole page */}
+      {/* 1. Cinematic Grain Overlay */}
+      <div className="fixed inset-0 z-50 pointer-events-none opacity-[0.12] mix-blend-overlay"
+        style={{ backgroundImage: "url('https://grainy-gradients.vercel.app/noise.svg')" }} />
+
+      {/* 2. Global Precision Grid */}
+      <div className="fixed inset-0 z-0 pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(${isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.03)"} 1px, transparent 1px), 
+                           linear-gradient(90deg, ${isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.03)"} 1px, transparent 1px)`,
+          backgroundSize: "42px 42px",
+        }}
+      />
+
       <ProjectBackButton
         onClick={() => navigate("/projects")}
         style={{
