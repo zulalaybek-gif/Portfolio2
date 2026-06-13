@@ -219,7 +219,7 @@ function HeroSection() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.8, ease: "easeOut" }}
             className="relative z-10 w-[110px] md:w-[160px] overflow-hidden"
-            style={{ borderRadius: "2px" }} // Minimal radius for the 'scanner' crop
+            style={{ borderRadius: "100%" }} // Full circle to fix the square laser issue
           >
             {/* The MZW Logo */}
             <svg className="w-full relative z-10 drop-shadow-[0_0_20px_rgba(255,255,255,0.1)]" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="0 0 40.9986 36.3546" aria-label="Logo MZW">
@@ -228,7 +228,7 @@ function HeroSection() {
               </g>
             </svg>
 
-            {/* 5. Laser Scanner Sweep */}
+            {/* 5. Laser Scanner Sweep - High-end tech detail */}
             <motion.div 
               className="absolute inset-0 z-20 pointer-events-none"
               style={{
@@ -236,9 +236,10 @@ function HeroSection() {
                   ? "linear-gradient(110deg, transparent 35%, rgba(255,255,255,0.7) 50%, transparent 65%)"
                   : "linear-gradient(110deg, transparent 35%, rgba(0,0,0,0.15) 50%, transparent 65%)",
                 mixBlendMode: isDark ? "overlay" : "multiply",
+                borderRadius: "100%", // Matching the container
               }}
-              animate={{ x: ["-150%", "150%"] }}
-              transition={{ duration: 2.8, repeat: Infinity, repeatDelay: 5, ease: [0.45, 0, 0.55, 1] }}
+              animate={{ x: ["-180%", "180%"] }}
+              transition={{ duration: 3.2, repeat: Infinity, repeatDelay: 4.5, ease: [0.45, 0, 0.55, 1] }}
             />
           </motion.div>
         </div>
@@ -1467,20 +1468,50 @@ export function ProjectMzw() {
   const navigate = useNavigate();
 
   const containerRef = useRef<HTMLDivElement | null>(null);
+  
+  // Track scroll for global grid dynamics
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
+  // Grid Opacity Map:
+  // 0 (Hero): 100% visible
+  // 0.2 (Intro/Context): Fade to 40%
+  // 0.35 (Palette Start): Fade to 0%
+  // 0.45 (Palette End): Back to 40%
+  // 0.9 (Final): Fade back to 100%
+  const gridOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.15, 0.3, 0.4, 0.5, 0.9, 1],
+    [1, 0.4, 0.4, 0, 0.4, 0.4, 1]
+  );
 
   return (
     <div ref={containerRef} className="relative w-full">
-      {/* GLOBAL STUDIO LAYERS: Grain & Precision Grid present across the whole page */}
+      {/* GLOBAL STUDIO LAYERS */}
+      
       {/* 1. Cinematic Grain Overlay */}
       <div className="fixed inset-0 z-50 pointer-events-none opacity-[0.12] mix-blend-overlay"
         style={{ backgroundImage: "url('https://grainy-gradients.vercel.app/noise.svg')" }} />
 
-      {/* 2. Global Precision Grid */}
-      <div className="fixed inset-0 z-0 pointer-events-none"
+      {/* 2. Global Dynamic Precision Grid with Pulse Beat */}
+      <motion.div 
+        className="fixed inset-0 z-0 pointer-events-none"
         style={{
           backgroundImage: `linear-gradient(${isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.03)"} 1px, transparent 1px), 
                            linear-gradient(90deg, ${isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.03)"} 1px, transparent 1px)`,
           backgroundSize: "42px 42px",
+          opacity: gridOpacity,
+        }}
+        animate={{
+          scale: [1, 1.002, 1],
+          opacity: isDark ? [0.6, 1, 0.6] : [0.4, 0.8, 0.4],
+        }}
+        transition={{
+          duration: 1.5, // 80 BPM approx
+          repeat: Infinity,
+          ease: "easeInOut",
         }}
       />
 
