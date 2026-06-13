@@ -697,36 +697,28 @@ function DecorativeEqualizer({ isDark }: { isDark: boolean }) {
 
 function AnimatedPlayerMockup() {
   return (
-    <div className="relative mx-auto" style={{ aspectRatio: "785 / 1766" }}>
+    <div className="relative">
+      <div className="relative z-10 w-full" style={{ aspectRatio: "1080 / 1350" }}>
+        <img src={imgPlayerCenter} alt="MZW — lecteur en cours de lecture" className="absolute inset-0 size-full object-contain" />
+      </div>
       <div
-        className="absolute inset-0 rounded-[2.1rem] md:rounded-[3.2rem] p-[2.2%]"
+        className="absolute z-20"
         style={{
-          background: "linear-gradient(145deg, #19191d 0%, #050507 48%, #2a2b30 100%)",
-          boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.16), inset 0 0 0 3px rgba(0,0,0,0.82)",
+          left: "16.2%",
+          right: "16.2%",
+          top: "67.6%",
+          height: "5.8%",
+          filter: "drop-shadow(0 0 10px rgba(93,71,146,0.5))",
+          mixBlendMode: "screen",
         }}
       >
-        <div className="relative size-full overflow-hidden rounded-[1.75rem] md:rounded-[2.75rem]" style={{ background: "#090211" }}>
-          <img src={imgPlayerCenter} alt="MZW — lecteur en cours de lecture" className="absolute inset-0 size-full object-cover" />
-          <div
-            className="absolute z-20"
-            style={{
-              left: "8%",
-              right: "8%",
-              top: "70.4%",
-              height: "5%",
-              filter: "drop-shadow(0 0 10px rgba(93,71,146,0.5))",
-              mixBlendMode: "screen",
-            }}
-          >
-            <AnimatedWaveform />
-          </div>
-        </div>
+        <AnimatedWaveform />
       </div>
       <motion.div
         aria-hidden="true"
         className="absolute left-1/2 z-20 rounded-full"
         style={{
-          bottom: "7.6%",
+          bottom: "7.8%",
           width: "19%",
           aspectRatio: "1 / 1",
           background: "radial-gradient(circle, rgba(255,255,255,0.18), rgba(93,71,146,0.12) 55%, transparent 72%)",
