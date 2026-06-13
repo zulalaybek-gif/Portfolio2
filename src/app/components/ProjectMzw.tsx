@@ -705,7 +705,7 @@ function PrintSection() {
    =================================== */
 function VinylSection() {
   const { t } = useI18n();
-  const { r } = useTheme();
+  const { isDark, r } = useTheme();
   const body = useBodyStyle();
 
   return (
@@ -723,10 +723,33 @@ function VinylSection() {
         <FadeIn delay={0.15}>
           <div className="flex justify-center">
             <div
-              className="rounded-2xl overflow-hidden max-w-md"
-              style={{ border: `1px solid ${r(0.04)}` }}
+              className="relative rounded-2xl overflow-hidden max-w-md"
+              style={{
+                border: `1px solid ${r(0.04)}`,
+                background: isDark
+                  ? "linear-gradient(180deg, rgba(18,10,28,0.92), rgba(7,5,12,0.98))"
+                  : "linear-gradient(180deg, rgba(250,247,244,0.95), rgba(238,233,228,0.98))",
+              }}
             >
-              <img src={imgVinyle} alt="Pochette vinyle MZW No Sense" className="w-full object-cover" />
+              <div
+                className="absolute left-1/2 top-0 h-[34%] w-[58%] -translate-x-1/2 pointer-events-none"
+                style={{
+                  background: isDark
+                    ? `radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.44) 0%, rgba(${ACCENT_RGB},0.24) 36%, rgba(37,77,155,0.14) 58%, transparent 82%)`
+                    : `radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.68) 0%, rgba(${ACCENT_RGB},0.16) 42%, rgba(37,77,155,0.08) 62%, transparent 84%)`,
+                  filter: "blur(18px)",
+                  opacity: isDark ? 0.95 : 0.78,
+                }}
+              />
+              <div
+                className="absolute left-1/2 top-0 h-[46%] w-[74%] -translate-x-1/2 pointer-events-none"
+                style={{
+                  background: `linear-gradient(180deg, rgba(255,255,255,${isDark ? 0.16 : 0.2}) 0%, rgba(${ACCENT_RGB},${isDark ? 0.12 : 0.07}) 42%, transparent 100%)`,
+                  filter: "blur(28px)",
+                  opacity: isDark ? 0.78 : 0.58,
+                }}
+              />
+              <img src={imgVinyle} alt="Pochette vinyle MZW No Sense" className="relative z-10 w-full object-cover" />
             </div>
           </div>
         </FadeIn>
