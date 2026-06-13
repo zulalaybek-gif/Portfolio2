@@ -146,7 +146,7 @@ function HeroSection() {
           initial={{ opacity: 0, y: 30, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
-          className="w-[140px] md:w-[200px]"
+          className="w-[110px] md:w-[160px]"
         >
           <svg className="w-full" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="0 0 40.9986 36.3546" aria-label="Logo MZW">
             <g>
