@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef, useEffect, useState, useCallback } from "react";
-import { ArrowLeft, ExternalLink, Play } from "lucide-react";
+import { ArrowLeft, ExternalLink, Play, Zap, Sparkles, Droplets, Moon, Star } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useI18n, type TranslationKey } from "./i18n";
 import { useTheme } from "./theme";
@@ -34,9 +34,9 @@ const WEB_PROTO_EMBED_URL = `https://www.figma.com/embed?embed_host=share&url=${
 
 const PALETTE = [
   { hex: "#FD6235", name: "Flame Orange" },
-  { hex: "#8823F7", name: "Electric Violet" },
+  { hex: "#8E25F7", name: "Electric Violet" },
   { hex: "#1DA4D0", name: "Cyan Blue" },
-  { hex: "#26252D", name: "Dark Onyx" },
+  { hex: "#2B253D", name: "Dark Onyx" },
 ];
 
 function SectionLabel({ children }: { children: string }) {
@@ -282,60 +282,267 @@ function VisualDirectionSection() {
 }
 
 /* ===================================
-   6. PALETTE
+   6. PALETTE — Chromatic Booster Pack
    =================================== */
 function PaletteSection() {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const { isDark, r } = useTheme();
   const body = useBodyStyle();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const cards = [
+    { 
+      hex: "#FD6235", 
+      name: "Tangerine", 
+      role: lang === "fr" ? "Énergie" : "Energy", 
+      traits: lang === "fr" ? ["Vibrant", "Chaleureux", "Dynamique"] : ["Vibrant", "Warm", "Dynamic"],
+      icon: Zap,
+      rotation: -14,
+      x: -60,
+      y: 0,
+      zIndex: 40
+    },
+    { 
+      hex: "#8E25F7", 
+      name: "Éclat Violet", 
+      role: lang === "fr" ? "Créativité" : "Creativity", 
+      traits: lang === "fr" ? ["Mystérieux", "Inspirant"] : ["Mysterious", "Inspiring"],
+      icon: Sparkles,
+      rotation: -5,
+      x: -20,
+      y: 15,
+      zIndex: 30
+    },
+    { 
+      hex: "#1DA4D0", 
+      name: "Cyan Bleu", 
+      role: lang === "fr" ? "Confiance" : "Trust", 
+      traits: lang === "fr" ? ["Serein", "Fiable", "Clair"] : ["Serene", "Reliable", "Clear"],
+      icon: Droplets,
+      rotation: 5,
+      x: 20,
+      y: 30,
+      zIndex: 20
+    },
+    { 
+      hex: "#2B253D", 
+      name: "Charbon", 
+      role: lang === "fr" ? "Profondeur" : "Depth", 
+      traits: lang === "fr" ? ["Stable", "Sophistiqué"] : ["Stable", "Sophisticated"],
+      icon: Moon,
+      rotation: 14,
+      x: 60,
+      y: 50,
+      zIndex: 10
+    },
+  ];
 
   return (
-    <section className="px-6 md:px-16 py-16">
-      <div className="max-w-5xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start mb-10">
-          <FadeIn>
-            <SectionLabel>{t("kh.palette.label")}</SectionLabel>
-          </FadeIn>
-          <FadeIn delay={0.1}>
-            <p style={body}>{t("kh.palette.text")}</p>
-          </FadeIn>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {PALETTE.map((color, i) => (
-            <FadeIn key={color.hex} delay={0.12 + i * 0.06}>
-              <div className="flex flex-col items-center gap-3">
-                <div
-                  className="w-full aspect-square rounded-[28px] transition-transform duration-300 hover:scale-105"
-                  style={{
-                    background: color.hex,
-                    boxShadow: isDark
-                      ? `0 12px 30px ${color.hex}33`
-                      : `0 8px 24px ${color.hex}22`,
-                  }}
-                />
-                <span
-                  style={{
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: "0.6rem",
-                    letterSpacing: "0.05em",
-                    color: r(0.3),
-                  }}
-                >
-                  {color.hex}
-                </span>
-                <span
-                  style={{
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: "0.55rem",
-                    color: r(0.2),
-                  }}
-                >
-                  {color.name}
-                </span>
-              </div>
+    <section className="px-6 md:px-16 py-24 md:py-32 overflow-hidden">
+      <div className="max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_2fr] gap-12 lg:gap-20 items-center">
+          
+          {/* Text Side */}
+          <div className="flex flex-col gap-6 order-2 lg:order-1">
+            <FadeIn>
+              <SectionLabel>{t("kh.palette.label")}</SectionLabel>
             </FadeIn>
-          ))}
+            <FadeIn delay={0.1}>
+              <h2 
+                style={{ 
+                  fontFamily: "'Space Grotesk', sans-serif", 
+                  fontSize: "clamp(2.2rem, 5vw, 3.8rem)", 
+                  fontWeight: 700, 
+                  lineHeight: 0.95, 
+                  letterSpacing: "-0.02em",
+                  color: isDark ? "#fff" : DARK_BG 
+                }}
+              >
+                {lang === "fr" ? "Booster Pack Chromatique" : "Chromatic Booster Pack"}
+              </h2>
+            </FadeIn>
+            <FadeIn delay={0.15}>
+              <p style={{ ...body, fontSize: "1rem", maxWidth: "500px" }}>
+                {lang === "fr" 
+                  ? "Quatre teintes stratégiques. Une identité cohérente et mémorable. Collectionnez la palette de Kitty Hub et donnez du pouvoir à vos créations."
+                  : "Four strategic hues. A consistent and memorable identity. Collect the Kitty Hub palette and empower your creations."}
+              </p>
+            </FadeIn>
+            
+            <div className="flex flex-col gap-5 mt-6">
+              {[
+                { label: lang === "fr" ? "Identité forte" : "Strong identity", desc: lang === "fr" ? "Couleurs uniques et différenciantes." : "Unique and differentiating colors.", icon: Star },
+                { label: lang === "fr" ? "Impact visuel" : "Visual impact", desc: lang === "fr" ? "Des contrastes qui captent l'attention." : "Contrasts that catch the eye.", icon: Zap },
+                { label: lang === "fr" ? "Valeur de collection" : "Collector value", desc: lang === "fr" ? "Une palette pensée pour durer." : "A palette designed to last.", icon: Sparkles },
+              ].map((item, i) => (
+                <FadeIn key={i} delay={0.2 + i * 0.1}>
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 shrink-0 rounded-full flex items-center justify-center bg-white/5 border border-white/10">
+                      <item.icon size={16} style={{ color: ACCENT }} />
+                    </div>
+                    <div>
+                      <h4 style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", fontWeight: 700, color: isDark ? "#fff" : DARK_BG }}>{item.label}</h4>
+                      <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.8rem", color: r(0.35) }}>{item.desc}</p>
+                    </div>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+
+          {/* Visual Side: Fan of Cards + Booster */}
+          <div className="relative flex items-center justify-center min-h-[500px] md:min-h-[640px] order-1 lg:order-2">
+            {/* Background Atmosphere */}
+            <div className="absolute inset-0 pointer-events-none" style={{
+              background: `radial-gradient(circle at 50% 50%, rgba(${ACCENT_RGB}, 0.1) 0%, transparent 70%)`,
+              filter: "blur(60px)"
+            }} />
+
+            {/* The Cards Fan */}
+            <div className="relative w-full max-w-[400px] aspect-[4/5] z-20">
+              {cards.map((card, i) => (
+                <motion.div
+                  key={card.hex}
+                  initial={{ opacity: 0, x: 0, y: 150, rotate: 0 }}
+                  whileInView={{ 
+                    opacity: 1, 
+                    x: isMobile ? card.x * 1.4 : card.x * 2.8,
+                    y: isMobile ? card.y * 1.5 : card.y * 2,
+                    rotate: card.rotation 
+                  }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ 
+                    duration: 1, 
+                    delay: 0.5 + i * 0.12, 
+                    type: "spring",
+                    stiffness: 40,
+                    damping: 12
+                  }}
+                  whileHover={{ 
+                    y: (isMobile ? card.y * 1.5 : card.y * 2) - 30, 
+                    scale: 1.05, 
+                    zIndex: 100,
+                    transition: { duration: 0.3 }
+                  }}
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] md:w-[280px] aspect-[2.2/3.2] rounded-[1.5rem] p-5 md:p-6 flex flex-col justify-between shadow-2xl cursor-pointer overflow-hidden"
+                  style={{
+                    background: `linear-gradient(145deg, ${card.hex} 0%, ${card.hex}dd 100%)`,
+                    zIndex: card.zIndex,
+                    border: "1px solid rgba(255,255,255,0.3)",
+                    boxShadow: `0 40px 80px rgba(0,0,0,0.4), inset 0 0 40px rgba(255,255,255,0.15)`
+                  }}
+                >
+                   {/* Card Shine Overlay */}
+                   <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none" />
+
+                  {/* Top: Role + Icon */}
+                  <div className="flex justify-between items-start relative z-10">
+                    <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.9rem", fontWeight: 800, color: "#fff", textTransform: "uppercase", letterSpacing: "0.1em" }}>{card.role}</span>
+                    <card.icon size={20} color="white" fill="white" className="opacity-90" />
+                  </div>
+
+                  {/* Center: Glowing Sphere + Star Shape */}
+                  <div className="relative flex items-center justify-center flex-1 my-6 relative z-10">
+                    <motion.div 
+                      animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
+                      transition={{ duration: 3, repeat: Infinity }}
+                      className="absolute w-[90%] aspect-square rounded-full bg-white/20 blur-2xl" 
+                    />
+                    <div className="relative w-[75%] aspect-square rounded-full border border-white/25 flex items-center justify-center bg-white/5 overflow-hidden">
+                        <motion.div 
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                          className="absolute inset-0 bg-gradient-to-t from-transparent via-white/15 to-transparent" 
+                        />
+                        <Star size={36} fill="white" className="text-white opacity-50 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />
+                    </div>
+                  </div>
+
+                  {/* Bottom: Hex + Name + Traits */}
+                  <div className="flex flex-col gap-2.5 relative z-10">
+                    <div className="flex justify-between items-end">
+                      <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1rem", fontWeight: 700, color: "#fff", letterSpacing: "0.02em" }}>{card.hex}</span>
+                      <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", fontWeight: 400, color: "#fff", opacity: 0.95 }}>{card.name}</span>
+                    </div>
+                    <div className="w-full h-[1px] bg-white/30" />
+                    <div className="flex flex-wrap gap-x-3 gap-y-1">
+                      {card.traits.map(trait => (
+                        <span key={trait} style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", fontWeight: 500, color: "#fff", opacity: 0.8 }}>{trait}</span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Booster Pack (The base) */}
+            <motion.div 
+              className="absolute bottom-[-10%] left-1/2 -translate-x-1/2 z-[45] w-[300px] md:w-[380px] aspect-[3.2/4.2]"
+              initial={{ y: 150, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div 
+                className="w-full h-full rounded-[2.5rem] p-8 flex flex-col items-center justify-center gap-6 relative overflow-hidden"
+                style={{
+                  background: "linear-gradient(165deg, #1a1025 0%, #07020b 100%)",
+                  border: "2px solid rgba(255,255,255,0.12)",
+                  boxShadow: "0 30px 90px rgba(0,0,0,0.9), inset 0 0 40px rgba(142,37,247,0.3)"
+                }}
+              >
+                {/* Crinkled Metallic Overlay */}
+                <div className="absolute inset-0 opacity-[0.15] pointer-events-none" style={{
+                  backgroundImage: "url('https://grainy-gradients.vercel.app/noise.svg')",
+                  mixBlendMode: "screen"
+                }} />
+                
+                {/* Pack Visual Elements */}
+                <div className="flex flex-col items-center gap-2 relative z-10">
+                   <div className="flex gap-1.5 mb-3">
+                     {[...Array(5)].map((_, i) => <Star key={i} size={11} fill="white" className="text-white opacity-90 drop-shadow-sm" />)}
+                   </div>
+                   <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.1rem", fontWeight: 700, letterSpacing: "0.3em", color: "#fff", opacity: 0.8 }}>KITTY HUB</span>
+                   <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "2.4rem", fontWeight: 800, letterSpacing: "0.08em", color: "#fff", lineHeight: 1, textShadow: "0 0 20px rgba(136,35,247,0.4)" }}>PALETTE</h3>
+                   <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.75rem", fontWeight: 600, letterSpacing: "0.4em", color: "#fff", opacity: 0.4, marginTop: 15 }}>ÉDITION ORIGINALE</p>
+                </div>
+
+                {/* Decorative tear and light */}
+                <div className="absolute top-10 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 h-[60%] bg-gradient-to-t from-black/60 to-transparent" />
+              </div>
+            </motion.div>
+
+            {/* Collection Tip (Small card UI) */}
+            <FadeIn delay={1.4} className="absolute bottom-[-15%] right-0 md:right-[-5%] z-[60]">
+               <motion.div 
+                 whileHover={{ scale: 1.05 }}
+                 className="flex items-center gap-5 bg-white/10 backdrop-blur-xl p-5 rounded-[1.2rem] border border-white/15 shadow-2xl"
+               >
+                  <div className="flex -space-x-4">
+                     {[...Array(3)].map((_, i) => (
+                       <div key={i} className="w-7 h-10 rounded-sm bg-white/15 border border-white/20 rotate-[-12deg] shadow-lg" />
+                     ))}
+                  </div>
+                  <div className="flex flex-col gap-0.5">
+                    <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", fontWeight: 700, color: "#fff" }}>
+                      {lang === "fr" ? "Collectionnez." : "Collect."}
+                    </p>
+                    <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.7rem", color: r(0.4), fontWeight: 500 }}>
+                      {lang === "fr" ? "Créez sans limites." : "Create without limits."}
+                    </p>
+                  </div>
+               </motion.div>
+            </FadeIn>
+          </div>
+
         </div>
       </div>
     </section>
