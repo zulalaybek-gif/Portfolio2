@@ -245,7 +245,11 @@ function ContextSection() {
             <SectionLabel>{t("mzw.context.label")}</SectionLabel>
           </FadeIn>
           <FadeIn delay={0.1}>
-            <p style={body}>{t("mzw.context.text")}</p>
+            <div className="space-y-5">
+              <p style={body}>{t("mzw.context.text")}</p>
+              <p style={body}>{t("mzw.intention.text1")}</p>
+              <p style={body}>{t("mzw.intention.text2")}</p>
+            </div>
           </FadeIn>
         </div>
       </div>
@@ -269,7 +273,10 @@ function DirectionSection() {
             <SectionLabel>{t("mzw.direction.label")}</SectionLabel>
           </FadeIn>
           <FadeIn delay={0.1}>
-            <p style={body}>{t("mzw.direction.text")}</p>
+            <div className="space-y-5">
+              <p style={body}>{t("mzw.direction.text")}</p>
+              <p style={body}>{t("mzw.choices.text")}</p>
+            </div>
           </FadeIn>
         </div>
 
@@ -281,29 +288,6 @@ function DirectionSection() {
             </div>
           </div>
         </FadeIn>
-      </div>
-    </section>
-  );
-}
-
-/* ===================================
-   5. CHOIX GRAPHIQUES
-   =================================== */
-function ChoicesSection() {
-  const { t } = useI18n();
-  const body = useBodyStyle();
-
-  return (
-    <section className="px-6 md:px-16 py-16">
-      <div className="max-w-5xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start">
-          <FadeIn>
-            <SectionLabel>{t("mzw.choices.label")}</SectionLabel>
-          </FadeIn>
-          <FadeIn delay={0.1}>
-            <p style={body}>{t("mzw.choices.text")}</p>
-          </FadeIn>
-        </div>
       </div>
     </section>
   );
@@ -346,32 +330,6 @@ function NamingSection() {
           </FadeIn>
           <FadeIn delay={0.1}>
             <p style={body}>{t("mzw.butterfly.text")}</p>
-          </FadeIn>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ===================================
-   5c. INTENTION
-   =================================== */
-function IntentionSection() {
-  const { t } = useI18n();
-  const body = useBodyStyle();
-
-  return (
-    <section className="px-6 md:px-16 py-16">
-      <div className="max-w-5xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start">
-          <FadeIn>
-            <SectionLabel>{t("mzw.intention.label")}</SectionLabel>
-          </FadeIn>
-          <FadeIn delay={0.1}>
-            <div className="space-y-5">
-              <p style={body}>{t("mzw.intention.text1")}</p>
-              <p style={body}>{t("mzw.intention.text2")}</p>
-            </div>
           </FadeIn>
         </div>
       </div>
@@ -1405,9 +1363,7 @@ export function ProjectMzw() {
         <HeroSection />
         <IntroSection />
         <ContextSection />
-        <IntentionSection />
         <DirectionSection />
-        <ChoicesSection />
         <NamingSection />
         <PaletteSection />
         <LogoSection />
