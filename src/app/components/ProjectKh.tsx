@@ -324,44 +324,44 @@ function PaletteSection() {
       src: imgPaletteOrange,
       alt: "Kitty Hub orange collector card",
       className:
-        "top-[8px] left-1/2 -translate-x-1/2 w-[165px] max-w-[46vw] md:top-[32px] md:left-[56px] md:translate-x-0 md:w-[205px] md:max-w-none lg:top-[75px] lg:left-[10px] lg:w-[230px]",
-      rotate: "-2deg",
-      zIndex: 30,
+        "left-[18px] top-[8px] w-[164px] md:left-[46px] md:top-[8px] md:w-[218px] lg:left-[58px] lg:top-[6px] lg:w-[274px]",
+      rotate: "-4deg",
+      zIndex: 34,
     },
     {
       id: "violet",
       src: imgPaletteViolet,
       alt: "Kitty Hub violet collector card",
       className:
-        "top-[28px] left-1/2 -translate-x-[calc(50%-28px)] w-[160px] max-w-[44vw] md:top-[46px] md:left-[196px] md:translate-x-0 md:w-[205px] md:max-w-none lg:top-[90px] lg:left-[180px] lg:w-[230px]",
-      rotate: "1.5deg",
-      zIndex: 24,
+        "left-[112px] top-[28px] w-[156px] md:left-[180px] md:top-[24px] md:w-[212px] lg:left-[226px] lg:top-[28px] lg:w-[266px]",
+      rotate: "2deg",
+      zIndex: 31,
     },
     {
       id: "blue",
       src: imgPaletteBlue,
       alt: "Kitty Hub blue collector card",
       className:
-        "top-[48px] left-1/2 -translate-x-[calc(50%-54px)] w-[155px] max-w-[42vw] md:top-[64px] md:left-[326px] md:translate-x-0 md:w-[205px] md:max-w-none lg:top-[113px] lg:left-[340px] lg:w-[230px]",
-      rotate: "2deg",
-      zIndex: 18,
+        "left-[194px] top-[48px] w-[148px] md:left-[304px] md:top-[44px] md:w-[206px] lg:left-[380px] lg:top-[52px] lg:w-[258px]",
+      rotate: "5deg",
+      zIndex: 28,
     },
     {
       id: "dark",
       src: imgPaletteDark,
       alt: "Kitty Hub dark collector card",
       className:
-        "top-[68px] left-1/2 -translate-x-[calc(50%-76px)] w-[150px] max-w-[40vw] md:top-[88px] md:left-[450px] md:translate-x-0 md:w-[205px] md:max-w-none lg:top-[140px] lg:left-[475px] lg:w-[230px]",
-      rotate: "3deg",
-      zIndex: 12,
+        "left-[258px] top-[66px] w-[140px] md:left-[422px] md:top-[68px] md:w-[196px] lg:left-[528px] lg:top-[82px] lg:w-[246px]",
+      rotate: "8deg",
+      zIndex: 25,
     },
     {
       id: "booster",
       src: imgPaletteBooster,
       alt: "Kitty Hub chromatic booster pack",
       className:
-        "top-[220px] left-1/2 -translate-x-1/2 w-[175px] max-w-[52vw] md:top-[270px] md:left-[130px] md:translate-x-0 md:w-[235px] md:max-w-none lg:top-[260px] lg:left-[185px] lg:w-[270px]",
-      rotate: "-6deg",
+        "left-[86px] top-[176px] w-[190px] md:left-[140px] md:top-[230px] md:w-[250px] lg:left-[176px] lg:top-[286px] lg:w-[312px]",
+      rotate: "-8deg",
       zIndex: 40,
     },
   ];
@@ -378,10 +378,10 @@ function PaletteSection() {
       />
 
       <div className="relative max-w-[1480px] mx-auto overflow-visible px-6 lg:px-[64px]">
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,38%)_minmax(0,62%)] gap-[48px] lg:gap-[40px] items-start overflow-visible">
+        <div className="flex flex-col items-start gap-[48px] overflow-visible lg:flex-row lg:items-center lg:gap-[56px]">
 
           {/* LEFT COLUMN: 360px */}
-          <div className="w-full z-20">
+          <div className="w-full z-20 lg:w-[420px] lg:shrink-0">
             <FadeIn>
               <div
                 className="inline-flex items-center px-4 rounded-[8px] mb-[44px] border border-white/10"
@@ -431,24 +431,25 @@ function PaletteSection() {
             </div>
           </div>
 
-          {/* RIGHT VISUAL ZONE: 920px */}
-          <div className="relative w-full h-[430px] md:h-[560px] lg:h-[620px] overflow-visible">
-            <div className="relative mx-auto h-full w-full max-w-[390px] overflow-visible md:max-w-[690px] lg:mx-0 lg:w-[720px] lg:max-w-none">
+          <div className="relative z-10 mx-auto h-[360px] w-full max-w-[360px] overflow-visible md:h-[500px] md:max-w-[650px] lg:mx-0 lg:h-[560px] lg:w-[760px] lg:max-w-none lg:shrink-0">
 
-              {/* Background Glows and Shape */}
-              {!isMobile && (
-                <div className="absolute left-[-20px] top-[16px] z-0 h-[520px] w-[560px] overflow-hidden rounded-[34px] border border-white/5 pointer-events-none md:w-[590px] lg:w-[650px]">
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      background: 'radial-gradient(circle at 30% 30%, rgba(142,37,247,0.12) 0%, transparent 65%), radial-gradient(circle at 70% 70%, rgba(29,164,208,0.1) 0%, transparent 65%)',
-                      backgroundColor: 'rgba(255,255,255,0.01)'
-                    }}
-                  />
-                </div>
-              )}
+            <div className="absolute left-0 top-[28px] z-[1] h-[300px] w-full overflow-visible rounded-[28px] border border-white/5 pointer-events-none md:top-[26px] md:h-[430px] lg:top-[20px] lg:h-[520px] lg:w-[640px] lg:rounded-[32px]">
+              <div
+                className="absolute inset-0 rounded-[inherit]"
+                style={{
+                  background: 'radial-gradient(circle at 30% 30%, rgba(142,37,247,0.12) 0%, transparent 65%), radial-gradient(circle at 70% 70%, rgba(29,164,208,0.1) 0%, transparent 65%)',
+                  backgroundColor: 'rgba(255,255,255,0.01)'
+                }}
+              />
+            </div>
 
-              <div className="absolute inset-0 z-10 overflow-visible">
+            <div className="absolute left-[20px] top-[18px] z-20 h-[250px] w-[300px] rounded-full bg-violet-500/10 blur-[70px] pointer-events-none md:left-[90px] md:top-[40px] md:h-[340px] md:w-[460px] lg:left-[120px] lg:top-[48px] lg:h-[380px] lg:w-[520px]" />
+
+            <motion.div
+              className="absolute left-0 top-0 z-30 h-[360px] w-[360px] overflow-visible pointer-events-none md:h-[500px] md:w-[650px] lg:left-[48px] lg:top-[-8px] lg:h-[560px] lg:w-[760px]"
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 7, ease: "easeInOut", repeat: Infinity }}
+            >
                 {paletteAssets.map((asset, i) => (
                   <motion.img
                     key={asset.id}
@@ -462,31 +463,11 @@ function PaletteSection() {
                     style={{
                       rotate: asset.rotate,
                       zIndex: asset.zIndex,
+                      transformOrigin: "center center",
                     }}
                   />
                 ))}
-              </div>
-
-              {/* Cartouche Right Detail */}
-              {!isMobile && (
-                <FadeIn delay={0.8}>
-                  <div
-                    className="absolute left-[560px] top-[460px] w-[300px] h-[86px] rounded-[18px] bg-white/[0.03] border border-white/5 flex items-center px-6 gap-4 z-50 backdrop-blur-sm"
-                  >
-                    <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center border border-white/10 shrink-0 shadow-inner">
-                       <div className="w-5 h-4 border border-white/30 rounded-sm relative">
-                          <div className="absolute inset-0 translate-x-1 -translate-y-1 border border-white/10 rounded-sm" />
-                       </div>
-                    </div>
-                    <p className="text-white/60 text-[14px] leading-snug font-medium">
-                      Collectionnez. Combinez.<br />
-                      <span className="text-white/80">Créez sans limites.</span>
-                    </p>
-                  </div>
-                </FadeIn>
-              )}
-
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
