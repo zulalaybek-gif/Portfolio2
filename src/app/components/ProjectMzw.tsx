@@ -1344,12 +1344,12 @@ function DecorativeSwirl({ isDark }: { isDark: boolean }) {
     <div className="absolute inset-0 z-[0] pointer-events-none overflow-hidden" aria-hidden="true">
       <motion.div
         className="absolute"
-        style={{ width: "clamp(900px, 100vw, 1800px)", top: "18%", left: "-25%", aspectRatio: "1112.71 / 1487.03" }}
+        style={{ width: "clamp(760px, 92vw, 1600px)", top: "clamp(-180px, -10vw, -70px)", left: "-18%", aspectRatio: "1112.71 / 1487.03" }}
         animate={{ rotate: [0, 3, -2, 0], scale: [1, 1.04, 0.97, 1] }}
         transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
       >
         <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 1112.71 1487.03"
-          style={{ opacity: isDark ? 0.2 : 0.08 }}>
+          style={{ opacity: isDark ? 0.24 : 0.1 }}>
           <defs>
             <linearGradient id="swirl-grad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#254d9b" />
