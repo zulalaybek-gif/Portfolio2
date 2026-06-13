@@ -12,7 +12,7 @@ import svgPaths from "../../imports/svg-8j0m9nldaw";
 import imgNoSenseA3 from "../../assets/mzw/01-affiche.png";
 import imgSupportPrint1 from "../../assets/mzw/02-support-print.jpg";
 import imgSupportPrint2 from "../../assets/mzw/03-support-print.jpg";
-import imgVinyle from "../../assets/mzw/04-vinyle.png";
+import imgVinyle from "../../assets/mzw/14-vinyle.png";
 import imgTShirt from "../../assets/mzw/05-tshirt.png";
 import imgMockup1 from "../../assets/mzw/06-mockup.png";
 import imgMockup2 from "../../assets/mzw/07-mockup.png";
