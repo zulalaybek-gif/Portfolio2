@@ -787,66 +787,6 @@ function MerchSection() {
 
 const EQ_COLORS = ["#254d9b", "#5d4792", "#b3428a", "#5DA9FF", "#D8C7D1"];
 
-const WAVEFORM_PLAYED = [62, 105, 89, 46, 62, 50, 121, 62, 62, 62, 42, 54, 22, 54, 113, 77, 54, 34, 77, 113, 77, 77, 89, 113, 70, 54, 77, 77, 62];
-const WAVEFORM_UNPLAYED = [105, 89, 70, 62, 77, 121, 62, 62, 62, 30, 38, 14, 38, 77, 54, 38, 22, 54, 77, 54, 54, 62, 77, 50, 38, 54, 54];
-const WF_MAX = 121;
-
-function AnimatedWaveform() {
-  const playedBars = useMemo(
-    () =>
-      WAVEFORM_PLAYED.map((h) => {
-        const pct = (h / WF_MAX) * 100;
-        const variance = 15 + Math.random() * 20;
-        return {
-          base: pct,
-          high: Math.min(100, pct + variance),
-          low: Math.max(15, pct - variance * 0.6),
-          duration: 0.6 + Math.random() * 0.8,
-          delay: Math.random() * 0.5,
-        };
-      }),
-    []
-  );
-  const unplayedBars = useMemo(
-    () =>
-      WAVEFORM_UNPLAYED.map((h) => {
-        const pct = (h / WF_MAX) * 100;
-        const variance = 8 + Math.random() * 12;
-        return {
-          base: pct,
-          high: Math.min(100, pct + variance),
-          low: Math.max(10, pct - variance * 0.5),
-          duration: 0.8 + Math.random() * 0.6,
-          delay: Math.random() * 0.4,
-        };
-      }),
-    []
-  );
-
-  return (
-    <div className="flex items-center gap-[1.5px] w-full" style={{ height: "100%" }}>
-      {playedBars.map((bar, i) => (
-        <motion.div
-          key={`p-${i}`}
-          className="flex-1 rounded-full"
-          style={{ background: "#60488e", minWidth: 1.5, maxWidth: 4 }}
-          animate={{ height: [`${bar.base}%`, `${bar.high}%`, `${bar.low}%`, `${bar.base}%`] }}
-          transition={{ duration: bar.duration, delay: bar.delay, repeat: Infinity, ease: "easeInOut" }}
-        />
-      ))}
-      {unplayedBars.map((bar, i) => (
-        <motion.div
-          key={`u-${i}`}
-          className="flex-1 rounded-full"
-          style={{ background: "rgba(255,255,255,0.65)", minWidth: 1.5, maxWidth: 4 }}
-          animate={{ height: [`${bar.base}%`, `${bar.high}%`, `${bar.low}%`, `${bar.base}%`] }}
-          transition={{ duration: bar.duration, delay: bar.delay, repeat: Infinity, ease: "easeInOut" }}
-        />
-      ))}
-    </div>
-  );
-}
-
 /* Decorative equalizer — ultra-wide with soft edge fade and slow motion */
 function DecorativeEqualizer({ isDark }: { isDark: boolean }) {
   const barCount = 180;
@@ -887,91 +827,11 @@ function DecorativeEqualizer({ isDark }: { isDark: boolean }) {
 function AnimatedPlayerMockup() {
   return (
     <div className="relative">
-      <div className="relative z-10 w-full" style={{ aspectRatio: "1080 / 980" }}>
-        <div
-          className="absolute left-1/2 top-1/2 w-[54%] max-w-none -translate-x-1/2 -translate-y-1/2 rounded-[2.2rem] p-[1.2%]"
-          style={{
-            aspectRatio: "785 / 1260",
-            background: "linear-gradient(145deg, #1c1d21 0%, #050507 48%, #2c2d32 100%)",
-            boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.18), inset 0 0 0 3px rgba(0,0,0,0.86)",
-          }}
-        >
-          <div className="relative size-full overflow-hidden rounded-[1.85rem]" style={{ background: "#090211" }}>
-            <img src={imgPlayerCenter} alt="MZW — lecteur en cours de lecture" className="absolute inset-0 size-full object-cover object-top" />
-            <div 
-              className="absolute inset-x-0 bottom-0 z-20 flex flex-col items-center"
-              style={{
-                height: "35%",
-                padding: "18px 8% 42px",
-                background: "linear-gradient(180deg, rgba(9,2,17,0.86) 0%, rgba(9,2,17,0.97) 22%, #090211 100%)",
-              }}
-            >
-              <div
-                className="w-full"
-                style={{
-                  height: 38,
-                  filter: "drop-shadow(0 0 10px rgba(93,71,146,0.5))",
-                  mixBlendMode: "screen",
-                }}
-              >
-                <AnimatedWaveform />
-              </div>
-              <div
-                className="mt-[14px] flex w-full items-center justify-between"
-                style={{
-                  color: "rgba(255,255,255,0.6)",
-                  fontFamily: "'Inter', sans-serif",
-                  fontSize: 12,
-                  lineHeight: 1,
-                }}
-              >
-                <span>1:04</span>
-                <span>3:29</span>
-              </div>
-              <div className="mt-7 flex w-full items-center justify-center gap-8">
-                <span
-                  aria-hidden="true"
-                  className="block h-4 w-4"
-                  style={{
-                    borderTop: "1.5px solid rgba(255,255,255,0.42)",
-                    borderBottom: "1.5px solid rgba(255,255,255,0.42)",
-                    transform: "skewX(-18deg)",
-                  }}
-                />
-                <motion.div
-                  aria-hidden="true"
-                  className="relative rounded-full"
-                  style={{
-                    width: 60,
-                    aspectRatio: "1 / 1",
-                    background: "radial-gradient(circle, rgba(255,255,255,0.22), rgba(93,71,146,0.16) 55%, rgba(93,71,146,0.06) 72%)",
-                    boxShadow: "0 0 24px rgba(93,71,146,0.28)",
-                  }}
-                  animate={{ scale: [1, 1.06, 1], opacity: [0.78, 1, 0.78] }}
-                  transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  <span
-                    className="absolute left-1/2 top-1/2 block h-0 w-0 -translate-x-[35%] -translate-y-1/2"
-                    style={{
-                      borderTop: "8px solid transparent",
-                      borderBottom: "8px solid transparent",
-                      borderLeft: "13px solid rgba(255,255,255,0.88)",
-                    }}
-                  />
-                </motion.div>
-                <span
-                  aria-hidden="true"
-                  className="block h-4 w-4 rounded-full"
-                  style={{
-                    border: "1.5px solid rgba(255,255,255,0.42)",
-                    borderLeftColor: "transparent",
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <img
+        src={imgPlayerCenter}
+        alt="MZW — lecteur en cours de lecture"
+        className="relative z-10 mx-auto h-auto w-full object-contain"
+      />
     </div>
   );
 }
@@ -1040,7 +900,7 @@ function MobileSection() {
             {/* Center phone — hero player */}
             <FadeIn delay={0.15} className="relative z-30">
               <motion.div className="relative" initial={{ opacity: 0, y: 70, scale: 0.92 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true }} transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}>
-                <motion.div className="relative" style={{ width: "clamp(280px, 37.5vw, 520px)" }}
+                <motion.div className="relative" style={{ width: "clamp(230px, 24vw, 360px)" }}
                   animate={{ y: [0, -6, 0], filter: [phoneShadow(true), `drop-shadow(0 40px 80px rgba(0,0,0,${isDark ? 0.7 : 0.3})) drop-shadow(0 0 60px rgba(${ACCENT_RGB},${isDark ? 0.35 : 0.18}))`, phoneShadow(true)] }}
                   transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}>
                   <AnimatedPlayerMockup />
