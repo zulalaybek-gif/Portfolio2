@@ -451,61 +451,61 @@ const translations = {
   "mw.back": { fr: "Retour aux projets", en: "Back to projects" },
 
   // ── MZW — No Sense ──
-  "mzw.hero.label": { fr: "Direction Artistique", en: "Visual Identity" },
+  "mzw.hero.label": { fr: "Direction Artistique", en: "Art Direction" },
   "mzw.hero.year": { fr: "2022", en: "2022" },
   "mzw.intro.subtitle": {
     fr: "Direction artistique complète pour un groupe de musique électro fictif.",
-    en: "Visual identity creation for a fictional electronic music group.",
+    en: "Complete art direction for a fictional electronic music group.",
   },
   "mzw.intro.desc": {
     fr: "Le projet déploie une direction graphique pensée pour vivre sur affiche, vinyle, merchandising, interface mobile et prototype web.",
-    en: "MZW is a visual universe creation project imagined for a fictional electronic music group. The goal was to design a strong, immersive, and versatile identity, capable of existing across multiple formats: poster, vinyl sleeve, merchandising, and mobile interface.",
+    en: "The project develops a graphic direction designed to live across posters, vinyl, merchandising, mobile interface and web prototype.",
   },
   "mzw.context.label": { fr: "Contexte", en: "Context" },
   "mzw.context.text": {
     fr: "L'enjeu : donner au groupe une présence immédiatement reconnaissable, avec un système clair, cohérent et adaptable du print au digital.",
-    en: "The challenge was to create a visual identity strong enough to give the group an immediately recognizable presence, while ensuring consistency across different media. The universe had to work equally well in print and in more digital or derivative uses.",
+    en: "The challenge: give the group an immediately recognizable presence, with a clear, consistent system that could move from print to digital.",
   },
   "mzw.direction.label": { fr: "Direction visuelle", en: "Visual Direction" },
   "mzw.direction.text": {
     fr: "La direction repose sur une composition centrale sculpturale, entourée de lignes topographiques. Elles évoquent les ondes sonores, le mouvement, les vibrations et l'énergie électronique.",
-    en: "The project relies on an intense and experimental graphic universe, built around a highly expressive central composition, fluid topographic lines, and immersive visual treatment. The whole aims to translate the energy of electronic music through a dense, digital, and sensory aesthetic.",
+    en: "The direction is built around a sculptural central composition, surrounded by topographic lines. They suggest sound waves, movement, vibrations and electronic energy.",
   },
   "mzw.choices.label": { fr: "Choix graphiques", en: "Graphic Choices" },
   "mzw.choices.text": {
     fr: "Le signe central agit comme un emblème. Sa symétrie apporte de la stabilité, tandis que les dégradés et les tracés en arrière-plan créent rythme, relief et tension.",
-    en: "The composition was conceived as a focal point with strong visual impact, almost like an emblem. Its symmetrical, structured, and sculptural treatment establishes a strong presence, while the background lines bring rhythm, vibration, and depth. The whole creates a visual tension echoing the sound intensity and immersive dimension of the musical universe.",
+    en: "The central mark acts as an emblem. Its symmetry brings stability, while gradients and background lines create rhythm, depth and tension.",
   },
   "mzw.palette.label": { fr: "Palette chromatique", en: "Color Palette" },
   "mzw.palette.text": {
     fr: "Bleu profond, cyan, rose froid, magenta et violet composent une palette nocturne, vibrante et numérique.",
-    en: "The palette combines deep blue, cyan, cool pink, magenta and purple. Luminous contrasts bring energy, tension and intensity, while cool tones establish a more nocturnal and electronic depth.",
+    en: "Deep blue, cyan, cool pink, magenta and violet shape a nocturnal, vibrant and digital palette.",
   },
   "mzw.print.label": { fr: "Supports print", en: "Print Materials" },
   "mzw.print.text": {
     fr: "L'affiche A3 installe le langage graphique dans un format événementiel, lisible et impactant.",
-    en: "The A3 poster and mockup variations allow the identity to be visualized in a real-world display and event communication context.",
+    en: "The A3 poster brings the graphic language into an event format, readable and impactful.",
   },
   "mzw.merch.label": { fr: "Merchandising", en: "Merchandising" },
   "mzw.merch.text": {
     fr: "Le textile reprend le signe MZW avec une application sobre, pensée comme une extension portable de l'identité.",
-    en: "Textile variations extend the visual universe beyond paper, with a restrained application of the MZW mark on apparel.",
+    en: "The textile piece uses the MZW mark with restraint, as a wearable extension of the identity.",
   },
   "mzw.vinyl.label": { fr: "Pochette vinyle", en: "Vinyl Sleeve" },
   "mzw.mobile.label": { fr: "Interface mobile", en: "Mobile Interface" },
   "mzw.mobile.text": {
     fr: "Le player mobile transpose le système graphique dans une expérience d'écoute, entre pochette, contrôle et animation sonore.",
-    en: "The mobile player extends the identity into the digital space, offering a listening experience consistent with the group's visual universe.",
+    en: "The mobile player translates the graphic system into a listening experience, between artwork, controls and animated sound.",
   },
   "mzw.mobile.anecdote": {
     fr: "« Schmetterling » signifie « papillon » en allemand : un lien direct entre le symbole, le son et l'univers du groupe.",
-    en: "\"Schmetterling\" means \"butterfly\" in German — a nod to the butterfly, the central graphic element of MZW's visual identity.",
+    en: "\"Schmetterling\" means \"butterfly\" in German: a direct link between the symbol, the sound and the group's universe.",
   },
   "mzw.mockups.label": { fr: "Mises en situation", en: "Mockups" },
   "mzw.final.label": { fr: "Clôture", en: "Closing" },
   "mzw.final.text": {
     fr: "Une direction artistique complète, pensée comme un système vivant : du signe au support, de l'objet imprimé à l'expérience digitale.",
-    en: "A complete and immersive visual universe — from poster to vinyl, from merchandising to mobile app, an identity that pulses to the rhythm of music.",
+    en: "A complete art direction, designed as a living system: from mark to medium, from printed object to digital experience.",
   },
   "mzw.back": { fr: "Retour aux projets", en: "Back to projects" },
   "mzw.logo.label": { fr: "Logo", en: "Logo" },
@@ -513,30 +513,30 @@ const translations = {
   "mzw.name.label": { fr: "Construction du nom", en: "Name Construction" },
   "mzw.name.text": {
     fr: "MZW reprend les initiales des trois membres du groupe. Chaque lettre a été associée à un mot allemand, en référence aux origines de la musique électro.",
-    en: "The name MZW takes the initials of the three team members' first names. Reduced to this short, compact form, it becomes a graphic sign in itself: direct, memorable, and easily identifiable within the group's universe.",
+    en: "MZW takes the initials of the three group members. Each letter was paired with a German word, referencing the German roots of electronic music.",
   },
   "mzw.baseline.label": { fr: "Baseline", en: "Baseline" },
   "mzw.baseline.text": {
     fr: "Mis ensemble, ces mots ne forment pas de sens clair. La baseline « No Sense » assume ce décalage et transforme l'ambiguïté en parti pris.",
-    en: "The baseline 'No Sense' extends this logic by introducing an element of offset and ambiguity. It evokes something less direct, more abstract, almost elusive, reinforcing the experimental and mysterious dimension of the project. In this universe, language is not just informative: it also contributes to the atmosphere.",
+    en: "Placed together, these words do not form a clear meaning. The baseline \"No Sense\" embraces that shift and turns ambiguity into a creative stance.",
   },
   "mzw.butterfly.label": { fr: "Choix du papillon", en: "Butterfly Choice" },
   "mzw.butterfly.text": {
     fr: "Le mot-signe et la baseline ont été travaillés pour faire émerger une silhouette de papillon. Le symbole introduit l'idée de transformation, de mouvement et de vibration.",
-    en: "The wordmark was built to bring out a butterfly-like silhouette through a symmetric, unfolded composition. This choice introduces a more symbolic reading into the visual identity: the butterfly evokes transformation, lightness, movement, and a form of visual vibration, resonating with the electronic music universe. Its structure also opens up an interesting graphic playground, between typographic impact and near-organic form.",
+    en: "The wordmark and baseline were shaped to reveal a butterfly silhouette. The symbol introduces ideas of transformation, movement and vibration.",
   },
   "mzw.intention.label": { fr: "Intention", en: "Intent" },
   "mzw.intention.text1": {
     fr: "L'intention était de créer une présence construite, expressive et légèrement énigmatique, capable de porter le caractère du groupe sans le figer.",
-    en: "The whole was conceived as an identity that is at once constructed, expressive, and slightly enigmatic. The work plays on the tension between readability and experimentation, between structure and sensation, to create an immersive visual universe consistent with a more digital, intense, and singular musical aesthetic.",
+    en: "The intention was to create a structured, expressive and slightly enigmatic presence, able to carry the group's character without freezing it.",
   },
   "mzw.intention.text2": {
     fr: "Le projet cherche l'équilibre entre lisibilité et expérimentation : une écriture qui devient image, un rythme graphique qui accompagne le son.",
-    en: "The color contrasts and gradients convey a sense of sonic material in motion, while the symmetric structure reinforces the idea of a constructed, almost pulsating visual system linked to rhythm. The typographic treatment seeks to create a dialogue between readability and impact, with writing that becomes image itself. The whole was designed to transcribe an aesthetic that is at once digital, energetic, and immersive, consistent with the project's musical universe.",
+    en: "The project seeks a balance between readability and experimentation: lettering that becomes image, and a graphic rhythm that follows the sound.",
   },
   "mzw.vinyl.text": {
     fr: "La pochette vinyle condense le projet dans un objet iconique, à la fois graphique, musical et collectionnable.",
-    en: "The vinyl sleeve condenses the graphic universe into an iconic format — an object that is both visual and sonic.",
+    en: "The vinyl sleeve condenses the project into an iconic object, at once graphic, musical and collectible.",
   },
 
   // ── Project description for listing ──
