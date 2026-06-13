@@ -699,7 +699,11 @@ function AnimatedPlayerMockup() {
   return (
     <div className="relative">
       <div className="relative z-10 w-full" style={{ aspectRatio: "1080 / 1350" }}>
-        <img src={imgPlayerCenter} alt="MZW — lecteur en cours de lecture" className="absolute inset-0 size-full object-contain" />
+        <img
+          src={imgPlayerCenter}
+          alt="MZW — lecteur en cours de lecture"
+          className="absolute left-1/2 top-1/2 h-[90%] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 object-contain"
+        />
       </div>
       <div
         className="absolute z-20"
