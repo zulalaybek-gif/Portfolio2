@@ -1467,51 +1467,22 @@ export function ProjectMzw() {
   const { r, isDark } = useTheme();
   const navigate = useNavigate();
 
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  
-  // Track scroll for global grid dynamics
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
-
-  // Grid Opacity Map:
-  // 0 (Hero): 100% visible
-  // 0.2 (Intro/Context): Fade to 40%
-  // 0.35 (Palette Start): Fade to 0%
-  // 0.45 (Palette End): Back to 40%
-  // 0.9 (Final): Fade back to 100%
-  const gridOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.15, 0.3, 0.4, 0.5, 0.9, 1],
-    [1, 0.4, 0.4, 0, 0.4, 0.4, 1]
-  );
-
   return (
-    <div ref={containerRef} className="relative w-full">
+    <div className="relative w-full">
       {/* GLOBAL STUDIO LAYERS */}
       
       {/* 1. Cinematic Grain Overlay */}
       <div className="fixed inset-0 z-50 pointer-events-none opacity-[0.12] mix-blend-overlay"
         style={{ backgroundImage: "url('https://grainy-gradients.vercel.app/noise.svg')" }} />
 
-      {/* 2. Global Dynamic Precision Grid with Pulse Beat */}
-      <motion.div 
+      {/* 2. Global Precision Grid */}
+      <div 
         className="fixed inset-0 z-0 pointer-events-none"
         style={{
           backgroundImage: `linear-gradient(${isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.03)"} 1px, transparent 1px), 
                            linear-gradient(90deg, ${isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.03)"} 1px, transparent 1px)`,
           backgroundSize: "42px 42px",
-          opacity: gridOpacity,
-        }}
-        animate={{
-          scale: [1, 1.002, 1],
-          opacity: isDark ? [0.6, 1, 0.6] : [0.4, 0.8, 0.4],
-        }}
-        transition={{
-          duration: 1.5, // 80 BPM approx
-          repeat: Infinity,
-          ease: "easeInOut",
+          opacity: isDark ? 0.58 : 0.4,
         }}
       />
 
