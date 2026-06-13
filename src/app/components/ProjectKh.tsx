@@ -351,7 +351,7 @@ function PaletteSection() {
       src: imgPaletteDark,
       alt: "Kitty Hub dark collector card",
       className:
-        "top-[56px] left-1/2 -translate-x-[calc(50%-52px)] w-[50vw] max-w-[210px] md:top-[86px] md:left-[382px] md:translate-x-0 md:w-[210px] md:max-w-none lg:top-[105px] lg:left-[455px] lg:w-[255px]",
+        "top-[56px] left-1/2 -translate-x-[calc(50%-52px)] w-[50vw] max-w-[210px] md:top-[86px] md:left-[382px] md:translate-x-0 md:w-[210px] md:max-w-none lg:top-[105px] lg:left-[515px] lg:w-[255px]",
       rotate: "5deg",
       zIndex: 12,
     },
@@ -367,7 +367,7 @@ function PaletteSection() {
   ];
 
   return (
-    <section className="relative w-full bg-[#030303] overflow-visible" style={{ paddingTop: '72px', paddingBottom: '136px' }}>
+    <section className="relative w-full bg-[#030303] overflow-x-clip overflow-y-visible" style={{ paddingTop: '72px', paddingBottom: '136px' }}>
       {/* Background Grid Decoration */}
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none"
@@ -377,7 +377,7 @@ function PaletteSection() {
         }}
       />
 
-      <div className="max-w-[1480px] mx-auto px-6 lg:px-[64px]">
+      <div className="relative max-w-[1480px] mx-auto overflow-visible px-6 lg:px-[64px]">
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,42%)_minmax(0,58%)] gap-[48px] lg:gap-[40px] items-start overflow-visible">
 
           {/* LEFT COLUMN: 360px */}
@@ -433,17 +433,19 @@ function PaletteSection() {
 
           {/* RIGHT VISUAL ZONE: 920px */}
           <div className="relative w-full h-[430px] md:h-[520px] lg:h-[610px] overflow-visible">
-            <div className="relative mx-auto h-full w-full max-w-[420px] overflow-visible md:max-w-[660px] lg:mx-0 lg:max-w-none">
+            <div className="relative mx-auto h-full w-full max-w-[420px] overflow-visible md:max-w-[660px] lg:mx-0 lg:w-[760px] lg:max-w-none">
 
               {/* Background Glows and Shape */}
               {!isMobile && (
-                <div
-                  className="absolute left-[-20px] top-[16px] w-[calc(100%+140px)] h-[520px] rounded-[34px] border border-white/5 z-0 pointer-events-none"
-                  style={{
-                    background: 'radial-gradient(circle at 30% 30%, rgba(142,37,247,0.12) 0%, transparent 65%), radial-gradient(circle at 70% 70%, rgba(29,164,208,0.1) 0%, transparent 65%)',
-                    backgroundColor: 'rgba(255,255,255,0.01)'
-                  }}
-                />
+                <div className="absolute left-[-20px] top-[16px] z-0 h-[520px] w-[560px] overflow-hidden rounded-[34px] border border-white/5 pointer-events-none md:w-[590px] lg:w-[650px]">
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background: 'radial-gradient(circle at 30% 30%, rgba(142,37,247,0.12) 0%, transparent 65%), radial-gradient(circle at 70% 70%, rgba(29,164,208,0.1) 0%, transparent 65%)',
+                      backgroundColor: 'rgba(255,255,255,0.01)'
+                    }}
+                  />
+                </div>
               )}
 
               <div className="absolute inset-0 z-10 overflow-visible">
