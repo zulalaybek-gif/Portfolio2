@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef, useEffect, useState, useCallback } from "react";
-import { ArrowLeft, ExternalLink, Play, Zap, Sparkles, Droplets, Moon, Star } from "lucide-react";
+import { ArrowLeft, ExternalLink, Play, Zap, Sparkles, Star } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useI18n, type TranslationKey } from "./i18n";
 import { useTheme } from "./theme";
@@ -23,6 +23,11 @@ import imgMockup1 from "../../assets/kittyhub/12-MOCKUP-1.png";
 import imgMockup2 from "../../assets/kittyhub/13-MOCKUP-2.png";
 import imgPikatchu from "../../assets/kittyhub/14-pikatchu.png";
 import videoIpadAnimation from "../../assets/kittyhub/15-animation-interface-ipad.mp4";
+import imgPaletteOrange from "../../assets/kittyhub/assets/01.palette.png";
+import imgPaletteViolet from "../../assets/kittyhub/assets/02.palette.png";
+import imgPaletteBlue from "../../assets/kittyhub/assets/03.palette.png";
+import imgPaletteDark from "../../assets/kittyhub/assets/04.palette.png";
+import imgPaletteBooster from "../../assets/kittyhub/assets/05.palette.png";
 
 /* -- Helpers -- */
 const ACCENT = "#FD6235";
@@ -285,9 +290,7 @@ function VisualDirectionSection() {
    6. PALETTE — Chromatic Booster Pack
    =================================== */
 function PaletteSection() {
-  const { t, lang } = useI18n();
-  const { isDark, r } = useTheme();
-  const body = useBodyStyle();
+  const { lang } = useI18n();
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -297,128 +300,130 @@ function PaletteSection() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  const cards = [
-    { 
-      hex: "#FD6235", 
-      name: "Tangerine", 
-      role: lang === "fr" ? "Énergie" : "Energy", 
-      traits: lang === "fr" ? ["Vibrant", "Chaleureux", "Dynamique"] : ["Vibrant", "Warm", "Dynamic"],
-      icon: Zap,
-      rotation: -4,
-      x: 20,
-      y: 10,
-      zIndex: 40
+  const advantages = [
+    {
+      label: lang === "fr" ? "Identité forte" : "Strong identity",
+      desc: lang === "fr" ? "Couleurs uniques et différenciantes." : "Unique and differentiating colors.",
+      icon: Star
     },
-    { 
-      hex: "#8E25F7", 
-      name: "Éclat Violet", 
-      role: lang === "fr" ? "Créativité" : "Creativity", 
-      traits: lang === "fr" ? ["Mystérieux", "Inspirant"] : ["Mysterious", "Inspiring"],
-      icon: Sparkles,
-      rotation: 3,
-      x: 175,
-      y: 35,
-      zIndex: 30
+    {
+      label: lang === "fr" ? "Impact visuel" : "Visual impact",
+      desc: lang === "fr" ? "Des contrastes qui captent l'attention." : "Contrasts that capture attention.",
+      icon: Zap
     },
-    { 
-      hex: "#1DA4D0", 
-      name: "Cyan Bleu", 
-      role: lang === "fr" ? "Confiance" : "Trust", 
-      traits: lang === "fr" ? ["Serein", "Fiable", "Clair"] : ["Serene", "Reliable", "Clear"],
-      icon: Droplets,
-      rotation: 6,
-      x: 320,
-      y: 60,
-      zIndex: 20
-    },
-    { 
-      hex: "#2B253D", 
-      name: "Charbon", 
-      role: lang === "fr" ? "Profondeur" : "Depth", 
-      traits: lang === "fr" ? ["Stable", "Sophistiqué"] : ["Stable", "Sophisticated"],
-      icon: Moon,
-      rotation: 9,
-      x: 460,
-      y: 85,
-      zIndex: 10
+    {
+      label: lang === "fr" ? "Valeur de collection" : "Collector value",
+      desc: lang === "fr" ? "Une palette pensée pour durer." : "A palette designed to last.",
+      icon: Sparkles
     },
   ];
 
-  // Adjusted mobile positions for tighter fan
-  const mobileCards = [
-    { ...cards[0], rotation: -6, x: 0, y: 0 },
-    { ...cards[1], rotation: -2, x: 80, y: 15 },
-    { ...cards[2], rotation: 4, x: 160, y: 35 },
-    { ...cards[3], rotation: 10, x: 230, y: 55 },
+  const paletteAssets = [
+    {
+      id: "orange",
+      src: imgPaletteOrange,
+      alt: "Kitty Hub orange collector card",
+      className:
+        "top-0 left-1/2 -translate-x-1/2 w-[62vw] max-w-[260px] md:top-[8px] md:left-[32px] md:translate-x-0 md:w-[240px] md:max-w-none lg:top-[10px] lg:left-[40px] lg:w-[290px]",
+      rotate: "-2deg",
+      zIndex: 30,
+    },
+    {
+      id: "violet",
+      src: imgPaletteViolet,
+      alt: "Kitty Hub violet collector card",
+      className:
+        "top-[20px] left-1/2 -translate-x-[calc(50%-22px)] w-[58vw] max-w-[244px] md:top-[30px] md:left-[150px] md:translate-x-0 md:w-[228px] md:max-w-none lg:top-[35px] lg:left-[180px] lg:w-[275px]",
+      rotate: "1deg",
+      zIndex: 24,
+    },
+    {
+      id: "blue",
+      src: imgPaletteBlue,
+      alt: "Kitty Hub blue collector card",
+      className:
+        "top-[38px] left-1/2 -translate-x-[calc(50%-38px)] w-[54vw] max-w-[226px] md:top-[58px] md:left-[268px] md:translate-x-0 md:w-[220px] md:max-w-none lg:top-[70px] lg:left-[320px] lg:w-[265px]",
+      rotate: "3deg",
+      zIndex: 18,
+    },
+    {
+      id: "dark",
+      src: imgPaletteDark,
+      alt: "Kitty Hub dark collector card",
+      className:
+        "top-[56px] left-1/2 -translate-x-[calc(50%-52px)] w-[50vw] max-w-[210px] md:top-[86px] md:left-[382px] md:translate-x-0 md:w-[210px] md:max-w-none lg:top-[105px] lg:left-[455px] lg:w-[255px]",
+      rotate: "5deg",
+      zIndex: 12,
+    },
+    {
+      id: "booster",
+      src: imgPaletteBooster,
+      alt: "Kitty Hub chromatic booster pack",
+      className:
+        "bottom-[4px] left-1/2 -translate-x-1/2 w-[60vw] max-w-[252px] md:bottom-[-18px] md:left-[110px] md:translate-x-0 md:w-[250px] md:max-w-none lg:bottom-[-25px] lg:left-[135px] lg:w-[300px]",
+      rotate: "-7deg",
+      zIndex: 40,
+    },
   ];
-
-  const currentCards = isMobile ? mobileCards : cards;
 
   return (
-    <section className="px-6 md:px-12 lg:px-[64px] py-[96px] overflow-visible">
-      <div className="max-w-[1400px] mx-auto">
-        <div className="flex flex-col lg:flex-row gap-[48px] lg:gap-[64px] items-center">
-          
-          {/* Text Side (36%) */}
-          <div className="flex flex-col lg:w-[36%] shrink-0 z-50 max-w-[420px]">
+    <section className="relative w-full bg-[#030303] overflow-visible" style={{ paddingTop: '72px', paddingBottom: '136px' }}>
+      {/* Background Grid Decoration */}
+      <div
+        className="absolute inset-0 opacity-[0.03] pointer-events-none"
+        style={{
+          backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)',
+          backgroundSize: '40px 40px'
+        }}
+      />
+
+      <div className="max-w-[1480px] mx-auto px-6 lg:px-[64px]">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,42%)_minmax(0,58%)] gap-[48px] lg:gap-[40px] items-start overflow-visible">
+
+          {/* LEFT COLUMN: 360px */}
+          <div className="w-full z-20">
             <FadeIn>
-              <div 
-                className="inline-flex items-center px-4 rounded-[14px] mb-[28px]" 
-                style={{ height: '36px', background: r(0.04), border: `1px solid ${r(0.06)}` }}
+              <div
+                className="inline-flex items-center px-4 rounded-[8px] mb-[44px] border border-white/10"
+                style={{ height: '34px', background: 'rgba(255,255,255,0.03)' }}
               >
-                <SectionLabel>{t("kh.palette.label")}</SectionLabel>
+                <span className="text-white/60 uppercase tracking-[0.16em]" style={{ fontSize: '11px' }}>
+                  {lang === "fr" ? "Palette chromatique" : "Chromatic Palette"}
+                </span>
               </div>
             </FadeIn>
+
             <FadeIn delay={0.1}>
-              <h2 
-                className="mb-[24px]"
-                style={{ 
-                  fontFamily: "'Space Grotesk', sans-serif", 
-                  fontSize: isMobile ? "40px" : "62px", 
-                  fontWeight: 700, 
-                  lineHeight: 0.95, 
-                  letterSpacing: "-0.03em",
-                  color: isDark ? "#fff" : DARK_BG 
-                }}
-              >
+              <h2 className="mb-[32px] font-semibold text-white" style={{ fontSize: isMobile ? '38px' : '50px', lineHeight: isMobile ? '44px' : '58px', maxWidth: '360px' }}>
                 {lang === "fr" ? "Booster Pack" : "Chromatic"}<br />
-                <span style={{ 
-                  background: `linear-gradient(to right, ${ACCENT}, #8E25F7)`,
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent"
+                <span style={{
+                  background: 'linear-gradient(to right, #1DA4D0, #8E25F7)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent'
                 }}>
                   {lang === "fr" ? "Chromatique" : "Booster Pack"}
                 </span>
               </h2>
             </FadeIn>
-            <FadeIn delay={0.15}>
-              <p style={{ 
-                ...body, 
-                fontSize: isMobile ? "16px" : "19px", 
-                lineHeight: 1.45,
-                marginBottom: "36px",
-                color: r(0.4)
-              }}>
-                {lang === "fr" 
+
+            <FadeIn delay={0.2}>
+              <p className="mb-[72px] text-white/68" style={{ fontSize: '17px', lineHeight: '27px', maxWidth: '340px' }}>
+                {lang === "fr"
                   ? "Quatre teintes stratégiques. Une identité cohérente et mémorable. Collectionnez la palette de Kitty Hub et donnez du pouvoir à vos créations."
                   : "Four strategic hues. A consistent and memorable identity. Collect the Kitty Hub palette and empower your creations."}
               </p>
             </FadeIn>
-            
-            <div className="flex flex-col gap-[14px]">
-              {[
-                { label: lang === "fr" ? "Identité forte" : "Strong identity", desc: lang === "fr" ? "Couleurs uniques." : "Unique colors.", icon: Star },
-                { label: lang === "fr" ? "Impact visuel" : "Visual impact", desc: lang === "fr" ? "Contrastes captivants." : "Captivating contrasts.", icon: Zap },
-                { label: lang === "fr" ? "Valeur de collection" : "Collector value", desc: lang === "fr" ? "Pensée pour durer." : "Designed to last.", icon: Sparkles },
-              ].map((item, i) => (
-                <FadeIn key={i} delay={0.2 + i * 0.1}>
-                  <div className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.02] border border-white/5 backdrop-blur-sm">
-                    <div className="w-[36px] h-[36px] shrink-0 rounded-full flex items-center justify-center bg-white/5 border border-white/10">
-                      <item.icon size={16} style={{ color: ACCENT }} />
+
+            <div className="flex flex-col gap-[16px] w-full max-w-[340px]">
+              {advantages.map((adv, i) => (
+                <FadeIn key={i} delay={0.3 + i * 0.1}>
+                  <div className="flex items-center gap-[20px] p-[22px_24px] rounded-[20px] bg-white/[0.02] border border-white/5 backdrop-blur-md">
+                    <div className="w-[42px] h-[42px] rounded-full flex items-center justify-center bg-white/5 border border-white/10 shrink-0">
+                      <adv.icon size={18} className="text-white/80" />
                     </div>
                     <div>
-                      <h4 style={{ fontFamily: "'Inter', sans-serif", fontSize: "16px", fontWeight: 700, color: isDark ? "#fff" : DARK_BG }}>{item.label}</h4>
-                      <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px", color: r(0.3) }}>{item.desc}</p>
+                      <h4 className="text-white text-[16px] font-bold leading-tight">{adv.label}</h4>
+                      <p className="text-white/40 text-[13px] mt-1">{adv.desc}</p>
                     </div>
                   </div>
                 </FadeIn>
@@ -426,123 +431,108 @@ function PaletteSection() {
             </div>
           </div>
 
-          {/* Visual Side (64%) */}
-          <div className="relative flex items-center lg:w-[64%] h-[480px] md:h-[620px] order-1 lg:order-2 px-4 md:px-10 overflow-visible">
-            {/* Background Atmosphere */}
-            <div className="absolute inset-0 pointer-events-none" style={{
-              background: `radial-gradient(circle at 40% 50%, rgba(${ACCENT_RGB}, 0.12) 0%, transparent 80%)`,
-              filter: "blur(120px)"
-            }} />
+          {/* RIGHT VISUAL ZONE: 920px */}
+          <div className="relative w-full h-[430px] md:h-[520px] lg:h-[610px] overflow-visible">
+            <div className="relative mx-auto h-full w-full max-w-[420px] overflow-visible md:max-w-[660px] lg:mx-0 lg:max-w-none">
 
-            {/* The Cards Group */}
-            <div className="relative w-full h-full max-w-[840px]">
-              {currentCards.map((card, i) => {
-                const Icon = card.icon;
-                return (
-                  <motion.div
-                    key={card.hex}
-                    initial={{ opacity: 0, x: 0, y: 100, rotate: 0 }}
-                    whileInView={{ 
-                      opacity: 1, 
-                      x: card.x,
-                      y: card.y,
-                      rotate: card.rotation 
-                    }}
-                    viewport={{ once: true }}
-                    transition={{ 
-                      duration: 1.2, 
-                      delay: 0.4 + i * 0.1, 
-                      type: "spring",
-                      stiffness: 40,
-                      damping: 15
-                    }}
-                    className="absolute rounded-[24px] p-5 md:p-7 flex flex-col justify-between cursor-pointer overflow-hidden border border-white/20"
-                    style={{
-                      width: isMobile ? "145px" : "220px",
-                      height: isMobile ? "210px" : "320px",
-                      background: `linear-gradient(145deg, ${card.hex} 0%, ${card.hex}dd 100%)`,
-                      zIndex: card.zIndex,
-                      boxShadow: `0 30px 60px rgba(0,0,0,0.4), inset 0 0 40px rgba(255,255,255,0.2)`,
-                      borderRadius: isMobile ? "20px" : "26px"
-                    }}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
-                    
-                    <div className="flex justify-between items-start relative z-10">
-                      <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: isMobile ? "0.6rem" : "0.75rem", fontWeight: 800, color: "#fff", textTransform: "uppercase", letterSpacing: "0.05em" }}>{card.role}</span>
-                      <Icon size={isMobile ? 14 : 18} color="white" fill="white" className="opacity-90" />
-                    </div>
-
-                    <div className="relative flex items-center justify-center flex-1 z-10 my-2">
-                      <div className="w-[85%] aspect-square rounded-full border border-white/15 flex items-center justify-center bg-white/5 backdrop-blur-sm shadow-inner">
-                        <Icon size={isMobile ? 28 : 40} className="text-white/40 drop-shadow-[0_0_12px_rgba(255,255,255,0.3)]" />
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col gap-1 relative z-10">
-                      <div className="flex justify-between items-end">
-                        <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: isMobile ? "0.75rem" : "1rem", fontWeight: 700, color: "#fff" }}>{card.hex}</span>
-                        <span style={{ fontFamily: "'Inter', sans-serif", fontSize: isMobile ? "0.65rem" : "0.8rem", color: "#fff", opacity: 0.9 }}>{card.name}</span>
-                      </div>
-                      <div className="w-full h-[1px] bg-white/20 my-1" />
-                      <div className="flex flex-wrap gap-x-2">
-                        {card.traits.map(trait => (
-                          <span key={trait} style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.55rem", fontWeight: 500, color: "#fff", opacity: 0.85 }}>{trait}</span>
-                        ))}
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-
-              {/* Booster Pack (The real sachet at the bottom) */}
-              <motion.div 
-                className="absolute z-[35] pointer-events-none"
-                initial={{ y: 250, x: isMobile ? 65 : 120, opacity: 0, rotate: -8 }}
-                whileInView={{ y: isMobile ? 140 : 280, x: isMobile ? 65 : 120, opacity: 1, rotate: -8 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                style={{
-                  width: isMobile ? "200px" : "330px",
-                  height: isMobile ? "260px" : "380px",
-                }}
-              >
-                <div 
-                  className="w-full h-full p-8 md:p-12 flex flex-col items-center justify-center relative overflow-hidden"
+              {/* Background Glows and Shape */}
+              {!isMobile && (
+                <div
+                  className="absolute left-[-20px] top-[16px] w-[calc(100%+140px)] h-[520px] rounded-[34px] border border-white/5 z-0 pointer-events-none"
                   style={{
-                    background: "linear-gradient(165deg, #1d122b 0%, #0a0412 100%)",
-                    border: "2px solid rgba(255,255,255,0.12)",
-                    borderRadius: "3rem 3rem 1.5rem 1.5rem", // Sachet shape: rounder top, tighter bottom
-                    boxShadow: "0 60px 120px rgba(0,0,0,1), inset 0 0 60px rgba(142,37,247,0.3)"
+                    background: 'radial-gradient(circle at 30% 30%, rgba(142,37,247,0.12) 0%, transparent 65%), radial-gradient(circle at 70% 70%, rgba(29,164,208,0.1) 0%, transparent 65%)',
+                    backgroundColor: 'rgba(255,255,255,0.01)'
                   }}
-                >
-                  {/* Crimped top detail */}
-                  <div className="absolute top-0 left-0 right-0 h-6 flex items-start justify-center opacity-30">
-                    <div className="w-full h-[1px] bg-white/40 mt-1" />
-                    <div className="w-full h-[1px] bg-white/40 mt-2" />
-                  </div>
+                />
+              )}
 
-                  <div className="absolute inset-0 opacity-[0.2] mix-blend-screen" style={{ backgroundImage: "url('https://grainy-gradients.vercel.app/noise.svg')" }} />
-                  
-                  <div className="flex flex-col items-center gap-2 relative z-10 text-center">
-                    <div className="flex gap-2 mb-3">
-                      {[...Array(5)].map((_, i) => <Star key={i} size={isMobile ? 10 : 13} fill="white" className="text-white opacity-90" />)}
+              <div className="absolute inset-0 z-10 overflow-visible">
+                {paletteAssets.map((asset, i) => (
+                  <motion.img
+                    key={asset.id}
+                    src={asset.src}
+                    alt={asset.alt}
+                    initial={{ opacity: 0, y: 42 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.9, delay: 0.14 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                    className={`absolute h-auto object-contain pointer-events-none select-none drop-shadow-[0_34px_70px_rgba(0,0,0,0.55)] ${asset.className}`}
+                    style={{
+                      rotate: asset.rotate,
+                      zIndex: asset.zIndex,
+                    }}
+                  />
+                ))}
+              </div>
+
+              {/* Cartouche Right Detail */}
+              {!isMobile && (
+                <FadeIn delay={0.8}>
+                  <div
+                    className="absolute left-[560px] top-[460px] w-[300px] h-[86px] rounded-[18px] bg-white/[0.03] border border-white/5 flex items-center px-6 gap-4 z-50 backdrop-blur-sm"
+                  >
+                    <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center border border-white/10 shrink-0 shadow-inner">
+                       <div className="w-5 h-4 border border-white/30 rounded-sm relative">
+                          <div className="absolute inset-0 translate-x-1 -translate-y-1 border border-white/10 rounded-sm" />
+                       </div>
                     </div>
-                    <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: isMobile ? "0.85rem" : "1.2rem", fontWeight: 700, letterSpacing: "0.4em", color: "#fff", opacity: 0.9 }}>KITTY HUB</span>
-                    <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: isMobile ? "1.8rem" : "2.8rem", fontWeight: 800, color: "#fff", lineHeight: 1, textShadow: "0 0 20px rgba(136,35,247,0.5)" }}>PALETTE</h3>
-                    <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.6em", color: "#fff", opacity: 0.35, marginTop: 15 }}>ÉDITION ORIGINALE</p>
+                    <p className="text-white/60 text-[14px] leading-snug font-medium">
+                      Collectionnez. Combinez.<br />
+                      <span className="text-white/80">Créez sans limites.</span>
+                    </p>
                   </div>
-                  
-                  {/* Sachet lighting */}
-                  <div className="absolute top-0 left-0 right-0 h-[30%] bg-gradient-to-b from-white/10 to-transparent" />
-                  <div className="absolute bottom-[-10%] left-[-10%] w-[120%] h-[1.5px] bg-gradient-to-r from-transparent via-white/20 to-transparent rotate-[20deg]" />
-                </div>
-              </motion.div>
+                </FadeIn>
+              )}
+
             </div>
           </div>
-
         </div>
       </div>
+
+      {/* BOTTOM STATUS BAR */}
+      <FadeIn delay={1} className="mt-[100px] lg:mt-[60px]">
+        <div className="border-t border-white/5 bg-white/[0.01] py-8 px-6 lg:px-[64px] backdrop-blur-sm">
+          <div className="max-w-[1480px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+             {/* Logo and Context */}
+             <div className="flex items-center gap-4 shrink-0">
+                <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                   <div className="w-6 h-6 bg-[#030303] rounded-full flex items-center justify-center">
+                      <div className="w-2.5 h-2.5 bg-[#FD6235] rounded-full shadow-[0_0_8px_#FD6235]" />
+                   </div>
+                </div>
+                <div>
+                  <span className="text-white font-bold text-[15px] block leading-none mb-1">Kitty Hub</span>
+                  <span className="text-white/30 text-[12px] font-medium tracking-tight">
+                    {lang === "fr" ? "Projet d'identité visuelle" : "Visual Identity Project"}
+                  </span>
+                </div>
+             </div>
+
+             {/* Color Gauge */}
+             <div className="hidden md:flex items-center gap-2">
+                {[ '#FD6235', '#8E25F7', '#1DA4D0', '#2B253D' ].map((color, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ width: 0 }}
+                    whileInView={{ width: '64px' }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 1.2 + i * 0.1, duration: 0.8 }}
+                    className="h-1.5 rounded-full"
+                    style={{ backgroundColor: color }}
+                  />
+                ))}
+             </div>
+
+             {/* Right Info */}
+             <div className="flex items-center gap-4 shrink-0">
+                <span className="text-white/30 text-[11px] uppercase tracking-[0.25em] font-bold">
+                  {lang === "fr" ? "Palette chromatique" : "Chromatic Palette"}
+                </span>
+                <div className="w-5 h-5 opacity-20"><Star size={20} fill="white" /></div>
+             </div>
+          </div>
+        </div>
+      </FadeIn>
     </section>
   );
 }
