@@ -191,45 +191,45 @@ function HeroSection() {
         </motion.div>
 
         <div className="relative">
-          {/* Pulsing Musical Aura */}
+          {/* Pulsing Musical Aura - Layer 1: Strong Visual Impact */}
           <motion.div
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
             style={{
-              width: "160%",
-              height: "160%",
-              background: `radial-gradient(circle, rgba(${ACCENT_RGB}, 0.22) 0%, transparent 70%)`,
-              filter: "blur(35px)",
+              width: "220%",
+              height: "220%",
+              background: `radial-gradient(circle, rgba(${ACCENT_RGB}, 0.5) 0%, rgba(${ACCENT_RGB}, 0.1) 40%, transparent 75%)`,
+              filter: "blur(50px)",
               mixBlendMode: "screen",
             }}
             animate={{
-              scale: [1, 1.15, 1],
-              opacity: [0.35, 0.65, 0.35],
+              scale: [0.95, 1.15, 0.95],
+              opacity: [0.15, 0.5, 0.15],
             }}
             transition={{
-              duration: 4,
+              duration: 3.5,
               repeat: Infinity,
               ease: "easeInOut",
             }}
           />
 
-          {/* Logo with subtle breathing */}
+          {/* Logo with clearly perceptible breathing */}
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.98 }}
+            initial={{ opacity: 0, y: 20, scale: 0.96 }}
             animate={{ 
               opacity: 1, 
               y: 0, 
-              scale: [1, 1.03, 1],
+              scale: [1, 1.05, 1],
             }}
             transition={{ 
               opacity: { duration: 1.2, delay: 0.5 },
               y: { duration: 1.2, delay: 0.5 },
-              scale: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1.7 }
+              scale: { duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 1.7 }
             }}
             className="relative flex w-[110px] items-center justify-center md:w-[160px]"
           >
-            <svg className="w-full drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="0 0 40.9986 36.3546" aria-label="Logo MZW">
+            <svg className="w-full drop-shadow-[0_0_25px_rgba(255,255,255,0.2)]" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="0 0 40.9986 36.3546" aria-label="Logo MZW">
               <g>
-                <path d={svgPaths.p3c9ec700} fill={isDark ? "white" : "black"} stroke={isDark ? "rgba(255,255,255,0.1)" : "none"} strokeWidth="0.2" strokeLinejoin="round" />
+                <path d={svgPaths.p3c9ec700} fill={isDark ? "white" : "black"} stroke={isDark ? "rgba(255,255,255,0.15)" : "none"} strokeWidth="0.25" strokeLinejoin="round" />
               </g>
             </svg>
           </motion.div>
