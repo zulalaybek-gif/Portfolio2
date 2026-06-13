@@ -375,124 +375,159 @@ function PaletteSection() {
           </FadeIn>
         </div>
 
-        <div className="relative overflow-hidden py-10 md:py-14">
-          <svg className="absolute inset-0 size-full opacity-[0.1]" fill="none" preserveAspectRatio="none" viewBox="0 0 1000 420" aria-hidden="true">
-            {Array.from({ length: 9 }).map((_, i) => (
-              <path
-                key={i}
-                d={`M-90 ${290 + i * 15} C 80 ${245 + i * 8}, 205 ${355 - i * 5}, 360 ${292 + i * 9} S 635 ${238 + i * 7}, 805 ${308 - i * 4} S 1030 ${328 + i * 5}, 1120 ${250 + i * 7}`}
-                stroke="rgba(255,255,255,0.32)"
-                strokeWidth="0.8"
-              />
-            ))}
-          </svg>
-          <div
-            className="absolute inset-x-0 top-1/2 h-44 -translate-y-1/2 opacity-75"
-            style={{
-              background:
-                "linear-gradient(90deg, rgba(37,77,155,0.16), rgba(93,71,146,0.18), rgba(179,66,138,0.2), rgba(204,123,99,0.17), rgba(226,192,73,0.14))",
-              filter: "blur(34px)",
-            }}
-          />
-          <div className="relative min-h-[360px] overflow-hidden px-1 py-8 md:min-h-[430px] md:px-2 md:py-10">
-            <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-white/20" />
-            <div
-              className="absolute inset-x-0 top-1/2 h-[2px] -translate-y-1/2"
-              style={{
-                background:
-                  "linear-gradient(90deg, #254D9B 0%, #254D9B 18%, #5D4792 25%, #B3428A 50%, #CC7B63 74%, #E2C049 100%)",
-                boxShadow: "0 0 24px rgba(179,66,138,0.3)",
-              }}
+        <div className="relative h-[520px] overflow-hidden md:h-[620px]">
+          <svg className="absolute inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 1000 620" aria-hidden="true">
+            <defs>
+              <linearGradient id="mzw-palette-wave" x1="0" x2="1000" y1="0" y2="0">
+                <stop stopColor="#254D9B" />
+                <stop offset="0.25" stopColor="#5D4792" />
+                <stop offset="0.5" stopColor="#B3428A" />
+                <stop offset="0.75" stopColor="#CC7B63" />
+                <stop offset="1" stopColor="#E2C049" />
+              </linearGradient>
+              <filter id="mzw-palette-glow" x="-30%" y="-60%" width="160%" height="220%">
+                <feGaussianBlur stdDeviation="6" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+
+            <rect width="1000" height="620" fill="transparent" />
+            <g opacity="0.12">
+              {Array.from({ length: 10 }).map((_, i) => (
+                <path
+                  key={i}
+                  d={`M620 ${430 + i * 13} C 700 ${390 + i * 9}, 760 ${480 - i * 3}, 840 ${430 + i * 7} S 980 ${390 + i * 8}, 1080 ${445 + i * 5}`}
+                  stroke="rgba(255,255,255,0.5)"
+                  strokeWidth="0.8"
+                />
+              ))}
+            </g>
+
+            <path d="M0 310 H1000" stroke="rgba(255,255,255,0.22)" strokeWidth="1" />
+            <path
+              d="M0 310 C 55 240, 95 382, 145 312 S 240 252, 300 310 S 395 372, 455 310 S 550 248, 610 310 S 706 372, 765 310 S 870 248, 1000 310"
+              stroke="url(#mzw-palette-wave)"
+              strokeWidth="1.35"
+              filter="url(#mzw-palette-glow)"
+              opacity="0.85"
+            />
+            <path
+              d="M0 310 C 55 276, 95 346, 145 312 S 240 278, 300 310 S 395 342, 455 310 S 550 276, 610 310 S 706 344, 765 310 S 870 278, 1000 310"
+              stroke="rgba(255,255,255,0.26)"
+              strokeWidth="0.8"
+              opacity="0.7"
             />
 
-            <div className="absolute inset-x-3 top-1/2 flex h-[230px] -translate-y-1/2 items-center gap-[3px] md:inset-x-7 md:h-[270px]">
-              {Array.from({ length: 135 }).map((_, i) => {
-                const ratio = i / 134;
-                const paletteIndex = Math.min(PALETTE.length - 1, Math.floor(ratio * PALETTE.length));
-                const color = PALETTE[paletteIndex].hex;
-                const local = (ratio * PALETTE.length) % 1;
-                const center = Math.abs(local - 0.5);
-                const pulse = 0.34 + (1 - center * 2) * 0.66;
-                const rhythm = Math.abs(Math.sin(i * 0.48)) * 0.28 + Math.abs(Math.sin(i * 0.13)) * 0.22;
-                const height = 12 + (pulse * 72 + rhythm * 44);
-
-                return (
-                  <span
-                    key={i}
-                    className="block flex-1 rounded-full"
-                    style={{
-                      height: `${Math.min(100, height)}%`,
-                      minWidth: 1,
-                      background: `linear-gradient(180deg, transparent, ${color}dd 18%, ${color} 50%, ${color}dd 82%, transparent)`,
-                      boxShadow: `0 0 ${8 + pulse * 14}px ${color}55`,
-                      opacity: 0.18 + pulse * 0.48,
-                    }}
-                  />
-                );
-              })}
-            </div>
+            {Array.from({ length: 180 }).map((_, i) => {
+              const x = (i / 179) * 1000;
+              const band = Math.min(PALETTE.length - 1, Math.floor((i / 180) * PALETTE.length));
+              const color = PALETTE[band].hex;
+              const local = ((i / 179) * PALETTE.length) % 1;
+              const center = 1 - Math.min(1, Math.abs(local - 0.5) * 2);
+              const rhythm = Math.abs(Math.sin(i * 0.43)) * 0.45 + Math.abs(Math.sin(i * 0.17)) * 0.25;
+              const h = 18 + center * 138 + rhythm * 58;
+              return (
+                <line
+                  key={i}
+                  x1={x}
+                  x2={x}
+                  y1={310 - h / 2}
+                  y2={310 + h / 2}
+                  stroke={color}
+                  strokeWidth="1.4"
+                  strokeLinecap="round"
+                  opacity={0.12 + center * 0.42}
+                />
+              );
+            })}
 
             {PALETTE.map((color, i) => {
-              const left = 10 + i * 20;
+              const x = 110 + i * 195;
               return (
-                <FadeIn key={color.hex} delay={0.12 + i * 0.06}>
-                  <div
-                    className="absolute top-0 z-10 flex h-full -translate-x-1/2 flex-col items-center justify-between py-7 md:py-9"
-                    style={{ left: `${left}%` }}
+                <g key={color.hex}>
+                  <line x1={x} x2={x} y1="145" y2="475" stroke={color.hex} strokeWidth="0.9" strokeDasharray="2 6" opacity="0.45" />
+                  <rect x={x - 2.5} y="132" width="5" height="5" fill={color.hex} opacity="0.9" />
+                  <rect x={x - 2.5} y="488" width="5" height="5" fill={color.hex} opacity="0.9" />
+                  {Array.from({ length: 34 }).map((_, barIndex) => {
+                    const distance = Math.abs(barIndex - 16.5);
+                    const h = Math.max(18, 126 - distance * 5.8 + ((barIndex + i) % 5) * 5);
+                    const barX = x - 68 + barIndex * 4;
+                    return (
+                      <line
+                        key={barIndex}
+                        x1={barX}
+                        x2={barX}
+                        y1={310 - h / 2}
+                        y2={310 + h / 2}
+                        stroke={color.hex}
+                        strokeWidth="1.15"
+                        strokeLinecap="round"
+                        opacity={0.18 + (16.5 - Math.min(distance, 16.5)) * 0.032}
+                      />
+                    );
+                  })}
+                </g>
+              );
+            })}
+          </svg>
+
+          {PALETTE.map((color, i) => {
+            const left = 11 + i * 19.5;
+            return (
+              <FadeIn key={color.hex} delay={0.12 + i * 0.06}>
+                <div
+                  className="absolute top-[13%] z-10 flex h-[74%] -translate-x-1/2 flex-col items-center justify-between"
+                  style={{ left: `${left}%` }}
+                >
+                  <span
+                    className="uppercase"
+                    style={{
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: "clamp(0.48rem, 1.1vw, 0.68rem)",
+                      letterSpacing: "0.2em",
+                      color: color.hex,
+                    }}
                   >
+                    {color.name}
+                  </span>
+                  <div
+                    className="h-[130px] w-16 rounded-[1.1rem] md:h-[190px] md:w-[90px] md:rounded-[1.45rem]"
+                    style={{
+                      background: `linear-gradient(180deg, ${color.hex}, ${color.hex}e6)`,
+                      boxShadow: `0 0 26px ${color.hex}55, inset 0 1px 0 rgba(255,255,255,0.2)`,
+                    }}
+                  />
+                  <div className="text-center">
                     <span
-                      className="uppercase"
+                      className="block uppercase"
                       style={{
                         fontFamily: "'Inter', sans-serif",
-                        fontSize: "0.58rem",
-                        letterSpacing: "0.22em",
+                        fontSize: "clamp(0.48rem, 1vw, 0.65rem)",
+                        letterSpacing: "0.12em",
                         color: color.hex,
                       }}
                     >
-                      {color.name}
+                      {color.hex}
                     </span>
-                    <div className="relative flex h-[58%] items-center justify-center">
-                      <div
-                        className="absolute left-1/2 h-full w-px -translate-x-1/2 opacity-55"
-                        style={{ background: `linear-gradient(180deg, ${color.hex}, transparent 22%, transparent 78%, ${color.hex})` }}
-                      />
-                      <div
-                        className="relative h-20 w-2 rounded-full md:h-24"
-                        style={{
-                          background: color.hex,
-                          boxShadow: `0 0 24px ${color.hex}aa, 0 0 60px ${color.hex}44`,
-                        }}
-                      />
-                    </div>
-                    <div className="text-center">
-                      <span
-                        className="block uppercase"
-                        style={{
-                          fontFamily: "'Inter', sans-serif",
-                          fontSize: "0.6rem",
-                          letterSpacing: "0.12em",
-                          color: color.hex,
-                        }}
-                      >
-                        {color.hex}
-                      </span>
-                      <span
-                        className="mt-2 block uppercase"
-                        style={{
-                          fontFamily: "'Inter', sans-serif",
-                          fontSize: "0.52rem",
-                          letterSpacing: "0.18em",
-                          color: "rgba(255,255,255,0.48)",
-                        }}
-                      >
-                        {color.role}
-                      </span>
-                    </div>
+                    <span
+                      className="mt-2 block uppercase"
+                      style={{
+                        fontFamily: "'Inter', sans-serif",
+                        fontSize: "clamp(0.44rem, 0.9vw, 0.58rem)",
+                        letterSpacing: "0.18em",
+                        color: "rgba(255,255,255,0.5)",
+                      }}
+                    >
+                      {color.role}
+                    </span>
                   </div>
-                </FadeIn>
-              );
-            })}
-          </div>
+                </div>
+              </FadeIn>
+            );
+          })}
         </div>
       </div>
     </section>
