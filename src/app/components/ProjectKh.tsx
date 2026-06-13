@@ -324,7 +324,7 @@ function PaletteSection() {
       src: imgPaletteOrange,
       alt: "Kitty Hub orange collector card",
       className:
-        "left-[18px] top-[8px] w-[164px] md:left-[46px] md:top-[8px] md:w-[218px] lg:left-[58px] lg:top-[6px] lg:w-[274px]",
+        "left-[12px] top-0 w-[165px] md:left-[46px] md:top-[8px] md:w-[218px] lg:left-[80px] lg:top-0 lg:w-[282px]",
       rotate: "-4deg",
       zIndex: 34,
     },
@@ -333,8 +333,8 @@ function PaletteSection() {
       src: imgPaletteViolet,
       alt: "Kitty Hub violet collector card",
       className:
-        "left-[112px] top-[28px] w-[156px] md:left-[180px] md:top-[24px] md:w-[212px] lg:left-[226px] lg:top-[28px] lg:w-[266px]",
-      rotate: "2deg",
+        "left-[104px] top-[22px] w-[158px] md:left-[180px] md:top-[24px] md:w-[212px] lg:left-[245px] lg:top-[22px] lg:w-[272px]",
+      rotate: "1deg",
       zIndex: 31,
     },
     {
@@ -342,8 +342,8 @@ function PaletteSection() {
       src: imgPaletteBlue,
       alt: "Kitty Hub blue collector card",
       className:
-        "left-[194px] top-[48px] w-[148px] md:left-[304px] md:top-[44px] md:w-[206px] lg:left-[380px] lg:top-[52px] lg:w-[258px]",
-      rotate: "5deg",
+        "left-[184px] top-[44px] w-[150px] md:left-[304px] md:top-[44px] md:w-[206px] lg:left-[395px] lg:top-[48px] lg:w-[262px]",
+      rotate: "4deg",
       zIndex: 28,
     },
     {
@@ -351,8 +351,8 @@ function PaletteSection() {
       src: imgPaletteDark,
       alt: "Kitty Hub dark collector card",
       className:
-        "left-[258px] top-[66px] w-[140px] md:left-[422px] md:top-[68px] md:w-[196px] lg:left-[528px] lg:top-[82px] lg:w-[246px]",
-      rotate: "8deg",
+        "left-[246px] top-[64px] w-[142px] md:left-[422px] md:top-[68px] md:w-[196px] lg:left-[535px] lg:top-[80px] lg:w-[252px]",
+      rotate: "7deg",
       zIndex: 25,
     },
     {
@@ -360,8 +360,8 @@ function PaletteSection() {
       src: imgPaletteBooster,
       alt: "Kitty Hub chromatic booster pack",
       className:
-        "left-[86px] top-[176px] w-[190px] md:left-[140px] md:top-[230px] md:w-[250px] lg:left-[176px] lg:top-[286px] lg:w-[312px]",
-      rotate: "-8deg",
+        "left-[78px] top-[168px] w-[205px] md:left-[140px] md:top-[230px] md:w-[250px] lg:left-[205px] lg:top-[270px] lg:w-[330px]",
+      rotate: "-7deg",
       zIndex: 40,
     },
   ];
@@ -431,7 +431,7 @@ function PaletteSection() {
             </div>
           </div>
 
-          <div className="relative z-10 mx-auto h-[360px] w-full max-w-[360px] overflow-visible md:h-[500px] md:max-w-[650px] lg:mx-0 lg:h-[560px] lg:w-[760px] lg:max-w-none lg:shrink-0">
+          <div className="relative z-10 mx-auto h-[380px] w-full max-w-[360px] overflow-visible md:h-[500px] md:max-w-[650px] lg:mx-0 lg:h-[610px] lg:w-[760px] lg:max-w-none lg:shrink-0">
 
             <div className="absolute left-0 top-[28px] z-[1] h-[300px] w-full overflow-visible rounded-[28px] border border-white/5 pointer-events-none md:top-[26px] md:h-[430px] lg:top-[20px] lg:h-[520px] lg:w-[640px] lg:rounded-[32px]">
               <div
@@ -446,7 +446,7 @@ function PaletteSection() {
             <div className="absolute left-[20px] top-[18px] z-20 h-[250px] w-[300px] rounded-full bg-violet-500/10 blur-[70px] pointer-events-none md:left-[90px] md:top-[40px] md:h-[340px] md:w-[460px] lg:left-[120px] lg:top-[48px] lg:h-[380px] lg:w-[520px]" />
 
             <motion.div
-              className="absolute left-0 top-0 z-30 h-[360px] w-[360px] overflow-visible pointer-events-none md:h-[500px] md:w-[650px] lg:left-[48px] lg:top-[-8px] lg:h-[560px] lg:w-[760px]"
+              className="absolute left-0 top-0 z-30 h-[380px] w-[360px] overflow-visible pointer-events-none md:h-[500px] md:w-[650px] lg:left-auto lg:right-[-155px] lg:top-[30px] lg:h-[610px] lg:w-[860px]"
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 7, ease: "easeInOut", repeat: Infinity }}
             >
