@@ -142,23 +142,37 @@ function HeroSection() {
   const imgOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
-    <section ref={ref} className="relative w-full min-h-[80vh] flex flex-col items-center justify-center overflow-hidden px-6 py-20">
+    <section ref={ref} className="relative w-full min-h-[85vh] flex flex-col items-center justify-center overflow-hidden px-6 py-20">
+      {/* Background Gradient with smooth transition mask */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background: isDark
             ? `radial-gradient(ellipse 42% 34% at 50% 48%, rgba(${ACCENT_RGB},0.18) 0%, transparent 72%),
-               radial-gradient(ellipse 78% 58% at 50% 48%, rgba(37,77,155,0.1) 0%, transparent 70%)`
-            : `radial-gradient(ellipse 42% 34% at 50% 48%, rgba(${ACCENT_RGB},0.11) 0%, transparent 72%),
-               radial-gradient(ellipse 78% 58% at 50% 48%, rgba(37,77,155,0.06) 0%, transparent 70%)`,
+               radial-gradient(ellipse 78% 58% at 50% 48%, rgba(37,77,155,0.12) 0%, transparent 70%)`
+            : `radial-gradient(ellipse 42% 34% at 50% 48%, rgba(${ACCENT_RGB},0.12) 0%, transparent 72%),
+               radial-gradient(ellipse 78% 58% at 50% 48%, rgba(37,77,155,0.08) 0%, transparent 70%)`,
+          maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
         }}
       />
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.13] mix-blend-soft-light"
+
+      {/* Animated Electro Texture (Fine Grid) */}
+      <motion.div 
+        className="absolute inset-0 pointer-events-none opacity-[0.03] md:opacity-[0.06]"
         style={{
-          backgroundImage:
-            "radial-gradient(circle at 20% 30%, rgba(255,255,255,0.8) 0 0.6px, transparent 0.8px), radial-gradient(circle at 70% 65%, rgba(255,255,255,0.55) 0 0.5px, transparent 0.75px)",
-          backgroundSize: "3px 3px, 5px 5px",
+          backgroundImage: `radial-gradient(circle, ${ACCENT} 1px, transparent 1px)`,
+          backgroundSize: "32px 32px",
+          maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
+        }}
+        animate={{
+          backgroundPosition: ["0px 0px", "32px 32px"]
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "linear"
         }}
       />
 
@@ -167,80 +181,59 @@ function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.3 }}
-          className="mb-8 flex items-center gap-4 justify-center"
+          className="mb-12 flex items-center gap-4 justify-center"
         >
-          <div className="w-8 h-[1px]" style={{ background: r(0.1) }} />
-          <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase", color: r(0.3) }}>
+          <div className="w-8 h-[1px]" style={{ background: r(0.15) }} />
+          <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", letterSpacing: "0.25em", textTransform: "uppercase", color: r(0.4) }}>
             {t("mzw.hero.label")} — {t("mzw.hero.year")}
           </span>
-          <div className="w-8 h-[1px]" style={{ background: r(0.1) }} />
+          <div className="w-8 h-[1px]" style={{ background: r(0.15) }} />
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
-          className="relative flex w-[220px] items-center justify-center md:w-[320px]"
-        >
+        <div className="relative">
+          {/* Pulsing Musical Aura */}
           <motion.div
-            aria-hidden="true"
-            className="absolute left-1/2 top-1/2 h-[170%] w-[170%] -translate-x-1/2 -translate-y-1/2 rounded-full"
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
             style={{
-              background: `radial-gradient(circle, rgba(${ACCENT_RGB},${isDark ? 0.2 : 0.13}) 0%, rgba(179,66,138,${isDark ? 0.1 : 0.06}) 34%, transparent 68%)`,
-              filter: "blur(24px)",
+              width: "160%",
+              height: "160%",
+              background: `radial-gradient(circle, rgba(${ACCENT_RGB}, 0.22) 0%, transparent 70%)`,
+              filter: "blur(35px)",
+              mixBlendMode: "screen",
             }}
             animate={{
-              scale: [1, 1.015, 1],
-              opacity: isDark ? [0.46, 0.72, 0.46] : [0.34, 0.54, 0.34],
+              scale: [1, 1.15, 1],
+              opacity: [0.35, 0.65, 0.35],
             }}
-            transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
           />
-          <motion.svg
-            aria-hidden="true"
-            className="absolute inset-x-0 top-1/2 z-0 w-full -translate-y-1/2"
-            fill="none"
-            preserveAspectRatio="none"
-            viewBox="0 0 320 132"
-            style={{ height: "132px", filter: `drop-shadow(0 0 12px rgba(${ACCENT_RGB},0.16))` }}
-          >
-            {HERO_TOPO_LINES.map((d, i) => (
-              <motion.path
-                key={d}
-                d={d}
-                stroke={isDark ? `rgba(${ACCENT_RGB},${0.15 + i * 0.025})` : `rgba(${ACCENT_RGB},${0.11 + i * 0.018})`}
-                strokeWidth={i === 1 ? 0.9 : 0.7}
-                strokeLinecap="round"
-                vectorEffect="non-scaling-stroke"
-                animate={{ x: [0, i % 2 === 0 ? 1.2 : -1.2, 0], opacity: [0.48, 0.78, 0.48] }}
-                transition={{ duration: 5.4 + i * 0.6, repeat: Infinity, ease: "easeInOut", delay: i * 0.18 }}
-              />
-            ))}
-          </motion.svg>
+
+          {/* Logo with subtle breathing */}
           <motion.div
-            className="relative z-10 w-[110px] md:w-[160px]"
-            animate={{
-              scale: [1, 1.01, 1],
-              filter: isDark
-                ? [
-                    "drop-shadow(0 0 8px rgba(255,255,255,0.12)) drop-shadow(0 0 18px rgba(93,71,146,0.28))",
-                    "drop-shadow(0 0 12px rgba(255,255,255,0.18)) drop-shadow(0 0 32px rgba(93,71,146,0.42))",
-                    "drop-shadow(0 0 8px rgba(255,255,255,0.12)) drop-shadow(0 0 18px rgba(93,71,146,0.28))",
-                  ]
-                : [
-                    "drop-shadow(0 0 8px rgba(93,71,146,0.1)) drop-shadow(0 12px 24px rgba(15,8,23,0.08))",
-                    "drop-shadow(0 0 14px rgba(93,71,146,0.18)) drop-shadow(0 16px 32px rgba(15,8,23,0.12))",
-                    "drop-shadow(0 0 8px rgba(93,71,146,0.1)) drop-shadow(0 12px 24px rgba(15,8,23,0.08))",
-                  ],
+            initial={{ opacity: 0, y: 20, scale: 0.98 }}
+            animate={{ 
+              opacity: 1, 
+              y: 0, 
+              scale: [1, 1.03, 1],
             }}
-            transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
+            transition={{ 
+              opacity: { duration: 1.2, delay: 0.5 },
+              y: { duration: 1.2, delay: 0.5 },
+              scale: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1.7 }
+            }}
+            className="relative flex w-[110px] items-center justify-center md:w-[160px]"
           >
-            <svg className="w-full" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="0 0 40.9986 36.3546" aria-label="Logo MZW">
+            <svg className="w-full drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="0 0 40.9986 36.3546" aria-label="Logo MZW">
               <g>
-                <path d={svgPaths.p3c9ec700} fill={isDark ? "white" : "black"} stroke={isDark ? "black" : "none"} strokeWidth="0.35" strokeLinejoin="round" />
+                <path d={svgPaths.p3c9ec700} fill={isDark ? "white" : "black"} stroke={isDark ? "rgba(255,255,255,0.1)" : "none"} strokeWidth="0.2" strokeLinejoin="round" />
               </g>
             </svg>
           </motion.div>
-        </motion.div>
+        </div>
       </motion.div>
     </section>
   );
