@@ -58,11 +58,11 @@ const TAP_GENERATORS: Array<() => { x: number; y: number; scale: number; rotate:
 let lastTapIdx = -1;
 
 const PALETTE = [
-  { hex: "#254d9b", name: "Deep Blue" },
-  { hex: "#5d4792", name: "Royal Violet" },
-  { hex: "#b3428a", name: "Magenta" },
-  { hex: "#5DA9FF", name: "Signal Cyan" },
-  { hex: "#D8C7D1", name: "Mist Lilac" },
+  { hex: "#254D9B", name: "Basse", role: "Profondeur" },
+  { hex: "#5D4792", name: "Harmonie", role: "Tension" },
+  { hex: "#B3428A", name: "Énergie", role: "Intensité" },
+  { hex: "#CC7B63", name: "Pulsation", role: "Chaleur" },
+  { hex: "#E2C049", name: "Résonance", role: "Éclat" },
 ];
 
 function SectionLabel({ children }: { children: string }) {
@@ -399,32 +399,90 @@ function PaletteSection() {
           </FadeIn>
         </div>
 
-        <div className="grid grid-cols-5 gap-3">
+        <div
+          className="relative overflow-hidden rounded-[2rem] px-5 py-10 md:px-8 md:py-12"
+          style={{
+            background: isDark
+              ? "linear-gradient(180deg, rgba(9,5,15,0.96), rgba(6,8,18,0.98))"
+              : "linear-gradient(180deg, rgba(17,12,28,0.96), rgba(8,10,22,0.98))",
+            border: `1px solid ${r(0.06)}`,
+            boxShadow: isDark
+              ? "0 28px 90px rgba(0,0,0,0.42), inset 0 1px 0 rgba(255,255,255,0.05)"
+              : "0 24px 70px rgba(20,22,35,0.18), inset 0 1px 0 rgba(255,255,255,0.08)",
+          }}
+        >
+          <div
+            className="absolute inset-x-0 top-1/2 h-[42%] -translate-y-1/2 opacity-70"
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(37,77,155,0.12), rgba(93,71,146,0.18), rgba(179,66,138,0.18), rgba(204,123,99,0.14), rgba(226,192,73,0.16))",
+              filter: "blur(22px)",
+            }}
+          />
+          <div className="absolute inset-0 opacity-[0.08] pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at 50% 50%, white 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
+
+          <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 lg:gap-4">
           {PALETTE.map((color, i) => (
             <FadeIn key={color.hex} delay={0.12 + i * 0.06}>
-              <div className="flex flex-col items-center gap-3">
+              <div className="group relative flex min-h-[250px] flex-col items-center justify-between overflow-hidden rounded-2xl px-4 py-5 transition-transform duration-500 hover:-translate-y-1">
                 <div
-                  className="w-full aspect-square rounded-xl transition-transform duration-300 hover:scale-105"
+                  className="absolute inset-x-0 top-1/2 h-[1px] -translate-y-1/2"
+                  style={{ background: `linear-gradient(90deg, transparent, ${color.hex}88, transparent)` }}
+                />
+                <div
+                  className="absolute left-1/2 top-1/2 h-[72%] w-[54%] -translate-x-1/2 -translate-y-1/2 opacity-65"
                   style={{
-                    background: color.hex,
-                    boxShadow: isDark
-                      ? `0 12px 30px ${color.hex}33`
-                      : `0 8px 24px ${color.hex}22`,
+                    background: `repeating-linear-gradient(90deg, transparent 0 5px, ${color.hex} 5px 7px, transparent 7px 12px)`,
+                    clipPath: "polygon(0 47%, 4% 42%, 8% 55%, 12% 28%, 16% 70%, 20% 36%, 24% 64%, 28% 22%, 32% 78%, 36% 32%, 40% 68%, 44% 40%, 48% 60%, 52% 30%, 56% 72%, 60% 36%, 64% 66%, 68% 24%, 72% 76%, 76% 34%, 80% 65%, 84% 42%, 88% 58%, 92% 44%, 96% 54%, 100% 48%, 100% 52%, 96% 46%, 92% 56%, 88% 42%, 84% 58%, 80% 35%, 76% 66%, 72% 24%, 68% 76%, 64% 34%, 60% 64%, 56% 28%, 52% 70%, 48% 40%, 44% 60%, 40% 32%, 36% 68%, 32% 22%, 28% 78%, 24% 36%, 20% 64%, 16% 30%, 12% 72%, 8% 45%, 4% 58%, 0 53%)",
+                    filter: `drop-shadow(0 0 16px ${color.hex})`,
                   }}
                 />
                 <span
+                  className="relative z-10 uppercase"
                   style={{
                     fontFamily: "'Inter', sans-serif",
-                    fontSize: "0.55rem",
-                    letterSpacing: "0.05em",
-                    color: r(0.25),
+                    fontSize: "0.62rem",
+                    letterSpacing: "0.22em",
+                    color: color.hex,
                   }}
                 >
-                  {color.hex}
+                  {color.name}
                 </span>
+                <div
+                  className="relative z-10 h-24 w-16 rounded-2xl transition-transform duration-500 group-hover:scale-105 md:h-28 md:w-20"
+                  style={{
+                    background: color.hex,
+                    boxShadow: `0 0 36px ${color.hex}66, inset 0 1px 0 rgba(255,255,255,0.18)`,
+                  }}
+                />
+                <div className="relative z-10 text-center">
+                  <span
+                    className="block uppercase"
+                    style={{
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: "0.62rem",
+                      letterSpacing: "0.12em",
+                      color: color.hex,
+                    }}
+                  >
+                    {color.hex}
+                  </span>
+                  <span
+                    className="mt-2 block uppercase"
+                    style={{
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: "0.56rem",
+                      letterSpacing: "0.18em",
+                      color: "rgba(255,255,255,0.52)",
+                    }}
+                  >
+                    {color.role}
+                  </span>
+                </div>
               </div>
             </FadeIn>
           ))}
+          </div>
         </div>
       </div>
     </section>
@@ -699,38 +757,45 @@ function AnimatedPlayerMockup() {
   return (
     <div className="relative">
       <div className="relative z-10 w-full" style={{ aspectRatio: "1080 / 1350" }}>
-        <img
-          src={imgPlayerCenter}
-          alt="MZW — lecteur en cours de lecture"
-          className="absolute left-1/2 top-1/2 w-[54%] max-w-none -translate-x-1/2 -translate-y-1/2 object-contain"
-        />
+        <div
+          className="absolute left-1/2 top-1/2 w-[54%] max-w-none -translate-x-1/2 -translate-y-1/2 rounded-[2.2rem] p-[1.2%]"
+          style={{
+            aspectRatio: "785 / 1766",
+            background: "linear-gradient(145deg, #1c1d21 0%, #050507 48%, #2c2d32 100%)",
+            boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.18), inset 0 0 0 3px rgba(0,0,0,0.86)",
+          }}
+        >
+          <div className="relative size-full overflow-hidden rounded-[1.85rem]" style={{ background: "#090211" }}>
+            <img src={imgPlayerCenter} alt="MZW — lecteur en cours de lecture" className="absolute inset-0 size-full object-cover" />
+            <div
+              className="absolute z-20"
+              style={{
+                left: "8%",
+                right: "8%",
+                top: "70.4%",
+                height: "5%",
+                filter: "drop-shadow(0 0 10px rgba(93,71,146,0.5))",
+                mixBlendMode: "screen",
+              }}
+            >
+              <AnimatedWaveform />
+            </div>
+            <motion.div
+              aria-hidden="true"
+              className="absolute left-1/2 z-20 rounded-full"
+              style={{
+                bottom: "7.6%",
+                width: "19%",
+                aspectRatio: "1 / 1",
+                background: "radial-gradient(circle, rgba(255,255,255,0.18), rgba(93,71,146,0.12) 55%, transparent 72%)",
+                transform: "translateX(-50%)",
+              }}
+              animate={{ scale: [1, 1.1, 1], opacity: [0.35, 0.62, 0.35] }}
+              transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </div>
+        </div>
       </div>
-      <div
-        className="absolute z-20"
-        style={{
-          left: "27%",
-          right: "27%",
-          top: "69.8%",
-          height: "4.9%",
-          filter: "drop-shadow(0 0 10px rgba(93,71,146,0.5))",
-          mixBlendMode: "screen",
-        }}
-      >
-        <AnimatedWaveform />
-      </div>
-      <motion.div
-        aria-hidden="true"
-        className="absolute left-1/2 z-20 rounded-full"
-        style={{
-          bottom: "8.8%",
-          width: "11%",
-          aspectRatio: "1 / 1",
-          background: "radial-gradient(circle, rgba(255,255,255,0.18), rgba(93,71,146,0.12) 55%, transparent 72%)",
-          transform: "translateX(-50%)",
-        }}
-        animate={{ scale: [1, 1.1, 1], opacity: [0.35, 0.62, 0.35] }}
-        transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
-      />
     </div>
   );
 }
@@ -806,7 +871,7 @@ function MobileSection() {
                 viewport={{ once: true }}
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 1.05, delay: 0.2, ease: "easeOut", y: { duration: 6, repeat: Infinity, ease: "easeInOut" } }}
-                style={{ width: "clamp(135px, 18vw, 255px)", filter: phoneShadow(false) }}
+                style={{ width: "clamp(165px, 22vw, 315px)", filter: phoneShadow(false) }}
               >
                 <img src={imgPlayerSplash} alt="MZW — écran d'accueil mobile" className="w-full h-auto object-contain" />
               </motion.div>
@@ -835,7 +900,7 @@ function MobileSection() {
                 viewport={{ once: true }}
                 animate={{ y: [0, 10, 0] }}
                 transition={{ duration: 1.05, delay: 0.4, ease: "easeOut", y: { duration: 6.8, repeat: Infinity, ease: "easeInOut" } }}
-                style={{ width: "clamp(135px, 18vw, 255px)", filter: phoneShadow(false) }}
+                style={{ width: "clamp(165px, 22vw, 315px)", filter: phoneShadow(false) }}
               >
                 <img src={imgPlayerLibrary} alt="MZW — bibliothèque mobile" className="w-full h-auto object-contain" />
               </motion.div>
