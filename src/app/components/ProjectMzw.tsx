@@ -375,18 +375,7 @@ function PaletteSection() {
           </FadeIn>
         </div>
 
-        <div
-          className="relative overflow-hidden rounded-[2rem] px-5 py-10 md:px-8 md:py-14"
-          style={{
-            background: isDark
-              ? "linear-gradient(180deg, rgba(9,5,15,0.96), rgba(6,8,18,0.98))"
-              : "linear-gradient(180deg, rgba(17,12,28,0.96), rgba(8,10,22,0.98))",
-            border: `1px solid ${r(0.06)}`,
-            boxShadow: isDark
-              ? "0 28px 90px rgba(0,0,0,0.42), inset 0 1px 0 rgba(255,255,255,0.05)"
-              : "0 24px 70px rgba(20,22,35,0.18), inset 0 1px 0 rgba(255,255,255,0.08)",
-          }}
-        >
+        <div className="relative overflow-hidden py-10 md:py-14">
           <svg className="absolute inset-0 size-full opacity-[0.1]" fill="none" preserveAspectRatio="none" viewBox="0 0 1000 420" aria-hidden="true">
             {Array.from({ length: 9 }).map((_, i) => (
               <path
@@ -405,7 +394,7 @@ function PaletteSection() {
               filter: "blur(34px)",
             }}
           />
-          <div className="relative min-h-[360px] overflow-hidden rounded-[1.4rem] border border-white/[0.04] bg-black/[0.12] px-4 py-8 md:min-h-[430px] md:px-7 md:py-10">
+          <div className="relative min-h-[360px] overflow-hidden px-1 py-8 md:min-h-[430px] md:px-2 md:py-10">
             <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-white/20" />
             <div
               className="absolute inset-x-0 top-1/2 h-[2px] -translate-y-1/2"
