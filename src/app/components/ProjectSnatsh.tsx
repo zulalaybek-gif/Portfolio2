@@ -87,16 +87,29 @@ function HeroSection() {
   const imgOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
-    <section ref={ref} className="relative w-full min-h-[80vh] flex flex-col items-center justify-center overflow-hidden px-6 py-20">
+    <section ref={ref} className="relative w-full min-h-[80vh] flex flex-col items-center justify-center overflow-visible px-6 py-20">
       {/* Floating rounded squares animation */}
-      <FloatingSquares count={20} />
+      <div
+        className="absolute inset-x-0 top-0 -bottom-24 pointer-events-none overflow-hidden"
+        style={{
+          WebkitMaskImage: "linear-gradient(to bottom, #000 0%, #000 72%, rgba(0,0,0,0.75) 86%, transparent 100%)",
+          maskImage: "linear-gradient(to bottom, #000 0%, #000 72%, rgba(0,0,0,0.75) 86%, transparent 100%)",
+        }}
+      >
+        <FloatingSquares
+          count={20}
+          className={isDark ? "" : "opacity-95 mix-blend-multiply contrast-125 saturate-125"}
+        />
+      </div>
 
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-x-0 top-0 -bottom-20 pointer-events-none"
         style={{
           background: isDark
             ? `radial-gradient(ellipse 60% 50% at 50% 45%, rgba(${ACCENT_RGB},0.08) 0%, transparent 70%)`
-            : `radial-gradient(ellipse 60% 50% at 50% 45%, rgba(${ACCENT_RGB},0.12) 0%, transparent 70%)`,
+            : `radial-gradient(ellipse 62% 52% at 50% 44%, rgba(${ACCENT_RGB},0.18) 0%, rgba(${SECONDARY_RGB},0.1) 48%, transparent 76%)`,
+          WebkitMaskImage: "linear-gradient(to bottom, #000 0%, #000 74%, rgba(0,0,0,0.65) 88%, transparent 100%)",
+          maskImage: "linear-gradient(to bottom, #000 0%, #000 74%, rgba(0,0,0,0.65) 88%, transparent 100%)",
         }}
       />
 
