@@ -832,7 +832,7 @@ function MobileSection() {
         </div>
 
         <div
-          className="relative overflow-hidden rounded-[2rem] md:rounded-[3rem] px-4 py-12 md:px-10 md:py-16"
+          className="relative overflow-hidden rounded-[2rem] md:rounded-[3rem] px-4 pt-6 pb-12 md:px-10 md:pt-8 md:pb-14"
           style={{
             minHeight: "clamp(620px, 76vw, 900px)",
             background: sceneBg,
@@ -861,7 +861,7 @@ function MobileSection() {
             transition={{ duration: 7.2, repeat: Infinity, ease: "easeInOut" }}
           />
 
-          <div className="relative z-20 flex items-end justify-center min-h-[clamp(560px,70vw,820px)]">
+          <div className="relative z-20 flex items-center justify-center min-h-[clamp(500px,64vw,760px)]">
             {/* Left phone — smaller and slightly behind */}
             <FadeIn delay={0.1} className="absolute left-[3%] md:left-[7%] bottom-[18%] z-10">
               <motion.div
