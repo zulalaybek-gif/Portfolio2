@@ -702,16 +702,16 @@ function AnimatedPlayerMockup() {
         <img
           src={imgPlayerCenter}
           alt="MZW — lecteur en cours de lecture"
-          className="absolute left-1/2 top-1/2 h-[90%] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 object-contain"
+          className="absolute left-1/2 top-1/2 h-[72%] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 object-contain"
         />
       </div>
       <div
         className="absolute z-20"
         style={{
-          left: "16.2%",
-          right: "16.2%",
-          top: "67.6%",
-          height: "5.8%",
+          left: "35%",
+          right: "35%",
+          top: "64%",
+          height: "4.2%",
           filter: "drop-shadow(0 0 10px rgba(93,71,146,0.5))",
           mixBlendMode: "screen",
         }}
@@ -722,8 +722,8 @@ function AnimatedPlayerMockup() {
         aria-hidden="true"
         className="absolute left-1/2 z-20 rounded-full"
         style={{
-          bottom: "7.8%",
-          width: "19%",
+          bottom: "17.5%",
+          width: "11%",
           aspectRatio: "1 / 1",
           background: "radial-gradient(circle, rgba(255,255,255,0.18), rgba(93,71,146,0.12) 55%, transparent 72%)",
           transform: "translateX(-50%)",
