@@ -785,7 +785,7 @@ function MerchSection() {
    11. INTERFACE MOBILE — Immersive phone showcase with animated waveform
    =================================== */
 
-const EQ_COLORS = ["#254d9b", "#5d4792", "#b3428a", "#5DA9FF", "#D8C7D1"];
+const EQ_COLORS = PALETTE.map((color) => color.hex);
 
 /* Decorative equalizer — ultra-wide with soft edge fade and slow motion */
 function DecorativeEqualizer({ isDark }: { isDark: boolean }) {
