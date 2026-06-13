@@ -722,17 +722,9 @@ function VinylSection() {
 
         <FadeIn delay={0.15}>
           <div className="flex justify-center">
-            <div
-              className="relative rounded-2xl overflow-hidden max-w-md"
-              style={{
-                border: `1px solid ${r(0.04)}`,
-                background: isDark
-                  ? "linear-gradient(180deg, rgba(18,10,28,0.92), rgba(7,5,12,0.98))"
-                  : "linear-gradient(180deg, rgba(250,247,244,0.95), rgba(238,233,228,0.98))",
-              }}
-            >
+            <div className="relative max-w-md">
               <div
-                className="absolute left-1/2 top-0 h-[34%] w-[58%] -translate-x-1/2 pointer-events-none"
+                className="absolute left-1/2 top-[-8%] h-[38%] w-[68%] -translate-x-1/2 pointer-events-none"
                 style={{
                   background: isDark
                     ? `radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.44) 0%, rgba(${ACCENT_RGB},0.24) 36%, rgba(37,77,155,0.14) 58%, transparent 82%)`
@@ -742,14 +734,14 @@ function VinylSection() {
                 }}
               />
               <div
-                className="absolute left-1/2 top-0 h-[46%] w-[74%] -translate-x-1/2 pointer-events-none"
+                className="absolute left-1/2 top-[-6%] h-[50%] w-[88%] -translate-x-1/2 pointer-events-none"
                 style={{
                   background: `linear-gradient(180deg, rgba(255,255,255,${isDark ? 0.16 : 0.2}) 0%, rgba(${ACCENT_RGB},${isDark ? 0.12 : 0.07}) 42%, transparent 100%)`,
                   filter: "blur(28px)",
                   opacity: isDark ? 0.78 : 0.58,
                 }}
               />
-              <img src={imgVinyle} alt="Pochette vinyle MZW No Sense" className="relative z-10 w-full object-cover" />
+              <img src={imgVinyle} alt="Pochette vinyle MZW No Sense" className="relative z-10 w-full object-contain" />
             </div>
           </div>
         </FadeIn>
