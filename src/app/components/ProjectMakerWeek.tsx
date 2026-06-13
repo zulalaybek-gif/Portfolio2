@@ -546,6 +546,8 @@ function EventSection() {
 function GallerySection() {
   const { t } = useI18n();
   const { isDark, r } = useTheme();
+  const [isGalleryPaused, setIsGalleryPaused] = React.useState(false);
+  const resumeTimerRef = React.useRef<number | null>(null);
 
   const photos: Array<{ src: string; alt: string; position?: string }> = [
     { src: imgPhoto10, alt: "Photo de groupe Maker Week", position: "50% 43%" },
@@ -567,10 +569,56 @@ function GallerySection() {
     { photos: firstRow, direction: "right", duration: 150 },
     { photos: secondRow, direction: "left", duration: 165 },
   ];
+  const pauseGallery = () => {
+    if (resumeTimerRef.current) {
+      window.clearTimeout(resumeTimerRef.current);
+    }
+    setIsGalleryPaused(true);
+  };
+  const resumeGallery = () => {
+    if (resumeTimerRef.current) {
+      window.clearTimeout(resumeTimerRef.current);
+    }
+    resumeTimerRef.current = window.setTimeout(() => setIsGalleryPaused(false), 900);
+  };
 
   return (
     <section className="px-6 md:px-16 py-20 md:py-24">
       <div className="max-w-6xl mx-auto">
+        <style>{`
+          @keyframes makerWeekGalleryLeft {
+            from { transform: translate3d(0, 0, 0); }
+            to { transform: translate3d(-50%, 0, 0); }
+          }
+
+          @keyframes makerWeekGalleryRight {
+            from { transform: translate3d(-50%, 0, 0); }
+            to { transform: translate3d(0, 0, 0); }
+          }
+
+          .maker-week-gallery-row {
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+            touch-action: pan-x;
+          }
+
+          .maker-week-gallery-row::-webkit-scrollbar {
+            display: none;
+          }
+
+          .maker-week-gallery-track {
+            will-change: transform;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            animation-play-state: running;
+          }
+
+          .maker-week-gallery-track.is-paused,
+          .maker-week-gallery-row:hover .maker-week-gallery-track {
+            animation-play-state: paused;
+          }
+        `}</style>
+
         <FadeIn className="mb-8 md:mb-10">
           <SectionLabel>{t("mw.gallery.label")}</SectionLabel>
         </FadeIn>
@@ -599,45 +647,56 @@ function GallerySection() {
                 const rowPhotos = [...row.photos, ...row.photos];
 
                 return (
-                  <motion.div
+                  <div
                     key={row.direction}
-                    className="flex w-max gap-3 md:gap-4"
-                    animate={{ x: row.direction === "left" ? ["0%", "-50%"] : ["-50%", "0%"] }}
-                    transition={{
-                      duration: row.duration,
-                      ease: "linear",
-                      repeat: Infinity,
+                    className="maker-week-gallery-row overflow-x-auto overscroll-x-contain"
+                    onPointerDown={pauseGallery}
+                    onPointerUp={resumeGallery}
+                    onPointerCancel={resumeGallery}
+                    onTouchStart={pauseGallery}
+                    onTouchEnd={resumeGallery}
+                    onScroll={() => {
+                      pauseGallery();
+                      resumeGallery();
                     }}
                   >
-                    {rowPhotos.map((photo, index) => (
-                      <div
-                        key={`${row.direction}-${photo.src}-${index}`}
-                        className="w-[62vw] max-w-[340px] shrink-0 overflow-hidden rounded-2xl sm:w-[300px] md:w-[340px] lg:w-[380px]"
-                        style={{
-                          aspectRatio: rowIndex === 0 ? "4 / 3" : "16 / 10",
-                          border: `1px solid ${r(0.05)}`,
-                          background: isDark ? "rgba(255,255,255,0.045)" : "rgba(10,26,42,0.035)",
-                          boxShadow: isDark
-                            ? "0 20px 48px rgba(0,0,0,0.34)"
-                            : "0 20px 48px rgba(10,26,42,0.13)",
-                        }}
-                      >
-                        <img
-                          src={photo.src}
-                          alt={photo.alt}
-                          className="block h-full w-full object-cover"
+                    <div
+                      className={`maker-week-gallery-track flex w-max gap-3 md:gap-4 ${isGalleryPaused ? "is-paused" : ""}`}
+                      style={{
+                        animationName: row.direction === "left" ? "makerWeekGalleryLeft" : "makerWeekGalleryRight",
+                        animationDuration: `${row.duration}s`,
+                      }}
+                    >
+                      {rowPhotos.map((photo, index) => (
+                        <div
+                          key={`${row.direction}-${photo.src}-${index}`}
+                          className="w-[62vw] max-w-[340px] shrink-0 overflow-hidden rounded-2xl sm:w-[300px] md:w-[340px] lg:w-[380px]"
                           style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                            objectPosition: photo.position ?? "50% 50%",
-                            transform: "scale(1.1)",
+                            aspectRatio: rowIndex === 0 ? "4 / 3" : "16 / 10",
+                            border: `1px solid ${r(0.05)}`,
+                            background: isDark ? "rgba(255,255,255,0.045)" : "rgba(10,26,42,0.035)",
+                            boxShadow: isDark
+                              ? "0 20px 48px rgba(0,0,0,0.34)"
+                              : "0 20px 48px rgba(10,26,42,0.13)",
                           }}
-                          loading="lazy"
-                        />
-                      </div>
-                    ))}
-                  </motion.div>
+                        >
+                          <img
+                            src={photo.src}
+                            alt={photo.alt}
+                            className="block h-full w-full object-cover"
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                              objectPosition: photo.position ?? "50% 50%",
+                              transform: "scale(1.1)",
+                            }}
+                            loading="lazy"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 );
               })}
             </div>
