@@ -400,7 +400,7 @@ function PaletteSection() {
         </div>
 
         <div
-          className="relative overflow-hidden rounded-[2rem] px-5 py-10 md:px-8 md:py-12"
+          className="relative overflow-hidden rounded-[2rem] px-5 py-10 md:px-8 md:py-14"
           style={{
             background: isDark
               ? "linear-gradient(180deg, rgba(9,5,15,0.96), rgba(6,8,18,0.98))"
@@ -411,77 +411,123 @@ function PaletteSection() {
               : "0 24px 70px rgba(20,22,35,0.18), inset 0 1px 0 rgba(255,255,255,0.08)",
           }}
         >
+          <svg className="absolute inset-0 size-full opacity-[0.12]" fill="none" preserveAspectRatio="none" viewBox="0 0 1000 420" aria-hidden="true">
+            {Array.from({ length: 9 }).map((_, i) => (
+              <path
+                key={i}
+                d={`M-80 ${300 + i * 14} C 90 ${230 + i * 7}, 190 ${370 - i * 4}, 340 ${300 + i * 10} S 620 ${250 + i * 6}, 790 ${310 - i * 5} S 1030 ${330 + i * 4}, 1110 ${260 + i * 8}`}
+                stroke="rgba(255,255,255,0.34)"
+                strokeWidth="0.8"
+              />
+            ))}
+          </svg>
           <div
-            className="absolute inset-x-0 top-1/2 h-[42%] -translate-y-1/2 opacity-70"
+            className="absolute inset-x-0 top-1/2 h-24 -translate-y-1/2 opacity-80"
             style={{
               background:
-                "linear-gradient(90deg, rgba(37,77,155,0.12), rgba(93,71,146,0.18), rgba(179,66,138,0.18), rgba(204,123,99,0.14), rgba(226,192,73,0.16))",
-              filter: "blur(22px)",
+                "linear-gradient(90deg, rgba(37,77,155,0.18), rgba(93,71,146,0.22), rgba(179,66,138,0.22), rgba(204,123,99,0.2), rgba(226,192,73,0.2))",
+              filter: "blur(26px)",
             }}
           />
-          <div className="absolute inset-0 opacity-[0.08] pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at 50% 50%, white 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
+          <svg className="absolute inset-x-0 top-1/2 h-44 w-full -translate-y-1/2 opacity-80" fill="none" preserveAspectRatio="none" viewBox="0 0 1000 220" aria-hidden="true">
+            <path
+              d="M0 110 C 55 40, 95 172, 145 112 S 240 52, 300 110 S 395 170, 455 110 S 550 48, 610 110 S 706 172, 765 110 S 870 48, 1000 110"
+              stroke="url(#mzw-wave-grad)"
+              strokeWidth="1.2"
+            />
+            <path
+              d="M0 110 C 55 68, 95 146, 145 112 S 240 76, 300 110 S 395 144, 455 110 S 550 72, 610 110 S 706 146, 765 110 S 870 76, 1000 110"
+              stroke="rgba(255,255,255,0.24)"
+              strokeWidth="0.8"
+            />
+            <defs>
+              <linearGradient id="mzw-wave-grad" x1="0" x2="1000" y1="0" y2="0">
+                <stop stopColor="#254D9B" />
+                <stop offset="0.25" stopColor="#5D4792" />
+                <stop offset="0.5" stopColor="#B3428A" />
+                <stop offset="0.75" stopColor="#CC7B63" />
+                <stop offset="1" stopColor="#E2C049" />
+              </linearGradient>
+            </defs>
+          </svg>
 
-          <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 lg:gap-4">
-          {PALETTE.map((color, i) => (
-            <FadeIn key={color.hex} delay={0.12 + i * 0.06}>
-              <div className="group relative flex min-h-[250px] flex-col items-center justify-between overflow-hidden rounded-2xl px-4 py-5 transition-transform duration-500 hover:-translate-y-1">
-                <div
-                  className="absolute inset-x-0 top-1/2 h-[1px] -translate-y-1/2"
-                  style={{ background: `linear-gradient(90deg, transparent, ${color.hex}88, transparent)` }}
-                />
-                <div
-                  className="absolute left-1/2 top-1/2 h-[72%] w-[54%] -translate-x-1/2 -translate-y-1/2 opacity-65"
-                  style={{
-                    background: `repeating-linear-gradient(90deg, transparent 0 5px, ${color.hex} 5px 7px, transparent 7px 12px)`,
-                    clipPath: "polygon(0 47%, 4% 42%, 8% 55%, 12% 28%, 16% 70%, 20% 36%, 24% 64%, 28% 22%, 32% 78%, 36% 32%, 40% 68%, 44% 40%, 48% 60%, 52% 30%, 56% 72%, 60% 36%, 64% 66%, 68% 24%, 72% 76%, 76% 34%, 80% 65%, 84% 42%, 88% 58%, 92% 44%, 96% 54%, 100% 48%, 100% 52%, 96% 46%, 92% 56%, 88% 42%, 84% 58%, 80% 35%, 76% 66%, 72% 24%, 68% 76%, 64% 34%, 60% 64%, 56% 28%, 52% 70%, 48% 40%, 44% 60%, 40% 32%, 36% 68%, 32% 22%, 28% 78%, 24% 36%, 20% 64%, 16% 30%, 12% 72%, 8% 45%, 4% 58%, 0 53%)",
-                    filter: `drop-shadow(0 0 16px ${color.hex})`,
-                  }}
-                />
-                <span
-                  className="relative z-10 uppercase"
-                  style={{
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: "0.62rem",
-                    letterSpacing: "0.22em",
-                    color: color.hex,
-                  }}
-                >
-                  {color.name}
-                </span>
-                <div
-                  className="relative z-10 h-24 w-16 rounded-2xl transition-transform duration-500 group-hover:scale-105 md:h-28 md:w-20"
-                  style={{
-                    background: color.hex,
-                    boxShadow: `0 0 36px ${color.hex}66, inset 0 1px 0 rgba(255,255,255,0.18)`,
-                  }}
-                />
-                <div className="relative z-10 text-center">
+          <div className="relative grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-5 lg:gap-3">
+            {PALETTE.map((color, i) => (
+              <FadeIn key={color.hex} delay={0.12 + i * 0.06}>
+                <div className="group relative flex min-h-[292px] flex-col items-center justify-between px-3 py-2 transition-transform duration-500 hover:-translate-y-1">
                   <span
-                    className="block uppercase"
+                    className="relative z-10 uppercase"
                     style={{
                       fontFamily: "'Inter', sans-serif",
                       fontSize: "0.62rem",
-                      letterSpacing: "0.12em",
+                      letterSpacing: "0.22em",
                       color: color.hex,
                     }}
                   >
-                    {color.hex}
+                    {color.name}
                   </span>
-                  <span
-                    className="mt-2 block uppercase"
-                    style={{
-                      fontFamily: "'Inter', sans-serif",
-                      fontSize: "0.56rem",
-                      letterSpacing: "0.18em",
-                      color: "rgba(255,255,255,0.52)",
-                    }}
-                  >
-                    {color.role}
-                  </span>
+
+                  <div className="relative z-10 flex h-44 w-full items-center justify-center">
+                    <div
+                      className="absolute left-1/2 top-1/2 h-[130%] w-px -translate-x-1/2 -translate-y-1/2 opacity-45"
+                      style={{
+                        background: `linear-gradient(180deg, transparent, ${color.hex}, transparent)`,
+                      }}
+                    />
+                    <div className="absolute inset-x-0 top-1/2 flex -translate-y-1/2 items-center justify-center gap-[3px]">
+                      {Array.from({ length: 25 }).map((_, barIndex) => {
+                        const distance = Math.abs(barIndex - 12);
+                        const height = Math.max(12, 78 - distance * 5 + ((barIndex + i) % 4) * 7);
+                        return (
+                          <span
+                            key={barIndex}
+                            className="block w-px rounded-full"
+                            style={{
+                              height: `${height}%`,
+                              background: `linear-gradient(180deg, transparent, ${color.hex}, transparent)`,
+                              boxShadow: `0 0 10px ${color.hex}88`,
+                              opacity: 0.2 + (12 - Math.min(distance, 12)) * 0.045,
+                            }}
+                          />
+                        );
+                      })}
+                    </div>
+                    <div
+                      className="relative z-10 h-28 w-16 rounded-[1.35rem] transition-transform duration-500 group-hover:scale-105 md:h-32 md:w-[4.6rem]"
+                      style={{
+                        background: `linear-gradient(180deg, ${color.hex}, ${color.hex}dd)`,
+                        boxShadow: `0 0 30px ${color.hex}66, 0 0 70px ${color.hex}22, inset 0 1px 0 rgba(255,255,255,0.22)`,
+                      }}
+                    />
+                  </div>
+
+                  <div className="relative z-10 text-center">
+                    <span
+                      className="block uppercase"
+                      style={{
+                        fontFamily: "'Inter', sans-serif",
+                        fontSize: "0.62rem",
+                        letterSpacing: "0.12em",
+                        color: color.hex,
+                      }}
+                    >
+                      {color.hex}
+                    </span>
+                    <span
+                      className="mt-2 block uppercase"
+                      style={{
+                        fontFamily: "'Inter', sans-serif",
+                        fontSize: "0.56rem",
+                        letterSpacing: "0.18em",
+                        color: "rgba(255,255,255,0.52)",
+                      }}
+                    >
+                      {color.role}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </FadeIn>
-          ))}
+              </FadeIn>
+            ))}
           </div>
         </div>
       </div>
