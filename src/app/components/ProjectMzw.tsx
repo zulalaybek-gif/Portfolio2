@@ -407,25 +407,15 @@ function PaletteSection() {
             </g>
 
             <path d="M0 310 H1000" stroke="rgba(255,255,255,0.22)" strokeWidth="1" />
-            <path
-              d="M0 310 C 55 240, 95 382, 145 312 S 240 252, 300 310 S 395 372, 455 310 S 550 248, 610 310 S 706 372, 765 310 S 870 248, 1000 310"
-              stroke="url(#mzw-palette-wave)"
-              strokeWidth="1.35"
-              filter="url(#mzw-palette-glow)"
-              opacity="0.85"
-            />
-            <path
-              d="M0 310 C 55 276, 95 346, 145 312 S 240 278, 300 310 S 395 342, 455 310 S 550 276, 610 310 S 706 344, 765 310 S 870 278, 1000 310"
-              stroke="rgba(255,255,255,0.26)"
-              strokeWidth="0.8"
-              opacity="0.7"
-            />
+            <path d="-80 310 H1080" stroke="url(#mzw-palette-wave)" strokeWidth="1.4" filter="url(#mzw-palette-glow)" opacity="0.85" />
+            <path d="-80 304 H1080" stroke="rgba(255,255,255,0.18)" strokeWidth="0.7" opacity="0.58" />
+            <path d="-80 316 H1080" stroke="rgba(255,255,255,0.14)" strokeWidth="0.7" opacity="0.48" />
 
-            {Array.from({ length: 180 }).map((_, i) => {
-              const x = (i / 179) * 1000;
-              const band = Math.min(PALETTE.length - 1, Math.floor((i / 180) * PALETTE.length));
+            {Array.from({ length: 216 }).map((_, i) => {
+              const x = -70 + (i / 215) * 1140;
+              const band = Math.min(PALETTE.length - 1, Math.max(0, Math.floor(((x + 70) / 1140) * PALETTE.length)));
               const color = PALETTE[band].hex;
-              const local = ((i / 179) * PALETTE.length) % 1;
+              const local = (((x + 70) / 1140) * PALETTE.length) % 1;
               const center = 1 - Math.min(1, Math.abs(local - 0.5) * 2);
               const rhythm = Math.abs(Math.sin(i * 0.43)) * 0.45 + Math.abs(Math.sin(i * 0.17)) * 0.25;
               const h = 18 + center * 138 + rhythm * 58;
@@ -445,7 +435,7 @@ function PaletteSection() {
             })}
 
             {PALETTE.map((color, i) => {
-              const x = 110 + i * 195;
+              const x = 80 + i * 210;
               return (
                 <g key={color.hex}>
                   <line x1={x} x2={x} y1="145" y2="475" stroke={color.hex} strokeWidth="0.9" strokeDasharray="2 6" opacity="0.45" />
@@ -475,7 +465,7 @@ function PaletteSection() {
           </svg>
 
           {PALETTE.map((color, i) => {
-            const left = 11 + i * 19.5;
+            const left = 8 + i * 21;
             return (
               <FadeIn key={color.hex} delay={0.12 + i * 0.06}>
                 <div
