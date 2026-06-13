@@ -324,7 +324,7 @@ function PaletteSection() {
       src: imgPaletteOrange,
       alt: "Kitty Hub orange collector card",
       className:
-        "top-0 left-1/2 -translate-x-1/2 w-[62vw] max-w-[260px] md:top-[8px] md:left-[32px] md:translate-x-0 md:w-[240px] md:max-w-none lg:top-[10px] lg:left-[40px] lg:w-[290px]",
+        "top-[8px] left-1/2 -translate-x-1/2 w-[165px] max-w-[46vw] md:top-[32px] md:left-[56px] md:translate-x-0 md:w-[205px] md:max-w-none lg:top-[40px] lg:left-[80px] lg:w-[230px]",
       rotate: "-2deg",
       zIndex: 30,
     },
@@ -333,8 +333,8 @@ function PaletteSection() {
       src: imgPaletteViolet,
       alt: "Kitty Hub violet collector card",
       className:
-        "top-[20px] left-1/2 -translate-x-[calc(50%-22px)] w-[58vw] max-w-[244px] md:top-[30px] md:left-[150px] md:translate-x-0 md:w-[228px] md:max-w-none lg:top-[35px] lg:left-[180px] lg:w-[275px]",
-      rotate: "1deg",
+        "top-[28px] left-1/2 -translate-x-[calc(50%-28px)] w-[160px] max-w-[44vw] md:top-[46px] md:left-[196px] md:translate-x-0 md:w-[205px] md:max-w-none lg:top-[55px] lg:left-[250px] lg:w-[230px]",
+      rotate: "1.5deg",
       zIndex: 24,
     },
     {
@@ -342,8 +342,8 @@ function PaletteSection() {
       src: imgPaletteBlue,
       alt: "Kitty Hub blue collector card",
       className:
-        "top-[38px] left-1/2 -translate-x-[calc(50%-38px)] w-[54vw] max-w-[226px] md:top-[58px] md:left-[268px] md:translate-x-0 md:w-[220px] md:max-w-none lg:top-[70px] lg:left-[320px] lg:w-[265px]",
-      rotate: "3deg",
+        "top-[48px] left-1/2 -translate-x-[calc(50%-54px)] w-[155px] max-w-[42vw] md:top-[64px] md:left-[326px] md:translate-x-0 md:w-[205px] md:max-w-none lg:top-[78px] lg:left-[410px] lg:w-[230px]",
+      rotate: "2deg",
       zIndex: 18,
     },
     {
@@ -351,8 +351,8 @@ function PaletteSection() {
       src: imgPaletteDark,
       alt: "Kitty Hub dark collector card",
       className:
-        "top-[56px] left-1/2 -translate-x-[calc(50%-52px)] w-[50vw] max-w-[210px] md:top-[86px] md:left-[382px] md:translate-x-0 md:w-[210px] md:max-w-none lg:top-[105px] lg:left-[515px] lg:w-[255px]",
-      rotate: "5deg",
+        "top-[68px] left-1/2 -translate-x-[calc(50%-76px)] w-[150px] max-w-[40vw] md:top-[88px] md:left-[450px] md:translate-x-0 md:w-[205px] md:max-w-none lg:top-[105px] lg:left-[565px] lg:w-[230px]",
+      rotate: "3deg",
       zIndex: 12,
     },
     {
@@ -360,14 +360,14 @@ function PaletteSection() {
       src: imgPaletteBooster,
       alt: "Kitty Hub chromatic booster pack",
       className:
-        "bottom-[4px] left-1/2 -translate-x-1/2 w-[60vw] max-w-[252px] md:bottom-[-18px] md:left-[110px] md:translate-x-0 md:w-[250px] md:max-w-none lg:bottom-[-25px] lg:left-[135px] lg:w-[300px]",
-      rotate: "-7deg",
+        "top-[220px] left-1/2 -translate-x-1/2 w-[175px] max-w-[52vw] md:top-[270px] md:left-[130px] md:translate-x-0 md:w-[235px] md:max-w-none lg:top-[305px] lg:left-[160px] lg:w-[270px]",
+      rotate: "-6deg",
       zIndex: 40,
     },
   ];
 
   return (
-    <section className="relative w-full bg-[#030303] overflow-x-clip overflow-y-visible" style={{ paddingTop: '72px', paddingBottom: '136px' }}>
+    <section className="relative w-full bg-[#030303] overflow-visible" style={{ paddingTop: '72px', paddingBottom: '136px' }}>
       {/* Background Grid Decoration */}
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none"
@@ -378,7 +378,7 @@ function PaletteSection() {
       />
 
       <div className="relative max-w-[1480px] mx-auto overflow-visible px-6 lg:px-[64px]">
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,42%)_minmax(0,58%)] gap-[48px] lg:gap-[40px] items-start overflow-visible">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,38%)_minmax(0,62%)] gap-[48px] lg:gap-[40px] items-start overflow-visible">
 
           {/* LEFT COLUMN: 360px */}
           <div className="w-full z-20">
@@ -432,8 +432,8 @@ function PaletteSection() {
           </div>
 
           {/* RIGHT VISUAL ZONE: 920px */}
-          <div className="relative w-full h-[430px] md:h-[520px] lg:h-[610px] overflow-visible">
-            <div className="relative mx-auto h-full w-full max-w-[420px] overflow-visible md:max-w-[660px] lg:mx-0 lg:w-[760px] lg:max-w-none">
+          <div className="relative w-full h-[430px] md:h-[560px] lg:h-[620px] overflow-visible">
+            <div className="relative mx-auto h-full w-full max-w-[390px] overflow-visible md:max-w-[690px] lg:mx-0 lg:w-[720px] lg:max-w-none">
 
               {/* Background Glows and Shape */}
               {!isMobile && (
