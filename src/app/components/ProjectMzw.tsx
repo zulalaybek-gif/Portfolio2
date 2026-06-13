@@ -887,43 +887,88 @@ function DecorativeEqualizer({ isDark }: { isDark: boolean }) {
 function AnimatedPlayerMockup() {
   return (
     <div className="relative">
-      <div className="relative z-10 w-full" style={{ aspectRatio: "1080 / 1010" }}>
+      <div className="relative z-10 w-full" style={{ aspectRatio: "1080 / 980" }}>
         <div
           className="absolute left-1/2 top-1/2 w-[54%] max-w-none -translate-x-1/2 -translate-y-1/2 rounded-[2.2rem] p-[1.2%]"
           style={{
-            aspectRatio: "785 / 1320",
+            aspectRatio: "785 / 1260",
             background: "linear-gradient(145deg, #1c1d21 0%, #050507 48%, #2c2d32 100%)",
             boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.18), inset 0 0 0 3px rgba(0,0,0,0.86)",
           }}
         >
           <div className="relative size-full overflow-hidden rounded-[1.85rem]" style={{ background: "#090211" }}>
             <img src={imgPlayerCenter} alt="MZW — lecteur en cours de lecture" className="absolute inset-0 size-full object-cover object-top" />
-            <div
-              className="absolute z-20"
+            <div 
+              className="absolute inset-x-0 bottom-0 z-20 flex flex-col items-center"
               style={{
-                left: "8%",
-                right: "8%",
-                top: "63.8%",
-                height: "5%",
-                filter: "drop-shadow(0 0 10px rgba(93,71,146,0.5))",
-                mixBlendMode: "screen",
+                height: "35%",
+                padding: "18px 8% 42px",
+                background: "linear-gradient(180deg, rgba(9,2,17,0.86) 0%, rgba(9,2,17,0.97) 22%, #090211 100%)",
               }}
             >
-              <AnimatedWaveform />
+              <div
+                className="w-full"
+                style={{
+                  height: 38,
+                  filter: "drop-shadow(0 0 10px rgba(93,71,146,0.5))",
+                  mixBlendMode: "screen",
+                }}
+              >
+                <AnimatedWaveform />
+              </div>
+              <div
+                className="mt-[14px] flex w-full items-center justify-between"
+                style={{
+                  color: "rgba(255,255,255,0.6)",
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: 12,
+                  lineHeight: 1,
+                }}
+              >
+                <span>1:04</span>
+                <span>3:29</span>
+              </div>
+              <div className="mt-7 flex w-full items-center justify-center gap-8">
+                <span
+                  aria-hidden="true"
+                  className="block h-4 w-4"
+                  style={{
+                    borderTop: "1.5px solid rgba(255,255,255,0.42)",
+                    borderBottom: "1.5px solid rgba(255,255,255,0.42)",
+                    transform: "skewX(-18deg)",
+                  }}
+                />
+                <motion.div
+                  aria-hidden="true"
+                  className="relative rounded-full"
+                  style={{
+                    width: 60,
+                    aspectRatio: "1 / 1",
+                    background: "radial-gradient(circle, rgba(255,255,255,0.22), rgba(93,71,146,0.16) 55%, rgba(93,71,146,0.06) 72%)",
+                    boxShadow: "0 0 24px rgba(93,71,146,0.28)",
+                  }}
+                  animate={{ scale: [1, 1.06, 1], opacity: [0.78, 1, 0.78] }}
+                  transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <span
+                    className="absolute left-1/2 top-1/2 block h-0 w-0 -translate-x-[35%] -translate-y-1/2"
+                    style={{
+                      borderTop: "8px solid transparent",
+                      borderBottom: "8px solid transparent",
+                      borderLeft: "13px solid rgba(255,255,255,0.88)",
+                    }}
+                  />
+                </motion.div>
+                <span
+                  aria-hidden="true"
+                  className="block h-4 w-4 rounded-full"
+                  style={{
+                    border: "1.5px solid rgba(255,255,255,0.42)",
+                    borderLeftColor: "transparent",
+                  }}
+                />
+              </div>
             </div>
-            <motion.div
-              aria-hidden="true"
-              className="absolute left-1/2 z-20 rounded-full"
-              style={{
-                bottom: "clamp(34px, 11%, 54px)",
-                width: "19%",
-                aspectRatio: "1 / 1",
-                background: "radial-gradient(circle, rgba(255,255,255,0.18), rgba(93,71,146,0.12) 55%, transparent 72%)",
-                transform: "translateX(-50%)",
-              }}
-              animate={{ scale: [1, 1.1, 1], opacity: [0.35, 0.62, 0.35] }}
-              transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
-            />
           </div>
         </div>
       </div>
