@@ -323,8 +323,9 @@ function PaletteSection() {
       id: "orange",
       src: imgPaletteOrange,
       alt: "Kitty Hub orange collector card",
-      className:
-        "left-[12px] top-0 w-[165px] md:left-[46px] md:top-[8px] md:w-[218px] lg:left-[42px] lg:top-[22px] lg:w-[270px]",
+      className: isMobile 
+        ? "left-[12px] top-0 w-[165px]" 
+        : "left-[42px] top-[22px] w-[270px]",
       rotate: "-4deg",
       zIndex: 34,
     },
@@ -332,8 +333,9 @@ function PaletteSection() {
       id: "violet",
       src: imgPaletteViolet,
       alt: "Kitty Hub violet collector card",
-      className:
-        "left-[104px] top-[22px] w-[158px] md:left-[180px] md:top-[24px] md:w-[212px] lg:left-[196px] lg:top-[42px] lg:w-[260px]",
+      className: isMobile 
+        ? "left-[104px] top-[22px] w-[158px]" 
+        : "left-[196px] top-[42px] w-[260px]",
       rotate: "1deg",
       zIndex: 31,
     },
@@ -341,8 +343,9 @@ function PaletteSection() {
       id: "blue",
       src: imgPaletteBlue,
       alt: "Kitty Hub blue collector card",
-      className:
-        "left-[184px] top-[44px] w-[150px] md:left-[304px] md:top-[44px] md:w-[206px] lg:left-[338px] lg:top-[66px] lg:w-[250px]",
+      className: isMobile 
+        ? "left-[184px] top-[44px] w-[150px]" 
+        : "left-[338px] top-[66px] w-[250px]",
       rotate: "4deg",
       zIndex: 28,
     },
@@ -350,8 +353,9 @@ function PaletteSection() {
       id: "dark",
       src: imgPaletteDark,
       alt: "Kitty Hub dark collector card",
-      className:
-        "left-[246px] top-[64px] w-[142px] md:left-[422px] md:top-[68px] md:w-[196px] lg:left-[468px] lg:top-[92px] lg:w-[238px]",
+      className: isMobile 
+        ? "left-[246px] top-[64px] w-[142px]" 
+        : "left-[468px] top-[92px] w-[238px]",
       rotate: "7deg",
       zIndex: 25,
     },
@@ -359,10 +363,11 @@ function PaletteSection() {
       id: "booster",
       src: imgPaletteBooster,
       alt: "Kitty Hub chromatic booster pack",
-      className:
-        "left-[78px] top-[168px] w-[205px] md:left-[140px] md:top-[230px] md:w-[250px] lg:left-[150px] lg:top-[238px] lg:w-[315px]",
+      className: isMobile 
+        ? "left-[78px] top-[168px] w-[205px]" 
+        : "left-[150px] top-[238px] w-[315px]",
       rotate: "-7deg",
-      zIndex: 40,
+      zIndex: 45,
     },
   ];
 
@@ -380,8 +385,8 @@ function PaletteSection() {
       <div className="relative max-w-[1480px] mx-auto overflow-visible px-6 lg:px-[64px]">
         <div className="flex flex-col items-start gap-[48px] overflow-visible lg:flex-row lg:items-center lg:gap-[56px]">
 
-          {/* LEFT COLUMN: 360px */}
-          <div className="w-full z-20 lg:w-[420px] lg:shrink-0">
+          {/* LEFT COLUMN: 38% */}
+          <div className="w-full z-20 lg:w-[38%] lg:shrink-0 overflow-visible">
             <FadeIn>
               <div
                 className="inline-flex items-center px-4 rounded-[8px] mb-[44px] border border-white/10"
@@ -431,22 +436,38 @@ function PaletteSection() {
             </div>
           </div>
 
-          <div className="relative z-10 mx-auto h-[380px] w-full max-w-[360px] overflow-visible md:h-[500px] md:max-w-[650px] lg:mx-0 lg:h-[610px] lg:w-[760px] lg:max-w-none lg:shrink-0">
-
-            <div className="absolute left-0 top-[28px] z-[1] h-[300px] w-full overflow-visible rounded-[28px] border border-white/5 pointer-events-none md:top-[26px] md:h-[430px] lg:top-[48px] lg:h-[430px] lg:w-[560px] lg:rounded-[32px]">
-              <div
-                className="absolute inset-0 rounded-[inherit]"
+          {/* RIGHT COLUMN: 62% */}
+          <div className="relative mx-auto h-[380px] w-full max-w-[360px] overflow-visible lg:mx-0 lg:h-[610px] lg:w-[62%] lg:max-w-none lg:shrink-0">
+            
+            {/* LEVEL 1: BACKGROUND DECORATIVE BLOCK */}
+            {!isMobile && (
+              <div 
+                className="absolute right-0 top-[40px] w-[640px] h-[500px] rounded-[32px] z-[1] overflow-visible border border-white/5 pointer-events-none"
                 style={{
                   background: 'radial-gradient(circle at 30% 30%, rgba(142,37,247,0.12) 0%, transparent 65%), radial-gradient(circle at 70% 70%, rgba(29,164,208,0.1) 0%, transparent 65%)',
                   backgroundColor: 'rgba(255,255,255,0.01)'
                 }}
               />
-            </div>
+            )}
+            
+            {/* GLOW (Optional, kept but independent) */}
+            <div className="absolute left-[20px] top-[18px] z-[2] h-[250px] w-[300px] rounded-full bg-violet-500/10 blur-[70px] pointer-events-none md:left-[90px] md:top-[40px] md:h-[340px] md:w-[460px] lg:left-[120px] lg:top-[48px] lg:h-[380px] lg:w-[520px]" />
 
-            <div className="absolute left-[20px] top-[18px] z-20 h-[250px] w-[300px] rounded-full bg-violet-500/10 blur-[70px] pointer-events-none md:left-[90px] md:top-[40px] md:h-[340px] md:w-[460px] lg:left-[120px] lg:top-[48px] lg:h-[380px] lg:w-[520px]" />
-
+            {/* LEVEL 3: CARDS WRAPPER */}
             <motion.div
-              className="absolute left-0 top-0 z-50 h-[380px] w-[360px] overflow-visible pointer-events-none md:h-[500px] md:w-[650px] lg:left-[-60px] lg:top-[36px] lg:h-[560px] lg:w-[780px]"
+              className="relative overflow-visible pointer-events-none lg:absolute"
+              style={isMobile ? {
+                width: '100%',
+                maxWidth: '360px',
+                height: '380px',
+                zIndex: 30
+              } : {
+                top: '72px',
+                right: '-95px',
+                width: '780px',
+                height: '560px',
+                zIndex: 30
+              }}
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 7, ease: "easeInOut", repeat: Infinity }}
             >
