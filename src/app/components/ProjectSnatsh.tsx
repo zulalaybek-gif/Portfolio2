@@ -98,7 +98,7 @@ function HeroSection() {
       >
         <FloatingSquares
           count={20}
-          className={isDark ? "" : "opacity-95 mix-blend-multiply contrast-125 saturate-125"}
+          className={isDark ? "-translate-y-14" : "-translate-y-14 opacity-95 mix-blend-multiply contrast-125 saturate-125"}
         />
       </div>
 
