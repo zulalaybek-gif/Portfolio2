@@ -446,7 +446,7 @@ function PaletteSection() {
             <div className="absolute left-[20px] top-[18px] z-20 h-[250px] w-[300px] rounded-full bg-violet-500/10 blur-[70px] pointer-events-none md:left-[90px] md:top-[40px] md:h-[340px] md:w-[460px] lg:left-[120px] lg:top-[48px] lg:h-[380px] lg:w-[520px]" />
 
             <motion.div
-              className="absolute left-0 top-0 z-30 h-[380px] w-[360px] overflow-visible pointer-events-none md:h-[500px] md:w-[650px] lg:left-auto lg:right-[-95px] lg:top-[72px] lg:h-[560px] lg:w-[780px]"
+              className="absolute left-0 top-0 z-40 h-[380px] w-[360px] overflow-visible pointer-events-none md:h-[500px] md:w-[650px] lg:left-auto lg:right-[25px] lg:top-[72px] lg:h-[560px] lg:w-[780px]"
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 7, ease: "easeInOut", repeat: Infinity }}
             >
