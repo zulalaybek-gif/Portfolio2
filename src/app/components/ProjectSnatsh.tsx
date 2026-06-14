@@ -90,26 +90,24 @@ function HeroSection() {
     <section ref={ref} className="relative w-full min-h-[80vh] flex flex-col items-center justify-center overflow-visible px-6 py-20">
       {/* Floating rounded squares animation */}
       <div
-        className="absolute inset-x-0 top-0 -bottom-24 pointer-events-none overflow-hidden"
+        className="absolute inset-x-0 top-8 -bottom-16 pointer-events-none overflow-hidden"
         style={{
-          WebkitMaskImage: "linear-gradient(to bottom, #000 0%, #000 72%, rgba(0,0,0,0.75) 86%, transparent 100%)",
-          maskImage: "linear-gradient(to bottom, #000 0%, #000 72%, rgba(0,0,0,0.75) 86%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, #000 5%, #000 72%, rgba(0,0,0,0.68) 88%, transparent 100%)",
+          maskImage: "linear-gradient(to bottom, transparent 0%, #000 5%, #000 72%, rgba(0,0,0,0.68) 88%, transparent 100%)",
         }}
       >
         <FloatingSquares
           count={20}
-          className={isDark ? "-translate-y-14" : "-translate-y-14 opacity-95 mix-blend-multiply contrast-125 saturate-125"}
+          className={isDark ? "" : "opacity-95 mix-blend-multiply contrast-125 saturate-125"}
         />
       </div>
 
       <div
-        className="absolute inset-x-0 top-0 -bottom-20 pointer-events-none"
+        className="absolute inset-x-0 -top-16 -bottom-40 pointer-events-none"
         style={{
           background: isDark
             ? `radial-gradient(ellipse 60% 50% at 50% 45%, rgba(${ACCENT_RGB},0.08) 0%, transparent 70%)`
             : `radial-gradient(ellipse 62% 52% at 50% 44%, rgba(${ACCENT_RGB},0.18) 0%, rgba(${SECONDARY_RGB},0.1) 48%, transparent 76%)`,
-          WebkitMaskImage: "linear-gradient(to bottom, #000 0%, #000 74%, rgba(0,0,0,0.65) 88%, transparent 100%)",
-          maskImage: "linear-gradient(to bottom, #000 0%, #000 74%, rgba(0,0,0,0.65) 88%, transparent 100%)",
         }}
       />
 
@@ -667,12 +665,8 @@ function InteractiveBook() {
         {/* Book container */}
         <FadeIn delay={0.15}>
           <div
-            className="relative rounded-2xl overflow-hidden"
+            className="relative"
             style={{
-              background: isDark
-                ? "linear-gradient(160deg, #141612 0%, #0a0c08 100%)"
-                : "linear-gradient(160deg, #f7f6f3 0%, #edece8 100%)",
-              border: `1px solid ${r(0.06)}`,
               perspective: "1200px",
             }}
           >
@@ -789,7 +783,6 @@ function InteractiveBook() {
    =================================== */
 function MockupsSection() {
   const { t } = useI18n();
-  const { r } = useTheme();
   const body = useBodyStyle();
 
   return (
@@ -805,9 +798,7 @@ function MockupsSection() {
         </div>
 
         <FadeIn delay={0.15}>
-          <div className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-            <img src={imgMockup} alt="SNATSH brochure bi-fold mockup" className="w-full object-cover" />
-          </div>
+          <img src={imgMockup} alt="SNATSH brochure bi-fold mockup" className="w-full object-cover" />
         </FadeIn>
       </div>
     </section>
@@ -829,20 +820,10 @@ function FinalSection() {
           <SectionLabel>{t("sn.final.label")}</SectionLabel>
         </FadeIn>
 
-        {/* Closing logo — icon with sage gradient */}
+        {/* Closing logo */}
         <FadeIn>
           <div className="flex justify-center mb-10">
-            <div
-              className="w-[180px] h-[180px] md:w-[240px] md:h-[240px] rounded-[36px] overflow-hidden flex items-center justify-center"
-              style={{
-                background: `linear-gradient(160deg, ${ACCENT} 0%, ${SECONDARY} 100%)`,
-                boxShadow: isDark
-                  ? `0 30px 80px rgba(${ACCENT_RGB},0.2)`
-                  : `0 30px 80px rgba(${ACCENT_RGB},0.15)`,
-              }}
-            >
-              <img src={logoIconWhite} alt="SNATSH" className="w-[55%]" />
-            </div>
+            <img src={isDark ? logoIconWhite : logoIconBlack} alt="SNATSH" className="w-[96px] md:w-[128px]" />
           </div>
         </FadeIn>
 
