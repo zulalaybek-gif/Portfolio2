@@ -463,8 +463,8 @@ function PaletteSection() {
                 zIndex: 30
               } : {
                 top: '72px',
-                right: '-95px',
-                width: '780px',
+                right: '-200px',
+                width: '860px',
                 height: '560px',
                 zIndex: 30
               }}
