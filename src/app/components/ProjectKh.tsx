@@ -442,7 +442,7 @@ function PaletteSection() {
             {/* LEVEL 1: BACKGROUND DECORATIVE BLOCK */}
             {!isMobile && (
               <div 
-                className="absolute right-0 top-[40px] w-[640px] h-[500px] rounded-[32px] z-[1] overflow-visible border border-white/5 pointer-events-none"
+                className="absolute right-[110px] top-[40px] w-[640px] h-[500px] rounded-[32px] z-[1] overflow-visible border border-white/5 pointer-events-none"
                 style={{
                   background: 'radial-gradient(circle at 30% 30%, rgba(142,37,247,0.12) 0%, transparent 65%), radial-gradient(circle at 70% 70%, rgba(29,164,208,0.1) 0%, transparent 65%)',
                   backgroundColor: 'rgba(255,255,255,0.01)'
@@ -463,7 +463,7 @@ function PaletteSection() {
                 zIndex: 30
               } : {
                 top: '72px',
-                right: '-200px',
+                right: '-220px',
                 width: '860px',
                 height: '560px',
                 zIndex: 30
