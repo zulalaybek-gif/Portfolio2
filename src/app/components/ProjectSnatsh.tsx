@@ -123,13 +123,33 @@ function HeroSection() {
             : "linear-gradient(to bottom, transparent, rgba(244,244,242,0.86))",
         }}
       />
+      {[
+        { className: "left-[11%] top-[38%] h-10 w-10 rounded-2xl", color: SECONDARY_RGB, delay: 0 },
+        { className: "left-[20%] top-[62%] h-7 w-7 rounded-xl", color: ACCENT_RGB, delay: 0.65 },
+        { className: "left-[46%] top-[22%] h-9 w-9 rounded-2xl", color: SECONDARY_RGB, delay: 0.25 },
+        { className: "left-[58%] bottom-[16%] h-11 w-11 rounded-2xl", color: ACCENT_RGB, delay: 0.85 },
+        { className: "right-[14%] top-[30%] h-8 w-8 rounded-xl", color: ACCENT_RGB, delay: 0.45 },
+        { className: "right-[8%] bottom-[30%] h-10 w-10 rounded-2xl", color: SECONDARY_RGB, delay: 1.05 },
+      ].map((square) => (
+        <motion.div
+          key={square.className}
+          className={`pointer-events-none absolute z-[2] ${square.className}`}
+          animate={{ y: [0, -12, 0], x: [0, 7, 0], rotate: [-7, 5, -7] }}
+          transition={{ duration: 7.8, delay: square.delay, repeat: Infinity, ease: "easeInOut" }}
+          style={{
+            background: `rgba(${square.color},${isDark ? 0.14 : 0.26})`,
+            boxShadow: isDark ? "0 18px 46px rgba(0,0,0,0.2)" : "0 18px 42px rgba(0,0,0,0.055)",
+            filter: "blur(0.15px)",
+          }}
+        />
+      ))}
 
-      <div className="relative z-10 mx-auto grid max-w-7xl items-start gap-4 pt-8 lg:grid-cols-[0.34fr_0.66fr]">
+      <div className="relative z-10 mx-auto grid max-w-7xl items-start gap-4 pt-8 lg:grid-cols-[0.38fr_0.62fr]">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="max-w-[470px]"
+          className="max-w-[560px]"
         >
           <div className="mb-8 flex items-center gap-4">
             <span
@@ -155,17 +175,18 @@ function HeroSection() {
           />
 
           <h1
-            className="mb-7 max-w-xl"
+            className="mb-7 max-w-[34rem]"
             style={{
               fontFamily: "'Plus Jakarta Sans', sans-serif",
-              fontSize: "clamp(1.9rem, 3vw, 3.05rem)",
+              fontSize: "clamp(1.85rem, 2.65vw, 2.8rem)",
               lineHeight: 1.14,
               fontWeight: 520,
               letterSpacing: "0",
               color: textStrong,
             }}
           >
-            Donner vie aux idées.<br />Créer l'émotion.
+            <span className="block whitespace-nowrap">Donner vie aux idées.</span>
+            <span className="block whitespace-nowrap">Créer l'émotion.</span>
           </h1>
 
           <p
@@ -180,14 +201,14 @@ function HeroSection() {
             De la première étincelle à l'image finale, nous concevons des contenus audiovisuels clairs, puissants et mémorables.
           </p>
 
-          <div className="mt-8 grid max-w-lg gap-6 sm:grid-cols-2">
+          <div className="mt-8 grid max-w-[520px] grid-cols-1 gap-5 sm:grid-cols-2 sm:items-start">
             {[
               ["Vision créative", "Raconter juste.", ACCENT_RGB],
               ["Exécution maîtrisée", "Livrer fort.", SECONDARY_RGB],
             ].map(([label, value, color]) => (
               <div
                 key={label}
-                className="flex items-center gap-3"
+                className="grid grid-cols-[2.5rem_minmax(0,1fr)] items-center gap-3"
                 style={{
                   color: textStrong,
                 }}
@@ -234,35 +255,105 @@ function HeroSection() {
         </motion.div>
 
         <motion.div
-          className="pointer-events-none relative min-h-[360px] overflow-visible md:min-h-[500px] lg:min-h-[620px]"
+          className="pointer-events-none relative min-h-[420px] overflow-visible md:min-h-[560px] lg:min-h-[680px]"
           initial={{ opacity: 0, x: 38 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.12, ease: "easeOut" }}
         >
+          <div
+            className="absolute left-[54%] top-[27%] h-20 w-[128%] -translate-x-1/2 -rotate-[2deg] rounded-full blur-[2px]"
+            style={{
+              background: isDark
+                ? `linear-gradient(90deg, transparent, rgba(${ACCENT_RGB},0.12), rgba(244,244,242,0.14), transparent)`
+                : `linear-gradient(90deg, transparent, rgba(${ACCENT_RGB},0.2), rgba(255,255,255,0.72), transparent)`,
+              opacity: isDark ? 0.52 : 0.68,
+            }}
+          />
+          <div
+            className="absolute left-[55%] top-[46%] h-24 w-[142%] -translate-x-1/2 rotate-[1deg] rounded-full blur-[3px]"
+            style={{
+              background: isDark
+                ? `linear-gradient(90deg, transparent, rgba(${SECONDARY_RGB},0.16), rgba(244,244,242,0.1), transparent)`
+                : `linear-gradient(90deg, transparent, rgba(${SECONDARY_RGB},0.32), rgba(255,255,255,0.78), transparent)`,
+              opacity: isDark ? 0.5 : 0.74,
+            }}
+          />
+          <div
+            className="absolute left-[60%] top-[62%] h-16 w-[116%] -translate-x-1/2 rotate-[-1deg] rounded-full blur-[2px]"
+            style={{
+              background: isDark
+                ? `linear-gradient(90deg, transparent, rgba(${SECONDARY_RGB},0.13), rgba(${ACCENT_RGB},0.08), transparent)`
+                : `linear-gradient(90deg, transparent, rgba(${SECONDARY_RGB},0.26), rgba(${ACCENT_RGB},0.16), transparent)`,
+              opacity: isDark ? 0.42 : 0.62,
+            }}
+          />
           <motion.img
             src={heroVisual}
             alt=""
             aria-hidden="true"
-            className="absolute left-[47%] top-1/2 w-[186%] max-w-none -translate-x-1/2 -translate-y-1/2 object-contain md:w-[176%] lg:w-[188%]"
-            animate={{ y: [0, -8, 0], x: [0, 6, 0] }}
-            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute left-[54%] top-1/2 h-[1040px] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 object-contain md:h-[1350px] lg:h-[1650px] xl:h-[1800px]"
           />
           <motion.div
-            className="absolute left-[18%] top-[14%] h-9 w-9 rounded-xl"
-            animate={{ y: [0, -8, 0], rotate: [0, 4, 0] }}
+            className="absolute left-[10%] top-[12%] h-10 w-10 rounded-xl"
+            animate={{ y: [0, -10, 0], x: [0, 5, 0], rotate: [0, 5, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
             style={{
-              background: `rgba(${SECONDARY_RGB},${isDark ? 0.18 : 0.34})`,
+              background: `rgba(${SECONDARY_RGB},${isDark ? 0.2 : 0.38})`,
               boxShadow: isDark ? "0 18px 40px rgba(0,0,0,0.24)" : "0 18px 40px rgba(0,0,0,0.08)",
             }}
           />
           <motion.div
-            className="absolute bottom-[12%] left-[34%] h-10 w-10 rounded-xl"
-            animate={{ y: [0, 10, 0], rotate: [0, -4, 0] }}
+            className="absolute right-[8%] top-[18%] h-9 w-9 rounded-xl"
+            animate={{ y: [0, -9, 0], x: [0, -5, 0], rotate: [0, 6, 0] }}
+            transition={{ duration: 6.6, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
+            style={{
+              background: `rgba(${ACCENT_RGB},${isDark ? 0.18 : 0.36})`,
+              boxShadow: isDark ? "0 18px 40px rgba(0,0,0,0.22)" : "0 18px 38px rgba(0,0,0,0.08)",
+            }}
+          />
+          <motion.div
+            className="absolute bottom-[8%] left-[28%] h-11 w-11 rounded-xl"
+            animate={{ y: [0, 12, 0], x: [0, -5, 0], rotate: [0, -5, 0] }}
             transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
             style={{
-              background: `rgba(${ACCENT_RGB},${isDark ? 0.2 : 0.42})`,
+              background: `rgba(${ACCENT_RGB},${isDark ? 0.22 : 0.46})`,
               boxShadow: isDark ? "0 18px 40px rgba(0,0,0,0.22)" : "0 18px 38px rgba(0,0,0,0.08)",
+            }}
+          />
+          <motion.div
+            className="absolute bottom-[24%] right-[20%] h-8 w-8 rounded-lg"
+            animate={{ y: [0, 10, 0], x: [0, 4, 0], rotate: [0, -6, 0] }}
+            transition={{ duration: 7.4, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+            style={{
+              background: `rgba(${SECONDARY_RGB},${isDark ? 0.16 : 0.32})`,
+              boxShadow: isDark ? "0 16px 34px rgba(0,0,0,0.2)" : "0 16px 34px rgba(0,0,0,0.07)",
+            }}
+          />
+          <motion.div
+            className="absolute left-[43%] top-[43%] h-6 w-6 rounded-lg"
+            animate={{ y: [0, -12, 0], x: [0, 8, 0], rotate: [0, 8, 0] }}
+            transition={{ duration: 6.8, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+            style={{
+              background: `rgba(${SECONDARY_RGB},${isDark ? 0.13 : 0.24})`,
+              boxShadow: isDark ? "0 14px 30px rgba(0,0,0,0.18)" : "0 14px 30px rgba(0,0,0,0.06)",
+            }}
+          />
+          <motion.div
+            className="absolute bottom-[35%] right-[7%] h-7 w-7 rounded-lg"
+            animate={{ y: [0, 11, 0], x: [0, -7, 0], rotate: [0, -7, 0] }}
+            transition={{ duration: 7.2, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            style={{
+              background: `rgba(${ACCENT_RGB},${isDark ? 0.15 : 0.3})`,
+              boxShadow: isDark ? "0 14px 30px rgba(0,0,0,0.18)" : "0 14px 30px rgba(0,0,0,0.06)",
+            }}
+          />
+          <motion.div
+            className="absolute bottom-[7%] left-[62%] h-8 w-8 rounded-xl"
+            animate={{ y: [0, 13, 0], x: [0, 6, 0], rotate: [0, 5, 0] }}
+            transition={{ duration: 7.8, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
+            style={{
+              background: `rgba(${ACCENT_RGB},${isDark ? 0.17 : 0.34})`,
+              boxShadow: isDark ? "0 16px 34px rgba(0,0,0,0.2)" : "0 16px 34px rgba(0,0,0,0.07)",
             }}
           />
         </motion.div>
@@ -924,152 +1015,215 @@ function PaletteSection({ onActiveColorChange }: { onActiveColorChange?: (color:
    8. TYPOGRAPHY
    =================================== */
 function TypographySection() {
-  const { t } = useI18n();
-  const { isDark, r } = useTheme();
+  const { isDark } = useTheme();
+  const sectionText = isDark ? "#f4f4f2" : "#000000";
+  const sectionMuted = isDark ? "rgba(244,244,242,0.62)" : "rgba(0,0,0,0.58)";
+  const alphabet = "Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz";
 
   return (
-    <section className="px-6 md:px-16 py-16">
-      <div className="max-w-5xl mx-auto">
-        <FadeIn className="mb-10">
-          <SectionLabel>{t("sn.typo.label")}</SectionLabel>
-        </FadeIn>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Plus Jakarta Sans */}
-          <FadeIn delay={0.08}>
-            <div
-              className="rounded-2xl p-8 md:p-10 flex flex-col h-full"
-              style={{
-                background: isDark
-                  ? "linear-gradient(160deg, #181c16 0%, #0a0c08 100%)"
-                  : "linear-gradient(160deg, #1a1a2a 0%, #0a0a14 100%)",
-                border: `1px solid ${r(0.05)}`,
-              }}
-            >
-              {/* Fixed-height name zone */}
-              <div className="flex flex-col gap-4" style={{ minHeight: "clamp(5.5rem, 10vw, 8rem)" }}>
-                <p
-                  style={{
-                    fontFamily: "'Plus Jakarta Sans', sans-serif",
-                    fontSize: "clamp(2rem, 4vw, 3.5rem)",
-                    fontWeight: 700,
-                    color: "#fff",
-                    lineHeight: 0.9,
-                    letterSpacing: "-0.02em",
-                  }}
-                >
-                  Plus<br />Jakarta Sans
-                </p>
-                <span
-                  className="inline-block px-3 py-1 rounded-full"
-                  style={{
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: "0.6rem",
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    color: ACCENT,
-                    border: `1px solid rgba(${ACCENT_RGB},0.3)`,
-                    background: `rgba(${ACCENT_RGB},0.08)`,
-                    width: "fit-content",
-                  }}
-                >
-                  Titres &middot; Headings
-                </span>
-              </div>
-              <div className="w-full h-[1px] my-4" style={{ background: "rgba(255,255,255,0.08)" }} />
-              <p
+    <section className="px-6 py-20 md:px-16 md:py-24">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-12 grid gap-8 md:grid-cols-[0.9fr_1fr] md:items-end">
+          <FadeIn>
+            <div>
+              <SectionLabel>TYPOGRAPHIE</SectionLabel>
+              <span className="mt-3 block h-px w-14" style={{ background: ACCENT }} />
+              <h2
+                className="mt-8 max-w-[28rem]"
                 style={{
                   fontFamily: "'Plus Jakarta Sans', sans-serif",
-                  fontSize: "clamp(0.75rem, 1.5vw, 0.95rem)",
-                  fontWeight: 400,
-                  color: "rgba(255,255,255,0.5)",
-                  lineHeight: 1.2,
-                  letterSpacing: "0.02em",
+                  fontSize: "clamp(2.15rem, 4.8vw, 4.35rem)",
+                  lineHeight: 1.02,
+                  fontWeight: 720,
+                  letterSpacing: "0",
+                  color: sectionText,
                 }}
               >
-                Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz
-              </p>
-              <p
-                className="mt-auto pt-4"
-                style={{
-                  fontFamily: "'Roboto', sans-serif",
-                  fontSize: "0.7rem",
-                  lineHeight: 1.8,
-                  color: "rgba(255,255,255,0.4)",
-                }}
-              >
-                {t("sn.typo.jakarta.desc")}
-              </p>
+                Clarté, contraste et équilibre visuel.
+              </h2>
             </div>
           </FadeIn>
 
-          {/* Roboto */}
-          <FadeIn delay={0.14}>
-            <div
-              className="rounded-2xl p-8 md:p-10 flex flex-col h-full"
-              style={{
-                background: isDark
-                  ? "linear-gradient(160deg, #181c16 0%, #0a0c08 100%)"
-                  : "linear-gradient(160deg, #1a1a2a 0%, #0a0a14 100%)",
-                border: `1px solid ${r(0.05)}`,
-              }}
-            >
-              {/* Fixed-height name zone */}
-              <div className="flex flex-col gap-4" style={{ minHeight: "clamp(5.5rem, 10vw, 8rem)" }}>
-                <p
-                  style={{
-                    fontFamily: "'Roboto', sans-serif",
-                    fontSize: "clamp(2rem, 4vw, 3.5rem)",
-                    fontWeight: 700,
-                    color: "#fff",
-                    lineHeight: 0.9,
-                    letterSpacing: "-0.02em",
-                  }}
-                >
-                  Roboto
-                </p>
-                <span
-                  className="inline-block px-3 py-1 rounded-full"
-                  style={{
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: "0.6rem",
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    color: SECONDARY,
-                    border: `1px solid rgba(${SECONDARY_RGB},0.3)`,
-                    background: `rgba(${SECONDARY_RGB},0.08)`,
-                    width: "fit-content",
-                  }}
-                >
-                  Corps de texte &middot; Body
-                </span>
+          <FadeIn delay={0.08}>
+            <div className="max-w-md md:ml-auto">
+              <p
+                style={{
+                  fontFamily: "'Roboto', sans-serif",
+                  fontSize: "1rem",
+                  lineHeight: 1.85,
+                  color: sectionMuted,
+                }}
+              >
+                Deux typographies aux rôles bien définis pour une communication lisible, cohérente et impactante.
+              </p>
+              <div className="mt-7 flex items-center">
+                <span className="h-px flex-1" style={{ background: `linear-gradient(90deg, rgba(${ACCENT_RGB},0.72), rgba(${SECONDARY_RGB},0.42))` }} />
+                <span className="h-2 w-2 rounded-full" style={{ background: ACCENT }} />
               </div>
-              <div className="w-full h-[1px] my-4" style={{ background: "rgba(255,255,255,0.08)" }} />
-              <p
-                style={{
-                  fontFamily: "'Roboto', sans-serif",
-                  fontSize: "clamp(0.75rem, 1.5vw, 0.95rem)",
-                  fontWeight: 400,
-                  color: "rgba(255,255,255,0.5)",
-                  lineHeight: 1.2,
-                }}
-              >
-                Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz
-              </p>
-              <p
-                className="mt-auto pt-4"
-                style={{
-                  fontFamily: "'Roboto', sans-serif",
-                  fontSize: "0.7rem",
-                  lineHeight: 1.8,
-                  color: "rgba(255,255,255,0.4)",
-                }}
-              >
-                {t("sn.typo.roboto.desc")}
-              </p>
             </div>
           </FadeIn>
         </div>
+
+        <FadeIn delay={0.14}>
+          <div
+            className="relative grid overflow-hidden rounded-[28px] md:grid-cols-2"
+            style={{
+              border: `1px solid ${isDark ? "rgba(244,244,242,0.08)" : "rgba(0,0,0,0.06)"}`,
+              boxShadow: isDark ? "0 34px 90px rgba(0,0,0,0.3)" : "0 32px 88px rgba(10,12,8,0.08)",
+            }}
+          >
+            <span
+              className="absolute left-0 top-0 z-20 hidden h-full w-2 md:block"
+              style={{ background: `linear-gradient(180deg, ${ACCENT}, rgba(${ACCENT_RGB},0.28))` }}
+            />
+            <span
+              className="absolute bottom-0 left-1/2 top-0 z-20 hidden w-px md:block"
+              style={{ background: isDark ? "rgba(244,244,242,0.1)" : "rgba(0,0,0,0.08)" }}
+            />
+
+            <div
+              className="relative min-h-[460px] overflow-hidden p-8 md:p-12 lg:p-14"
+              style={{
+                background: isDark
+                  ? "linear-gradient(145deg, #f4f4f2 0%, #ffffff 55%, #e9ece5 100%)"
+                  : "linear-gradient(145deg, #ffffff 0%, #f4f4f2 58%, #eceee7 100%)",
+                color: "#000000",
+              }}
+            >
+              <span
+                className="pointer-events-none absolute -right-10 top-4 select-none"
+                style={{
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  fontSize: "12rem",
+                  lineHeight: 1,
+                  fontWeight: 800,
+                  color: "rgba(0,0,0,0.035)",
+                }}
+              >
+                Aa
+              </span>
+              <div className="relative z-10 flex h-full flex-col">
+                <h3
+                  style={{
+                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                    fontSize: "clamp(2rem, 4vw, 3.2rem)",
+                    lineHeight: 1.05,
+                    fontWeight: 760,
+                    letterSpacing: "0",
+                  }}
+                >
+                  Plus Jakarta Sans
+                </h3>
+                <span
+                  className="mt-5 inline-flex w-fit rounded-full px-3 py-1"
+                  style={{
+                    fontFamily: "'Roboto Mono', monospace",
+                    fontSize: "0.62rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.13em",
+                    color: "#ffffff",
+                    background: ACCENT,
+                  }}
+                >
+                  TITRES · HEADINGS
+                </span>
+                <div className="my-8 h-px w-full" style={{ background: "rgba(0,0,0,0.1)" }} />
+                <p
+                  style={{
+                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                    fontSize: "clamp(1rem, 1.5vw, 1.2rem)",
+                    lineHeight: 1.5,
+                    fontWeight: 560,
+                    color: "rgba(0,0,0,0.78)",
+                  }}
+                >
+                  {alphabet}
+                </p>
+                <p
+                  className="mt-auto pt-10 max-w-md"
+                  style={{
+                    fontFamily: "'Roboto', sans-serif",
+                    fontSize: "0.95rem",
+                    lineHeight: 1.9,
+                    color: "rgba(0,0,0,0.56)",
+                  }}
+                >
+                  Plus Jakarta Sans apporte structure, modernité et chaleur. Idéale pour les titres, elle affirme la hiérarchie visuelle avec précision.
+                </p>
+              </div>
+            </div>
+
+            <div
+              className="relative min-h-[460px] overflow-hidden p-8 md:p-12 lg:p-14"
+              style={{
+                background: "radial-gradient(ellipse at 78% 14%, rgba(193,211,221,0.13), transparent 38%), linear-gradient(145deg, #111923 0%, #060a10 58%, #020407 100%)",
+                color: "#f4f4f2",
+              }}
+            >
+              <span
+                className="pointer-events-none absolute -right-8 top-4 select-none"
+                style={{
+                  fontFamily: "'Roboto', sans-serif",
+                  fontSize: "12rem",
+                  lineHeight: 1,
+                  fontWeight: 800,
+                  color: "rgba(244,244,242,0.035)",
+                }}
+              >
+                Aa
+              </span>
+              <div className="relative z-10 flex h-full flex-col">
+                <h3
+                  style={{
+                    fontFamily: "'Roboto', sans-serif",
+                    fontSize: "clamp(2rem, 4vw, 3.2rem)",
+                    lineHeight: 1.05,
+                    fontWeight: 760,
+                    letterSpacing: "0",
+                  }}
+                >
+                  Roboto
+                </h3>
+                <span
+                  className="mt-5 inline-flex w-fit rounded-full px-3 py-1"
+                  style={{
+                    fontFamily: "'Roboto Mono', monospace",
+                    fontSize: "0.62rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.13em",
+                    color: "#061018",
+                    background: SECONDARY,
+                  }}
+                >
+                  CORPS DE TEXTE · BODY
+                </span>
+                <div className="my-8 h-px w-full" style={{ background: "rgba(244,244,242,0.14)" }} />
+                <p
+                  style={{
+                    fontFamily: "'Roboto', sans-serif",
+                    fontSize: "clamp(1rem, 1.5vw, 1.18rem)",
+                    lineHeight: 1.55,
+                    fontWeight: 500,
+                    color: "rgba(244,244,242,0.78)",
+                  }}
+                >
+                  {alphabet}
+                </p>
+                <p
+                  className="mt-auto pt-10 max-w-md"
+                  style={{
+                    fontFamily: "'Roboto', sans-serif",
+                    fontSize: "0.95rem",
+                    lineHeight: 1.9,
+                    color: "rgba(244,244,242,0.58)",
+                  }}
+                >
+                  Roboto assure une lecture confortable et neutre. Elle accompagne les contenus longs, les descriptions et les interfaces du quotidien.
+                </p>
+              </div>
+            </div>
+          </div>
+        </FadeIn>
       </div>
     </section>
   );
