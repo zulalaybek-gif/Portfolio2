@@ -21,6 +21,7 @@ import logoIconWhite from "../../assets/snatsh/assets/04.logo-icon-w.svg";
 import logoAsset05 from "../../assets/snatsh/assets/05.logo-asset.png";
 import logoAsset06 from "../../assets/snatsh/assets/06.logo-asset.png";
 import logoAsset07 from "../../assets/snatsh/assets/07.logo-asset.png";
+import logoAsset08 from "../../assets/snatsh/assets/08.logo-asset.png";
 
 /* -- Helpers -- */
 const ACCENT = "#c0c1a4";
@@ -310,7 +311,7 @@ function LogoSection() {
             style={{ background: `rgba(${ACCENT_RGB},0.12)` }}
           />
 
-          <div className="relative z-10 grid gap-12 md:grid-cols-[0.75fr_1.25fr] md:items-center">
+          <div className="relative z-10 grid gap-12 md:grid-cols-[0.7fr_1.3fr] md:items-center">
             <FadeIn className="max-w-sm">
               <p
                 className="mb-5"
@@ -361,40 +362,29 @@ function LogoSection() {
             </FadeIn>
 
             <FadeIn delay={0.12}>
-              <div className="relative min-h-[430px] md:min-h-[560px]">
-                <div
-                  className="absolute left-[6%] top-[20%] h-[52%] w-[54%] rounded-[30px] md:rounded-[42px]"
-                  style={{
-                    background: `linear-gradient(145deg, ${ACCENT} 0%, #aeb092 100%)`,
-                    boxShadow: "0 34px 80px rgba(0,0,0,0.34)",
-                    transform: "rotate(-3deg)",
-                  }}
-                >
-                  <div
-                    className="absolute -bottom-7 left-[12%] h-12 w-[76%] rounded-full blur-xl"
-                    style={{ background: "rgba(0,0,0,0.42)" }}
-                  />
-                  <div className="flex h-full items-center justify-center">
-                    <img src={logoIconBlack} alt="SNATSH icon" className="w-[36%]" />
-                  </div>
-                </div>
-
+              <div className="relative min-h-[470px] md:min-h-[620px]">
+                <img
+                  src={logoAsset08}
+                  alt="SNATSH sage monogram block"
+                  className="absolute left-[-4%] top-[15%] z-20 w-[62%] min-w-[240px]"
+                  style={{ filter: "drop-shadow(0 36px 58px rgba(0,0,0,0.38))" }}
+                />
                 <img
                   src={logoAsset05}
                   alt="SNATSH monogram block"
-                  className="absolute right-[5%] top-[4%] w-[31%] min-w-[120px]"
+                  className="absolute right-[7%] top-[1%] z-10 w-[29%] min-w-[118px]"
                   style={{ filter: "drop-shadow(0 24px 36px rgba(0,0,0,0.28))" }}
                 />
                 <img
                   src={logoAsset06}
                   alt="SNATSH light logo block"
-                  className="absolute right-[1%] top-[36%] w-[54%] min-w-[220px]"
+                  className="absolute right-[-1%] top-[35%] z-30 w-[55%] min-w-[230px]"
                   style={{ filter: "drop-shadow(0 28px 46px rgba(0,0,0,0.3))" }}
                 />
                 <img
                   src={logoAsset07}
                   alt="SNATSH dark logo block"
-                  className="absolute bottom-[3%] right-[10%] w-[50%] min-w-[210px]"
+                  className="absolute bottom-[2%] right-[9%] z-20 w-[52%] min-w-[220px]"
                   style={{ filter: "drop-shadow(0 30px 54px rgba(0,0,0,0.38))" }}
                 />
               </div>
