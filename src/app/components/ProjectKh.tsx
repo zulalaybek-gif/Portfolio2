@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from "motion/react";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { useRef, useEffect, useState, useCallback } from "react";
 import { ArrowLeft, ExternalLink, Play, Zap, Sparkles, Star } from "lucide-react";
 import { useNavigate } from "react-router";
@@ -28,6 +28,8 @@ import imgPaletteViolet from "../../assets/kittyhub/assets/02.palette.png";
 import imgPaletteBlue from "../../assets/kittyhub/assets/03.palette.png";
 import imgPaletteDark from "../../assets/kittyhub/assets/04.palette.png";
 import imgPaletteBooster from "../../assets/kittyhub/assets/05.palette.png";
+import imgLogoDarkCard from "../../assets/kittyhub/assets/10.logo-dark.png";
+import imgLogoLightCard from "../../assets/kittyhub/assets/11.logo-light.png";
 
 /* -- Helpers -- */
 const ACCENT = "#FD6235";
@@ -712,73 +714,209 @@ function TypographySection() {
    8. LOGO SYSTEM
    =================================== */
 function LogoSection() {
-  const { t } = useI18n();
-  const { isDark, r } = useTheme();
+  const { isDark } = useTheme();
+  const shouldReduceMotion = useReducedMotion();
+
+  const logoAttributes = [
+    { title: "Symbole iconique", text: "Un mark unique, pensé pour durer.", icon: Sparkles, color: "#FD6235" },
+    { title: "Énergie & mouvement", text: "Une identité vivante et expressive.", icon: Zap, color: "#8E25F7" },
+    { title: "Collectionnable", text: "Conçu pour être découvert, partagé et célébré.", icon: Star, color: "#1DA4D0" },
+  ];
+
+  const logoShards = [
+    { left: "10%", top: "14%", width: 16, height: 72, rotate: -28, color: isDark ? "#8E25F7" : "#B887F8", delay: 0 },
+    { left: "83%", top: "18%", width: 9, height: 42, rotate: 24, color: isDark ? "#1DA4D0" : "#78CDE5", delay: 0.8 },
+    { left: "88%", top: "58%", width: 18, height: 82, rotate: -20, color: isDark ? "#8E25F7" : "#B887F8", delay: 0.3 },
+    { left: "16%", top: "66%", width: 11, height: 52, rotate: -36, color: isDark ? "#1DA4D0" : "#78CDE5", delay: 1.1 },
+    { left: "78%", top: "76%", width: 10, height: 45, rotate: 32, color: isDark ? "#FD6235" : "#FF8A62", delay: 0.5 },
+    { left: "22%", top: "24%", width: 5, height: 5, rotate: 0, color: isDark ? "#FD6235" : "#FF8A62", delay: 0.2 },
+    { left: "72%", top: "10%", width: 4, height: 4, rotate: 0, color: isDark ? "#FFFFFF" : "#8E25F7", delay: 0.9 },
+    { left: "7%", top: "48%", width: 5, height: 5, rotate: 0, color: isDark ? "#8E25F7" : "#1DA4D0", delay: 1.4 },
+  ];
 
   return (
     <section className="px-6 md:px-16 py-16">
-      <div className="max-w-5xl mx-auto">
-        <FadeIn className="mb-10">
-          <SectionLabel>{t("kh.logo.label")}</SectionLabel>
+      <div className="max-w-6xl mx-auto">
+        <FadeIn>
+          <div
+            className="relative overflow-hidden rounded-[28px] md:rounded-[34px] border px-5 py-5 md:px-8 md:py-7 lg:px-10 lg:py-8"
+            style={{
+              background: isDark
+                ? "radial-gradient(circle at 74% 28%, rgba(142,37,247,0.18) 0%, transparent 32%), radial-gradient(circle at 78% 78%, rgba(29,164,208,0.12) 0%, transparent 34%), linear-gradient(135deg, #08050d 0%, #120a1b 48%, #07020b 100%)"
+                : "radial-gradient(circle at 74% 28%, rgba(142,37,247,0.12) 0%, transparent 32%), radial-gradient(circle at 78% 78%, rgba(29,164,208,0.1) 0%, transparent 34%), linear-gradient(135deg, #ffffff 0%, #f7f4fb 50%, #f1eef5 100%)",
+              borderColor: isDark ? "rgba(255,255,255,0.09)" : "rgba(7,2,11,0.08)",
+              boxShadow: isDark ? "0 36px 110px rgba(0,0,0,0.5)" : "0 28px 80px rgba(32,18,48,0.12)",
+            }}
+          >
+            <div
+              className="absolute inset-0 opacity-[0.05] pointer-events-none"
+              style={{
+                backgroundImage: isDark
+                  ? "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)"
+                  : "linear-gradient(#07020b 1px, transparent 1px), linear-gradient(90deg, #07020b 1px, transparent 1px)",
+                backgroundSize: "36px 36px",
+              }}
+            />
+
+            <div className="relative z-10 flex items-center justify-between gap-4 text-[10px] font-bold uppercase tracking-[0.22em] md:text-[11px]">
+              <div className="flex flex-wrap items-center gap-3 md:gap-5" style={{ color: isDark ? "rgba(255,255,255,0.58)" : "rgba(7,2,11,0.48)" }}>
+                <span>KITTY HUB</span>
+                <span style={{ color: ACCENT }}>/</span>
+                <span>PORTFOLIO</span>
+                <span style={{ color: ACCENT }}>/</span>
+                <span>LOGO SYSTEM</span>
+              </div>
+              <div
+                className="hidden rounded-full border px-4 py-2 md:block"
+                style={{
+                  color: isDark ? "rgba(255,255,255,0.72)" : "rgba(7,2,11,0.58)",
+                  borderColor: isDark ? "rgba(255,255,255,0.1)" : "rgba(7,2,11,0.08)",
+                  background: isDark ? "rgba(255,255,255,0.035)" : "rgba(255,255,255,0.58)",
+                }}
+              >
+                KITTY HUB UNIVERSE
+              </div>
+            </div>
+
+            <div className="relative z-10 grid grid-cols-1 items-center gap-10 pt-14 lg:grid-cols-[0.82fr_1.18fr] lg:gap-6 lg:pt-16">
+              <div className="max-w-[440px]">
+                <p className="mb-5 text-[11px] font-bold uppercase tracking-[0.32em]" style={{ color: ACCENT }}>
+                  ✦ LOGO SYSTEM
+                </p>
+                <h2
+                  className="mb-6 font-semibold"
+                  style={{
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontSize: "clamp(2.25rem, 4.4vw, 3.4rem)",
+                    lineHeight: 1,
+                    letterSpacing: "-0.02em",
+                    color: isDark ? "#fff" : DARK_BG,
+                  }}
+                >
+                  Une carte.<br />
+                  <span style={{ color: ACCENT }}>Un symbole rare. ✦</span>
+                </h2>
+                <p
+                  className="mb-8 max-w-[390px] border-l pl-6"
+                  style={{
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "clamp(0.9rem, 1.2vw, 1rem)",
+                    lineHeight: 1.72,
+                    color: isDark ? "rgba(255,255,255,0.62)" : "rgba(7,2,11,0.62)",
+                    borderColor: ACCENT,
+                  }}
+                >
+                  Plus qu'un logo, une pièce de collection.<br />
+                  Chaque détail raconte notre énergie,<br />
+                  notre créativité et notre univers.<br />
+                  Reconnaissable. Intemporel. Iconique.
+                </p>
+
+                <div className="grid gap-3">
+                  {logoAttributes.map((item) => (
+                    <div
+                      key={item.title}
+                      className="grid grid-cols-[44px_1fr] items-center gap-4 rounded-[16px] border p-3.5"
+                      style={{
+                        background: isDark ? "rgba(255,255,255,0.02)" : "rgba(255,255,255,0.56)",
+                        borderColor: isDark ? "rgba(255,255,255,0.06)" : "rgba(7,2,11,0.06)",
+                      }}
+                    >
+                      <div
+                        className="flex h-11 w-11 items-center justify-center rounded-full border"
+                        style={{
+                          color: item.color,
+                          background: isDark ? `${item.color}16` : `${item.color}0f`,
+                          borderColor: isDark ? `${item.color}55` : `${item.color}35`,
+                        }}
+                      >
+                        <item.icon size={18} fill={item.color} />
+                      </div>
+                      <div>
+                        <h3 className="text-[13px] font-bold" style={{ color: isDark ? "#fff" : DARK_BG }}>
+                          {item.title}
+                        </h3>
+                        <p className="mt-1 text-[12px]" style={{ color: isDark ? "rgba(255,255,255,0.46)" : "rgba(7,2,11,0.52)" }}>
+                          {item.text}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="relative min-h-[540px] overflow-visible lg:min-h-[620px]">
+                <div className="absolute left-[46%] top-[64%] h-[58px] w-[420px] -translate-x-1/2 rounded-full blur-[18px]" style={{ background: isDark ? "rgba(253,98,53,0.28)" : "rgba(142,37,247,0.12)" }} />
+                <div className="absolute left-[15%] top-[10%] h-[260px] w-[260px] rounded-full bg-[#8E25F7]/15 blur-[82px]" />
+                <div className="absolute right-[6%] top-[36%] h-[230px] w-[230px] rounded-full bg-[#1DA4D0]/12 blur-[82px]" />
+
+                {logoShards.map((shard, index) => (
+                  <motion.div
+                    key={index}
+                    className="absolute"
+                    animate={shouldReduceMotion ? undefined : {
+                      y: [0, index % 2 === 0 ? -8 : 7, 0],
+                      rotate: [shard.rotate, shard.rotate + (index % 2 === 0 ? 4 : -4), shard.rotate],
+                      opacity: [isDark ? 0.52 : 0.38, isDark ? 0.82 : 0.58, isDark ? 0.52 : 0.38],
+                    }}
+                    transition={{
+                      duration: 6.5 + index * 0.4,
+                      delay: shard.delay,
+                      ease: "easeInOut",
+                      repeat: Infinity,
+                    }}
+                    style={{
+                      left: shard.left,
+                      top: shard.top,
+                      width: shard.width,
+                      height: shard.height,
+                      rotate: `${shard.rotate}deg`,
+                      background: shard.width <= 5
+                        ? shard.color
+                        : `linear-gradient(160deg, rgba(255,255,255,0.88) 0%, ${shard.color} 42%, transparent 100%)`,
+                      border: shard.width <= 5 ? "none" : `1px solid ${shard.color}66`,
+                      borderRadius: shard.width <= 5 ? "999px" : "999px 999px 3px 3px",
+                      clipPath: shard.width <= 5 ? "none" : "polygon(50% 0%, 100% 20%, 70% 100%, 20% 82%)",
+                      opacity: isDark ? 0.58 : 0.42,
+                      filter: isDark ? `drop-shadow(0 0 14px ${shard.color}88)` : `drop-shadow(0 10px 18px ${shard.color}44)`,
+                    }}
+                  />
+                ))}
+
+                <motion.img
+                  src={isDark ? imgLogoDarkCard : imgLogoLightCard}
+                  alt={isDark ? "Carte logo Kitty Hub version sombre" : "Carte logo Kitty Hub version claire"}
+                  className="absolute left-[50%] top-[49%] z-20 w-[min(80vw,410px)] -translate-x-1/2 -translate-y-1/2 object-contain md:w-[455px] lg:left-[46%] lg:w-[520px]"
+                  initial={{ opacity: 0, y: 34, rotate: -3 }}
+                  whileInView={{ opacity: 1, y: 0, rotate: -3 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                  style={{
+                    filter: isDark
+                      ? "drop-shadow(0 36px 75px rgba(0,0,0,0.55)) drop-shadow(0 0 28px rgba(253,98,53,0.14))"
+                      : "drop-shadow(0 30px 58px rgba(35,19,50,0.18))",
+                  }}
+                />
+
+                <div className="absolute right-[-2%] top-[54%] z-30 hidden w-[104px] -translate-y-1/2 rounded-[18px] border p-4 text-right lg:block" style={{ background: isDark ? "rgba(7,2,11,0.58)" : "rgba(255,255,255,0.72)", borderColor: isDark ? "rgba(255,255,255,0.08)" : "rgba(7,2,11,0.08)" }}>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.24em]" style={{ color: isDark ? "rgba(255,255,255,0.42)" : "rgba(7,2,11,0.42)" }}>Rarity</p>
+                  <p className="mt-1 text-[18px] font-black uppercase" style={{ color: ACCENT }}>Rare</p>
+                  <div className="my-4 h-px" style={{ background: isDark ? "rgba(255,255,255,0.09)" : "rgba(7,2,11,0.08)" }} />
+                  <p className="text-[10px] font-bold uppercase tracking-[0.24em]" style={{ color: isDark ? "rgba(255,255,255,0.42)" : "rgba(7,2,11,0.42)" }}>ID</p>
+                  <p className="mt-1 text-[18px] font-black" style={{ color: isDark ? "#fff" : DARK_BG }}>001</p>
+                  <div className="my-4 h-px" style={{ background: isDark ? "rgba(255,255,255,0.09)" : "rgba(7,2,11,0.08)" }} />
+                  <p className="text-[10px] font-bold uppercase tracking-[0.24em]" style={{ color: isDark ? "rgba(255,255,255,0.42)" : "rgba(7,2,11,0.42)" }}>ÉDITION</p>
+                  <p className="mt-1 text-[13px] font-bold uppercase" style={{ color: isDark ? "rgba(255,255,255,0.76)" : "rgba(7,2,11,0.7)" }}>Originale</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative z-10 mt-8 flex flex-col gap-2 border-t pt-5 text-[10px] font-bold uppercase tracking-[0.24em] md:flex-row md:items-center md:justify-between" style={{ borderColor: isDark ? "rgba(255,255,255,0.07)" : "rgba(7,2,11,0.08)", color: isDark ? "rgba(255,255,255,0.35)" : "rgba(7,2,11,0.38)" }}>
+              <span>KITTY HUB © 2025</span>
+              <span>Tous droits réservés.</span>
+            </div>
+          </div>
         </FadeIn>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {/* Logo on accent */}
-          <FadeIn delay={0.08}>
-            <div
-              className="flex items-center justify-center rounded-2xl p-10 md:p-12 transition-all duration-700 aspect-square"
-              style={{
-                background: ACCENT,
-                border: `1px solid ${r(0.05)}`,
-                boxShadow: isDark ? `0 20px 60px rgba(${ACCENT_RGB},0.2)` : `0 12px 40px rgba(${ACCENT_RGB},0.15)`,
-              }}
-            >
-              <svg className="w-full max-w-[100px]" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="60 38 100 130">
-                <path d={svgPaths.pe2c7b00} fill="white" />
-                <path d={svgPaths.p1a04ad00} fill="white" />
-                <path d={svgPaths.p188bda80} fill="white" />
-              </svg>
-            </div>
-          </FadeIn>
-
-          {/* Logo dark on light */}
-          <FadeIn delay={0.14}>
-            <div
-              className="flex items-center justify-center rounded-2xl p-10 md:p-12 transition-all duration-700 aspect-square"
-              style={{
-                background: isDark
-                  ? "linear-gradient(160deg, #f0ebe4 0%, #e8e2d9 100%)"
-                  : "linear-gradient(160deg, #faf7f3 0%, #f0ebe4 100%)",
-                border: `1px solid ${r(0.05)}`,
-              }}
-            >
-              <svg className="w-full max-w-[100px]" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="60 38 100 130">
-                <path d={svgPaths.p152f9b60} fill="#202020" />
-                <path d={svgPaths.p3326ab00} fill="#202020" />
-                <path d={svgPaths.p3a8ccd00} fill="#202020" />
-              </svg>
-            </div>
-          </FadeIn>
-
-          {/* Full cat shape */}
-          <FadeIn delay={0.2}>
-            <div
-              className="flex items-center justify-center rounded-2xl p-10 md:p-12 transition-all duration-700 aspect-square"
-              style={{
-                background: isDark
-                  ? "linear-gradient(160deg, #1a1020 0%, #0f0817 100%)"
-                  : "linear-gradient(160deg, #1a1a2a 0%, #0a0a14 100%)",
-                border: `1px solid ${r(0.05)}`,
-              }}
-            >
-              <svg className="w-full max-w-[100px]" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="0 0 336 444">
-                <path d={svgPaths.p3ede9b00} fill={ACCENT} />
-                <path d={svgPaths.p318b8200} fill={ACCENT} />
-                <path d={svgPaths.p39a19400} fill={ACCENT} />
-              </svg>
-            </div>
-          </FadeIn>
-        </div>
       </div>
     </section>
   );
