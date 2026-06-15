@@ -32,31 +32,19 @@ const DARK_BG = "#0f0817";
 
 const MZW_SWIRL_PATHS_URL = "/assets/mzw-swirl-paths.json";
 
-/* Butterfly tap animation generators — each returns randomised values so no two clicks feel the same */
+/* Butterfly tap animation generators */
 const TAP_GENERATORS: Array<() => { x: number; y: number; scale: number; rotate: number; opacity: number; dur: number }> = [
-  // 1: Shrink & implode
   () => ({ x: (Math.random() - 0.5) * 20, y: (Math.random() - 0.5) * 20, scale: 0.02 + Math.random() * 0.12, rotate: (Math.random() - 0.5) * 40, opacity: 0, dur: 0.4 + Math.random() * 0.2 }),
-  // 2: Fly up fast
   () => ({ x: (Math.random() - 0.5) * 80, y: -(150 + Math.random() * 150), scale: 0.4 + Math.random() * 0.4, rotate: -20 - Math.random() * 30, opacity: 0, dur: 0.5 + Math.random() * 0.25 }),
-  // 3: Spiral right
   () => ({ x: 80 + Math.random() * 120, y: -(40 + Math.random() * 80), scale: 0.05 + Math.random() * 0.15, rotate: 270 + Math.random() * 180, opacity: 0, dur: 0.6 + Math.random() * 0.2 }),
-  // 4: Drift left & dissolve
   () => ({ x: -(100 + Math.random() * 120), y: -20 + Math.random() * 60, scale: 0.3 + Math.random() * 0.3, rotate: -(10 + Math.random() * 20), opacity: 0, dur: 0.55 + Math.random() * 0.2 }),
-  // 5: Zoom out & spin
   () => ({ x: (Math.random() - 0.5) * 30, y: (Math.random() - 0.5) * 30, scale: 2.5 + Math.random() * 1.5, rotate: 120 + Math.random() * 120, opacity: 0, dur: 0.45 + Math.random() * 0.2 }),
-  // 6: Fall down heavy
   () => ({ x: (Math.random() - 0.5) * 60, y: 180 + Math.random() * 150, scale: 0.2 + Math.random() * 0.2, rotate: 15 + Math.random() * 25, opacity: 0, dur: 0.7 + Math.random() * 0.2 }),
-  // 7: Diagonal top-right scatter
   () => ({ x: 60 + Math.random() * 100, y: -(80 + Math.random() * 100), scale: 0.02 + Math.random() * 0.08, rotate: -(60 + Math.random() * 60), opacity: 0, dur: 0.4 + Math.random() * 0.2 }),
-  // 8: Spiral left upward
   () => ({ x: -(60 + Math.random() * 100), y: -(60 + Math.random() * 120), scale: 0.1 + Math.random() * 0.2, rotate: -(200 + Math.random() * 200), opacity: 0, dur: 0.6 + Math.random() * 0.25 }),
-  // 9: Poof — quick scale up then vanish
   () => ({ x: (Math.random() - 0.5) * 15, y: -(10 + Math.random() * 20), scale: 1.8 + Math.random() * 0.8, rotate: (Math.random() - 0.5) * 50, opacity: 0, dur: 0.3 + Math.random() * 0.15 }),
-  // 10: Tumble down-right
   () => ({ x: 80 + Math.random() * 100, y: 100 + Math.random() * 120, scale: 0.15 + Math.random() * 0.2, rotate: 90 + Math.random() * 180, opacity: 0, dur: 0.65 + Math.random() * 0.2 }),
-  // 11: Float away gently upward-left
   () => ({ x: -(30 + Math.random() * 60), y: -(100 + Math.random() * 100), scale: 0.5 + Math.random() * 0.3, rotate: -(5 + Math.random() * 15), opacity: 0, dur: 0.8 + Math.random() * 0.3 }),
-  // 12: Diagonal bottom-left plunge
   () => ({ x: -(70 + Math.random() * 80), y: 120 + Math.random() * 100, scale: 0.08 + Math.random() * 0.12, rotate: 40 + Math.random() * 60, opacity: 0, dur: 0.55 + Math.random() * 0.2 }),
 ];
 let lastTapIdx = -1;
@@ -69,6 +57,60 @@ const PALETTE = [
   { hex: "#E2C049", name: "Résonance", role: "Éclat" },
 ];
 
+/* -- Decorative Components -- */
+
+function TopographicWaves({ isDark, density = 10, opacity = 0.3, height = "50%", position = "center", speed = 30, spread = 140 }: { isDark: boolean; density?: number; opacity?: number; height?: string; position?: "top" | "center" | "bottom" | "full"; speed?: number; spread?: number }) {
+  const posClass = position === "top" ? "top-0" : position === "bottom" ? "bottom-0" : position === "full" ? "inset-0" : "top-1/2 -translate-y-1/2";
+  
+  return (
+    <div className={`absolute inset-x-0 ${posClass} pointer-events-none`} style={{ height: position === "full" ? "100%" : height, opacity }} aria-hidden="true">
+      <svg className="size-full overflow-visible" fill="none" preserveAspectRatio="none" viewBox="0 0 1000 400">
+        <defs>
+          <linearGradient id="mzw-wave-grad-hairline" x1="0" x2="1000" y1="0" y2="0">
+            <stop stopColor="#254D9B" stopOpacity="0.4" />
+            <stop offset="0.25" stopColor="#5D4792" stopOpacity="0.8" />
+            <stop offset="0.5" stopColor="#B3428A" />
+            <stop offset="0.75" stopColor="#CC7B63" stopOpacity="0.8" />
+            <stop offset="1" stopColor="#E2C049" stopOpacity="0.4" />
+          </linearGradient>
+        </defs>
+        {Array.from({ length: density }).map((_, i) => (
+          <motion.path
+            key={i}
+            d={`M-250 ${150 + i * spread/density} C 150 ${100 + i * 15}, 350 ${300 - i * 10}, 550 ${150 + i * 20} S 850 ${100 + i * 12}, 1250 ${150 + i * spread/density}`}
+            stroke="url(#mzw-wave-grad-hairline)"
+            strokeWidth={0.5 + (i % 3) * 0.2}
+            animate={{ 
+              d: [
+                `M-250 ${150 + i * spread/density} C 150 ${100 + i * 15}, 350 ${300 - i * 10}, 550 ${150 + i * 20} S 850 ${100 + i * 12}, 1250 ${150 + i * spread/density}`,
+                `M-250 ${170 + i * spread/density} C 200 ${120 + i * 12}, 380 ${280 - i * 8}, 580 ${170 + i * 18} S 830 ${80 + i * 15}, 1250 ${140 + i * spread/density}`,
+                `M-250 ${150 + i * spread/density} C 150 ${100 + i * 15}, 350 ${300 - i * 10}, 550 ${150 + i * 20} S 850 ${100 + i * 12}, 1250 ${150 + i * spread/density}`
+              ]
+            }}
+            transition={{ duration: speed + i * 4, repeat: Infinity, ease: "easeInOut" }}
+          />
+        ))}
+      </svg>
+    </div>
+  );
+}
+
+function EnergyGrid({ isDark, opacity = 0.35 }: { isDark: boolean; opacity?: number }) {
+  return (
+    <div 
+      className="absolute inset-0 z-0 pointer-events-none overflow-hidden"
+      style={{
+        backgroundImage: `linear-gradient(${isDark ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.4)"} 1.5px, transparent 1.5px), 
+                         linear-gradient(90deg, ${isDark ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.4)"} 1.5px, transparent 1.5px)`,
+        backgroundSize: "64px 64px",
+        opacity,
+        maskImage: "radial-gradient(circle at center, black, transparent 95%)",
+        WebkitMaskImage: "radial-gradient(circle at center, black, transparent 95%)",
+      }}
+    />
+  );
+}
+
 function SectionLabel({ children }: { children: string }) {
   const { r } = useTheme();
   return (
@@ -77,16 +119,16 @@ function SectionLabel({ children }: { children: string }) {
       style={{
         fontFamily: "'Inter', sans-serif",
         fontSize: "0.6rem",
-        color: r(0.25),
+        color: r(0.3),
         letterSpacing: "0.25em",
       }}
     >
-      <span className="mb-3 flex h-5 items-center gap-[3px]" aria-hidden="true">
+      <span className="mb-4 flex h-5 items-center gap-[3px]" aria-hidden="true">
         {Array.from({ length: 18 }).map((_, i) => {
           const height = 5 + ((i * 7) % 13);
           const color = PALETTE[i % PALETTE.length].hex;
           return (
-            <span
+            <motion.span
               key={i}
               className="block w-px rounded-full"
               style={{
@@ -95,6 +137,8 @@ function SectionLabel({ children }: { children: string }) {
                 opacity: 0.18 + (i % 5) * 0.035,
                 boxShadow: `0 0 8px ${color}55`,
               }}
+              animate={{ height: [height, height * 1.5, height] }}
+              transition={{ duration: 2 + (i % 3), repeat: Infinity, ease: "easeInOut" }}
             />
           );
         })}
@@ -129,93 +173,143 @@ function useBodyStyle() {
 }
 
 /* ===================================
-   1. HERO — Strong opening (poster)
+   1. HERO — SPECTACULAR IMMERSION
    =================================== */
 function HeroSection() {
   const { t } = useI18n();
   const { isDark, r } = useTheme();
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.04]);
-  const imgOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   return (
-    <section ref={ref} className="relative flex min-h-[92vh] w-full flex-col items-center justify-center overflow-hidden px-6 py-20 md:min-h-screen">
-      <img
-        src={imgHeaderLight}
-        alt=""
-        aria-hidden="true"
-        className="absolute inset-0 size-full object-cover transition-opacity duration-700"
-        style={{ opacity: isDark ? 0 : 1, objectPosition: "center center" }}
-      />
-      <img
-        src={imgHeaderDark}
-        alt=""
-        aria-hidden="true"
-        className="absolute inset-0 size-full object-cover transition-opacity duration-700"
-        style={{ opacity: isDark ? 1 : 0, objectPosition: "center center" }}
-      />
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: isDark
-            ? "radial-gradient(ellipse at center, transparent 0%, rgba(7,4,13,0.08) 44%, rgba(7,4,13,0.64) 100%)"
-            : "radial-gradient(ellipse at center, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.18) 48%, rgba(246,244,241,0.72) 100%)",
-        }}
-      />
-      <div
-        className="absolute inset-x-0 bottom-0 h-[26%] pointer-events-none"
-        style={{
-          background: isDark
-            ? "linear-gradient(180deg, transparent, rgba(5,4,10,0.88))"
-            : "linear-gradient(180deg, transparent, rgba(246,244,241,0.92))",
-        }}
-      />
+    <section ref={ref} className="relative flex min-h-[85vh] w-full flex-col items-center justify-center overflow-hidden px-6 py-12 md:min-h-screen"
+      style={{ background: isDark ? "#07040d" : "#fcfaf7" }}>
+      
+      {/* ── ATMOSPHERIC CANVAS — Clean & Wide ── */}
+      <div className="absolute inset-0 z-0">
+        <EnergyGrid isDark={isDark} opacity={isDark ? 0.15 : 0.08} />
+        
+        {/* Subtle Panoramic Topography */}
+        <div className="absolute inset-0 flex flex-col justify-center">
+          <TopographicWaves isDark={isDark} density={8} opacity={isDark ? 0.4 : 0.25} height="60%" position="center" speed={40} spread={160} />
+          <div className="rotate-180 opacity-40">
+            <TopographicWaves isDark={isDark} density={6} opacity={isDark ? 0.3 : 0.15} height="60%" position="center" speed={55} spread={200} />
+          </div>
+        </div>
 
-      <motion.div className="relative z-10 flex flex-col items-center" style={{ scale: imgScale, opacity: imgOpacity }}>
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.3 }}
-          className="mb-10 flex items-center gap-6 md:mb-12 md:gap-8"
+        {/* Ambient Glow */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: isDark
+              ? `radial-gradient(circle at 50% 50%, rgba(${ACCENT_RGB}, 0.12) 0%, transparent 70%)`
+              : `radial-gradient(circle at 50% 50%, rgba(${ACCENT_RGB}, 0.06) 0%, transparent 70%)`
+          }}
+        />
+
+        {/* Minimal Particles */}
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          {Array.from({ length: 25 }).map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute rounded-full"
+              style={{
+                width: 1.5,
+                height: 1.5,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                background: PALETTE[i % PALETTE.length].hex,
+                opacity: 0,
+              }}
+              animate={{
+                y: [0, -150],
+                opacity: [0, 0.5, 0],
+              }}
+              transition={{
+                duration: 15 + Math.random() * 20,
+                repeat: Infinity,
+                delay: Math.random() * 10,
+                ease: "linear"
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* ── CENTRAL COMPOSITION — Compact & Elegant ── */}
+      <motion.div 
+        className="relative z-10 flex flex-col items-center w-full max-w-6xl" 
+        style={{ y: contentY, opacity: contentOpacity }}
+      >
+        {/* Back button — Original placement */}
+        <motion.button
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          onClick={() => navigate("/projects")}
+          className="group absolute left-0 top-[-40px] flex items-center gap-2 cursor-pointer"
+          style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.75rem", color: r(0.3) }}
         >
-          <div className="w-16 h-[1px]" style={{ background: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)" }} />
+          <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
+          {t("mzw.back")}
+        </motion.button>
+
+        {/* Minimal Eyebrow */}
+        <motion.div
+          initial={{ opacity: 0, y: 15, letterSpacing: "1.2em" }}
+          animate={{ opacity: 1, y: 0, letterSpacing: "0.8em" }}
+          transition={{ duration: 1.8, ease: "easeOut" }}
+          className="mb-14 flex flex-col items-center gap-6"
+        >
           <span style={{ 
             fontFamily: "'Inter', sans-serif", 
-            fontSize: "0.58rem", 
-            letterSpacing: "0.5em", 
+            fontSize: "0.6rem", 
             textTransform: "uppercase", 
-            color: r(isDark ? 0.36 : 0.3) 
+            fontWeight: 400,
+            color: r(isDark ? 0.6 : 0.4) 
           }}>
-            {t("mzw.hero.label")} — {t("mzw.hero.year")}
+            {t("mzw.hero.label")}
           </span>
-          <div className="w-16 h-[1px]" style={{ background: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)" }} />
+          <div className="w-12 h-px bg-current opacity-20" />
         </motion.div>
 
-        <div className="relative flex size-[220px] items-center justify-center md:size-[300px]">
-          <motion.div
-            className="absolute size-full rounded-full"
-            animate={{ 
-              scale: [1, 1.08, 1],
-              opacity: isDark ? [0.42, 0.66, 0.42] : [0.32, 0.5, 0.32],
-            }}
-            transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut" }}
-            style={{ 
-              background: isDark
-                ? `radial-gradient(circle, rgba(255,255,255,0.18), rgba(${ACCENT_RGB},0.22) 34%, rgba(179,66,138,0.1) 56%, transparent 72%)`
-                : `radial-gradient(circle, rgba(255,255,255,0.72), rgba(${ACCENT_RGB},0.14) 38%, rgba(226,192,73,0.1) 58%, transparent 74%)`,
-              filter: "blur(28px)",
-            }}
-          />
+        {/* Refined Central Core */}
+        <div className="relative flex items-center justify-center size-[240px] md:size-[360px]">
+          {/* Subtle Halos */}
+          {Array.from({ length: 3 }).map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute rounded-full border border-white/5"
+              style={{ width: "100%", height: "100%" }}
+              animate={{
+                scale: [0.8, 1.1 + i * 0.1],
+                opacity: [0, 0.3 - i * 0.1, 0],
+              }}
+              transition={{
+                duration: 8,
+                delay: i * 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
+
+          {/* Soft Core Glow */}
+          <div className="absolute size-[80%] rounded-full blur-[70px] opacity-40"
+               style={{ background: `radial-gradient(circle, ${ACCENT}, #b3428a, transparent)` }} />
+
+          {/* The Logo */}
           <motion.div
             initial={{ opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.8, ease: "easeOut" }}
-            className="relative z-10 w-[116px] md:w-[170px]"
+            transition={{ duration: 2, ease: "easeOut", delay: 0.3 }}
+            className="relative z-10 w-[140px] md:w-[220px]"
             style={{
               filter: isDark
-                ? `drop-shadow(0 0 18px rgba(255,255,255,0.18)) drop-shadow(0 0 42px rgba(${ACCENT_RGB},0.34))`
-                : `drop-shadow(0 16px 34px rgba(15,8,23,0.12)) drop-shadow(0 0 30px rgba(${ACCENT_RGB},0.18))`,
+                ? `drop-shadow(0 0 35px rgba(${ACCENT_RGB}, 0.5))`
+                : `drop-shadow(0 15px 30px rgba(0,0,0,0.1))`
             }}
           >
             <img
@@ -226,6 +320,26 @@ function HeroSection() {
             />
           </motion.div>
         </div>
+
+        {/* Minimal Year */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.4 }}
+          transition={{ duration: 2, delay: 1.8 }}
+          className="mt-14 text-[0.6rem] tracking-[0.6em] font-light"
+          style={{ color: isDark ? "#fff" : "#000" }}
+        >
+          {t("mzw.hero.year")}
+        </motion.div>
+      </motion.div>
+      
+      {/* Simple Scroll Indicator */}
+      <motion.div 
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 opacity-30"
+        animate={{ y: [0, 8, 0] }}
+        transition={{ duration: 2.5, repeat: Infinity }}
+      >
+        <div className="w-px h-14 bg-current" />
       </motion.div>
     </section>
   );
@@ -239,65 +353,68 @@ function IntroSection() {
   const { r, isDark } = useTheme();
 
   return (
-    <section className="px-6 md:px-16 py-16 max-w-4xl mx-auto">
-      <FadeIn>
-        <h1
-          className="text-center mb-2"
-          style={{
-            fontFamily: "'Space Grotesk', sans-serif",
-            fontSize: "clamp(1.8rem, 5vw, 3rem)",
-            fontWeight: 700,
-            letterSpacing: "-0.02em",
-            color: isDark ? "#fff" : DARK_BG,
-            transition: "color 0.5s ease",
-          }}
-        >
-          MZW
-        </h1>
-      </FadeIn>
-      <FadeIn delay={0.05}>
-        <p
-          className="text-center mb-6"
-          style={{
-            fontFamily: "'Inter', sans-serif",
-            fontSize: "0.75rem",
-            letterSpacing: "0.15em",
-            textTransform: "uppercase",
-            color: ACCENT,
-          }}
-        >
-          No Sense
-        </p>
-      </FadeIn>
-      <FadeIn delay={0.1}>
-        <p
-          className="text-center"
-          style={{
-            fontFamily: "'Inter', sans-serif",
-            fontSize: "clamp(0.95rem, 2vw, 1.15rem)",
-            lineHeight: 1.9,
-            color: r(0.45),
-          }}
-        >
-          {t("mzw.intro.subtitle")}
-        </p>
-      </FadeIn>
-      <FadeIn delay={0.15}>
-        <div className="w-12 h-[1px] mx-auto my-8" style={{ background: `rgba(${ACCENT_RGB},0.3)` }} />
-      </FadeIn>
-      <FadeIn delay={0.2}>
-        <p
-          className="text-center max-w-2xl mx-auto"
-          style={{
-            fontFamily: "'Inter', sans-serif",
-            fontSize: "0.85rem",
-            lineHeight: 2,
-            color: r(0.3),
-          }}
-        >
-          {t("mzw.intro.desc")}
-        </p>
-      </FadeIn>
+    <section className="relative px-6 md:px-16 py-24 max-w-4xl mx-auto overflow-hidden">
+      <TopographicWaves isDark={isDark} density={10} opacity={0.3} height="100%" />
+      <div className="relative z-10">
+        <FadeIn>
+          <h1
+            className="text-center mb-2"
+            style={{
+              fontFamily: "'Space Grotesk', sans-serif",
+              fontSize: "clamp(1.8rem, 5vw, 3rem)",
+              fontWeight: 700,
+              letterSpacing: "-0.02em",
+              color: isDark ? "#fff" : DARK_BG,
+              transition: "color 0.5s ease",
+            }}
+          >
+            MZW
+          </h1>
+        </FadeIn>
+        <FadeIn delay={0.05}>
+          <p
+            className="text-center mb-6"
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "0.75rem",
+              letterSpacing: "0.15em",
+              textTransform: "uppercase",
+              color: ACCENT,
+            }}
+          >
+            No Sense
+          </p>
+        </FadeIn>
+        <FadeIn delay={0.1}>
+          <p
+            className="text-center"
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "clamp(0.95rem, 2vw, 1.15rem)",
+              lineHeight: 1.9,
+              color: r(0.45),
+            }}
+          >
+            {t("mzw.intro.subtitle")}
+          </p>
+        </FadeIn>
+        <FadeIn delay={0.15}>
+          <div className="w-12 h-[1px] mx-auto my-8" style={{ background: `rgba(${ACCENT_RGB},0.3)` }} />
+        </FadeIn>
+        <FadeIn delay={0.2}>
+          <p
+            className="text-center max-w-2xl mx-auto"
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "0.85rem",
+              lineHeight: 2,
+              color: r(0.3),
+            }}
+          >
+            {t("mzw.intro.desc")}
+          </p>
+        </FadeIn>
+      </div>
     </section>
   );
 }
@@ -334,7 +451,7 @@ function ContextSection() {
    =================================== */
 function DirectionSection() {
   const { t } = useI18n();
-  const { r } = useTheme();
+  const { r, isDark } = useTheme();
   const body = useBodyStyle();
 
   return (
@@ -352,11 +469,12 @@ function DirectionSection() {
           </FadeIn>
         </div>
 
-        {/* Main poster full width */}
+        {/* Main poster considerably scaled down */}
         <FadeIn delay={0.15}>
           <div className="flex justify-center">
-            <div className="rounded-2xl overflow-hidden max-w-sm" style={{ border: `1px solid ${r(0.04)}` }}>
-              <img src={imgNoSenseA3} alt="Affiche MZW No Sense" className="w-full object-cover" />
+            <div className="rounded-xl overflow-hidden max-w-[240px] relative group" style={{ border: `1px solid ${r(isDark ? 0.08 : 0.04)}` }}>
+               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+               <img src={imgNoSenseA3} alt="Affiche MZW No Sense" className="w-full object-cover" />
             </div>
           </div>
         </FadeIn>
@@ -410,7 +528,7 @@ function NamingSection() {
 }
 
 /* ===================================
-   6. PALETTE
+   6. PALETTE — RESTORED ANIMATION
    =================================== */
 function PaletteSection() {
   const { t } = useI18n();
@@ -431,91 +549,109 @@ function PaletteSection() {
         </div>
       </div>
 
+      <div
+        className="relative min-h-[620px] overflow-hidden rounded-none px-4 py-12 md:min-h-[660px] md:px-10 md:py-16"
+        style={{
+          background: isDark
+            ? "linear-gradient(180deg, rgba(12,8,19,0.98), rgba(5,4,10,0.98))"
+            : "#fff",
+          borderTop: `1px solid ${r(isDark ? 0.06 : 0.08)}`,
+          borderBottom: `1px solid ${r(isDark ? 0.06 : 0.08)}`,
+        }}
+      >
         <div
-          className="relative min-h-[620px] overflow-hidden rounded-none px-4 py-12 md:min-h-[660px] md:px-10 md:py-16"
+          className="absolute inset-0 pointer-events-none"
           style={{
             background: isDark
-              ? "linear-gradient(180deg, rgba(12,8,19,0.98), rgba(5,4,10,0.98))"
-              : "#fff",
-            border: `1px solid ${r(isDark ? 0.06 : 0.08)}`,
-            boxShadow: isDark
-              ? "0 28px 90px rgba(0,0,0,0.34), inset 0 1px 0 rgba(255,255,255,0.04)"
-              : "0 24px 70px rgba(45,38,31,0.1), inset 0 1px 0 rgba(255,255,255,0.9)",
+              ? `radial-gradient(circle at 50% 40%, rgba(${ACCENT_RGB},0.12), transparent 70%)`
+              : `radial-gradient(circle at 50% 40%, rgba(${ACCENT_RGB},0.06), transparent 70%)`,
           }}
-        >
-          <div
-            className="absolute inset-x-[-10%] top-[8%] h-[58%] pointer-events-none"
-            style={{
-              background: isDark
-                ? `radial-gradient(ellipse at 50% 42%, rgba(${ACCENT_RGB},0.18), transparent 62%)`
-                : `radial-gradient(ellipse at 50% 42%, rgba(${ACCENT_RGB},0.1), transparent 64%)`,
-            }}
-          />
-          <img
-            src={imgSpectreLight}
-            alt=""
-            aria-hidden="true"
-            className="absolute left-1/2 top-[11%] w-[112%] max-w-none -translate-x-1/2 object-contain transition-opacity duration-700"
-            style={{ opacity: isDark ? 0 : 0.86 }}
-          />
-          <img
-            src={imgSpectreDark}
-            alt=""
-            aria-hidden="true"
-            className="absolute left-1/2 top-[11%] w-[112%] max-w-none -translate-x-1/2 object-contain transition-opacity duration-700"
-            style={{ opacity: isDark ? 0.74 : 0 }}
-          />
-          <div
-            className="absolute inset-x-0 bottom-0 h-[44%] pointer-events-none"
-            style={{
-              background: isDark
-                ? "linear-gradient(180deg, transparent, rgba(5,4,10,0.92) 72%)"
-                : "linear-gradient(180deg, transparent, rgba(255,255,255,0.92) 74%)",
-            }}
-          />
+        />
+        <img
+          src={imgSpectreLight}
+          alt=""
+          aria-hidden="true"
+          className="absolute left-1/2 top-[11%] w-[112%] max-w-none -translate-x-1/2 object-contain transition-opacity duration-700"
+          style={{ opacity: isDark ? 0 : 0.86 }}
+        />
+        <img
+          src={imgSpectreDark}
+          alt=""
+          aria-hidden="true"
+          className="absolute left-1/2 top-[11%] w-[112%] max-w-none -translate-x-1/2 object-contain transition-opacity duration-700"
+          style={{ opacity: isDark ? 0.74 : 0 }}
+        />
 
-          <div className="relative z-10 grid grid-cols-1 gap-5 md:hidden">
-            {PALETTE.map((color, i) => (
-              <FadeIn key={color.hex} delay={0.12 + i * 0.06}>
-                <div className="flex h-[154px] flex-row items-center justify-between gap-4">
-                  <span
-                    className="w-[32%] uppercase"
-                    style={{
-                      fontFamily: "'Inter', sans-serif",
-                      fontSize: "clamp(0.46rem, 1vw, 0.68rem)",
-                      letterSpacing: "0.2em",
-                      color: color.hex,
-                    }}
+        <div className="relative z-10 hidden md:flex h-[600px] max-w-6xl mx-auto items-end justify-between px-12 pb-20">
+          {PALETTE.map((color, i) => {
+            return (
+              <FadeIn key={color.hex} delay={0.2 + i * 0.1} className="flex-1 flex flex-col items-center group">
+                <div className="relative w-full flex flex-col items-center">
+                  <motion.div
+                    className="mb-8 flex flex-col items-center opacity-60"
+                    animate={shouldReduceMotion ? undefined : { y: [0, -5, 0] }}
+                    transition={{ duration: 4, delay: i * 0.5, repeat: Infinity }}
                   >
-                    {color.name}
-                  </span>
-                  <div className="relative flex h-[120px] flex-1 items-center justify-center" aria-hidden="true">
+                    <span
+                      style={{
+                        fontFamily: "'Space Grotesk', sans-serif",
+                        fontSize: "0.75rem",
+                        letterSpacing: "0.2em",
+                        color: color.hex,
+                        fontWeight: 600,
+                        textTransform: "uppercase"
+                      }}
+                    >
+                      {color.name}
+                    </span>
+                    <div className="w-[1px] h-12 mt-4" style={{ background: `linear-gradient(to bottom, ${color.hex}, transparent)` }} />
+                  </motion.div>
+
+                  <div className="relative h-[320px] w-full flex items-center justify-center">
+                    {/* Frequency bars — RESTORED ANIMATION */}
+                    <div className="absolute inset-0 flex items-center justify-center gap-[3px]">
+                      {Array.from({ length: 12 }).map((_, j) => (
+                        <motion.div
+                          key={j}
+                          className="w-[2px] rounded-full"
+                          style={{ background: color.hex, opacity: 0.1 + (j/12) * 0.2 }}
+                          animate={{ height: [40 + Math.random() * 60, 100 + Math.random() * 120, 40 + Math.random() * 60] }}
+                          transition={{ duration: 0.8 + Math.random(), repeat: Infinity, ease: "easeInOut", delay: j * 0.1 }}
+                        />
+                      ))}
+                    </div>
+                    
+                    {/* Main pillar */}
                     <motion.div
-                      className="h-[92px] w-3 rounded-full"
-                      style={{ background: color.hex }}
-                      animate={shouldReduceMotion ? undefined : { y: [0, -3, 0, 2, 0] }}
-                      transition={{ duration: 5.2, delay: i * 0.28, repeat: Infinity, ease: "easeInOut" }}
+                      className="relative z-10 w-6 rounded-full"
+                      style={{ 
+                        background: `linear-gradient(to top, ${color.hex}, ${color.hex}cc)`,
+                        boxShadow: `0 0 30px ${color.hex}33`,
+                        height: 280
+                      }}
                     />
                   </div>
-                  <div className="w-[40%] text-right">
+
+                  <div className="mt-8 text-center opacity-70">
                     <span
-                      className="block uppercase"
+                      className="block mb-2"
                       style={{
                         fontFamily: "'Inter', sans-serif",
-                        fontSize: "clamp(0.46rem, 1vw, 0.65rem)",
-                        letterSpacing: "0.12em",
+                        fontSize: "0.75rem",
+                        letterSpacing: "0.15em",
                         color: color.hex,
+                        fontWeight: 600
                       }}
                     >
                       {color.hex}
                     </span>
                     <span
-                      className="mt-2 block uppercase"
+                      className="block uppercase"
                       style={{
                         fontFamily: "'Inter', sans-serif",
-                        fontSize: "clamp(0.42rem, 0.9vw, 0.58rem)",
-                        letterSpacing: "0.18em",
-                        color: isDark ? "rgba(255,255,255,0.5)" : "rgba(15,8,23,0.46)",
+                        fontSize: "0.55rem",
+                        letterSpacing: "0.15em",
+                        color: isDark ? "rgba(255,255,255,0.4)" : "rgba(15,8,23,0.4)",
                       }}
                     >
                       {color.role}
@@ -523,88 +659,23 @@ function PaletteSection() {
                   </div>
                 </div>
               </FadeIn>
-            ))}
-          </div>
-
-          <div className="relative z-10 hidden min-h-[560px] md:block">
-            {PALETTE.map((color, i) => {
-              const positions = [4.2, 26.2, 50.4, 75.7, 95.6];
-              return (
-                <FadeIn key={color.hex} delay={0.12 + i * 0.06}>
-                  <div
-                    className="absolute top-0 h-[540px] w-[15%] -translate-x-1/2"
-                    style={{ left: `${positions[i]}%` }}
-                  >
-                    <span
-                      className="absolute top-0 left-1/2 w-full -translate-x-1/2 text-center uppercase"
-                      style={{
-                        fontFamily: "'Inter', sans-serif",
-                        fontSize: "clamp(0.46rem, 1vw, 0.68rem)",
-                        letterSpacing: "0.2em",
-                        color: color.hex,
-                      }}
-                    >
-                      {color.name}
-                    </span>
-                    <motion.div
-                      className="absolute left-1/2 top-[44px] flex h-[142px] -translate-x-1/2 flex-col items-center"
-                      aria-hidden="true"
-                      animate={shouldReduceMotion ? undefined : { y: [0, -2, 0, 1.5, 0], opacity: [0.66, 0.95, 0.7, 0.9, 0.66] }}
-                      transition={{ duration: 3.8, delay: i * 0.18, repeat: Infinity, ease: "easeInOut" }}
-                    >
-                      <span style={{ color: color.hex, fontSize: 13, lineHeight: 1 }}>+</span>
-                      <div
-                        className="mt-3 h-[82px] w-px"
-                        style={{
-                          background: `repeating-linear-gradient(180deg, ${color.hex} 0 2px, transparent 2px 9px)`,
-                          opacity: 0.46,
-                        }}
-                      />
-                      <div
-                        className="mt-2 size-1.5 rounded-full"
-                        style={{
-                          background: color.hex,
-                        }}
-                      />
-                    </motion.div>
-                    <div className="absolute left-1/2 top-[184px] flex h-[250px] -translate-x-1/2 items-center justify-center" aria-hidden="true">
-                      <motion.div
-                        className="h-[250px] w-5 rounded-full"
-                        style={{ background: color.hex }}
-                        animate={shouldReduceMotion ? undefined : { y: [0, -4, 0, 3, 0] }}
-                        transition={{ duration: 5.6, delay: i * 0.32, repeat: Infinity, ease: "easeInOut" }}
-                      />
-                    </div>
-                    <div className="absolute bottom-0 left-1/2 w-full -translate-x-1/2 text-center">
-                      <span
-                        className="block uppercase"
-                        style={{
-                          fontFamily: "'Inter', sans-serif",
-                          fontSize: "clamp(0.46rem, 1vw, 0.65rem)",
-                          letterSpacing: "0.12em",
-                          color: color.hex,
-                        }}
-                      >
-                        {color.hex}
-                      </span>
-                      <span
-                        className="mt-2 block uppercase"
-                        style={{
-                          fontFamily: "'Inter', sans-serif",
-                          fontSize: "clamp(0.42rem, 0.9vw, 0.58rem)",
-                          letterSpacing: "0.18em",
-                          color: isDark ? "rgba(255,255,255,0.5)" : "rgba(15,8,23,0.46)",
-                        }}
-                      >
-                        {color.role}
-                      </span>
-                    </div>
-                  </div>
-                </FadeIn>
-              );
-            })}
-          </div>
+            );
+          })}
         </div>
+
+        {/* Mobile View */}
+        <div className="relative z-10 grid grid-cols-1 gap-8 md:hidden px-8 pb-16">
+          {PALETTE.map((color, i) => (
+            <FadeIn key={color.hex} delay={0.1 + i * 0.05} className="flex items-center gap-6">
+              <div className="w-12 h-12 rounded-full" style={{ background: color.hex, boxShadow: `0 0 20px ${color.hex}44` }} />
+              <div>
+                <span className="block uppercase text-[0.7rem] tracking-widest font-bold" style={{ color: color.hex }}>{color.name}</span>
+                <span className="block text-[0.6rem] tracking-wider opacity-60 uppercase mt-1" style={{ color: isDark ? "#fff" : "#000" }}>{color.hex} — {color.role}</span>
+              </div>
+            </FadeIn>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }
@@ -666,13 +737,14 @@ function LogoSection() {
    =================================== */
 function PrintSection() {
   const { t } = useI18n();
-  const { r } = useTheme();
+  const { r, isDark } = useTheme();
   const body = useBodyStyle();
 
   return (
-    <section className="px-6 md:px-16 py-16">
-      <div className="max-w-5xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start mb-10">
+    <section className="px-6 md:px-16 py-32 relative overflow-hidden">
+      <TopographicWaves isDark={isDark} density={12} opacity={0.3} height="100%" position="full" spread={90} />
+      <div className="max-w-5xl mx-auto relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start mb-16">
           <FadeIn>
             <SectionLabel>{t("mzw.print.label")}</SectionLabel>
           </FadeIn>
@@ -683,12 +755,12 @@ function PrintSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FadeIn delay={0.15}>
-            <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
+            <div className="rounded-xl overflow-hidden shadow-2xl transition-transform hover:scale-[1.02] duration-700" style={{ border: `1px solid ${r(isDark ? 0.06 : 0.04)}` }}>
               <img src={imgSupportPrint1} alt="Support print MZW 1" className="w-full object-cover" />
             </div>
           </FadeIn>
           <FadeIn delay={0.2}>
-            <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
+            <div className="rounded-xl overflow-hidden shadow-2xl transition-transform hover:scale-[1.02] duration-700" style={{ border: `1px solid ${r(isDark ? 0.06 : 0.04)}` }}>
               <img src={imgSupportPrint2} alt="Support print MZW 2" className="w-full object-cover" />
             </div>
           </FadeIn>
@@ -707,39 +779,23 @@ function VinylSection() {
   const body = useBodyStyle();
 
   return (
-    <section className="px-6 md:px-16 py-16">
-      <div className="max-w-5xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start mb-10">
+    <section className="px-6 md:px-16 py-32 relative overflow-hidden">
+      <TopographicWaves isDark={isDark} density={15} opacity={0.35} height="80%" />
+      
+      <div className="max-w-5xl mx-auto relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-10 items-start mb-16">
           <FadeIn>
             <SectionLabel>{t("mzw.vinyl.label")}</SectionLabel>
           </FadeIn>
           <FadeIn delay={0.1}>
-            <p style={body}>{t("mzw.vinyl.text")}</p>
+            <p style={{ ...body, fontSize: "1rem" }}>{t("mzw.vinyl.text")}</p>
           </FadeIn>
         </div>
 
         <FadeIn delay={0.15}>
           <div className="flex justify-center">
             <div className="relative max-w-md">
-              <div
-                className="absolute left-1/2 top-[-8%] h-[38%] w-[68%] -translate-x-1/2 pointer-events-none"
-                style={{
-                  background: isDark
-                    ? `radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.44) 0%, rgba(${ACCENT_RGB},0.24) 36%, rgba(37,77,155,0.14) 58%, transparent 82%)`
-                    : `radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.68) 0%, rgba(${ACCENT_RGB},0.16) 42%, rgba(37,77,155,0.08) 62%, transparent 84%)`,
-                  filter: "blur(18px)",
-                  opacity: isDark ? 0.95 : 0.78,
-                }}
-              />
-              <div
-                className="absolute left-1/2 top-[-6%] h-[50%] w-[88%] -translate-x-1/2 pointer-events-none"
-                style={{
-                  background: `linear-gradient(180deg, rgba(255,255,255,${isDark ? 0.16 : 0.2}) 0%, rgba(${ACCENT_RGB},${isDark ? 0.12 : 0.07}) 42%, transparent 100%)`,
-                  filter: "blur(28px)",
-                  opacity: isDark ? 0.78 : 0.58,
-                }}
-              />
-              <img src={imgVinyle} alt="Pochette vinyle MZW No Sense" className="relative z-10 w-full object-contain" />
+              <img src={imgVinyle} alt="Pochette vinyle MZW No Sense" className="relative z-10 w-full object-contain shadow-[0_30px_80px_rgba(0,0,0,0.4)] transition-transform hover:scale-[1.02] duration-700" />
             </div>
           </div>
         </FadeIn>
@@ -753,7 +809,7 @@ function VinylSection() {
    =================================== */
 function MerchSection() {
   const { t } = useI18n();
-  const { r } = useTheme();
+  const { r, isDark } = useTheme();
   const body = useBodyStyle();
 
   return (
@@ -780,59 +836,8 @@ function MerchSection() {
 }
 
 /* ===================================
-   11. INTERFACE MOBILE — Immersive phone showcase with animated waveform
+   11. INTERFACE MOBILE
    =================================== */
-
-const EQ_COLORS = PALETTE.map((color) => color.hex);
-
-/* Decorative equalizer — ultra-wide with soft edge fade and slow motion */
-function DecorativeEqualizer({ isDark }: { isDark: boolean }) {
-  const barCount = 180;
-  const center = barCount / 2;
-  const bars = useMemo(
-    () =>
-      Array.from({ length: barCount }).map((_, i) => ({
-        color: EQ_COLORS[i % EQ_COLORS.length],
-        baseH: 15 + Math.random() * 25,
-        peakH: 35 + Math.random() * 50,
-        duration: 1.2 + Math.random() * 1.5,
-        delay: Math.random() * 1.2,
-        edgeOpacity: Math.max(0, 1 - (Math.abs(i - center) / center) * 1.15),
-      })),
-    []
-  );
-
-  return (
-    <div className="flex items-end justify-center gap-[1.5px] w-full" style={{ height: "55px" }}>
-      {bars.map((bar, i) => (
-        <motion.div
-          key={i}
-          className="flex-1 rounded-full"
-          style={{
-            background: `linear-gradient(to top, ${bar.color}${isDark ? "cc" : "99"}, ${bar.color}${isDark ? "44" : "33"})`,
-            minWidth: 0.8,
-            maxWidth: 3,
-            opacity: bar.edgeOpacity,
-          }}
-          animate={{ height: [`${bar.baseH}%`, `${bar.peakH}%`, `${bar.baseH + 6}%`, `${bar.peakH - 10}%`, `${bar.baseH}%`] }}
-          transition={{ duration: bar.duration, delay: bar.delay, repeat: Infinity, ease: "easeInOut" }}
-        />
-      ))}
-    </div>
-  );
-}
-
-function AnimatedPlayerMockup() {
-  return (
-    <div className="relative">
-      <img
-        src={imgPlayerCenter}
-        alt="MZW — lecteur en cours de lecture"
-        className="relative z-10 mx-auto h-auto w-full object-contain"
-      />
-    </div>
-  );
-}
 
 function MobileSection() {
   const { t } = useI18n();
@@ -844,95 +849,171 @@ function MobileSection() {
       ? `drop-shadow(0 30px 60px rgba(0,0,0,0.65))${intense ? ` drop-shadow(0 0 50px rgba(${ACCENT_RGB},0.25))` : ""}`
       : `drop-shadow(0 25px 50px rgba(0,0,0,0.2))${intense ? ` drop-shadow(0 0 35px rgba(${ACCENT_RGB},0.12))` : ""}`;
 
-  const sceneBg = isDark
-    ? `radial-gradient(circle at 50% 48%, rgba(${ACCENT_RGB},0.2), transparent 36%),
-       radial-gradient(circle at 18% 68%, rgba(37,77,155,0.16), transparent 28%),
-       radial-gradient(circle at 82% 62%, rgba(226,192,73,0.08), transparent 24%),
-       linear-gradient(180deg, rgba(15,18,16,0.94), rgba(11,13,12,0.98))`
-    : `radial-gradient(circle at 50% 48%, rgba(${ACCENT_RGB},0.12), transparent 36%),
-       radial-gradient(circle at 18% 68%, rgba(37,77,155,0.08), transparent 28%),
-       linear-gradient(180deg, rgba(245,245,243,0.72), rgba(234,234,234,0.92))`;
-
   return (
-    <section className="px-6 md:px-12 py-20 overflow-hidden">
-      <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start mb-16">
+    <section className="px-6 md:px-12 py-32 overflow-hidden relative">
+      <TopographicWaves isDark={isDark} density={15} opacity={0.4} height="100%" position="full" />
+      
+      <div className="max-w-6xl mx-auto relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-10 items-start mb-20">
           <FadeIn>
             <SectionLabel>{t("mzw.mobile.label")}</SectionLabel>
           </FadeIn>
           <FadeIn delay={0.1}>
-            <p style={body}>{t("mzw.mobile.text")}</p>
+            <p style={{ ...body, fontSize: "1.05rem" }}>{t("mzw.mobile.text")}</p>
           </FadeIn>
         </div>
 
-        <div
-          className="relative overflow-hidden rounded-[2rem] md:rounded-[3rem] px-4 pt-6 pb-12 md:px-10 md:pt-8 md:pb-14"
-          style={{
-            minHeight: "clamp(620px, 76vw, 900px)",
-            background: sceneBg,
-            border: `1px solid ${r(isDark ? 0.08 : 0.1)}`,
-            boxShadow: isDark
-              ? "0 40px 120px rgba(0,0,0,0.42), inset 0 1px 0 rgba(255,255,255,0.05)"
-              : "0 34px 100px rgba(35,38,36,0.12), inset 0 1px 0 rgba(255,255,255,0.75)",
-          }}
-        >
-          <div className="absolute inset-x-0 bottom-0 h-[34%] pointer-events-none" style={{ background: "linear-gradient(180deg, transparent, rgba(0,0,0,0.24))" }} />
-          <div className="absolute inset-0 pointer-events-none opacity-[0.18]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)", backgroundSize: "72px 72px" }} />
-
-          <div className="relative z-20 flex items-center justify-center min-h-[clamp(500px,64vw,760px)]">
-            {/* Left phone — smaller and slightly behind */}
-            <FadeIn delay={0.1} className="absolute left-[3%] md:left-[7%] bottom-[18%] z-10">
-              <motion.div
-                className="relative"
-                initial={{ opacity: 0, x: -70, rotate: -8, scale: 0.9 }}
-                whileInView={{ opacity: 1, x: 0, rotate: -4, scale: 1 }}
-                viewport={{ once: true }}
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 1.05, delay: 0.2, ease: "easeOut", y: { duration: 6, repeat: Infinity, ease: "easeInOut" } }}
-                style={{ width: "clamp(165px, 22vw, 315px)", filter: phoneShadow(false) }}
-              >
-                <img src={imgPlayerSplash} alt="MZW — écran d'accueil mobile" className="w-full h-auto object-contain" />
-              </motion.div>
-            </FadeIn>
-
-            {/* Center phone — hero player */}
-            <FadeIn delay={0.15} className="relative z-30">
-              <motion.div className="relative" initial={{ opacity: 0, y: 70, scale: 0.92 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true }} transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}>
-                <motion.div className="relative" style={{ width: "clamp(230px, 24vw, 360px)" }}
-                  animate={{ y: [0, -6, 0], filter: [phoneShadow(true), `drop-shadow(0 40px 80px rgba(0,0,0,${isDark ? 0.7 : 0.3})) drop-shadow(0 0 60px rgba(${ACCENT_RGB},${isDark ? 0.35 : 0.18}))`, phoneShadow(true)] }}
-                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}>
-                  <AnimatedPlayerMockup />
-                </motion.div>
-                {/* Reflection */}
-                <div className="mt-2 mx-auto overflow-hidden pointer-events-none"
-                  style={{ width: "80%", height: "45px", opacity: isDark ? 0.06 : 0.03, transform: "scaleY(-1) scaleX(0.92)", maskImage: "linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, transparent 100%)", WebkitMaskImage: "linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, transparent 100%)", borderRadius: "0 0 20px 20px", background: "#0f0817" }} />
-              </motion.div>
-            </FadeIn>
-
-            {/* Right phone — smaller and slightly behind */}
-            <FadeIn delay={0.25} className="absolute right-[3%] md:right-[7%] bottom-[20%] z-10">
-              <motion.div
-                className="relative"
-                initial={{ opacity: 0, x: 70, rotate: 8, scale: 0.9 }}
-                whileInView={{ opacity: 1, x: 0, rotate: 4, scale: 1 }}
-                viewport={{ once: true }}
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 1.05, delay: 0.4, ease: "easeOut", y: { duration: 6.8, repeat: Infinity, ease: "easeInOut" } }}
-                style={{ width: "clamp(165px, 22vw, 315px)", filter: phoneShadow(false) }}
-              >
-                <img src={imgPlayerLibrary} alt="MZW — bibliothèque mobile" className="w-full h-auto object-contain" />
-              </motion.div>
-            </FadeIn>
-          </div>
-
-          {/* Anecdote */}
-          <FadeIn delay={0.4}>
-            <p className="text-center mt-8 mx-auto max-w-md italic" style={{ ...body, opacity: 0.55, fontSize: "clamp(0.72rem, 1.1vw, 0.82rem)" }}>
-              {t("mzw.mobile.anecdote")}
-            </p>
+        <div className="relative z-20 flex items-center justify-center min-h-[clamp(500px,60vw,800px)] mt-12">
+          {/* Left phone */}
+          <FadeIn delay={0.25} className="absolute left-[0%] md:left-[5%] bottom-[10%] z-10">
+            <div className="relative" style={{ width: "clamp(160px, 20vw, 300px)", filter: phoneShadow(false) }}>
+              <img src={imgPlayerSplash} alt="MZW — écran d'accueil mobile" className="w-full h-auto object-contain" />
+            </div>
           </FadeIn>
 
+          {/* Center phone — SCALED DOWN to clamp(240px, 26vw, 360px) */}
+          <FadeIn delay={0.4} className="relative z-30">
+            <div className="relative" style={{ width: "clamp(220px, 24vw, 340px)", filter: phoneShadow(true) }}>
+              <img src={imgPlayerCenter} alt="MZW — lecteur en cours de lecture" className="relative z-10 mx-auto h-auto w-full object-contain" />
+            </div>
+          </FadeIn>
+
+          {/* Right phone */}
+          <FadeIn delay={0.55} className="absolute right-[0%] md:right-[5%] bottom-[12%] z-10">
+            <div className="relative" style={{ width: "clamp(160px, 20vw, 300px)", filter: phoneShadow(false) }}>
+              <img src={imgPlayerLibrary} alt="MZW — bibliothèque mobile" className="w-full h-auto object-contain" />
+            </div>
+          </FadeIn>
         </div>
+
+        <FadeIn delay={0.8}>
+          <p className="text-center mt-20 mx-auto max-w-xl italic font-medium tracking-widest leading-loose" 
+             style={{ ...body, color: r(0.45), fontSize: "clamp(0.85rem, 1.4vw, 1rem)" }}>
+            {t("mzw.mobile.anecdote")}
+          </p>
+        </FadeIn>
+      </div>
+    </section>
+  );
+}
+
+function MockupsSection() {
+  const { t } = useI18n();
+  const { r, isDark } = useTheme();
+
+  return (
+    <section className="px-6 md:px-16 py-32 relative overflow-hidden">
+      <TopographicWaves isDark={isDark} density={10} opacity={0.1} height="100%" position="full" />
+      <div className="max-w-5xl mx-auto relative z-10">
+        <FadeIn className="mb-16">
+          <SectionLabel>{t("mzw.mockups.label")}</SectionLabel>
+        </FadeIn>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <FadeIn delay={0.08}>
+            <div className="rounded-xl overflow-hidden shadow-2xl group" style={{ border: `1px solid ${r(0.06)}` }}>
+              <img src={imgMockup1} alt="Mise en situation MZW 1" className="w-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+            </div>
+          </FadeIn>
+          <FadeIn delay={0.14}>
+            <div className="rounded-xl overflow-hidden shadow-2xl group" style={{ border: `1px solid ${r(0.06)}` }}>
+              <img src={imgMockup2} alt="Mise en situation MZW 2" className="w-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+            </div>
+          </FadeIn>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FinalSection() {
+  const { t } = useI18n();
+  const { isDark, r } = useTheme();
+  const navigate = useNavigate();
+
+  return (
+    <section
+      className="relative overflow-hidden px-6 py-32 md:px-16 md:py-48"
+      style={{
+        background: isDark
+          ? "linear-gradient(180deg, rgba(7,5,14,0) 0%, rgba(11,8,22,0.6) 20%, #07040d 100%)"
+          : "linear-gradient(180deg, rgba(246,244,241,0) 0%, rgba(252,250,247,0.7) 30%, #fcfaf7 100%)",
+      }}
+    >
+      <TopographicWaves isDark={isDark} density={14} opacity={0.35} height="70%" />
+      
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(${isDark ? "rgba(255,255,255,0.03)" : "rgba(15,8,23,0.04)"} 1px, transparent 1px),
+                           linear-gradient(90deg, ${isDark ? "rgba(255,255,255,0.03)" : "rgba(15,8,23,0.04)"} 1px, transparent 1px)`,
+          backgroundSize: "64px 64px",
+          maskImage: "linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%)",
+        }}
+      />
+      
+      <motion.div
+        aria-hidden="true"
+        className="absolute left-1/2 top-1/2 h-[500px] w-[min(800px,95vw)] -translate-x-1/2 -translate-y-1/2 rounded-full"
+        style={{
+          background: isDark
+            ? `radial-gradient(ellipse, rgba(${ACCENT_RGB},0.2) 0%, rgba(179,66,138,0.08) 40%, transparent 70%)`
+            : `radial-gradient(ellipse, rgba(255,255,255,0.8) 0%, rgba(${ACCENT_RGB},0.1) 40%, rgba(204,123,99,0.06) 60%, transparent 80%)`,
+          filter: "blur(60px)",
+        }}
+        animate={{ 
+          opacity: isDark ? [0.4, 0.6, 0.4] : [0.5, 0.8, 0.5],
+          scale: [1, 1.1, 1]
+        }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center">
+        <FadeIn className="mb-12 text-center">
+          <SectionLabel>{t("mzw.final.label")}</SectionLabel>
+          <h2 className="mt-6 text-2xl md:text-4xl font-bold tracking-tight" style={{ color: isDark ? "#fff" : "#000", fontFamily: "'Space Grotesk', sans-serif" }}>
+            Resonance & Frequency
+          </h2>
+        </FadeIn>
+
+        <FadeIn>
+          <p
+            className="text-center max-w-lg mb-16 leading-relaxed"
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "0.95rem",
+              color: r(0.4),
+            }}
+          >
+            {t("mzw.final.text")}
+          </p>
+        </FadeIn>
+
+        <FadeIn>
+          <button
+            onClick={() => navigate("/projects")}
+            className="group flex items-center gap-4 rounded-full px-10 py-5 backdrop-blur-xl transition-all duration-500 hover:scale-[1.05] active:scale-[0.98] relative overflow-hidden"
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "0.85rem",
+              fontWeight: 500,
+              letterSpacing: "0.05em",
+              border: `1px solid ${isDark ? "rgba(255,255,255,0.15)" : "rgba(15,8,23,0.12)"}`,
+              color: isDark ? "#fff" : "#000",
+              background: isDark ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.7)",
+              boxShadow: isDark
+                ? `0 20px 50px rgba(0,0,0,0.3), 0 0 20px rgba(${ACCENT_RGB},0.1)`
+                : "0 20px 50px rgba(45,38,31,0.1)",
+            }}
+          >
+            <motion.div 
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
+            />
+            <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1.5" />
+            {t("mzw.back")}
+          </button>
+        </FadeIn>
       </div>
     </section>
   );
@@ -1071,7 +1152,7 @@ function SingleButterfly({ data, isDark }: { data: ButterflyData; isDark: boolea
           <AnimatePresence>
             {hoverSparkles.map((s) => {
               const sz = 2 + Math.random() * 3;
-              const color = EQ_COLORS[Math.floor(Math.random() * EQ_COLORS.length)];
+              const color = PALETTE[Math.floor(Math.random() * PALETTE.length)].hex;
               return (
                 <motion.div
                   key={s.id}
@@ -1218,220 +1299,26 @@ function FloatingButterfly() {
   );
 }
 
-function DecorativeSwirl({ isDark }: { isDark: boolean }) {
-  const [paths, setPaths] = useState<string[]>([]);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    const timer = window.setTimeout(() => {
-      fetch(MZW_SWIRL_PATHS_URL, { signal: controller.signal })
-        .then((response) => (response.ok ? response.json() : []))
-        .then((data) => {
-          if (Array.isArray(data)) setPaths(data.filter((item): item is string => typeof item === "string"));
-        })
-        .catch(() => {
-          if (!controller.signal.aborted) setPaths([]);
-        });
-    }, 350);
-
-    return () => {
-      window.clearTimeout(timer);
-      controller.abort();
-    };
-  }, []);
-
-  if (paths.length === 0) return null;
-
+function WaveSeparator({ isDark }: { isDark: boolean }) {
   return (
-    <div className="absolute inset-0 z-[0] pointer-events-none overflow-hidden" aria-hidden="true">
-      <motion.div
-        className="absolute"
-        style={{ width: "clamp(760px, 92vw, 1600px)", top: "clamp(-180px, -10vw, -70px)", left: "-18%", aspectRatio: "1112.71 / 1487.03" }}
-        animate={{ rotate: [0, 3, -2, 0], scale: [1, 1.04, 0.97, 1] }}
-        transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 1112.71 1487.03"
-          style={{ opacity: isDark ? 0.24 : 0.1 }}>
-          <defs>
-            <linearGradient id="swirl-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#254d9b" />
-              <stop offset="30%" stopColor="#5d4792" />
-              <stop offset="60%" stopColor="#b3428a" />
-              <stop offset="100%" stopColor="#D8C7D1" />
-            </linearGradient>
-          </defs>
-          {paths.map((d, i) => (
-            <path key={i} d={d} fill="url(#swirl-grad)" />
-          ))}
-        </svg>
-      </motion.div>
-    </div>
-  );
-}
-
-/* ===================================
-   12. MOCKUPS
-   =================================== */
-function MockupsSection() {
-  const { t } = useI18n();
-  const { r } = useTheme();
-
-  return (
-    <section className="px-6 md:px-16 py-16">
-      <div className="max-w-5xl mx-auto">
-        <FadeIn className="mb-10">
-          <SectionLabel>{t("mzw.mockups.label")}</SectionLabel>
-        </FadeIn>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FadeIn delay={0.08}>
-            <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-              <img src={imgMockup1} alt="Mise en situation MZW 1" className="w-full object-cover" />
-            </div>
-          </FadeIn>
-          <FadeIn delay={0.14}>
-            <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-              <img src={imgMockup2} alt="Mise en situation MZW 2" className="w-full object-cover" />
-            </div>
-          </FadeIn>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ===================================
-   13. FINAL — Closing + back
-   =================================== */
-function FinalSection() {
-  const { t } = useI18n();
-  const { isDark, r } = useTheme();
-  const navigate = useNavigate();
-
-  return (
-    <section
-      className="relative overflow-hidden px-6 py-24 md:px-16 md:py-32"
-      style={{
-        background: isDark
-          ? "linear-gradient(180deg, rgba(7,5,14,0) 0%, rgba(11,8,22,0.98) 28%, rgba(5,4,10,0.98) 100%)"
-          : "linear-gradient(180deg, rgba(246,244,241,0) 0%, rgba(252,250,247,0.98) 30%, rgba(245,242,238,0.98) 100%)",
-      }}
-    >
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `linear-gradient(${isDark ? "rgba(255,255,255,0.035)" : "rgba(15,8,23,0.045)"} 1px, transparent 1px),
-                           linear-gradient(90deg, ${isDark ? "rgba(255,255,255,0.035)" : "rgba(15,8,23,0.045)"} 1px, transparent 1px)`,
-          backgroundSize: "56px 56px",
-          maskImage: "linear-gradient(to bottom, transparent 0%, black 18%, black 86%, transparent 100%)",
-          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 18%, black 86%, transparent 100%)",
-        }}
-      />
-      <motion.div
-        aria-hidden="true"
-        className="absolute left-1/2 top-1/2 h-[420px] w-[min(760px,92vw)] -translate-x-1/2 -translate-y-1/2 rounded-full"
-        style={{
-          background: isDark
-            ? `radial-gradient(ellipse, rgba(${ACCENT_RGB},0.28) 0%, rgba(179,66,138,0.12) 42%, transparent 72%)`
-            : `radial-gradient(ellipse, rgba(255,255,255,0.78) 0%, rgba(${ACCENT_RGB},0.12) 42%, rgba(204,123,99,0.08) 62%, transparent 78%)`,
-          filter: "blur(42px)",
-        }}
-        animate={{ opacity: isDark ? [0.48, 0.72, 0.48] : [0.58, 0.82, 0.58] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-      />
-
-      <svg className="absolute inset-x-0 top-[14%] h-[54%] w-full pointer-events-none" fill="none" preserveAspectRatio="none" viewBox="0 0 1000 360" aria-hidden="true">
-        <defs>
-          <linearGradient id="mzw-final-line" x1="0" x2="1000" y1="0" y2="0">
-            <stop stopColor="#254D9B" />
-            <stop offset="0.28" stopColor="#5D4792" />
-            <stop offset="0.52" stopColor="#B3428A" />
-            <stop offset="0.76" stopColor="#CC7B63" />
-            <stop offset="1" stopColor="#E2C049" />
-          </linearGradient>
-        </defs>
-        {Array.from({ length: 9 }).map((_, i) => (
-          <motion.path
-            key={i}
-            d={`M-40 ${170 + i * 10} C 120 ${100 + i * 8}, 230 ${238 - i * 5}, 380 ${168 + i * 9} S 650 ${112 + i * 7}, 820 ${180 - i * 6} S 1020 ${220 + i * 4}, 1080 ${160 + i * 7}`}
-            stroke="url(#mzw-final-line)"
-            strokeWidth={i === 4 ? 1.1 : 0.65}
-            opacity={isDark ? 0.16 + i * 0.018 : 0.09 + i * 0.014}
-            animate={{ x: [0, i % 2 === 0 ? 8 : -8, 0] }}
-            transition={{ duration: 18 + i, repeat: Infinity, ease: "easeInOut" }}
-          />
-        ))}
+    <div className="w-full h-24 overflow-hidden pointer-events-none opacity-40" aria-hidden="true">
+      <svg className="w-full h-full" viewBox="0 0 1000 100" preserveAspectRatio="none">
+        <motion.path
+          d="M0 50 Q 250 10 500 50 T 1000 50"
+          fill="none"
+          stroke={isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)"}
+          strokeWidth="0.5"
+          animate={{
+            d: [
+              "M0 50 Q 250 10 500 50 T 1000 50",
+              "M0 50 Q 250 90 500 50 T 1000 50",
+              "M0 50 Q 250 10 500 50 T 1000 50"
+            ]
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        />
       </svg>
-
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        {PALETTE.map((color, i) => (
-          <span
-            key={color.hex}
-            className="absolute size-1 rounded-full"
-            style={{
-              left: `${18 + i * 16}%`,
-              top: `${30 + (i % 2) * 28}%`,
-              background: color.hex,
-              boxShadow: `0 0 18px ${color.hex}99`,
-              opacity: isDark ? 0.42 : 0.28,
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center">
-        <FadeIn className="mb-5 w-full max-w-2xl">
-          <div
-            className="mx-auto h-14 overflow-hidden opacity-75"
-            style={{
-              maskImage: "linear-gradient(to right, transparent, black 18%, black 82%, transparent)",
-              WebkitMaskImage: "linear-gradient(to right, transparent, black 18%, black 82%, transparent)",
-            }}
-            aria-hidden="true"
-          >
-            <DecorativeEqualizer isDark={isDark} />
-          </div>
-        </FadeIn>
-
-        <FadeIn className="mb-10">
-          <SectionLabel>{t("mzw.final.label")}</SectionLabel>
-        </FadeIn>
-
-        <FadeIn>
-          <p
-            className="text-center max-w-md mb-12"
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: "0.85rem",
-              lineHeight: 2,
-              color: r(0.3),
-            }}
-          >
-            {t("mzw.final.text")}
-          </p>
-        </FadeIn>
-
-        <FadeIn>
-          <button
-            onClick={() => navigate("/projects")}
-            className="group flex items-center gap-3 rounded-full px-7 py-3.5 backdrop-blur-md transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: "0.8rem",
-              border: `1px solid ${isDark ? "rgba(255,255,255,0.12)" : "rgba(15,8,23,0.1)"}`,
-              color: r(isDark ? 0.55 : 0.5),
-              background: isDark ? "rgba(255,255,255,0.045)" : "rgba(255,255,255,0.58)",
-              boxShadow: isDark
-                ? `0 0 34px rgba(${ACCENT_RGB},0.14), inset 0 1px 0 rgba(255,255,255,0.08)`
-                : "0 18px 50px rgba(45,38,31,0.08), inset 0 1px 0 rgba(255,255,255,0.85)",
-            }}
-          >
-            <ArrowLeft size={14} className="transition-transform group-hover:-translate-x-1" />
-            {t("mzw.back")}
-          </button>
-        </FadeIn>
-      </div>
-    </section>
+    </div>
   );
 }
 
@@ -1455,45 +1342,36 @@ export function ProjectMzw() {
       <div 
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
-          backgroundImage: `linear-gradient(${isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.03)"} 1px, transparent 1px), 
-                           linear-gradient(90deg, ${isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.03)"} 1px, transparent 1px)`,
-          backgroundSize: "42px 42px",
-          opacity: isDark ? 0.58 : 0.4,
+          backgroundImage: `linear-gradient(${isDark ? "rgba(255,255,255,0.02)" : "rgba(0,0,0,0.02)"} 1px, transparent 1px), 
+                           linear-gradient(90deg, ${isDark ? "rgba(255,255,255,0.02)" : "rgba(0,0,0,0.02)"} 1px, transparent 1px)`,
+          backgroundSize: "48px 48px",
+          opacity: isDark ? 0.6 : 0.4,
         }}
       />
-
-      <ProjectBackButton
-        onClick={() => navigate("/projects")}
-        style={{
-          background: isDark ? "rgba(15,8,23,0.7)" : "rgba(255,255,255,0.7)",
-          border: `1px solid ${r(0.08)}`,
-          color: r(0.5),
-          boxShadow: isDark ? "0 4px 20px rgba(0,0,0,0.3)" : "0 4px 20px rgba(0,0,0,0.08)",
-        }}
-      >
-        {t("mzw.back")}
-      </ProjectBackButton>
 
       <div className="relative z-[2]">
         <HeroSection />
         <IntroSection />
+        <WaveSeparator isDark={isDark} />
         <ContextSection />
         <DirectionSection />
+        <WaveSeparator isDark={isDark} />
         <NamingSection />
         <PaletteSection />
+        <WaveSeparator isDark={isDark} />
         <LogoSection />
         <MockupsSection />
+        <WaveSeparator isDark={isDark} />
         <PrintSection />
         <VinylSection />
         <MerchSection />
+        <WaveSeparator isDark={isDark} />
         <MobileSection />
 
         <FinalSection />
       </div>
 
-      {/* Decorative S-shape swirl — data loaded outside the JS bundle for lighter navigation */}
-      <DecorativeSwirl isDark={isDark} />
-
+      {/* Floating butterflies */}
       <FloatingButterfly />
     </div>
   );
