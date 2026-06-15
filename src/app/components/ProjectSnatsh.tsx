@@ -403,78 +403,277 @@ function LogoSection() {
    7. PALETTE
    =================================== */
 function PaletteSection() {
-  const { t } = useI18n();
   const { isDark, r } = useTheme();
-  const body = useBodyStyle();
+  const timecodes = ["00:00", "00:01", "00:02", "00:03", "00:05"];
+  const panelBg = isDark
+    ? "radial-gradient(circle at 18% 18%, rgba(193,211,221,0.1), transparent 28%), linear-gradient(145deg, #060b12 0%, #0b1824 55%, #05070a 100%)"
+    : "linear-gradient(145deg, rgba(244,244,242,0.92) 0%, rgba(255,255,255,0.82) 100%)";
+  const panelBorder = isDark ? "rgba(244,244,242,0.08)" : "rgba(10,12,8,0.08)";
+  const textStrong = isDark ? "#f4f4f2" : "#0a0c08";
+  const textSoft = isDark ? "rgba(244,244,242,0.68)" : "rgba(10,12,8,0.62)";
+  const rail = isDark ? "rgba(244,244,242,0.24)" : "rgba(10,12,8,0.22)";
+  const cardBorder = isDark ? "rgba(244,244,242,0.16)" : "rgba(10,12,8,0.12)";
 
   return (
-    <section className="px-6 md:px-16 py-16">
-      <div className="max-w-5xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start mb-10">
-          <FadeIn>
-            <SectionLabel>{t("sn.palette.label")}</SectionLabel>
-          </FadeIn>
-          <FadeIn delay={0.1}>
-            <p style={body}>{t("sn.palette.text")}</p>
-          </FadeIn>
-        </div>
+    <section className="px-6 md:px-16 py-20">
+      <div className="max-w-6xl mx-auto">
+        <div
+          className="relative overflow-hidden rounded-[28px] px-6 py-10 md:p-12 lg:p-14"
+          style={{
+            background: panelBg,
+            border: `1px solid ${panelBorder}`,
+            boxShadow: isDark ? "0 34px 100px rgba(0,0,0,0.28)" : "0 26px 70px rgba(10,12,8,0.08)",
+          }}
+        >
+          <div
+            className="absolute left-10 top-24 h-px w-44"
+            style={{
+              background: `linear-gradient(90deg, transparent, ${isDark ? "rgba(193,211,221,0.75)" : "rgba(192,193,164,0.68)"}, transparent)`,
+              boxShadow: isDark ? "0 0 22px rgba(193,211,221,0.55)" : "0 0 18px rgba(192,193,164,0.35)",
+            }}
+          />
+          <div
+            className="absolute bottom-8 left-1/2 h-52 w-52 -translate-x-1/2 rounded-full blur-3xl"
+            style={{ background: isDark ? "rgba(193,211,221,0.08)" : "rgba(192,193,164,0.13)" }}
+          />
 
-        <div className="grid grid-cols-5 gap-3 md:gap-4 mb-12">
-          {PALETTE.map((color, i) => (
-            <FadeIn key={color.hex} delay={0.12 + i * 0.06}>
-              <div className="flex flex-col items-center gap-3">
-                <div
-                  className="w-full aspect-square rounded-[20px] md:rounded-[28px] transition-transform duration-300 hover:scale-105"
+          <div className="relative z-10">
+            <div className="grid gap-8 md:grid-cols-[1.25fr_0.75fr] md:items-start">
+              <FadeIn>
+                <p
+                  className="mb-5"
                   style={{
-                    background: color.hex,
-                    boxShadow: isDark
-                      ? `0 12px 30px ${color.hex === "#000000" ? "rgba(0,0,0,0.6)" : `${color.hex}33`}`
-                      : `0 8px 24px ${color.hex === "#ffffff" ? "rgba(0,0,0,0.08)" : `${color.hex}22`}`,
-                    border: (color.hex === "#ffffff" || color.hex === "#f4f4f2")
-                      ? `1px solid ${r(0.1)}`
-                      : "none",
-                  }}
-                />
-                <span
-                  className="hidden md:block"
-                  style={{
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: "0.6rem",
-                    letterSpacing: "0.05em",
-                    color: r(0.3),
+                    fontFamily: "'Roboto Mono', monospace",
+                    fontSize: "0.78rem",
+                    letterSpacing: "0.22em",
+                    color: isDark ? "rgba(244,244,242,0.72)" : "rgba(10,12,8,0.58)",
                   }}
                 >
-                  {color.hex}
-                </span>
-                <span
-                  className="hidden md:block"
+                  PALETTE CHROMATIQUE
+                </p>
+                <h2
                   style={{
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: "0.55rem",
-                    color: r(0.2),
+                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                    fontSize: "clamp(2.6rem, 6vw, 5.4rem)",
+                    lineHeight: 0.96,
+                    fontWeight: 700,
+                    color: textStrong,
                   }}
                 >
-                  {color.name}
-                </span>
+                  Timeline de montage
+                </h2>
+              </FadeIn>
+
+              <FadeIn delay={0.1}>
+                <p
+                  className="md:pt-6"
+                  style={{
+                    fontFamily: "'Roboto', sans-serif",
+                    fontSize: "1rem",
+                    lineHeight: 1.9,
+                    color: textSoft,
+                  }}
+                >
+                  Une palette pensée comme une séquence. Cinq tonalités essentielles, en équilibre, pour donner du rythme, de la clarté et de l'impact à chaque projet.
+                </p>
+              </FadeIn>
+            </div>
+
+            <FadeIn delay={0.16}>
+              <div className="mt-16 overflow-x-auto pb-3">
+                <div className="min-w-[860px]">
+                  <div className="grid grid-cols-5 px-12">
+                    {timecodes.map((time) => (
+                      <div key={time} className="relative text-center">
+                        <span
+                          style={{
+                            fontFamily: "'Roboto Mono', monospace",
+                            fontSize: "0.78rem",
+                            color: textSoft,
+                          }}
+                        >
+                          {time}
+                        </span>
+                        <span
+                          className="absolute left-1/2 top-7 h-2 w-2 -translate-x-1/2 rounded-full"
+                          style={{ background: isDark ? "rgba(244,244,242,0.55)" : "rgba(10,12,8,0.36)" }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="relative mt-6">
+                    <div className="absolute left-12 right-12 top-0 h-px" style={{ background: rail }} />
+                    <div
+                      className="relative rounded-[18px] px-10 py-5"
+                      style={{
+                        background: isDark ? "rgba(244,244,242,0.045)" : "rgba(255,255,255,0.54)",
+                        border: `1px solid ${panelBorder}`,
+                        boxShadow: isDark ? "inset 0 0 40px rgba(193,211,221,0.05)" : "inset 0 0 34px rgba(10,12,8,0.035)",
+                      }}
+                    >
+                      <div className="absolute left-4 top-8 flex flex-col gap-2">
+                        {[0, 1, 2, 3, 4, 5].map((dot) => (
+                          <span key={dot} className="h-2 w-3 rounded-sm" style={{ background: r(0.16) }} />
+                        ))}
+                      </div>
+                      <div className="absolute right-4 top-8 flex flex-col gap-2">
+                        {[0, 1, 2, 3, 4, 5].map((dot) => (
+                          <span key={dot} className="h-2 w-3 rounded-sm" style={{ background: r(0.16) }} />
+                        ))}
+                      </div>
+
+                      <div className="grid grid-cols-5 gap-3">
+                        {PALETTE.map((color, i) => (
+                          <div key={color.hex} className="relative">
+                            <div
+                              className="aspect-[1.45] rounded-xl"
+                              style={{
+                                background: color.hex,
+                                border: `1px solid ${color.hex === "#000000" ? "rgba(244,244,242,0.22)" : cardBorder}`,
+                                boxShadow: isDark
+                                  ? `0 14px 36px ${color.hex === "#000000" ? "rgba(0,0,0,0.7)" : `${color.hex}2b`}`
+                                  : "0 12px 28px rgba(10,12,8,0.1)",
+                              }}
+                            >
+                              <span
+                                className="absolute left-3 top-3"
+                                style={{
+                                  fontFamily: "'Roboto Mono', monospace",
+                                  fontSize: "0.78rem",
+                                  fontWeight: 700,
+                                  color: color.hex === "#000000" ? "#f4f4f2" : "rgba(10,12,8,0.54)",
+                                  textShadow: color.hex === "#ffffff" || color.hex === "#f4f4f2" ? "0 1px 8px rgba(0,0,0,0.16)" : "none",
+                                }}
+                              >
+                                {String(i + 1).padStart(2, "0")}
+                              </span>
+                            </div>
+                            {i < PALETTE.length - 1 && (
+                              <span
+                                className="absolute -right-3 top-1/2 -translate-y-1/2"
+                                style={{
+                                  fontFamily: "'Roboto Mono', monospace",
+                                  fontSize: "1rem",
+                                  color: isDark ? "rgba(244,244,242,0.52)" : "rgba(10,12,8,0.34)",
+                                }}
+                              >
+                                »
+                              </span>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-5 gap-3 px-10 pt-4">
+                    {PALETTE.map((color) => (
+                      <div key={color.hex} className="text-center">
+                        <p
+                          style={{
+                            fontFamily: "'Roboto Mono', monospace",
+                            fontSize: "0.74rem",
+                            fontWeight: 700,
+                            color: textStrong,
+                          }}
+                        >
+                          {color.hex.toUpperCase()}
+                        </p>
+                        <p
+                          className="mt-1"
+                          style={{
+                            fontFamily: "'Roboto', sans-serif",
+                            fontSize: "0.72rem",
+                            color: textSoft,
+                          }}
+                        >
+                          {color.name}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="relative mt-8 h-10">
+                    <div className="absolute left-10 right-10 top-1/2 h-px" style={{ background: rail }} />
+                    <div className="absolute left-10 right-10 top-1/2 flex -translate-y-1/2 justify-between">
+                      {Array.from({ length: 34 }).map((_, i) => (
+                        <span key={i} className="h-3 w-px" style={{ background: i % 5 === 0 ? r(0.24) : r(0.12) }} />
+                      ))}
+                    </div>
+                    <div
+                      className="absolute left-1/2 top-1/2 flex h-8 -translate-x-1/2 -translate-y-1/2 items-center gap-1"
+                      style={{ filter: isDark ? "drop-shadow(0 0 12px rgba(193,211,221,0.55))" : "drop-shadow(0 0 10px rgba(192,193,164,0.42))" }}
+                    >
+                      <span className="h-7 w-1.5 rounded-full" style={{ background: isDark ? "#c1d3dd" : ACCENT }} />
+                      <span className="h-7 w-1.5 rounded-full" style={{ background: isDark ? "#f4f4f2" : "#0a0c08" }} />
+                    </div>
+                  </div>
+                </div>
               </div>
             </FadeIn>
-          ))}
-        </div>
 
-        {/* Role + Meaning */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <FadeIn delay={0.1}>
-            <div className="flex flex-col gap-3">
-              <SectionLabel>{t("sn.palette.role.label")}</SectionLabel>
-              <p style={body}>{t("sn.palette.role.text")}</p>
+            <div className="mt-12 grid gap-8 md:grid-cols-2">
+              {[
+                {
+                  label: "UTILISATION",
+                  text: "À utiliser avec intention et parcimonie pour structurer vos compositions, créer des contrastes maîtrisés et guider le regard. Chaque couleur a son rôle, chaque combinaison renforce le message.",
+                },
+                {
+                  label: "SIGNIFICATION",
+                  text: "Cette palette incarne une approche élégante, contemporaine et humaine. Des tons doux et lumineux inspirent confiance, tandis qu'un noir profond ancre l'émotion et sublime chaque image.",
+                },
+              ].map((item, i) => (
+                <FadeIn key={item.label} delay={0.18 + i * 0.06}>
+                  <div
+                    className="grid gap-5 md:grid-cols-[72px_1fr]"
+                    style={{ borderLeft: i === 1 ? `1px solid ${panelBorder}` : "none", paddingLeft: i === 1 ? "2rem" : 0 }}
+                  >
+                    <div
+                      className="flex h-16 w-16 items-center justify-center rounded-2xl"
+                      style={{
+                        border: `1px solid ${panelBorder}`,
+                        background: isDark ? "rgba(244,244,242,0.035)" : "rgba(255,255,255,0.48)",
+                      }}
+                    >
+                      <span
+                        className="h-8 w-8 rounded-full"
+                        style={{
+                          border: `1px solid ${isDark ? "rgba(244,244,242,0.62)" : "rgba(10,12,8,0.42)"}`,
+                          boxShadow: i === 0
+                            ? `12px 0 0 -6px ${isDark ? "rgba(244,244,242,0.42)" : "rgba(10,12,8,0.24)"}, -12px 0 0 -6px ${isDark ? "rgba(244,244,242,0.42)" : "rgba(10,12,8,0.24)"}`
+                            : `0 0 0 7px transparent, 0 0 0 1px ${isDark ? "rgba(244,244,242,0.18)" : "rgba(10,12,8,0.14)"}`,
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <p
+                        className="mb-3"
+                        style={{
+                          fontFamily: "'Roboto Mono', monospace",
+                          fontSize: "0.78rem",
+                          letterSpacing: "0.2em",
+                          color: textStrong,
+                        }}
+                      >
+                        {item.label}
+                      </p>
+                      <p
+                        style={{
+                          fontFamily: "'Roboto', sans-serif",
+                          fontSize: "0.95rem",
+                          lineHeight: 1.85,
+                          color: textSoft,
+                        }}
+                      >
+                        {item.text}
+                      </p>
+                    </div>
+                  </div>
+                </FadeIn>
+              ))}
             </div>
-          </FadeIn>
-          <FadeIn delay={0.15}>
-            <div className="flex flex-col gap-3">
-              <SectionLabel>{t("sn.palette.meaning.label")}</SectionLabel>
-              <p style={body}>{t("sn.palette.meaning.text")}</p>
-            </div>
-          </FadeIn>
+          </div>
         </div>
       </div>
     </section>
