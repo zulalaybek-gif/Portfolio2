@@ -18,6 +18,9 @@ import logoIconTxtBlack from "../../assets/snatsh/assets/01.logo-icon-txt-b.svg"
 import logoIconTxtWhite from "../../assets/snatsh/assets/02.logo-icon-txt-w.svg";
 import logoIconBlack from "../../assets/snatsh/assets/03.logo-icon-b.svg";
 import logoIconWhite from "../../assets/snatsh/assets/04.logo-icon-w.svg";
+import logoAsset05 from "../../assets/snatsh/assets/05.logo-asset.png";
+import logoAsset06 from "../../assets/snatsh/assets/06.logo-asset.png";
+import logoAsset07 from "../../assets/snatsh/assets/07.logo-asset.png";
 
 /* -- Helpers -- */
 const ACCENT = "#c0c1a4";
@@ -287,76 +290,116 @@ function ChoicesSection() {
    6. LOGO
    =================================== */
 function LogoSection() {
-  const { t } = useI18n();
-  const { isDark, r } = useTheme();
-
   return (
-    <section className="px-6 md:px-16 py-16">
-      <div className="max-w-5xl mx-auto">
-        <FadeIn className="mb-10">
-          <SectionLabel>{t("sn.logo.label")}</SectionLabel>
-        </FadeIn>
+    <section className="px-6 md:px-16 py-20">
+      <div className="max-w-6xl mx-auto">
+        <div
+          className="relative overflow-hidden rounded-[28px] px-6 py-10 md:p-12 lg:p-14"
+          style={{
+            background: "linear-gradient(150deg, #070b12 0%, #0d141c 48%, #05070a 100%)",
+            border: "1px solid rgba(244,244,242,0.08)",
+            boxShadow: "0 30px 90px rgba(0,0,0,0.28)",
+          }}
+        >
+          <div
+            className="absolute right-0 top-0 h-48 w-48 rounded-full blur-3xl"
+            style={{ background: `rgba(${SECONDARY_RGB},0.12)` }}
+          />
+          <div
+            className="absolute bottom-0 left-1/3 h-56 w-56 rounded-full blur-3xl"
+            style={{ background: `rgba(${ACCENT_RGB},0.12)` }}
+          />
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {/* Icon logo — white on dark */}
-          <FadeIn delay={0.08}>
-            <div
-              className="flex items-center justify-center rounded-xl p-6 md:p-8 transition-all duration-700 aspect-square"
-              style={{
-                background: isDark
-                  ? "linear-gradient(160deg, #1a1c18 0%, #0a0c08 100%)"
-                  : "#0a0c08",
-                border: `1px solid ${r(0.05)}`,
-              }}
-            >
-              <img src={logoIconWhite} alt="SNATSH icon" className="w-full max-w-[80px]" />
-            </div>
-          </FadeIn>
+          <div className="relative z-10 grid gap-12 md:grid-cols-[0.75fr_1.25fr] md:items-center">
+            <FadeIn className="max-w-sm">
+              <p
+                className="mb-5"
+                style={{
+                  fontFamily: "'Roboto Mono', monospace",
+                  fontSize: "0.72rem",
+                  letterSpacing: "0.16em",
+                  color: ACCENT,
+                }}
+              >
+                LOGO
+              </p>
+              <h2
+                className="mb-5"
+                style={{
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  fontSize: "clamp(2rem, 4vw, 3.4rem)",
+                  lineHeight: 1.05,
+                  fontWeight: 700,
+                  color: "#f4f4f2",
+                }}
+              >
+                Une identité simple, claire et mémorable.
+              </h2>
+              <p
+                className="mb-8"
+                style={{
+                  fontFamily: "'Roboto', sans-serif",
+                  fontSize: "0.95rem",
+                  lineHeight: 1.9,
+                  color: "rgba(244,244,242,0.68)",
+                }}
+              >
+                Le logotype et son monogramme expriment le mouvement, la précision et la clarté qui guident chaque projet.
+              </p>
+              <div className="flex items-center gap-3">
+                {[ACCENT, "#f4f4f2", "#0a0c08", SECONDARY].map((color) => (
+                  <span
+                    key={color}
+                    className="h-3 w-3 rounded-full"
+                    style={{
+                      background: color,
+                      boxShadow: "0 0 0 1px rgba(244,244,242,0.16)",
+                    }}
+                  />
+                ))}
+              </div>
+            </FadeIn>
 
-          {/* Icon logo — black on light */}
-          <FadeIn delay={0.14}>
-            <div
-              className="flex items-center justify-center rounded-xl p-6 md:p-8 transition-all duration-700 aspect-square"
-              style={{
-                background: isDark
-                  ? "linear-gradient(160deg, #f0ebe4 0%, #e8e2d9 100%)"
-                  : "linear-gradient(160deg, #faf7f3 0%, #f0ebe4 100%)",
-                border: `1px solid ${r(0.05)}`,
-              }}
-            >
-              <img src={logoIconBlack} alt="SNATSH icon" className="w-full max-w-[80px]" />
-            </div>
-          </FadeIn>
+            <FadeIn delay={0.12}>
+              <div className="relative min-h-[430px] md:min-h-[560px]">
+                <div
+                  className="absolute left-[6%] top-[20%] h-[52%] w-[54%] rounded-[30px] md:rounded-[42px]"
+                  style={{
+                    background: `linear-gradient(145deg, ${ACCENT} 0%, #aeb092 100%)`,
+                    boxShadow: "0 34px 80px rgba(0,0,0,0.34)",
+                    transform: "rotate(-3deg)",
+                  }}
+                >
+                  <div
+                    className="absolute -bottom-7 left-[12%] h-12 w-[76%] rounded-full blur-xl"
+                    style={{ background: "rgba(0,0,0,0.42)" }}
+                  />
+                  <div className="flex h-full items-center justify-center">
+                    <img src={logoIconBlack} alt="SNATSH icon" className="w-[36%]" />
+                  </div>
+                </div>
 
-          {/* Text logo — white on dark */}
-          <FadeIn delay={0.2}>
-            <div
-              className="flex items-center justify-center rounded-xl p-5 md:p-7 transition-all duration-700 aspect-square"
-              style={{
-                background: isDark
-                  ? "linear-gradient(160deg, #1a1c18 0%, #0a0c08 100%)"
-                  : "#0a0c08",
-                border: `1px solid ${r(0.05)}`,
-              }}
-            >
-              <img src={logoIconTxtWhite} alt="SNATSH" className="w-full max-w-[140px]" />
-            </div>
-          </FadeIn>
-
-          {/* Text logo — black on light */}
-          <FadeIn delay={0.26}>
-            <div
-              className="flex items-center justify-center rounded-xl p-5 md:p-7 transition-all duration-700 aspect-square"
-              style={{
-                background: isDark
-                  ? "linear-gradient(160deg, #f0ebe4 0%, #e8e2d9 100%)"
-                  : "linear-gradient(160deg, #faf7f3 0%, #f0ebe4 100%)",
-                border: `1px solid ${r(0.05)}`,
-              }}
-            >
-              <img src={logoIconTxtBlack} alt="SNATSH" className="w-full max-w-[140px]" />
-            </div>
-          </FadeIn>
+                <img
+                  src={logoAsset05}
+                  alt="SNATSH monogram block"
+                  className="absolute right-[5%] top-[4%] w-[31%] min-w-[120px]"
+                  style={{ filter: "drop-shadow(0 24px 36px rgba(0,0,0,0.28))" }}
+                />
+                <img
+                  src={logoAsset06}
+                  alt="SNATSH light logo block"
+                  className="absolute right-[1%] top-[36%] w-[54%] min-w-[220px]"
+                  style={{ filter: "drop-shadow(0 28px 46px rgba(0,0,0,0.3))" }}
+                />
+                <img
+                  src={logoAsset07}
+                  alt="SNATSH dark logo block"
+                  className="absolute bottom-[3%] right-[10%] w-[50%] min-w-[210px]"
+                  style={{ filter: "drop-shadow(0 30px 54px rgba(0,0,0,0.38))" }}
+                />
+              </div>
+            </FadeIn>
+          </div>
         </div>
       </div>
     </section>
