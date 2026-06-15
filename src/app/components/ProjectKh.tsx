@@ -1,6 +1,6 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { useRef, useEffect, useState, useCallback } from "react";
-import { ArrowLeft, ExternalLink, Play, Zap, Sparkles, Star } from "lucide-react";
+import { ExternalLink, Play, Zap, Sparkles, Star } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useI18n, type TranslationKey } from "./i18n";
 import { useTheme } from "./theme";
@@ -30,6 +30,9 @@ import imgPaletteDark from "../../assets/kittyhub/assets/04.palette.png";
 import imgPaletteBooster from "../../assets/kittyhub/assets/05.palette.png";
 import imgLogoDarkCard from "../../assets/kittyhub/assets/10.logo-dark.png";
 import imgLogoLightCard from "../../assets/kittyhub/assets/11.logo-light.png";
+import imgFooterLight from "../../assets/kittyhub/assets/12.footer-light.png";
+import imgFooterDark from "../../assets/kittyhub/assets/13.footer-dark.png";
+import imgFooterLogo from "../../assets/kittyhub/assets/14.footer-logo.png";
 
 /* -- Helpers -- */
 const ACCENT = "#FD6235";
@@ -1354,69 +1357,402 @@ function MockupsSection() {
    14. FINAL
    =================================== */
 function FinalSection() {
-  const { t } = useI18n();
-  const { isDark, r } = useTheme();
-  const navigate = useNavigate();
+  const { isDark } = useTheme();
+  const shouldReduceMotion = useReducedMotion();
+
+  const footerDiamonds = [
+    { left: "10%", top: "44%", width: 11, height: 22, color: "#1DA4D0", delay: 2.55, rotate: 26 },
+    { left: "15%", top: "31%", width: 16, height: 28, color: "#FD6235", delay: 0, rotate: -22 },
+    { left: "18%", top: "49%", width: 9, height: 18, color: "#FD9CC8", delay: 1.8, rotate: 34 },
+    { left: "23%", top: "56%", width: 12, height: 20, color: "#8E25F7", delay: 0.35, rotate: 18 },
+    { left: "27%", top: "22%", width: 13, height: 25, color: "#FD9CC8", delay: 2.75, rotate: -44 },
+    { left: "33%", top: "25%", width: 10, height: 18, color: "#1DA4D0", delay: 0.8, rotate: -12 },
+    { left: "35%", top: "43%", width: 18, height: 34, color: "#8E25F7", delay: 1.95, rotate: -38 },
+    { left: "41%", top: "52%", width: 14, height: 26, color: "#FD6235", delay: 1.25, rotate: 31 },
+    { left: "49%", top: "18%", width: 9, height: 18, color: "#1DA4D0", delay: 2.15, rotate: 18 },
+    { left: "52%", top: "44%", width: 12, height: 23, color: "#8E25F7", delay: 2.95, rotate: -12 },
+    { left: "57%", top: "20%", width: 12, height: 22, color: "#FD6235", delay: 0.55, rotate: 24 },
+    { left: "63%", top: "52%", width: 13, height: 24, color: "#1DA4D0", delay: 1.4, rotate: -28 },
+    { left: "68%", top: "33%", width: 16, height: 30, color: "#FD9CC8", delay: 2.35, rotate: 38 },
+    { left: "72%", top: "48%", width: 12, height: 20, color: "#8E25F7", delay: 1.05, rotate: -18 },
+    { left: "76%", top: "17%", width: 10, height: 21, color: "#1DA4D0", delay: 3.1, rotate: -28 },
+    { left: "80%", top: "29%", width: 11, height: 22, color: "#FD6235", delay: 1.65, rotate: 12 },
+    { left: "86%", top: "39%", width: 20, height: 36, color: "#1DA4D0", delay: 0.2, rotate: 28 },
+    { left: "90%", top: "58%", width: 12, height: 24, color: "#8E25F7", delay: 0.95, rotate: -34 },
+    { left: "94%", top: "49%", width: 9, height: 18, color: "#FD6235", delay: 3.35, rotate: 42 },
+  ];
+
+  const footerConfetti = [
+    { left: "18%", top: "46%", size: 7, color: "#FD6235", delay: 0.2 },
+    { left: "28%", top: "35%", size: 5, color: "#8E25F7", delay: 0.7 },
+    { left: "35%", top: "55%", size: 6, color: "#1DA4D0", delay: 1.1 },
+    { left: "47%", top: "26%", size: 5, color: "#FD9CC8", delay: 0.4 },
+    { left: "58%", top: "55%", size: 7, color: "#FD6235", delay: 1.5 },
+    { left: "70%", top: "38%", size: 6, color: "#8E25F7", delay: 0.9 },
+    { left: "82%", top: "54%", size: 6, color: "#1DA4D0", delay: 1.8 },
+  ];
+
+  const footerLightDiamonds = [
+    { left: "7%", top: "10%", width: 11, height: 23, color: "#8E25F7", delay: 0.4, rotate: -28 },
+    { left: "15%", top: "24%", width: 9, height: 18, color: "#1DA4D0", delay: 1.2, rotate: 32 },
+    { left: "24%", top: "9%", width: 16, height: 32, color: "#FD9CC8", delay: 0.8, rotate: -42 },
+    { left: "12%", top: "42%", width: 10, height: 20, color: "#FD6235", delay: 1.6, rotate: 18 },
+    { left: "74%", top: "10%", width: 12, height: 24, color: "#1DA4D0", delay: 0.2, rotate: -16 },
+    { left: "81%", top: "25%", width: 15, height: 29, color: "#8E25F7", delay: 1.05, rotate: 34 },
+    { left: "89%", top: "9%", width: 11, height: 22, color: "#FD6235", delay: 1.45, rotate: -30 },
+    { left: "94%", top: "38%", width: 13, height: 26, color: "#FD9CC8", delay: 0.65, rotate: 24 },
+    { left: "8%", top: "62%", width: 14, height: 28, color: "#1DA4D0", delay: 1.85, rotate: 38 },
+    { left: "22%", top: "78%", width: 10, height: 21, color: "#FD6235", delay: 2.25, rotate: -24 },
+    { left: "31%", top: "70%", width: 12, height: 24, color: "#8E25F7", delay: 2.55, rotate: 30 },
+    { left: "70%", top: "80%", width: 9, height: 19, color: "#FD9CC8", delay: 2.05, rotate: -36 },
+    { left: "91%", top: "76%", width: 15, height: 30, color: "#1DA4D0", delay: 2.75, rotate: 22 },
+  ];
+
+  const footerLightConfetti = [
+    { left: "13%", top: "8%", size: 5, color: "#FD6235", delay: 0.2 },
+    { left: "22%", top: "31%", size: 4, color: "#8E25F7", delay: 1.1 },
+    { left: "29%", top: "18%", size: 6, color: "#1DA4D0", delay: 0.7 },
+    { left: "9%", top: "48%", size: 5, color: "#FD9CC8", delay: 1.6 },
+    { left: "70%", top: "8%", size: 4, color: "#FD6235", delay: 0.45 },
+    { left: "76%", top: "32%", size: 6, color: "#1DA4D0", delay: 1.35 },
+    { left: "94%", top: "18%", size: 5, color: "#8E25F7", delay: 0.9 },
+    { left: "6%", top: "74%", size: 4, color: "#FD9CC8", delay: 1.9 },
+    { left: "18%", top: "84%", size: 6, color: "#1DA4D0", delay: 2.4 },
+    { left: "37%", top: "80%", size: 4, color: "#FD6235", delay: 2.1 },
+    { left: "65%", top: "86%", size: 5, color: "#8E25F7", delay: 2.7 },
+    { left: "78%", top: "78%", size: 4, color: "#FD9CC8", delay: 2.2 },
+    { left: "95%", top: "84%", size: 6, color: "#1DA4D0", delay: 2.95 },
+  ];
 
   return (
-    <section className="px-6 md:px-16 py-24">
-      <div className="max-w-5xl mx-auto flex flex-col items-center">
-        <FadeIn className="mb-6">
-          <SectionLabel>{t("kh.final.label")}</SectionLabel>
-        </FadeIn>
-
-        {/* Closing logo */}
+    <section
+      className="relative overflow-hidden px-0 pb-20 pt-28 md:pb-24 md:pt-36"
+      style={{
+        background: isDark
+          ? "linear-gradient(180deg, rgba(3,3,3,0) 0%, #08040d 42%, #030303 100%)"
+          : "linear-gradient(180deg, rgba(250,246,255,0) 0%, #fbf7ff 34%, #fbf7ff 72%, #fff 100%)",
+      }}
+    >
+      <div
+        className="absolute inset-x-0 top-0 h-48 pointer-events-none"
+        style={{
+          background: isDark
+            ? "linear-gradient(180deg, transparent 0%, rgba(142,37,247,0.05) 42%, rgba(3,3,3,0.18) 100%)"
+            : "linear-gradient(180deg, rgba(251,247,255,0) 0%, rgba(251,247,255,0.86) 58%, #fbf7ff 100%)",
+        }}
+      />
+      <div className="mx-auto max-w-[1480px]">
         <FadeIn>
-          <div className="flex justify-center mb-10">
+          <div
+            className="relative h-[360px] overflow-hidden md:h-[500px] lg:h-[600px]"
+            style={{
+              background: isDark
+                ? "radial-gradient(circle at 50% 54%, rgba(142,37,247,0.16) 0%, rgba(3,3,3,0) 48%), linear-gradient(180deg, rgba(3,3,3,0) 0%, #08040d 32%, #030303 100%)"
+                : "radial-gradient(circle at 50% 54%, rgba(142,37,247,0.13) 0%, rgba(255,255,255,0) 54%), linear-gradient(180deg, rgba(251,247,255,0) 0%, #fbf7ff 38%, #fbf7ff 74%, #fff 100%)",
+            }}
+          >
             <div
-              className="w-[180px] h-[180px] md:w-[240px] md:h-[240px] rounded-[36px] overflow-hidden flex items-center justify-center"
+              className="absolute inset-0 z-[1] opacity-[0.08] pointer-events-none"
               style={{
-                background: "linear-gradient(180deg, #FD6235 0%, #8823F7 100%)",
-                boxShadow: isDark
-                  ? `0 30px 80px rgba(${ACCENT_RGB},0.2)`
-                  : `0 30px 80px rgba(${ACCENT_RGB},0.1)`,
+                backgroundImage: isDark
+                  ? "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)"
+                  : "linear-gradient(#8E25F7 1px, transparent 1px), linear-gradient(90deg, #8E25F7 1px, transparent 1px)",
+                backgroundSize: "44px 44px",
+                maskImage: "linear-gradient(180deg, transparent 0%, black 22%, black 72%, transparent 100%)",
               }}
-            >
-              <svg className="w-[50%]" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="60 38 100 130">
-                <path d={svgPaths.pe2c7b00} fill="white" />
-                <path d={svgPaths.p1a04ad00} fill="white" />
-                <path d={svgPaths.p188bda80} fill="white" />
-              </svg>
-            </div>
+            />
+
+            <img
+              src={isDark ? imgFooterDark : imgFooterLight}
+              alt=""
+              className="absolute inset-x-0 top-0 z-10 h-full w-full object-cover object-center"
+              draggable={false}
+              style={{
+                maskImage: isDark
+                  ? "radial-gradient(ellipse 74% 62% at 50% 50%, black 36%, rgba(0,0,0,0.82) 62%, transparent 100%)"
+                  : "linear-gradient(180deg, transparent 0%, black 10%, black 70%, rgba(0,0,0,0.72) 84%, transparent 100%)",
+              }}
+            />
+
+            {!isDark && (
+              <div
+                className="absolute inset-x-0 bottom-0 z-[16] h-[46%] pointer-events-none"
+                style={{
+                  background: "linear-gradient(180deg, rgba(251,247,255,0) 0%, rgba(251,247,255,0.18) 42%, rgba(251,247,255,0.62) 74%, #fff 100%)",
+                }}
+              />
+            )}
+
+            <div
+              className="absolute inset-x-0 top-0 z-[14] h-32 pointer-events-none"
+              style={{
+                background: isDark
+                  ? "linear-gradient(180deg, #030303 0%, rgba(3,3,3,0.28) 44%, transparent 100%)"
+                  : "linear-gradient(180deg, #fbf7ff 0%, rgba(251,247,255,0.7) 42%, transparent 100%)",
+              }}
+            />
+
+            <div
+              className="absolute inset-0 z-[12] pointer-events-none"
+              style={{
+                background: isDark
+                  ? "radial-gradient(circle at 50% 56%, rgba(253,98,53,0.1) 0%, transparent 30%), radial-gradient(circle at 48% 48%, rgba(142,37,247,0.12) 0%, transparent 38%), linear-gradient(90deg, rgba(3,3,3,0.34), transparent 28%, transparent 72%, rgba(3,3,3,0.16))"
+                  : "radial-gradient(circle at 50% 56%, rgba(253,98,53,0.08) 0%, transparent 30%), radial-gradient(circle at 48% 48%, rgba(142,37,247,0.1) 0%, transparent 38%), linear-gradient(90deg, rgba(255,255,255,0.26), transparent 30%, transparent 72%, rgba(255,255,255,0.18))",
+              }}
+            />
+
+            <div
+              className="absolute right-[4%] top-[56%] z-[18] h-[150px] w-[430px] rounded-full blur-[26px] md:right-[7%] md:top-[58%] md:h-[190px] md:w-[520px]"
+              style={{
+                background: isDark
+                  ? "radial-gradient(ellipse at center, rgba(8,4,13,0.56), rgba(142,37,247,0.2) 38%, rgba(29,164,208,0.1) 58%, transparent 82%)"
+                  : "radial-gradient(ellipse at center, rgba(244,221,255,0.95), rgba(255,255,255,0.86) 38%, rgba(29,164,208,0.14) 62%, transparent 84%)",
+              }}
+            />
+
+            <motion.div
+              className="absolute left-1/2 top-[39%] z-20 h-[190px] w-[190px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[28px] md:h-[300px] md:w-[300px] md:blur-[40px]"
+              animate={shouldReduceMotion ? undefined : { opacity: [0.45, 0.78, 0.45], scale: [0.96, 1.08, 0.96] }}
+              transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
+              style={{
+                background: isDark
+                  ? "radial-gradient(circle, rgba(253,98,53,0.36), rgba(142,37,247,0.18) 54%, transparent 72%)"
+                  : "radial-gradient(circle, rgba(253,98,53,0.22), rgba(142,37,247,0.14) 54%, transparent 72%)",
+              }}
+            />
+
+            <motion.img
+              src={imgFooterLogo}
+              alt=""
+              className="absolute left-1/2 top-[39%] z-30 w-[210px] -translate-x-1/2 -translate-y-1/2 object-contain drop-shadow-[0_26px_54px_rgba(253,98,53,0.46)] md:w-[340px] lg:w-[430px]"
+              draggable={false}
+              style={{ top: isDark ? "39%" : "22%" }}
+              animate={shouldReduceMotion ? undefined : { y: [0, -9, 0], rotate: [-1.5, 1.5, -1.5] }}
+              transition={{ duration: 6.8, repeat: Infinity, ease: "easeInOut" }}
+            />
+
+            <div className="absolute left-1/2 top-[60%] z-20 h-[44px] w-[360px] -translate-x-1/2 rounded-full blur-[22px] md:h-[64px] md:w-[560px]" style={{ background: isDark ? "rgba(142,37,247,0.18)" : "rgba(142,37,247,0.12)" }} />
+            <motion.div
+              className="absolute bottom-2 left-1/2 z-30 h-[2px] w-[86%] -translate-x-1/2 rounded-full"
+              animate={shouldReduceMotion ? undefined : { opacity: isDark ? [0.38, 0.82, 0.38] : [0, 0, 0], scaleX: [0.92, 1.04, 0.92] }}
+              transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+              style={{
+                background: "linear-gradient(90deg, transparent, rgba(253,98,53,0.95), rgba(142,37,247,0.9), rgba(29,164,208,0.78), rgba(253,156,200,0.68), transparent)",
+                opacity: isDark ? 1 : 0,
+                boxShadow: isDark ? "0 0 22px rgba(142,37,247,0.44), 0 0 12px rgba(253,98,53,0.28)" : "none",
+              }}
+            />
+
+            {isDark && footerDiamonds.map((diamond, index) => (
+              <motion.div
+                key={index}
+                className="absolute z-30 cursor-default"
+                style={{
+                  left: diamond.left,
+                  top: diamond.top,
+                  width: diamond.width,
+                  height: diamond.height,
+                  rotate: `${diamond.rotate}deg`,
+                  background: `linear-gradient(145deg, rgba(255,255,255,0.88), ${diamond.color} 44%, rgba(255,255,255,0.16))`,
+                  border: `1px solid ${diamond.color}66`,
+                  clipPath: "polygon(50% 0%, 100% 28%, 72% 100%, 18% 76%)",
+                  boxShadow: `0 0 22px ${diamond.color}66`,
+                }}
+                animate={shouldReduceMotion ? undefined : {
+                  x: [0, index % 2 ? 8 : -7, index % 3 ? -4 : 6, 0],
+                  y: [0, index % 2 ? -9 : 8, index % 3 ? 5 : -6, 0],
+                  opacity: [0.38, 0.78, 0.52, 0.38],
+                }}
+                transition={{ duration: 8.5 + index * 0.45, delay: diamond.delay, repeat: Infinity, ease: "easeInOut" }}
+                whileHover={shouldReduceMotion ? undefined : { scale: 1.2, rotate: diamond.rotate + 18, y: -7, boxShadow: `0 0 34px ${diamond.color}` }}
+              />
+            ))}
+
+            {isDark && footerConfetti.map((dot, index) => (
+              <motion.span
+                key={index}
+                className="absolute z-30 rounded-full"
+                style={{
+                  left: dot.left,
+                  top: dot.top,
+                  width: dot.size,
+                  height: dot.size,
+                  background: dot.color,
+                  opacity: isDark ? 0.6 : 0.5,
+                  boxShadow: `0 0 ${dot.size * 4}px ${dot.color}88`,
+                }}
+                animate={shouldReduceMotion ? undefined : {
+                  x: [0, index % 2 ? 12 : -10, index % 3 ? -7 : 8, 0],
+                  y: [0, index % 2 ? -10 : 9, index % 3 ? 6 : -8, 0],
+                  opacity: [0.34, 0.78, 0.46, 0.34],
+                }}
+                transition={{ duration: 7.4 + index * 0.35, delay: dot.delay, repeat: Infinity, ease: "easeInOut" }}
+              />
+            ))}
+
+            {!isDark && footerLightDiamonds.map((diamond, index) => (
+              <motion.div
+                key={`light-diamond-${index}`}
+                className="absolute z-30 cursor-default"
+                style={{
+                  left: diamond.left,
+                  top: diamond.top,
+                  width: diamond.width,
+                  height: diamond.height,
+                  rotate: `${diamond.rotate}deg`,
+                  background: `linear-gradient(145deg, rgba(255,255,255,0.95), ${diamond.color} 48%, rgba(255,255,255,0.22))`,
+                  border: `1px solid ${diamond.color}55`,
+                  clipPath: "polygon(50% 0%, 100% 30%, 72% 100%, 18% 76%)",
+                  boxShadow: `0 0 20px ${diamond.color}55`,
+                }}
+                animate={shouldReduceMotion ? undefined : {
+                  x: [0, index % 2 ? 9 : -8, index % 3 ? -4 : 6, 0],
+                  y: [0, index % 2 ? -10 : 8, index % 3 ? 5 : -7, 0],
+                  opacity: [0.34, 0.72, 0.46, 0.34],
+                }}
+                transition={{ duration: 8.2 + index * 0.35, delay: diamond.delay, repeat: Infinity, ease: "easeInOut" }}
+              />
+            ))}
+
+            {!isDark && footerLightConfetti.map((dot, index) => (
+              <motion.span
+                key={`light-dot-${index}`}
+                className="absolute z-30 rounded-full"
+                style={{
+                  left: dot.left,
+                  top: dot.top,
+                  width: dot.size,
+                  height: dot.size,
+                  background: dot.color,
+                  opacity: 0.54,
+                  boxShadow: `0 0 ${dot.size * 5}px ${dot.color}88`,
+                }}
+                animate={shouldReduceMotion ? undefined : {
+                  x: [0, index % 2 ? 13 : -11, index % 3 ? -6 : 8, 0],
+                  y: [0, index % 2 ? -9 : 10, index % 3 ? 6 : -7, 0],
+                  opacity: [0.32, 0.72, 0.44, 0.32],
+                }}
+                transition={{ duration: 7.1 + index * 0.4, delay: dot.delay, repeat: Infinity, ease: "easeInOut" }}
+              />
+            ))}
+
+            {[0, 1, 2].map((item) => (
+              <motion.div
+                key={item}
+                className="absolute z-30 hidden border md:block"
+                style={{
+                  left: `${30 + item * 19}%`,
+                  top: `${28 + item * 9}%`,
+                  width: item === 1 ? 18 : 14,
+                  height: item === 1 ? 34 : 28,
+                  rotate: `${-28 + item * 31}deg`,
+                  borderColor: item === 0 ? "#FD623566" : item === 1 ? "#8E25F766" : "#1DA4D066",
+                  background: item === 0
+                    ? "linear-gradient(180deg, rgba(255,255,255,0.75), rgba(253,98,53,0.16))"
+                    : item === 1
+                      ? "linear-gradient(180deg, rgba(255,255,255,0.75), rgba(142,37,247,0.16))"
+                      : "linear-gradient(180deg, rgba(255,255,255,0.75), rgba(29,164,208,0.16))",
+                  clipPath: "polygon(50% 0%, 100% 30%, 72% 100%, 18% 76%)",
+                  filter: "drop-shadow(0 0 16px rgba(142,37,247,0.28))",
+                }}
+                whileHover={shouldReduceMotion ? undefined : { y: -8, rotate: item === 0 ? -18 : item === 1 ? 12 : 42, scale: 1.12 }}
+                transition={{ duration: 0.55, ease: "easeOut" }}
+              />
+            ))}
           </div>
-        </FadeIn>
-
-        <FadeIn>
-          <p
-            className="text-center max-w-md mb-12"
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: "0.85rem",
-              lineHeight: 2,
-              color: r(0.3),
-            }}
-          >
-            {t("kh.final.text")}
-          </p>
-        </FadeIn>
-
-        <FadeIn>
-          <button
-            onClick={() => navigate("/projects")}
-            className="group flex items-center gap-3 px-6 py-3 rounded-full transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: "0.8rem",
-              border: `1px solid ${r(0.1)}`,
-              color: r(0.4),
-            }}
-          >
-            <ArrowLeft size={14} className="transition-transform group-hover:-translate-x-1" />
-            {t("kh.back")}
-          </button>
         </FadeIn>
       </div>
     </section>
+  );
+}
+
+function KittyHubAmbientParticles() {
+  const { isDark } = useTheme();
+  const shouldReduceMotion = useReducedMotion();
+
+  const particles = [
+    { left: "8%", top: "7%", size: 5, color: "#FD6235", delay: 0 },
+    { left: "82%", top: "9%", size: 4, color: "#8E25F7", delay: 0.8 },
+    { left: "18%", top: "17%", size: 6, color: "#1DA4D0", delay: 1.4 },
+    { left: "72%", top: "23%", size: 5, color: "#FD9CC8", delay: 0.5 },
+    { left: "91%", top: "31%", size: 4, color: "#1DA4D0", delay: 1.1 },
+    { left: "11%", top: "39%", size: 4, color: "#8E25F7", delay: 1.8 },
+    { left: "58%", top: "46%", size: 6, color: "#FD6235", delay: 0.3 },
+    { left: "32%", top: "54%", size: 5, color: "#1DA4D0", delay: 1.6 },
+    { left: "86%", top: "61%", size: 5, color: "#8E25F7", delay: 0.9 },
+    { left: "16%", top: "69%", size: 4, color: "#FD9CC8", delay: 2.1 },
+    { left: "67%", top: "76%", size: 4, color: "#1DA4D0", delay: 1.3 },
+    { left: "43%", top: "83%", size: 6, color: "#8E25F7", delay: 0.6 },
+    { left: "6%", top: "91%", size: 5, color: "#1DA4D0", delay: 1.9 },
+    { left: "79%", top: "94%", size: 5, color: "#FD6235", delay: 0.2 },
+    { left: "94%", top: "73%", size: 6, color: "#FD9CC8", delay: 2.3 },
+    { left: "24%", top: "88%", size: 4, color: "#FD6235", delay: 1.7 },
+    { left: "38%", top: "11%", size: 5, color: "#FD9CC8", delay: 2.6 },
+    { left: "52%", top: "19%", size: 4, color: "#1DA4D0", delay: 3.1 },
+    { left: "4%", top: "28%", size: 6, color: "#8E25F7", delay: 2.4 },
+    { left: "47%", top: "34%", size: 5, color: "#FD6235", delay: 3.4 },
+    { left: "76%", top: "42%", size: 6, color: "#FD9CC8", delay: 2.9 },
+    { left: "21%", top: "48%", size: 4, color: "#1DA4D0", delay: 3.8 },
+    { left: "94%", top: "55%", size: 5, color: "#FD6235", delay: 3.2 },
+    { left: "52%", top: "64%", size: 4, color: "#8E25F7", delay: 2.7 },
+    { left: "35%", top: "73%", size: 5, color: "#FD9CC8", delay: 3.6 },
+    { left: "88%", top: "86%", size: 4, color: "#1DA4D0", delay: 2.8 },
+  ];
+
+  const gradientLines = [
+    { left: "12%", top: "28%", width: "22%", delay: 0 },
+    { left: "68%", top: "34%", width: "15%", delay: 2.1 },
+    { left: "60%", top: "52%", width: "18%", delay: 0.8 },
+    { left: "10%", top: "66%", width: "16%", delay: 2.7 },
+    { left: "24%", top: "86%", width: "26%", delay: 1.4 },
+  ];
+
+  return (
+    <div className="pointer-events-none absolute inset-0 z-[2] overflow-hidden">
+      {gradientLines.map((line, index) => (
+        <motion.span
+          key={`line-${index}`}
+          className="absolute h-px rounded-full"
+          style={{
+            left: line.left,
+            top: line.top,
+            width: line.width,
+            background: "linear-gradient(90deg, transparent, rgba(253,98,53,0.62), rgba(142,37,247,0.56), rgba(29,164,208,0.48), rgba(253,156,200,0.42), transparent)",
+            opacity: isDark ? 0.36 : 0.42,
+            boxShadow: isDark ? "0 0 18px rgba(142,37,247,0.24)" : "0 0 14px rgba(142,37,247,0.14)",
+          }}
+          animate={shouldReduceMotion ? undefined : { opacity: [0.18, isDark ? 0.5 : 0.56, 0.18], scaleX: [0.9, 1.08, 0.9] }}
+          transition={{ duration: 7.5, delay: line.delay, repeat: Infinity, ease: "easeInOut" }}
+        />
+      ))}
+      {particles.map((particle, index) => (
+        <motion.span
+          key={index}
+          className="absolute rounded-full"
+          style={{
+            left: particle.left,
+            top: particle.top,
+            width: particle.size + 1.5,
+            height: particle.size + 1.5,
+            background: particle.color,
+            opacity: isDark ? 0.62 : 0.5,
+            boxShadow: `0 0 ${particle.size * 6}px ${particle.color}99`,
+          }}
+          animate={shouldReduceMotion ? undefined : {
+            x: [0, index % 2 ? 18 : -16, index % 3 ? -10 : 14, 0],
+            y: [0, index % 2 ? -14 : 16, index % 3 ? 12 : -10, 0],
+            opacity: [isDark ? 0.38 : 0.3, isDark ? 0.82 : 0.66, isDark ? 0.52 : 0.42, isDark ? 0.38 : 0.3],
+            scale: [1, 1.28, 0.88, 1],
+          }}
+          transition={{
+            duration: 10 + index * 0.65,
+            delay: particle.delay,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+    </div>
   );
 }
 
@@ -1637,7 +1973,15 @@ export function ProjectKh() {
   const navigate = useNavigate();
 
   return (
-    <div className="relative w-full">
+    <div
+      className="relative w-full"
+      style={{
+        background: isDark
+          ? "radial-gradient(circle at 50% 14%, rgba(142,37,247,0.08) 0%, transparent 34%), linear-gradient(180deg, #030303 0%, #08040d 42%, #030303 100%)"
+          : "radial-gradient(circle at 50% 16%, rgba(142,37,247,0.07) 0%, transparent 34%), linear-gradient(180deg, #fbf7ff 0%, #f8f3ff 46%, #fff 100%)",
+      }}
+    >
+      <KittyHubAmbientParticles />
       <ProjectBackButton
         onClick={() => navigate("/projects")}
         style={{
