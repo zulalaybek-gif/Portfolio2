@@ -291,16 +291,21 @@ function ChoicesSection() {
    6. LOGO
    =================================== */
 function LogoSection() {
-  const { r } = useTheme();
+  const { isDark, r } = useTheme();
 
   return (
-    <section className="px-6 md:px-16 py-20">
+    <section className="px-6 md:px-16 py-24 overflow-hidden">
       <div className="max-w-6xl mx-auto">
         <div className="relative">
-          <div className="relative z-10 grid gap-12 md:grid-cols-[0.7fr_1.3fr] md:items-center">
-            <FadeIn className="max-w-sm">
+          <div
+            className="absolute left-[36%] top-1/2 hidden h-[34rem] w-[34rem] -translate-y-1/2 rounded-full blur-3xl md:block"
+            style={{ background: `rgba(${ACCENT_RGB},0.08)` }}
+          />
+
+          <div className="relative z-10 grid gap-10 md:grid-cols-[0.78fr_1.22fr] md:items-center">
+            <FadeIn className="max-w-md md:pb-10">
               <p
-                className="mb-5"
+                className="mb-6"
                 style={{
                   fontFamily: "'Roboto Mono', monospace",
                   fontSize: "0.72rem",
@@ -311,13 +316,13 @@ function LogoSection() {
                 LOGO
               </p>
               <h2
-                className="mb-5"
+                className="mb-6"
                 style={{
                   fontFamily: "'Plus Jakarta Sans', sans-serif",
                   fontSize: "clamp(2rem, 4vw, 3.4rem)",
                   lineHeight: 1.05,
                   fontWeight: 700,
-                  color: r(0.04),
+                  color: isDark ? "#f4f4f2" : "#0a0c08",
                 }}
               >
                 Une identité simple, claire et mémorable.
@@ -333,7 +338,7 @@ function LogoSection() {
               >
                 Le logotype et son monogramme expriment le mouvement, la précision et la clarté qui guident chaque projet.
               </p>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 pt-2">
                 {[ACCENT, "#f4f4f2", "#0a0c08", SECONDARY].map((color) => (
                   <span
                     key={color}
@@ -348,29 +353,41 @@ function LogoSection() {
             </FadeIn>
 
             <FadeIn delay={0.12}>
-              <div className="relative min-h-[470px] md:min-h-[620px]">
-                <img
+              <div className="relative min-h-[500px] md:min-h-[650px]">
+                <div
+                  className="absolute bottom-[11%] left-[6%] h-20 w-[58%] rounded-full blur-2xl"
+                  style={{ background: "rgba(0,0,0,0.22)" }}
+                />
+                <motion.img
                   src={logoAsset08}
                   alt="SNATSH sage monogram block"
-                  className="absolute left-[-4%] top-[15%] z-20 w-[62%] min-w-[240px]"
+                  className="absolute left-[-2%] top-[18%] z-20 w-[60%] min-w-[250px]"
+                  animate={{ y: [0, -10, 0], rotate: [-1.5, -2.6, -1.5] }}
+                  transition={{ duration: 7.5, repeat: Infinity, ease: "easeInOut" }}
                   style={{ filter: "drop-shadow(0 36px 58px rgba(0,0,0,0.38))" }}
                 />
-                <img
+                <motion.img
                   src={logoAsset05}
                   alt="SNATSH monogram block"
-                  className="absolute right-[7%] top-[1%] z-10 w-[29%] min-w-[118px]"
+                  className="absolute right-[10%] top-[2%] z-10 w-[27%] min-w-[116px]"
+                  animate={{ y: [0, -14, 0], rotate: [1.2, 2.4, 1.2] }}
+                  transition={{ duration: 6.8, repeat: Infinity, ease: "easeInOut", delay: 0.35 }}
                   style={{ filter: "drop-shadow(0 24px 36px rgba(0,0,0,0.28))" }}
                 />
-                <img
+                <motion.img
                   src={logoAsset06}
                   alt="SNATSH light logo block"
-                  className="absolute right-[-1%] top-[35%] z-30 w-[55%] min-w-[230px]"
+                  className="absolute right-[0%] top-[36%] z-30 w-[52%] min-w-[230px]"
+                  animate={{ y: [0, -8, 0], rotate: [0.3, -0.5, 0.3] }}
+                  transition={{ duration: 7.2, repeat: Infinity, ease: "easeInOut", delay: 0.7 }}
                   style={{ filter: "drop-shadow(0 28px 46px rgba(0,0,0,0.3))" }}
                 />
-                <img
+                <motion.img
                   src={logoAsset07}
                   alt="SNATSH dark logo block"
-                  className="absolute bottom-[2%] right-[9%] z-20 w-[52%] min-w-[220px]"
+                  className="absolute bottom-[5%] right-[13%] z-20 w-[47%] min-w-[210px]"
+                  animate={{ y: [0, 10, 0], rotate: [-0.6, 0.2, -0.6] }}
+                  transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
                   style={{ filter: "drop-shadow(0 30px 54px rgba(0,0,0,0.38))" }}
                 />
               </div>
