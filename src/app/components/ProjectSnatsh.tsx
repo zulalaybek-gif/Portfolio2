@@ -1284,15 +1284,13 @@ function MockupsSection() {
    11. FINAL
    =================================== */
 function FinalSection() {
-  const { t } = useI18n();
-  const { isDark, r } = useTheme();
-  const navigate = useNavigate();
+  const { isDark } = useTheme();
   const processItems = [
-    { label: "IDÉE", image: footerVisual09 },
-    { label: "TOURNAGE", image: footerVisual10 },
-    { label: "MONTAGE", image: footerVisual11 },
-    { label: "ÉTALONNAGE", image: footerVisual12 },
-    { label: "LIVRAISON", image: footerVisual13 },
+    { label: "IDÉE", image: footerVisual09, position: "center center" },
+    { label: "TOURNAGE", image: footerVisual10, position: "center center" },
+    { label: "MONTAGE", image: footerVisual11, position: "center center" },
+    { label: "ÉTALONNAGE", image: footerVisual12, position: "center center" },
+    { label: "LIVRAISON", image: footerVisual13, position: "center center" },
   ];
   const sectionBg = isDark
     ? "radial-gradient(ellipse at 72% 26%, rgba(193,211,221,0.08), transparent 34%), radial-gradient(ellipse at 26% 78%, rgba(192,193,164,0.08), transparent 36%), linear-gradient(145deg, #08101a 0%, #0d1724 54%, #070c13 100%)"
@@ -1328,138 +1326,103 @@ function FinalSection() {
         />
 
         <FadeIn>
-          <div className="relative z-10 min-h-[500px]">
-            <div
-              className="absolute left-0 right-0 top-[30%] hidden h-10 lg:block"
-              style={{
-                backgroundImage: `repeating-linear-gradient(90deg, ${isDark ? "rgba(244,244,242,0.1)" : "rgba(0,0,0,0.07)"} 0 1px, transparent 1px 12px)`,
-                WebkitMaskImage: "linear-gradient(90deg, transparent 0%, #000 6%, #000 88%, transparent 100%)",
-                maskImage: "linear-gradient(90deg, transparent 0%, #000 6%, #000 88%, transparent 100%)",
-              }}
-            />
-            <div
-              className="absolute left-0 right-[34%] top-[67%] hidden h-10 lg:block"
-              style={{
-                backgroundImage: `repeating-linear-gradient(90deg, ${isDark ? "rgba(244,244,242,0.1)" : "rgba(0,0,0,0.07)"} 0 1px, transparent 1px 12px)`,
-                WebkitMaskImage: "linear-gradient(90deg, transparent 0%, #000 6%, #000 92%, transparent 100%)",
-                maskImage: "linear-gradient(90deg, transparent 0%, #000 6%, #000 92%, transparent 100%)",
-              }}
-            />
-            <div className="hidden lg:block">
-              <span
-                className="absolute left-[23%] top-[27%] font-mono text-[0.5rem] tracking-[0.08em]"
-                style={{ color: textMuted }}
-              >
-                00:00:00
-              </span>
-              <span
-                className="absolute left-[60%] top-[27%] font-mono text-[0.5rem] tracking-[0.08em]"
-                style={{ color: textMuted }}
-              >
-                00:00:05
-              </span>
-              <span
-                className="absolute left-[23.8%] top-[31%] h-0 w-0 border-x-[4px] border-t-[8px] border-x-transparent"
-                style={{ borderTopColor: isDark ? "rgba(244,244,242,0.36)" : "rgba(0,0,0,0.24)" }}
-              />
-              <span
-                className="absolute left-[60.6%] top-[31%] h-0 w-0 border-x-[4px] border-t-[8px] border-x-transparent"
-                style={{ borderTopColor: isDark ? "rgba(244,244,242,0.36)" : "rgba(0,0,0,0.24)" }}
-              />
-            </div>
-
-            <div className="absolute left-0 top-[36%] hidden w-[68%] items-center gap-0 lg:flex">
-              {processItems.slice(0, 4).map((item, index) => (
-                <motion.div
-                  key={item.label}
-                  className="group relative h-[200px] flex-1 overflow-hidden rounded-[9px]"
-                  initial={{ opacity: 0, y: 18 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "120px 0px" }}
-                  transition={{ duration: 0.65, delay: index * 0.06, ease: "easeOut" }}
-                  style={{
-                    border: `1px solid ${isDark ? "rgba(244,244,242,0.1)" : "rgba(0,0,0,0.06)"}`,
-                    boxShadow: isDark ? "0 18px 42px rgba(0,0,0,0.26)" : "0 18px 42px rgba(0,0,0,0.08)",
-                    marginLeft: index === 0 ? 0 : -1,
-                  }}
-                >
-                  <img
-                    src={item.image}
-                    alt={`SNATSH ${item.label.toLowerCase()}`}
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.035]"
-                    style={{ filter: isDark ? "saturate(0.85) contrast(0.96)" : "saturate(0.92) contrast(0.98)" }}
-                  />
-                </motion.div>
-              ))}
-              <motion.div
-                className="relative h-[200px] flex-[1.5] overflow-hidden rounded-[9px]"
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "120px 0px" }}
-                transition={{ duration: 0.65, delay: 0.24, ease: "easeOut" }}
+          <div className="relative z-10 grid gap-12 lg:min-h-[500px] lg:grid-cols-[minmax(0,1.48fr)_minmax(320px,0.72fr)] lg:items-center lg:gap-16">
+            <div className="relative pt-16 lg:pt-20">
+              <div
+                className="pointer-events-none absolute left-0 right-0 top-8 hidden h-10 lg:block"
                 style={{
-                  border: `1px solid ${isDark ? "rgba(244,244,242,0.08)" : "rgba(0,0,0,0.04)"}`,
-                  marginLeft: -1,
+                  backgroundImage: `repeating-linear-gradient(90deg, ${isDark ? "rgba(244,244,242,0.1)" : "rgba(0,0,0,0.07)"} 0 1px, transparent 1px 12px)`,
+                  WebkitMaskImage: "linear-gradient(90deg, transparent 0%, #000 7%, #000 94%, transparent 100%)",
+                  maskImage: "linear-gradient(90deg, transparent 0%, #000 7%, #000 94%, transparent 100%)",
                 }}
-              >
-                <img
-                  src={processItems[4].image}
-                  alt={`SNATSH ${processItems[4].label.toLowerCase()}`}
-                  className="h-full w-full object-cover"
-                  style={{
-                    filter: isDark ? "blur(11px) saturate(0.68) opacity(0.34)" : "blur(11px) saturate(0.72) opacity(0.4)",
-                    transform: "scale(1.14)",
-                  }}
+              />
+              <div className="pointer-events-none absolute left-0 right-0 top-4 hidden lg:block">
+                <span className="absolute left-[36%] font-mono text-[0.5rem] tracking-[0.08em]" style={{ color: textMuted }}>
+                  00:00:00
+                </span>
+                <span className="absolute left-[73%] font-mono text-[0.5rem] tracking-[0.08em]" style={{ color: textMuted }}>
+                  00:00:05
+                </span>
+                <span
+                  className="absolute left-[37%] top-6 h-0 w-0 border-x-[4px] border-t-[8px] border-x-transparent"
+                  style={{ borderTopColor: isDark ? "rgba(244,244,242,0.32)" : "rgba(0,0,0,0.2)" }}
                 />
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background: isDark
-                      ? "linear-gradient(90deg, rgba(13,23,36,0.06), rgba(13,23,36,0.48) 68%, rgba(13,23,36,0.88))"
-                      : "linear-gradient(90deg, rgba(244,244,242,0.08), rgba(244,244,242,0.54) 68%, rgba(255,255,255,0.9))",
-                  }}
+                <span
+                  className="absolute left-[74%] top-6 h-0 w-0 border-x-[4px] border-t-[8px] border-x-transparent"
+                  style={{ borderTopColor: isDark ? "rgba(244,244,242,0.32)" : "rgba(0,0,0,0.2)" }}
                 />
-              </motion.div>
-            </div>
+              </div>
 
-            <div className="hidden lg:block">
-              {processItems.map((item, index) => {
-                const left = index === 0 ? "7%" : index === 1 ? "18.5%" : index === 2 ? "30%" : index === 3 ? "42%" : "53.5%";
-                return (
-                  <div key={`label-${item.label}`} className="absolute top-[69%]" style={{ left }}>
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-5 lg:gap-[3px]">
+                {processItems.map((item, index) => (
+                  <motion.div
+                    key={item.label}
+                    className="group relative h-[170px] overflow-hidden rounded-[9px] sm:h-[188px] lg:h-[198px]"
+                    initial={{ opacity: 0, y: 18 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "120px 0px" }}
+                    transition={{ duration: 0.65, delay: index * 0.06, ease: "easeOut" }}
+                    style={{
+                      border: `1px solid ${isDark ? "rgba(244,244,242,0.1)" : "rgba(0,0,0,0.06)"}`,
+                      boxShadow: isDark ? "0 18px 42px rgba(0,0,0,0.24)" : "0 18px 42px rgba(0,0,0,0.08)",
+                    }}
+                  >
+                    <img
+                      src={item.image}
+                      alt={`SNATSH ${item.label.toLowerCase()}`}
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.035]"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        display: "block",
+                        objectFit: "cover",
+                        objectPosition: item.position,
+                        filter: index === 4
+                          ? isDark
+                            ? "blur(4px) saturate(0.72) contrast(0.92) opacity(0.58)"
+                            : "blur(4px) saturate(0.78) contrast(0.96) opacity(0.68)"
+                          : isDark
+                            ? "saturate(0.86) contrast(0.96)"
+                            : "saturate(0.92) contrast(0.98)",
+                        transform: index === 4 ? "scale(1.06)" : undefined,
+                      }}
+                    />
+                    {index === 4 && (
+                      <div
+                        className="absolute inset-0"
+                        style={{
+                          background: isDark
+                            ? "linear-gradient(90deg, rgba(13,23,36,0.08), rgba(13,23,36,0.38) 72%, rgba(13,23,36,0.66))"
+                            : "linear-gradient(90deg, rgba(244,244,242,0.04), rgba(244,244,242,0.34) 72%, rgba(255,255,255,0.62))",
+                        }}
+                      />
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+
+              <div
+                className="mt-7 hidden h-10 lg:block"
+                style={{
+                  backgroundImage: `repeating-linear-gradient(90deg, ${isDark ? "rgba(244,244,242,0.1)" : "rgba(0,0,0,0.07)"} 0 1px, transparent 1px 12px)`,
+                  WebkitMaskImage: "linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%)",
+                  maskImage: "linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%)",
+                }}
+              />
+
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-5 lg:-mt-8 lg:gap-[3px]">
+                {processItems.map((item, index) => (
+                  <div key={`label-${item.label}`} className="text-center">
                     <span
-                      className="mx-auto mb-4 block h-0 w-0 border-x-[4px] border-b-[8px] border-x-transparent"
-                      style={{ borderBottomColor: index === 4 ? SECONDARY : isDark ? "rgba(244,244,242,0.32)" : "rgba(0,0,0,0.18)" }}
+                      className="mx-auto mb-3 block h-0 w-0 border-x-[4px] border-b-[8px] border-x-transparent"
+                      style={{ borderBottomColor: index === 4 ? SECONDARY : isDark ? "rgba(244,244,242,0.28)" : "rgba(0,0,0,0.16)" }}
                     />
                     <p
                       style={{
                         fontFamily: "'Roboto Mono', monospace",
-                        fontSize: "0.66rem",
+                        fontSize: "0.64rem",
                         letterSpacing: "0.1em",
                         color: index === 4 ? SECONDARY : textMuted,
-                      }}
-                    >
-                      {item.label}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className="grid gap-8 lg:hidden">
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
-                {processItems.map((item) => (
-                  <div key={item.label}>
-                    <div className="aspect-[4/5] overflow-hidden rounded-lg">
-                      <img src={item.image} alt={`SNATSH ${item.label.toLowerCase()}`} className="h-full w-full object-cover" />
-                    </div>
-                    <p
-                      className="mt-3"
-                      style={{
-                        fontFamily: "'Roboto Mono', monospace",
-                        fontSize: "0.62rem",
-                        letterSpacing: "0.1em",
-                        color: textMuted,
                       }}
                     >
                       {item.label}
@@ -1469,8 +1432,8 @@ function FinalSection() {
               </div>
             </div>
 
-            <div className="mt-12 lg:absolute lg:right-[4%] lg:top-[38%] lg:mt-0 lg:w-[30%]">
-              <div className="relative px-4 py-5 lg:px-0 lg:py-0">
+            <div>
+              <div className="relative mx-auto max-w-[430px] px-4 py-5 lg:mx-0 lg:px-0 lg:py-0">
                 <span
                   className="absolute -left-2 -top-2 hidden h-7 w-7 border-l border-t lg:block"
                   style={{ borderColor: isDark ? "rgba(193,211,221,0.22)" : "rgba(193,211,221,0.7)" }}
@@ -1490,7 +1453,7 @@ function FinalSection() {
                 <img
                   src={isDark ? logoIconTxtWhite : logoIconTxtBlack}
                   alt="SNATSH"
-                  className="mb-10 w-[220px] md:w-[300px] lg:w-[380px]"
+                  className="mb-10 w-[220px] md:w-[300px] lg:w-full"
                 />
                 <h2
                   style={{
@@ -1530,21 +1493,6 @@ function FinalSection() {
             </div>
           </div>
         </FadeIn>
-
-        <button
-          onClick={() => navigate("/projects")}
-          className="group relative z-10 mt-8 flex w-fit items-center gap-3 rounded-full px-5 py-2.5 transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
-          style={{
-            fontFamily: "'Inter', sans-serif",
-            fontSize: "0.75rem",
-            border: `1px solid ${r(0.1)}`,
-            color: r(0.4),
-            background: isDark ? "rgba(244,244,242,0.03)" : "rgba(255,255,255,0.42)",
-          }}
-        >
-          <ArrowLeft size={14} className="transition-transform group-hover:-translate-x-1" />
-          {t("sn.back")}
-        </button>
       </div>
     </section>
   );
