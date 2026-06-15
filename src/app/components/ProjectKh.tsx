@@ -291,6 +291,7 @@ function VisualDirectionSection() {
    =================================== */
 function PaletteSection() {
   const { lang } = useI18n();
+  const { isDark } = useTheme();
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -372,12 +373,21 @@ function PaletteSection() {
   ];
 
   return (
-    <section className="relative w-full bg-[#030303] overflow-visible" style={{ paddingTop: '72px', paddingBottom: '136px' }}>
+    <section
+      className="relative w-full overflow-visible"
+      style={{
+        paddingTop: '72px',
+        paddingBottom: '136px',
+        backgroundColor: isDark ? '#030303' : 'transparent',
+      }}
+    >
       {/* Background Grid Decoration */}
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none"
         style={{
-          backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)',
+          backgroundImage: isDark
+            ? 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)'
+            : 'linear-gradient(#07020b 1px, transparent 1px), linear-gradient(90deg, #07020b 1px, transparent 1px)',
           backgroundSize: '40px 40px'
         }}
       />
@@ -389,17 +399,32 @@ function PaletteSection() {
           <div className="w-full z-20 lg:w-[38%] lg:shrink-0 overflow-visible">
             <FadeIn>
               <div
-                className="inline-flex items-center px-4 rounded-[8px] mb-[44px] border border-white/10"
-                style={{ height: '34px', background: 'rgba(255,255,255,0.03)' }}
+                className="inline-flex items-center px-4 rounded-[8px] mb-[44px] border"
+                style={{
+                  height: '34px',
+                  background: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(7,2,11,0.035)',
+                  borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(7,2,11,0.08)',
+                }}
               >
-                <span className="text-white/60 uppercase tracking-[0.16em]" style={{ fontSize: '11px' }}>
+                <span
+                  className="uppercase tracking-[0.16em]"
+                  style={{ fontSize: '11px', color: isDark ? 'rgba(255,255,255,0.6)' : 'rgba(7,2,11,0.52)' }}
+                >
                   {lang === "fr" ? "Palette chromatique" : "Chromatic Palette"}
                 </span>
               </div>
             </FadeIn>
 
             <FadeIn delay={0.1}>
-              <h2 className="mb-[32px] font-semibold text-white" style={{ fontSize: isMobile ? '38px' : '50px', lineHeight: isMobile ? '44px' : '58px', maxWidth: '360px' }}>
+              <h2
+                className="mb-[32px] font-semibold"
+                style={{
+                  fontSize: isMobile ? '38px' : '50px',
+                  lineHeight: isMobile ? '44px' : '58px',
+                  maxWidth: '360px',
+                  color: isDark ? '#fff' : DARK_BG,
+                }}
+              >
                 {lang === "fr" ? "Booster Pack" : "Chromatic"}<br />
                 <span style={{
                   background: 'linear-gradient(to right, #1DA4D0, #8E25F7)',
@@ -412,7 +437,15 @@ function PaletteSection() {
             </FadeIn>
 
             <FadeIn delay={0.2}>
-              <p className="mb-[72px] text-white/68" style={{ fontSize: '17px', lineHeight: '27px', maxWidth: '340px' }}>
+              <p
+                className="mb-[72px]"
+                style={{
+                  fontSize: '17px',
+                  lineHeight: '27px',
+                  maxWidth: '340px',
+                  color: isDark ? 'rgba(255,255,255,0.68)' : 'rgba(7,2,11,0.58)',
+                }}
+              >
                 {lang === "fr"
                   ? "Quatre teintes stratégiques. Une identité cohérente et mémorable. Collectionnez la palette de Kitty Hub et donnez du pouvoir à vos créations."
                   : "Four strategic hues. A consistent and memorable identity. Collect the Kitty Hub palette and empower your creations."}
@@ -422,13 +455,35 @@ function PaletteSection() {
             <div className="flex flex-col gap-[16px] w-full max-w-[340px]">
               {advantages.map((adv, i) => (
                 <FadeIn key={i} delay={0.3 + i * 0.1}>
-                  <div className="flex items-center gap-[20px] p-[22px_24px] rounded-[20px] bg-white/[0.02] border border-white/5 backdrop-blur-md">
-                    <div className="w-[42px] h-[42px] rounded-full flex items-center justify-center bg-white/5 border border-white/10 shrink-0">
-                      <adv.icon size={18} className="text-white/80" />
+                  <div
+                    className="flex items-center gap-[20px] p-[22px_24px] rounded-[20px] border backdrop-blur-md"
+                    style={{
+                      background: isDark ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.58)',
+                      borderColor: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(7,2,11,0.08)',
+                    }}
+                  >
+                    <div
+                      className="w-[42px] h-[42px] rounded-full flex items-center justify-center border shrink-0"
+                      style={{
+                        background: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(7,2,11,0.035)',
+                        borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(7,2,11,0.08)',
+                      }}
+                    >
+                      <adv.icon size={18} style={{ color: isDark ? 'rgba(255,255,255,0.8)' : 'rgba(7,2,11,0.62)' }} />
                     </div>
                     <div>
-                      <h4 className="text-white text-[16px] font-bold leading-tight">{adv.label}</h4>
-                      <p className="text-white/40 text-[13px] mt-1">{adv.desc}</p>
+                      <h4
+                        className="text-[16px] font-bold leading-tight"
+                        style={{ color: isDark ? '#fff' : DARK_BG }}
+                      >
+                        {adv.label}
+                      </h4>
+                      <p
+                        className="text-[13px] mt-1"
+                        style={{ color: isDark ? 'rgba(255,255,255,0.4)' : 'rgba(7,2,11,0.48)' }}
+                      >
+                        {adv.desc}
+                      </p>
                     </div>
                   </div>
                 </FadeIn>
@@ -495,7 +550,13 @@ function PaletteSection() {
 
       {/* BOTTOM STATUS BAR */}
       <FadeIn delay={1} className="mt-[100px] lg:mt-[60px]">
-        <div className="border-t border-white/5 bg-white/[0.01] py-8 px-6 lg:px-[64px] backdrop-blur-sm">
+        <div
+          className="border-t py-8 px-6 lg:px-[64px] backdrop-blur-sm"
+          style={{
+            background: isDark ? 'rgba(255,255,255,0.01)' : 'rgba(255,255,255,0.44)',
+            borderColor: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(7,2,11,0.08)',
+          }}
+        >
           <div className="max-w-[1480px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
              {/* Logo and Context */}
              <div className="flex items-center gap-4 shrink-0">
@@ -505,8 +566,16 @@ function PaletteSection() {
                    </div>
                 </div>
                 <div>
-                  <span className="text-white font-bold text-[15px] block leading-none mb-1">Kitty Hub</span>
-                  <span className="text-white/30 text-[12px] font-medium tracking-tight">
+                  <span
+                    className="font-bold text-[15px] block leading-none mb-1"
+                    style={{ color: isDark ? '#fff' : DARK_BG }}
+                  >
+                    Kitty Hub
+                  </span>
+                  <span
+                    className="text-[12px] font-medium tracking-tight"
+                    style={{ color: isDark ? 'rgba(255,255,255,0.3)' : 'rgba(7,2,11,0.42)' }}
+                  >
                     {lang === "fr" ? "Projet d'identité visuelle" : "Visual Identity Project"}
                   </span>
                 </div>
@@ -529,10 +598,13 @@ function PaletteSection() {
 
              {/* Right Info */}
              <div className="flex items-center gap-4 shrink-0">
-                <span className="text-white/30 text-[11px] uppercase tracking-[0.25em] font-bold">
+                <span
+                  className="text-[11px] uppercase tracking-[0.25em] font-bold"
+                  style={{ color: isDark ? 'rgba(255,255,255,0.3)' : 'rgba(7,2,11,0.42)' }}
+                >
                   {lang === "fr" ? "Palette chromatique" : "Chromatic Palette"}
                 </span>
-                <div className="w-5 h-5 opacity-20"><Star size={20} fill="white" /></div>
+                <div className="w-5 h-5 opacity-20"><Star size={20} fill={isDark ? "white" : DARK_BG} /></div>
              </div>
           </div>
         </div>
