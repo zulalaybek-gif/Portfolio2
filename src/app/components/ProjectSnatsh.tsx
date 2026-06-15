@@ -291,26 +291,12 @@ function ChoicesSection() {
    6. LOGO
    =================================== */
 function LogoSection() {
+  const { r } = useTheme();
+
   return (
     <section className="px-6 md:px-16 py-20">
       <div className="max-w-6xl mx-auto">
-        <div
-          className="relative overflow-hidden rounded-[28px] px-6 py-10 md:p-12 lg:p-14"
-          style={{
-            background: "linear-gradient(150deg, #070b12 0%, #0d141c 48%, #05070a 100%)",
-            border: "1px solid rgba(244,244,242,0.08)",
-            boxShadow: "0 30px 90px rgba(0,0,0,0.28)",
-          }}
-        >
-          <div
-            className="absolute right-0 top-0 h-48 w-48 rounded-full blur-3xl"
-            style={{ background: `rgba(${SECONDARY_RGB},0.12)` }}
-          />
-          <div
-            className="absolute bottom-0 left-1/3 h-56 w-56 rounded-full blur-3xl"
-            style={{ background: `rgba(${ACCENT_RGB},0.12)` }}
-          />
-
+        <div className="relative">
           <div className="relative z-10 grid gap-12 md:grid-cols-[0.7fr_1.3fr] md:items-center">
             <FadeIn className="max-w-sm">
               <p
@@ -331,7 +317,7 @@ function LogoSection() {
                   fontSize: "clamp(2rem, 4vw, 3.4rem)",
                   lineHeight: 1.05,
                   fontWeight: 700,
-                  color: "#f4f4f2",
+                  color: r(0.04),
                 }}
               >
                 Une identité simple, claire et mémorable.
@@ -342,7 +328,7 @@ function LogoSection() {
                   fontFamily: "'Roboto', sans-serif",
                   fontSize: "0.95rem",
                   lineHeight: 1.9,
-                  color: "rgba(244,244,242,0.68)",
+                  color: r(0.34),
                 }}
               >
                 Le logotype et son monogramme expriment le mouvement, la précision et la clarté qui guident chaque projet.
