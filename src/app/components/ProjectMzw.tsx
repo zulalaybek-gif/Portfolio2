@@ -8,7 +8,6 @@ import { useTheme } from "./theme";
 import { ProjectBackButton } from "./ProjectBackButton";
 
 /* -- Assets -- */
-import svgPaths from "../../imports/svg-8j0m9nldaw";
 import imgNoSenseA3 from "../../assets/mzw/01-affiche.png";
 import imgSupportPrint1 from "../../assets/mzw/02-support-print.jpg";
 import imgSupportPrint2 from "../../assets/mzw/03-support-print.jpg";
@@ -20,6 +19,11 @@ import imgPlayerSplash from "../../assets/mzw/08-player.png";
 import imgPlayerCenter from "../../assets/mzw/13-player.png";
 import imgPlayerLibrary from "../../assets/mzw/10-player.png";
 import imgButterfly from "../../assets/mzw/11-papillon.png";
+import imgMzwLogo from "../../assets/mzw/assets/01.logo.svg";
+import imgSpectreLight from "../../assets/mzw/assets/02.spectre-light.png";
+import imgSpectreDark from "../../assets/mzw/assets/03.spectre-dark.png";
+import imgHeaderLight from "../../assets/mzw/assets/04.header-light.png";
+import imgHeaderDark from "../../assets/mzw/assets/05.header-dark.png";
 
 /* -- Helpers -- */
 const ACCENT = "#5d4792";
@@ -132,58 +136,48 @@ function HeroSection() {
   const { isDark, r } = useTheme();
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
+  const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.04]);
   const imgOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
-  // Mouse tracking for Magnetic Light with smooth spring
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
   return (
-    <section ref={ref} className="relative w-full min-h-[90vh] flex flex-col items-center justify-center overflow-hidden px-6 py-20">
-      {/* 3. Magnetic Light (Interaction) */}
-      <motion.div
-        className="absolute pointer-events-none z-0 rounded-full"
-        animate={{ x: mousePos.x, y: mousePos.y }}
-        transition={{ type: "spring", damping: 35, stiffness: 50 }}
-        style={{
-          width: "700px",
-          height: "700px",
-          left: "-350px",
-          top: "-350px",
-          background: isDark 
-            ? `radial-gradient(circle, rgba(${ACCENT_RGB}, 0.12) 0%, transparent 70%)`
-            : `radial-gradient(circle, rgba(${ACCENT_RGB}, 0.06) 0%, transparent 70%)`,
-          filter: "blur(60px)",
-          mixBlendMode: isDark ? "screen" : "multiply",
-        }}
+    <section ref={ref} className="relative flex min-h-[92vh] w-full flex-col items-center justify-center overflow-hidden px-6 py-20 md:min-h-screen">
+      <img
+        src={imgHeaderLight}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 size-full object-cover transition-opacity duration-700"
+        style={{ opacity: isDark ? 0 : 1, objectPosition: "center center" }}
       />
-
-      {/* 4. Deep Background Glow - Smooth transition to the global grid */}
+      <img
+        src={imgHeaderDark}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 size-full object-cover transition-opacity duration-700"
+        style={{ opacity: isDark ? 1 : 0, objectPosition: "center center" }}
+      />
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background: isDark
-            ? `radial-gradient(ellipse 60% 50% at 50% 45%, rgba(${ACCENT_RGB},0.18) 0%, transparent 80%)`
-            : `radial-gradient(ellipse 60% 50% at 50% 45%, rgba(${ACCENT_RGB},0.1) 0%, transparent 80%)`,
-          maskImage: "radial-gradient(circle at center, black 40%, transparent 100%)",
-          WebkitMaskImage: "radial-gradient(circle at center, black 40%, transparent 100%)",
+            ? "radial-gradient(ellipse at center, transparent 0%, rgba(7,4,13,0.08) 44%, rgba(7,4,13,0.64) 100%)"
+            : "radial-gradient(ellipse at center, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.18) 48%, rgba(246,244,241,0.72) 100%)",
+        }}
+      />
+      <div
+        className="absolute inset-x-0 bottom-0 h-[26%] pointer-events-none"
+        style={{
+          background: isDark
+            ? "linear-gradient(180deg, transparent, rgba(5,4,10,0.88))"
+            : "linear-gradient(180deg, transparent, rgba(246,244,241,0.92))",
         }}
       />
 
       <motion.div className="relative z-10 flex flex-col items-center" style={{ scale: imgScale, opacity: imgOpacity }}>
-        {/* Eyebrow Label */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, delay: 0.3 }}
-          className="mb-14 flex items-center gap-8"
+          className="mb-10 flex items-center gap-6 md:mb-12 md:gap-8"
         >
           <div className="w-16 h-[1px]" style={{ background: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)" }} />
           <span style={{ 
@@ -191,68 +185,47 @@ function HeroSection() {
             fontSize: "0.58rem", 
             letterSpacing: "0.5em", 
             textTransform: "uppercase", 
-            color: r(0.28) 
+            color: r(isDark ? 0.36 : 0.3) 
           }}>
             {t("mzw.hero.label")} — {t("mzw.hero.year")}
           </span>
           <div className="w-16 h-[1px]" style={{ background: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)" }} />
         </motion.div>
 
-        <div className="relative flex items-center justify-center">
-          {/* Logo Breathing Halo - Corrected: Full circle and better blur to avoid 'square' effect */}
+        <div className="relative flex size-[220px] items-center justify-center md:size-[300px]">
           <motion.div
-            className="absolute h-[150%] w-[150%] rounded-full blur-[60px]"
+            className="absolute size-full rounded-full"
             animate={{ 
-              scale: [1, 1.3, 1],
-              opacity: isDark ? [0.25, 0.45, 0.25] : [0.12, 0.22, 0.12]
+              scale: [1, 1.08, 1],
+              opacity: isDark ? [0.42, 0.66, 0.42] : [0.32, 0.5, 0.32],
             }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut" }}
             style={{ 
-              background: `rgba(${ACCENT_RGB}, 0.35)`,
-              borderRadius: "100%", // Explicitly round
+              background: isDark
+                ? `radial-gradient(circle, rgba(255,255,255,0.18), rgba(${ACCENT_RGB},0.22) 34%, rgba(179,66,138,0.1) 56%, transparent 72%)`
+                : `radial-gradient(circle, rgba(255,255,255,0.72), rgba(${ACCENT_RGB},0.14) 38%, rgba(226,192,73,0.1) 58%, transparent 74%)`,
+              filter: "blur(28px)",
             }}
           />
-
-          {/* Logo Core with Scanner Effect */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
+            initial={{ opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.8, ease: "easeOut" }}
-            className="relative z-10 w-[110px] md:w-[160px] overflow-hidden"
-            style={{ borderRadius: "100%" }} // Full circle to fix the square laser issue
+            className="relative z-10 w-[116px] md:w-[170px]"
+            style={{
+              filter: isDark
+                ? `drop-shadow(0 0 18px rgba(255,255,255,0.18)) drop-shadow(0 0 42px rgba(${ACCENT_RGB},0.34))`
+                : `drop-shadow(0 16px 34px rgba(15,8,23,0.12)) drop-shadow(0 0 30px rgba(${ACCENT_RGB},0.18))`,
+            }}
           >
-            {/* The MZW Logo */}
-            <svg className="w-full relative z-10 drop-shadow-[0_0_20px_rgba(255,255,255,0.1)]" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="0 0 40.9986 36.3546" aria-label="Logo MZW">
-              <g>
-                <path d={svgPaths.p3c9ec700} fill={isDark ? "white" : "black"} />
-              </g>
-            </svg>
-
-            {/* 5. Laser Scanner Sweep - High-end tech detail */}
-            <motion.div 
-              className="absolute inset-0 z-20 pointer-events-none"
-              style={{
-                background: isDark
-                  ? "linear-gradient(110deg, transparent 35%, rgba(255,255,255,0.7) 50%, transparent 65%)"
-                  : "linear-gradient(110deg, transparent 35%, rgba(0,0,0,0.15) 50%, transparent 65%)",
-                mixBlendMode: isDark ? "overlay" : "multiply",
-                borderRadius: "100%", // Matching the container
-              }}
-              animate={{ x: ["-180%", "180%"] }}
-              transition={{ duration: 3.2, repeat: Infinity, repeatDelay: 4.5, ease: [0.45, 0, 0.55, 1] }}
+            <img
+              src={imgMzwLogo}
+              alt="Logo MZW"
+              className="block w-full"
+              style={{ filter: isDark ? "brightness(0) invert(1)" : "brightness(0)" }}
             />
           </motion.div>
         </div>
-      </motion.div>
-
-      {/* Subtle tech detail at bottom */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.35 }}
-        transition={{ delay: 2.5, duration: 1.5 }}
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center"
-      >
-        <div className="w-[1px] h-14" style={{ background: `linear-gradient(to bottom, ${r(0.25)}, transparent)` }} />
       </motion.div>
     </section>
   );
@@ -456,127 +429,87 @@ function PaletteSection() {
           </FadeIn>
         </div>
 
-        <div className="relative h-[520px] overflow-hidden md:h-[620px]">
-          <svg className="absolute inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 1000 620" aria-hidden="true">
-            <defs>
-              <linearGradient id="mzw-palette-wave" x1="0" x2="1000" y1="0" y2="0">
-                <stop stopColor="#254D9B" />
-                <stop offset="0.25" stopColor="#5D4792" />
-                <stop offset="0.5" stopColor="#B3428A" />
-                <stop offset="0.75" stopColor="#CC7B63" />
-                <stop offset="1" stopColor="#E2C049" />
-              </linearGradient>
-              <filter id="mzw-palette-glow" x="-30%" y="-60%" width="160%" height="220%">
-                <feGaussianBlur stdDeviation="6" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-            </defs>
+        <div
+          className="relative min-h-[620px] overflow-hidden rounded-[2rem] px-4 py-12 md:min-h-[660px] md:px-10 md:py-16"
+          style={{
+            background: isDark
+              ? "linear-gradient(180deg, rgba(12,8,19,0.98), rgba(5,4,10,0.98))"
+              : "linear-gradient(180deg, rgba(252,250,247,0.98), rgba(242,239,235,0.96))",
+            border: `1px solid ${r(isDark ? 0.06 : 0.08)}`,
+            boxShadow: isDark
+              ? "0 28px 90px rgba(0,0,0,0.34), inset 0 1px 0 rgba(255,255,255,0.04)"
+              : "0 24px 70px rgba(45,38,31,0.1), inset 0 1px 0 rgba(255,255,255,0.9)",
+          }}
+        >
+          <div
+            className="absolute inset-x-[-10%] top-[8%] h-[58%] pointer-events-none"
+            style={{
+              background: isDark
+                ? `radial-gradient(ellipse at 50% 42%, rgba(${ACCENT_RGB},0.18), transparent 62%)`
+                : `radial-gradient(ellipse at 50% 42%, rgba(${ACCENT_RGB},0.1), transparent 64%)`,
+            }}
+          />
+          <img
+            src={imgSpectreLight}
+            alt=""
+            aria-hidden="true"
+            className="absolute left-1/2 top-[11%] w-[112%] max-w-none -translate-x-1/2 object-contain transition-opacity duration-700"
+            style={{ opacity: isDark ? 0 : 0.86 }}
+          />
+          <img
+            src={imgSpectreDark}
+            alt=""
+            aria-hidden="true"
+            className="absolute left-1/2 top-[11%] w-[112%] max-w-none -translate-x-1/2 object-contain transition-opacity duration-700"
+            style={{ opacity: isDark ? 0.74 : 0 }}
+          />
+          <div
+            className="absolute inset-x-0 bottom-0 h-[44%] pointer-events-none"
+            style={{
+              background: isDark
+                ? "linear-gradient(180deg, transparent, rgba(5,4,10,0.92) 72%)"
+                : "linear-gradient(180deg, transparent, rgba(242,239,235,0.9) 74%)",
+            }}
+          />
 
-            <rect width="1000" height="620" fill="transparent" />
-            <g opacity="0.12">
-              {Array.from({ length: 10 }).map((_, i) => (
-                <path
-                  key={i}
-                  d={`M620 ${430 + i * 13} C 700 ${390 + i * 9}, 760 ${480 - i * 3}, 840 ${430 + i * 7} S 980 ${390 + i * 8}, 1080 ${445 + i * 5}`}
-                  stroke="rgba(255,255,255,0.5)"
-                  strokeWidth="0.8"
-                />
-              ))}
-            </g>
-
-            <path d="M0 310 H1000" stroke="rgba(255,255,255,0.22)" strokeWidth="1" />
-            <path d="-80 310 H1080" stroke="url(#mzw-palette-wave)" strokeWidth="1.4" filter="url(#mzw-palette-glow)" opacity="0.85" />
-            <path d="-80 304 H1080" stroke="rgba(255,255,255,0.18)" strokeWidth="0.7" opacity="0.58" />
-            <path d="-80 316 H1080" stroke="rgba(255,255,255,0.14)" strokeWidth="0.7" opacity="0.48" />
-
-            {Array.from({ length: 216 }).map((_, i) => {
-              const x = -70 + (i / 215) * 1140;
-              const band = Math.min(PALETTE.length - 1, Math.max(0, Math.floor(((x + 70) / 1140) * PALETTE.length)));
-              const color = PALETTE[band].hex;
-              const local = (((x + 70) / 1140) * PALETTE.length) % 1;
-              const center = 1 - Math.min(1, Math.abs(local - 0.5) * 2);
-              const rhythm = Math.abs(Math.sin(i * 0.43)) * 0.45 + Math.abs(Math.sin(i * 0.17)) * 0.25;
-              const h = 18 + center * 138 + rhythm * 58;
-              return (
-                <line
-                  key={i}
-                  x1={x}
-                  x2={x}
-                  y1={310 - h / 2}
-                  y2={310 + h / 2}
-                  stroke={color}
-                  strokeWidth="1.4"
-                  strokeLinecap="round"
-                  opacity={0.12 + center * 0.42}
-                />
-              );
-            })}
-
-            {PALETTE.map((color, i) => {
-              const x = 80 + i * 210;
-              return (
-                <g key={color.hex}>
-                  <line x1={x} x2={x} y1="145" y2="475" stroke={color.hex} strokeWidth="0.9" strokeDasharray="2 6" opacity="0.45" />
-                  <rect x={x - 2.5} y="132" width="5" height="5" fill={color.hex} opacity="0.9" />
-                  <rect x={x - 2.5} y="488" width="5" height="5" fill={color.hex} opacity="0.9" />
-                  {Array.from({ length: 34 }).map((_, barIndex) => {
-                    const distance = Math.abs(barIndex - 16.5);
-                    const h = Math.max(18, 126 - distance * 5.8 + ((barIndex + i) % 5) * 5);
-                    const barX = x - 68 + barIndex * 4;
-                    return (
-                      <line
-                        key={barIndex}
-                        x1={barX}
-                        x2={barX}
-                        y1={310 - h / 2}
-                        y2={310 + h / 2}
-                        stroke={color.hex}
-                        strokeWidth="1.15"
-                        strokeLinecap="round"
-                        opacity={0.18 + (16.5 - Math.min(distance, 16.5)) * 0.032}
-                      />
-                    );
-                  })}
-                </g>
-              );
-            })}
-          </svg>
-
-          {PALETTE.map((color, i) => {
-            const left = 8 + i * 21;
-            return (
+          <div className="relative z-10 grid grid-cols-1 gap-5 md:hidden">
+            {PALETTE.map((color, i) => (
               <FadeIn key={color.hex} delay={0.12 + i * 0.06}>
-                <div
-                  className="absolute top-[13%] z-10 flex h-[74%] -translate-x-1/2 flex-col items-center justify-between"
-                  style={{ left: `${left}%` }}
-                >
+                <div className="flex h-[154px] flex-row items-center justify-between gap-4">
                   <span
-                    className="uppercase"
+                    className="w-[32%] uppercase"
                     style={{
                       fontFamily: "'Inter', sans-serif",
-                      fontSize: "clamp(0.48rem, 1.1vw, 0.68rem)",
+                      fontSize: "clamp(0.46rem, 1vw, 0.68rem)",
                       letterSpacing: "0.2em",
                       color: color.hex,
                     }}
                   >
                     {color.name}
                   </span>
-                  <div
-                    className="h-[130px] w-16 rounded-[1.1rem] md:h-[190px] md:w-[90px] md:rounded-[1.45rem]"
-                    style={{
-                      background: `linear-gradient(180deg, ${color.hex}, ${color.hex}e6)`,
-                      boxShadow: `0 0 26px ${color.hex}55, inset 0 1px 0 rgba(255,255,255,0.2)`,
-                    }}
-                  />
-                  <div className="text-center">
+                  <div className="relative flex h-[120px] flex-1 items-center justify-center" aria-hidden="true">
+                    <div
+                      className="absolute h-full w-[3px] rounded-full"
+                      style={{
+                        background: `linear-gradient(180deg, transparent, ${color.hex} 20%, ${color.hex} 78%, transparent)`,
+                        boxShadow: `0 0 18px ${color.hex}88, 0 0 48px ${color.hex}44`,
+                      }}
+                    />
+                    <div
+                      className="h-[58%] w-7 rounded-full md:w-10"
+                      style={{
+                        background: `linear-gradient(180deg, ${color.hex}22, ${color.hex}99, ${color.hex}22)`,
+                        filter: "blur(14px)",
+                        opacity: 0.72,
+                      }}
+                    />
+                  </div>
+                  <div className="w-[40%] text-right">
                     <span
                       className="block uppercase"
                       style={{
                         fontFamily: "'Inter', sans-serif",
-                        fontSize: "clamp(0.48rem, 1vw, 0.65rem)",
+                        fontSize: "clamp(0.46rem, 1vw, 0.65rem)",
                         letterSpacing: "0.12em",
                         color: color.hex,
                       }}
@@ -587,9 +520,9 @@ function PaletteSection() {
                       className="mt-2 block uppercase"
                       style={{
                         fontFamily: "'Inter', sans-serif",
-                        fontSize: "clamp(0.44rem, 0.9vw, 0.58rem)",
+                        fontSize: "clamp(0.42rem, 0.9vw, 0.58rem)",
                         letterSpacing: "0.18em",
-                        color: "rgba(255,255,255,0.5)",
+                        color: isDark ? "rgba(255,255,255,0.5)" : "rgba(15,8,23,0.46)",
                       }}
                     >
                       {color.role}
@@ -597,8 +530,92 @@ function PaletteSection() {
                   </div>
                 </div>
               </FadeIn>
-            );
-          })}
+            ))}
+          </div>
+
+          <div className="relative z-10 hidden min-h-[560px] md:block">
+            {PALETTE.map((color, i) => {
+              const positions = [11, 29, 50, 69, 87.5];
+              return (
+                <FadeIn key={color.hex} delay={0.12 + i * 0.06}>
+                  <div
+                    className="absolute top-0 h-[540px] -translate-x-1/2"
+                    style={{ left: `${positions[i]}%` }}
+                  >
+                    <span
+                      className="absolute top-0 left-1/2 -translate-x-1/2 uppercase"
+                      style={{
+                        fontFamily: "'Inter', sans-serif",
+                        fontSize: "clamp(0.46rem, 1vw, 0.68rem)",
+                        letterSpacing: "0.2em",
+                        color: color.hex,
+                      }}
+                    >
+                      {color.name}
+                    </span>
+                    <div className="absolute left-1/2 top-[44px] flex h-[142px] -translate-x-1/2 flex-col items-center" aria-hidden="true">
+                      <span style={{ color: color.hex, fontSize: 14, lineHeight: 1 }}>+</span>
+                      <div
+                        className="mt-3 h-[82px] w-px"
+                        style={{
+                          background: `repeating-linear-gradient(180deg, ${color.hex} 0 2px, transparent 2px 9px)`,
+                          opacity: 0.42,
+                        }}
+                      />
+                      <div
+                        className="mt-2 size-1.5 rounded-full"
+                        style={{
+                          background: color.hex,
+                          boxShadow: `0 0 10px ${color.hex}88`,
+                        }}
+                      />
+                    </div>
+                    <div className="absolute left-1/2 top-[188px] flex h-[272px] -translate-x-1/2 items-center justify-center" aria-hidden="true">
+                      <div
+                        className="absolute h-full w-5 rounded-full"
+                        style={{
+                          background: `linear-gradient(180deg, ${color.hex}00 0%, ${color.hex} 16%, ${color.hex} 82%, ${color.hex}00 100%)`,
+                          boxShadow: `0 0 22px ${color.hex}88, 0 0 60px ${color.hex}33`,
+                        }}
+                      />
+                      <div
+                        className="h-[72%] w-14 rounded-full"
+                        style={{
+                          background: `linear-gradient(180deg, ${color.hex}00, ${color.hex}77 48%, ${color.hex}00)`,
+                          filter: "blur(18px)",
+                          opacity: 0.72,
+                        }}
+                      />
+                    </div>
+                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-center">
+                      <span
+                        className="block uppercase"
+                        style={{
+                          fontFamily: "'Inter', sans-serif",
+                          fontSize: "clamp(0.46rem, 1vw, 0.65rem)",
+                          letterSpacing: "0.12em",
+                          color: color.hex,
+                        }}
+                      >
+                        {color.hex}
+                      </span>
+                      <span
+                        className="mt-2 block uppercase"
+                        style={{
+                          fontFamily: "'Inter', sans-serif",
+                          fontSize: "clamp(0.42rem, 0.9vw, 0.58rem)",
+                          letterSpacing: "0.18em",
+                          color: isDark ? "rgba(255,255,255,0.5)" : "rgba(15,8,23,0.46)",
+                        }}
+                      >
+                        {color.role}
+                      </span>
+                    </div>
+                  </div>
+                </FadeIn>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
@@ -610,7 +627,7 @@ function PaletteSection() {
    =================================== */
 function LogoSection() {
   const { t } = useI18n();
-  const { isDark, r } = useTheme();
+  const { isDark } = useTheme();
 
   return (
     <section className="px-6 md:px-16 py-16">
@@ -619,45 +636,150 @@ function LogoSection() {
           <SectionLabel>{t("mzw.logo.label")}</SectionLabel>
         </FadeIn>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* White logo on dark */}
-          <FadeIn delay={0.08}>
+        <FadeIn delay={0.08}>
+          <div
+            className="relative overflow-hidden px-2 py-8 md:px-6 md:py-12"
+            style={{
+              minHeight: "clamp(440px, 42vw, 520px)",
+            }}
+          >
             <div
-              className="flex items-center justify-center rounded-2xl p-12 md:p-16 transition-all duration-700"
+              className="absolute inset-0 pointer-events-none"
               style={{
-                background: isDark
-                  ? "linear-gradient(160deg, #1a1020 0%, #0f0817 100%)"
-                  : "linear-gradient(160deg, #1a1a2a 0%, #0a0a14 100%)",
-                border: `1px solid ${r(0.05)}`,
+                backgroundImage: `linear-gradient(${isDark ? "rgba(255,255,255,0.035)" : "rgba(15,8,23,0.04)"} 1px, transparent 1px),
+                                 linear-gradient(90deg, ${isDark ? "rgba(255,255,255,0.035)" : "rgba(15,8,23,0.04)"} 1px, transparent 1px)`,
+                backgroundSize: "52px 52px",
+                maskImage: "radial-gradient(ellipse at center, black 18%, transparent 72%)",
+                WebkitMaskImage: "radial-gradient(ellipse at center, black 18%, transparent 72%)",
               }}
-            >
-              <svg className="w-full max-w-[120px]" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="0 0 40.9986 36.3546">
-                <g>
-                  <path d={svgPaths.p3c9ec700} fill="white" stroke="black" strokeWidth="0.35" strokeLinejoin="round" />
-                </g>
-              </svg>
-            </div>
-          </FadeIn>
+            />
+            <div
+              className="absolute left-[28%] top-[57%] h-[310px] w-[310px] -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
+              style={{
+                background: `radial-gradient(circle, rgba(37,77,155,0.22), rgba(93,71,146,0.13) 44%, transparent 72%)`,
+                filter: "blur(34px)",
+              }}
+            />
+            <div
+              className="absolute right-[14%] top-[38%] h-[300px] w-[300px] -translate-y-1/2 rounded-full pointer-events-none"
+              style={{
+                background: "radial-gradient(circle, rgba(255,253,247,0.62), rgba(226,192,73,0.13) 38%, rgba(179,66,138,0.06) 58%, transparent 76%)",
+                filter: "blur(32px)",
+              }}
+            />
 
-          {/* Black logo on light */}
-          <FadeIn delay={0.14}>
-            <div
-              className="flex items-center justify-center rounded-2xl p-12 md:p-16 transition-all duration-700"
+            <svg className="absolute inset-x-0 top-1/2 h-28 w-full -translate-y-1/2 pointer-events-none" fill="none" preserveAspectRatio="none" viewBox="0 0 1000 120" aria-hidden="true">
+              <defs>
+                <linearGradient id="mzw-logo-wave" x1="0" x2="1000" y1="0" y2="0">
+                  <stop stopColor="#254D9B" />
+                  <stop offset="0.28" stopColor="#5D4792" />
+                  <stop offset="0.52" stopColor="#B3428A" />
+                  <stop offset="0.76" stopColor="#CC7B63" />
+                  <stop offset="1" stopColor="#E2C049" />
+                </linearGradient>
+              </defs>
+              <path d="M-20 62 C 110 52, 188 74, 280 60 S 430 46, 500 60 S 656 76, 740 58 S 890 48, 1020 62" stroke="url(#mzw-logo-wave)" strokeWidth="1.25" opacity={isDark ? 0.38 : 0.25} />
+              <path d="M-20 62 H1020" stroke="url(#mzw-logo-wave)" strokeWidth="0.7" opacity={isDark ? 0.24 : 0.16} strokeDasharray="2 13" />
+              {Array.from({ length: 58 }).map((_, i) => {
+                const x = 65 + i * 15;
+                const amp = 4 + ((i * 7) % 18);
+                return (
+                  <line
+                    key={i}
+                    x1={x}
+                    x2={x}
+                    y1={60 - amp / 2}
+                    y2={60 + amp / 2}
+                    stroke="url(#mzw-logo-wave)"
+                    strokeWidth="1"
+                    opacity={Math.max(0.04, 0.2 - Math.abs(i - 29) * 0.004)}
+                  />
+                );
+              })}
+            </svg>
+
+            <motion.div
+              className="absolute left-1/2 top-1/2 z-0 hidden size-3 -translate-x-1/2 -translate-y-1/2 rounded-full md:block"
               style={{
-                background: isDark
-                  ? "linear-gradient(160deg, #f0ebe4 0%, #e8e2d9 100%)"
-                  : "linear-gradient(160deg, #faf7f3 0%, #f0ebe4 100%)",
-                border: `1px solid ${r(0.05)}`,
+                background: `rgba(${ACCENT_RGB},0.7)`,
+                boxShadow: `0 0 22px rgba(${ACCENT_RGB},0.55), 0 0 50px rgba(179,66,138,0.28)`,
               }}
-            >
-              <svg className="w-full max-w-[120px]" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="0 0 40.9986 36.3546">
-                <g>
-                  <path d={svgPaths.p3c9ec700} fill="black" />
-                </g>
-              </svg>
+              animate={{ scale: [1, 1.22, 1], opacity: [0.72, 1, 0.72] }}
+              transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }}
+              aria-hidden="true"
+            />
+
+            <div className="relative z-10 flex flex-col items-center gap-10 md:block md:min-h-[390px]">
+              <motion.div
+                className="group relative flex aspect-square w-[min(300px,78vw)] items-center justify-center overflow-visible rounded-full md:absolute md:left-[12%] md:top-[55%] md:w-[340px] md:-translate-y-1/2"
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
+                style={{
+                  background: "radial-gradient(circle, rgba(17,10,31,0.98) 0%, rgba(8,7,18,0.95) 48%, rgba(8,7,18,0.18) 70%, transparent 72%)",
+                  boxShadow: `0 0 70px rgba(37,77,155,0.22), inset 0 0 42px rgba(93,71,146,0.18)`,
+                }}
+              >
+                <div
+                  className="absolute inset-[-18%] pointer-events-none rounded-full"
+                  style={{
+                    background: "repeating-radial-gradient(circle, rgba(255,255,255,0.13) 0 1px, transparent 1px 18px)",
+                    maskImage: "radial-gradient(circle, black 10%, transparent 66%)",
+                    WebkitMaskImage: "radial-gradient(circle, black 10%, transparent 66%)",
+                    opacity: isDark ? 0.22 : 0.16,
+                  }}
+                />
+                <img
+                  src={imgMzwLogo}
+                  alt="Logo MZW blanc"
+                  className="relative z-10 w-[92px] transition-transform duration-500 group-hover:scale-[1.035] md:w-[112px]"
+                  style={{ filter: "brightness(0) invert(1) drop-shadow(0 0 24px rgba(255,255,255,0.2))" }}
+                />
+              </motion.div>
+
+              <motion.div
+                className="group relative flex aspect-square w-[min(300px,78vw)] items-center justify-center overflow-visible rounded-full md:absolute md:right-[12%] md:top-[34%] md:w-[330px]"
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
+                style={{
+                  background: "radial-gradient(circle, rgba(255,253,248,0.98) 0%, rgba(245,239,229,0.9) 48%, rgba(245,239,229,0.18) 70%, transparent 72%)",
+                  boxShadow: "0 0 72px rgba(226,192,73,0.18), inset 0 0 42px rgba(255,255,255,0.74)",
+                }}
+              >
+                <div
+                  className="absolute inset-[-18%] pointer-events-none rounded-full"
+                  style={{
+                    background: "repeating-radial-gradient(circle, rgba(37,77,155,0.11) 0 1px, transparent 1px 18px)",
+                    maskImage: "radial-gradient(circle, black 10%, transparent 66%)",
+                    WebkitMaskImage: "radial-gradient(circle, black 10%, transparent 66%)",
+                    opacity: 0.18,
+                  }}
+                />
+                <img
+                  src={imgMzwLogo}
+                  alt="Logo MZW noir"
+                  className="relative z-10 w-[92px] transition-transform duration-500 group-hover:scale-[1.035] md:w-[112px]"
+                  style={{ filter: "brightness(0) drop-shadow(0 14px 28px rgba(15,8,23,0.12))" }}
+                />
+              </motion.div>
             </div>
-          </FadeIn>
-        </div>
+
+            <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+              {PALETTE.map((color, i) => (
+                <span
+                  key={color.hex}
+                  className="absolute size-1 rounded-full"
+                  style={{
+                    left: `${18 + i * 16}%`,
+                    top: `${18 + (i % 3) * 26}%`,
+                    background: color.hex,
+                    boxShadow: `0 0 18px ${color.hex}99`,
+                    opacity: isDark ? 0.42 : 0.3,
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        </FadeIn>
       </div>
     </section>
   );
@@ -1311,23 +1433,93 @@ function FinalSection() {
   const navigate = useNavigate();
 
   return (
-    <section className="relative px-6 md:px-16 py-20 overflow-hidden">
-      {/* Footer Grid Recall - Closing the studio aesthetic */}
-      <div className="absolute inset-0 pointer-events-none"
+    <section
+      className="relative overflow-hidden px-6 py-24 md:px-16 md:py-32"
+      style={{
+        background: isDark
+          ? "linear-gradient(180deg, rgba(7,5,14,0) 0%, rgba(11,8,22,0.98) 28%, rgba(5,4,10,0.98) 100%)"
+          : "linear-gradient(180deg, rgba(246,244,241,0) 0%, rgba(252,250,247,0.98) 30%, rgba(245,242,238,0.98) 100%)",
+      }}
+    >
+      <div
+        className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: `linear-gradient(${isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.03)"} 1px, transparent 1px), 
-                           linear-gradient(90deg, ${isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.03)"} 1px, transparent 1px)`,
-          backgroundSize: "42px 42px",
-          maskImage: "linear-gradient(to top, black 20%, transparent 90%)",
-          WebkitMaskImage: "linear-gradient(to top, black 20%, transparent 90%)",
+          backgroundImage: `linear-gradient(${isDark ? "rgba(255,255,255,0.035)" : "rgba(15,8,23,0.045)"} 1px, transparent 1px),
+                           linear-gradient(90deg, ${isDark ? "rgba(255,255,255,0.035)" : "rgba(15,8,23,0.045)"} 1px, transparent 1px)`,
+          backgroundSize: "56px 56px",
+          maskImage: "linear-gradient(to bottom, transparent 0%, black 18%, black 86%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 18%, black 86%, transparent 100%)",
         }}
       />
+      <motion.div
+        aria-hidden="true"
+        className="absolute left-1/2 top-1/2 h-[420px] w-[min(760px,92vw)] -translate-x-1/2 -translate-y-1/2 rounded-full"
+        style={{
+          background: isDark
+            ? `radial-gradient(ellipse, rgba(${ACCENT_RGB},0.28) 0%, rgba(179,66,138,0.12) 42%, transparent 72%)`
+            : `radial-gradient(ellipse, rgba(255,255,255,0.78) 0%, rgba(${ACCENT_RGB},0.12) 42%, rgba(204,123,99,0.08) 62%, transparent 78%)`,
+          filter: "blur(42px)",
+        }}
+        animate={{ opacity: isDark ? [0.48, 0.72, 0.48] : [0.58, 0.82, 0.58] }}
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+      />
 
-      <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
-        <FadeIn className="mb-6">
-          <SectionLabel>{t("mzw.final.label")}</SectionLabel>
+      <svg className="absolute inset-x-0 top-[14%] h-[54%] w-full pointer-events-none" fill="none" preserveAspectRatio="none" viewBox="0 0 1000 360" aria-hidden="true">
+        <defs>
+          <linearGradient id="mzw-final-line" x1="0" x2="1000" y1="0" y2="0">
+            <stop stopColor="#254D9B" />
+            <stop offset="0.28" stopColor="#5D4792" />
+            <stop offset="0.52" stopColor="#B3428A" />
+            <stop offset="0.76" stopColor="#CC7B63" />
+            <stop offset="1" stopColor="#E2C049" />
+          </linearGradient>
+        </defs>
+        {Array.from({ length: 9 }).map((_, i) => (
+          <motion.path
+            key={i}
+            d={`M-40 ${170 + i * 10} C 120 ${100 + i * 8}, 230 ${238 - i * 5}, 380 ${168 + i * 9} S 650 ${112 + i * 7}, 820 ${180 - i * 6} S 1020 ${220 + i * 4}, 1080 ${160 + i * 7}`}
+            stroke="url(#mzw-final-line)"
+            strokeWidth={i === 4 ? 1.1 : 0.65}
+            opacity={isDark ? 0.16 + i * 0.018 : 0.09 + i * 0.014}
+            animate={{ x: [0, i % 2 === 0 ? 8 : -8, 0] }}
+            transition={{ duration: 18 + i, repeat: Infinity, ease: "easeInOut" }}
+          />
+        ))}
+      </svg>
+
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        {PALETTE.map((color, i) => (
+          <span
+            key={color.hex}
+            className="absolute size-1 rounded-full"
+            style={{
+              left: `${18 + i * 16}%`,
+              top: `${30 + (i % 2) * 28}%`,
+              background: color.hex,
+              boxShadow: `0 0 18px ${color.hex}99`,
+              opacity: isDark ? 0.42 : 0.28,
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center">
+        <FadeIn className="mb-5 w-full max-w-2xl">
+          <div
+            className="mx-auto h-14 overflow-hidden opacity-75"
+            style={{
+              maskImage: "linear-gradient(to right, transparent, black 18%, black 82%, transparent)",
+              WebkitMaskImage: "linear-gradient(to right, transparent, black 18%, black 82%, transparent)",
+            }}
+            aria-hidden="true"
+          >
+            <DecorativeEqualizer isDark={isDark} />
+          </div>
         </FadeIn>
 
+        <FadeIn className="mb-10">
+          <SectionLabel>{t("mzw.final.label")}</SectionLabel>
+        </FadeIn>
 
         <FadeIn>
           <p
@@ -1346,12 +1538,16 @@ function FinalSection() {
         <FadeIn>
           <button
             onClick={() => navigate("/projects")}
-            className="group flex items-center gap-3 px-6 py-3 rounded-full transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
+            className="group flex items-center gap-3 rounded-full px-7 py-3.5 backdrop-blur-md transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
             style={{
               fontFamily: "'Inter', sans-serif",
               fontSize: "0.8rem",
-              border: `1px solid ${r(0.1)}`,
-              color: r(0.4),
+              border: `1px solid ${isDark ? "rgba(255,255,255,0.12)" : "rgba(15,8,23,0.1)"}`,
+              color: r(isDark ? 0.55 : 0.5),
+              background: isDark ? "rgba(255,255,255,0.045)" : "rgba(255,255,255,0.58)",
+              boxShadow: isDark
+                ? `0 0 34px rgba(${ACCENT_RGB},0.14), inset 0 1px 0 rgba(255,255,255,0.08)`
+                : "0 18px 50px rgba(45,38,31,0.08), inset 0 1px 0 rgba(255,255,255,0.85)",
             }}
           >
             <ArrowLeft size={14} className="transition-transform group-hover:-translate-x-1" />
@@ -1372,16 +1568,16 @@ export function ProjectMzw() {
   const navigate = useNavigate();
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full overflow-hidden">
       {/* GLOBAL STUDIO LAYERS */}
       
       {/* 1. Cinematic Grain Overlay */}
-      <div className="fixed inset-0 z-50 pointer-events-none opacity-[0.12] mix-blend-overlay"
+      <div className="absolute inset-0 z-50 pointer-events-none opacity-[0.12] mix-blend-overlay"
         style={{ backgroundImage: "url('https://grainy-gradients.vercel.app/noise.svg')" }} />
 
       {/* 2. Global Precision Grid */}
       <div 
-        className="fixed inset-0 z-0 pointer-events-none"
+        className="absolute inset-0 z-0 pointer-events-none"
         style={{
           backgroundImage: `linear-gradient(${isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.03)"} 1px, transparent 1px), 
                            linear-gradient(90deg, ${isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.03)"} 1px, transparent 1px)`,
@@ -1415,13 +1611,6 @@ export function ProjectMzw() {
         <VinylSection />
         <MerchSection />
         <MobileSection />
-
-        {/* Decorative equalizer — full width between Mockups and Final */}
-        <FadeIn>
-          <div className="py-10 overflow-hidden">
-            <DecorativeEqualizer isDark={isDark} />
-          </div>
-        </FadeIn>
 
         <FinalSection />
       </div>
