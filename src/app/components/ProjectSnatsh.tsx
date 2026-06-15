@@ -1,10 +1,9 @@
-import { motion, useScroll, useTransform, AnimatePresence } from "motion/react";
-import { useRef, useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useI18n, type TranslationKey } from "./i18n";
 import { useTheme } from "./theme";
-import { FloatingSquares } from "./FloatingSquares";
 import { ProjectBackButton } from "./ProjectBackButton";
 
 /* -- Assets -- */
@@ -22,6 +21,13 @@ import logoAsset05 from "../../assets/snatsh/assets/05.logo-asset.png";
 import logoAsset06 from "../../assets/snatsh/assets/06.logo-asset.png";
 import logoAsset07 from "../../assets/snatsh/assets/07.logo-asset.png";
 import logoAsset08 from "../../assets/snatsh/assets/08.logo-asset.png";
+import heroLight from "../../assets/snatsh/assets/14.hero-light.png";
+import heroDark from "../../assets/snatsh/assets/15.hero-dark.png";
+import footerVisual09 from "../../assets/snatsh/assets/09.footer-img.png";
+import footerVisual10 from "../../assets/snatsh/assets/10.footer-img.jpg";
+import footerVisual11 from "../../assets/snatsh/assets/11.footer-img.jpg";
+import footerVisual12 from "../../assets/snatsh/assets/12.footer-img.jpg";
+import footerVisual13 from "../../assets/snatsh/assets/13.footer-img.jpg";
 
 /* -- Helpers -- */
 const ACCENT = "#c0c1a4";
@@ -80,69 +86,187 @@ function useBodyStyle() {
 }
 
 /* ===================================
-   1. HERO — Logo on dark
+   1. HERO
    =================================== */
 function HeroSection() {
-  const { t } = useI18n();
-  const { isDark, r } = useTheme();
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
-  const imgOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const { isDark } = useTheme();
+  const heroBg = isDark
+    ? "radial-gradient(ellipse at 78% 20%, rgba(24,38,54,0.72), transparent 44%), radial-gradient(ellipse at 64% 54%, rgba(193,211,221,0.12), transparent 42%), radial-gradient(ellipse at 22% 30%, rgba(192,193,164,0.08), transparent 34%), linear-gradient(145deg, #08101a 0%, #0d1724 48%, #070c13 100%)"
+    : "radial-gradient(ellipse at 78% 20%, rgba(193,211,221,0.34), transparent 44%), radial-gradient(ellipse at 64% 54%, rgba(244,244,242,0.88), transparent 42%), radial-gradient(ellipse at 24% 28%, rgba(192,193,164,0.18), transparent 34%), linear-gradient(145deg, #f4f4f2 0%, #ffffff 52%, #edf3f5 100%)";
+  const textStrong = isDark ? "#ffffff" : "#000000";
+  const textSoft = isDark ? "rgba(244,244,242,0.68)" : "rgba(0,0,0,0.58)";
+  const heroVisual = isDark ? heroDark : heroLight;
 
   return (
-    <section ref={ref} className="relative w-full min-h-[80vh] flex flex-col items-center justify-center overflow-visible px-6 py-20">
-      {/* Floating rounded squares animation */}
+    <section className="relative overflow-hidden px-6 pb-16 pt-16 md:px-16 md:pb-20 md:pt-20">
       <div
-        className="absolute inset-x-0 top-8 -bottom-16 pointer-events-none overflow-hidden"
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: heroBg }}
+      />
+      <div
+        className="absolute right-[4%] top-[18%] h-px w-[min(760px,56vw)] opacity-45"
         style={{
-          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, #000 5%, #000 72%, rgba(0,0,0,0.68) 88%, transparent 100%)",
-          maskImage: "linear-gradient(to bottom, transparent 0%, #000 5%, #000 72%, rgba(0,0,0,0.68) 88%, transparent 100%)",
+          background: `linear-gradient(90deg, transparent, rgba(${ACCENT_RGB},0.35), rgba(${SECONDARY_RGB},0.28), transparent)`,
         }}
-      >
-        <FloatingSquares
-          count={20}
-          className={isDark ? "" : "opacity-95 mix-blend-multiply contrast-125 saturate-125"}
-        />
-      </div>
-
+      />
       <div
-        className="absolute inset-x-0 -top-16 -bottom-40 pointer-events-none"
+        className="absolute right-[2%] top-[48%] h-px w-[min(900px,62vw)] opacity-30"
+        style={{
+          background: `linear-gradient(90deg, transparent, rgba(255,255,255,0.52), rgba(${SECONDARY_RGB},0.32), transparent)`,
+        }}
+      />
+      <div
+        className="absolute inset-x-0 bottom-0 h-28 pointer-events-none"
         style={{
           background: isDark
-            ? `radial-gradient(ellipse 60% 50% at 50% 45%, rgba(${ACCENT_RGB},0.08) 0%, transparent 70%)`
-            : `radial-gradient(ellipse 62% 52% at 50% 44%, rgba(${ACCENT_RGB},0.18) 0%, rgba(${SECONDARY_RGB},0.1) 48%, transparent 76%)`,
+            ? "linear-gradient(to bottom, transparent, rgba(5,7,10,0.92))"
+            : "linear-gradient(to bottom, transparent, rgba(244,244,242,0.86))",
         }}
       />
 
-      <motion.div className="relative z-10 flex flex-col items-center" style={{ scale: imgScale, opacity: imgOpacity }}>
+      <div className="relative z-10 mx-auto grid max-w-7xl items-start gap-4 pt-8 lg:grid-cols-[0.34fr_0.66fr]">
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.3 }}
-          className="mb-8 flex items-center gap-4 justify-center"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="max-w-[470px]"
         >
-          <div className="w-8 h-[1px]" style={{ background: r(0.1) }} />
-          <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase", color: r(0.3) }}>
-            {t("sn.hero.label")} — {t("sn.hero.year")}
-          </span>
-          <div className="w-8 h-[1px]" style={{ background: r(0.1) }} />
-        </motion.div>
+          <div className="mb-8 flex items-center gap-4">
+            <span
+              className="h-px w-9"
+              style={{ background: ACCENT }}
+            />
+            <p
+              style={{
+                fontFamily: "'Roboto Mono', monospace",
+                fontSize: "0.72rem",
+                letterSpacing: "0.18em",
+                color: isDark ? "rgba(244,244,242,0.58)" : "rgba(0,0,0,0.48)",
+              }}
+            >
+              PRODUCTION AUDIOVISUELLE — 2026
+            </p>
+          </div>
 
-        {/* Logo text */}
-        <motion.div
-          initial={{ opacity: 0, y: 30, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
-          className="w-[280px] md:w-[400px]"
-        >
           <img
             src={isDark ? logoIconTxtWhite : logoIconTxtBlack}
             alt="SNATSH"
-            className="w-full"
+            className="mb-6 w-[230px] md:w-[320px]"
+          />
+
+          <h1
+            className="mb-7 max-w-xl"
+            style={{
+              fontFamily: "'Plus Jakarta Sans', sans-serif",
+              fontSize: "clamp(1.9rem, 3vw, 3.05rem)",
+              lineHeight: 1.14,
+              fontWeight: 520,
+              letterSpacing: "0",
+              color: textStrong,
+            }}
+          >
+            Donner vie aux idées.<br />Créer l'émotion.
+          </h1>
+
+          <p
+            className="max-w-md"
+            style={{
+              fontFamily: "'Roboto', sans-serif",
+              fontSize: "1rem",
+              lineHeight: 1.9,
+              color: textSoft,
+            }}
+          >
+            De la première étincelle à l'image finale, nous concevons des contenus audiovisuels clairs, puissants et mémorables.
+          </p>
+
+          <div className="mt-8 grid max-w-lg gap-6 sm:grid-cols-2">
+            {[
+              ["Vision créative", "Raconter juste.", ACCENT_RGB],
+              ["Exécution maîtrisée", "Livrer fort.", SECONDARY_RGB],
+            ].map(([label, value, color]) => (
+              <div
+                key={label}
+                className="flex items-center gap-3"
+                style={{
+                  color: textStrong,
+                }}
+              >
+                <span
+                  className="grid h-10 w-10 shrink-0 place-items-center rounded-xl"
+                  style={{
+                    background: `rgba(${color},${isDark ? 0.28 : 0.5})`,
+                    border: `1px solid ${isDark ? "rgba(244,244,242,0.08)" : "rgba(0,0,0,0.05)"}`,
+                    boxShadow: isDark ? "0 16px 38px rgba(0,0,0,0.16)" : "0 16px 36px rgba(0,0,0,0.07)",
+                  }}
+                >
+                  <span
+                    className="h-3 w-3 rounded-full"
+                    style={{ background: isDark ? "rgba(244,244,242,0.72)" : "rgba(255,255,255,0.86)" }}
+                  />
+                </span>
+                <span>
+                <p
+                  className="mb-1"
+                  style={{
+                    fontFamily: "'Roboto Mono', monospace",
+                    fontSize: "0.58rem",
+                    letterSpacing: "0.13em",
+                    color: isDark ? ACCENT : "rgba(0,0,0,0.48)",
+                  }}
+                >
+                  {label}
+                </p>
+                <p
+                  style={{
+                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                    fontSize: "1rem",
+                    fontWeight: 700,
+                    color: textStrong,
+                  }}
+                >
+                  {value}
+                </p>
+                </span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="pointer-events-none relative min-h-[360px] overflow-visible md:min-h-[500px] lg:min-h-[620px]"
+          initial={{ opacity: 0, x: 38 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.12, ease: "easeOut" }}
+        >
+          <motion.img
+            src={heroVisual}
+            alt=""
+            aria-hidden="true"
+            className="absolute left-[47%] top-1/2 w-[186%] max-w-none -translate-x-1/2 -translate-y-1/2 object-contain md:w-[176%] lg:w-[188%]"
+            animate={{ y: [0, -8, 0], x: [0, 6, 0] }}
+            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute left-[18%] top-[14%] h-9 w-9 rounded-xl"
+            animate={{ y: [0, -8, 0], rotate: [0, 4, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            style={{
+              background: `rgba(${SECONDARY_RGB},${isDark ? 0.18 : 0.34})`,
+              boxShadow: isDark ? "0 18px 40px rgba(0,0,0,0.24)" : "0 18px 40px rgba(0,0,0,0.08)",
+            }}
+          />
+          <motion.div
+            className="absolute bottom-[12%] left-[34%] h-10 w-10 rounded-xl"
+            animate={{ y: [0, 10, 0], rotate: [0, -4, 0] }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+            style={{
+              background: `rgba(${ACCENT_RGB},${isDark ? 0.2 : 0.42})`,
+              boxShadow: isDark ? "0 18px 40px rgba(0,0,0,0.22)" : "0 18px 38px rgba(0,0,0,0.08)",
+            }}
           />
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   );
 }
@@ -402,39 +526,70 @@ function LogoSection() {
 /* ===================================
    7. PALETTE
    =================================== */
-function PaletteSection() {
+function PaletteSection({ onActiveColorChange }: { onActiveColorChange?: (color: string) => void }) {
   const { isDark, r } = useTheme();
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const [playhead, setPlayhead] = useState(48);
+  const [isScrubbing, setIsScrubbing] = useState(false);
   const timecodes = ["00:00", "00:01", "00:02", "00:03", "00:05"];
-  const panelBg = isDark
-    ? "radial-gradient(circle at 18% 18%, rgba(193,211,221,0.1), transparent 28%), linear-gradient(145deg, #060b12 0%, #0b1824 55%, #05070a 100%)"
-    : "linear-gradient(145deg, rgba(244,244,242,0.92) 0%, rgba(255,255,255,0.82) 100%)";
   const panelBorder = isDark ? "rgba(244,244,242,0.08)" : "rgba(10,12,8,0.08)";
   const textStrong = isDark ? "#f4f4f2" : "#0a0c08";
   const textSoft = isDark ? "rgba(244,244,242,0.68)" : "rgba(10,12,8,0.62)";
-  const rail = isDark ? "rgba(244,244,242,0.24)" : "rgba(10,12,8,0.22)";
+  const rail = isDark ? "rgba(244,244,242,0.28)" : "rgba(10,12,8,0.34)";
+  const railBase = isDark ? "rgba(244,244,242,0.055)" : "rgba(10,12,8,0.075)";
   const cardBorder = isDark ? "rgba(244,244,242,0.16)" : "rgba(10,12,8,0.12)";
+  const activeIndex = Math.min(4, Math.max(0, Math.round((playhead / 100) * 4)));
+  const activeColor = PALETTE[activeIndex].hex;
+  const activeAura = activeColor === "#000000"
+    ? isDark
+      ? "rgba(244,244,242,0.1)"
+      : "rgba(0,0,0,0.18)"
+    : activeColor === "#FFFFFF" || activeColor === "#F4F4F2"
+      ? isDark
+        ? "rgba(244,244,242,0.32)"
+        : "rgba(192,193,164,0.26)"
+      : `${activeColor}${isDark ? "5c" : "70"}`;
+  const activeGlow = activeColor === "#000000"
+    ? isDark ? "rgba(244,244,242,0.28)" : "rgba(0,0,0,0.24)"
+    : `${activeColor}${isDark ? "8a" : "99"}`;
+
+  useEffect(() => {
+    onActiveColorChange?.(activeColor);
+  }, [activeColor, onActiveColorChange]);
+
+  const getTimelinePercent = (clientX: number) => {
+    const rect = timelineRef.current?.getBoundingClientRect();
+    if (!rect) return 0;
+    return Math.min(100, Math.max(0, ((clientX - rect.left) / rect.width) * 100));
+  };
+
+  const updatePlayhead = (clientX: number) => {
+    setPlayhead(getTimelinePercent(clientX));
+  };
+
+  const handleScrubStart = (event: PointerEvent<HTMLDivElement>) => {
+    setIsScrubbing(true);
+    event.currentTarget.setPointerCapture(event.pointerId);
+    updatePlayhead(event.clientX);
+  };
+
+  const handleScrubMove = (event: PointerEvent<HTMLDivElement>) => {
+    if (!isScrubbing) return;
+    updatePlayhead(event.clientX);
+  };
 
   return (
     <section className="px-6 md:px-16 py-20">
       <div className="max-w-6xl mx-auto">
-        <div
-          className="relative overflow-hidden rounded-[28px] px-6 py-10 md:p-12 lg:p-14"
-          style={{
-            background: panelBg,
-            border: `1px solid ${panelBorder}`,
-            boxShadow: isDark ? "0 34px 100px rgba(0,0,0,0.28)" : "0 26px 70px rgba(10,12,8,0.08)",
-          }}
-        >
-          <div
-            className="absolute left-10 top-24 h-px w-44"
-            style={{
-              background: `linear-gradient(90deg, transparent, ${isDark ? "rgba(193,211,221,0.75)" : "rgba(192,193,164,0.68)"}, transparent)`,
-              boxShadow: isDark ? "0 0 22px rgba(193,211,221,0.55)" : "0 0 18px rgba(192,193,164,0.35)",
+        <div className="relative isolate">
+          <motion.div
+            className="pointer-events-none absolute inset-x-[-12rem] top-[35%] z-0 h-[34rem] rounded-full blur-3xl"
+            animate={{
+              background: `radial-gradient(ellipse at 50% 50%, ${activeAura} 0%, transparent 70%)`,
+              opacity: isDark ? 0.72 : 0.64,
+              scale: isScrubbing ? 1.08 : 1,
             }}
-          />
-          <div
-            className="absolute bottom-8 left-1/2 h-52 w-52 -translate-x-1/2 rounded-full blur-3xl"
-            style={{ background: isDark ? "rgba(193,211,221,0.08)" : "rgba(192,193,164,0.13)" }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
           />
 
           <div className="relative z-10">
@@ -524,18 +679,44 @@ function PaletteSection() {
                       </div>
 
                       <div className="grid grid-cols-5 gap-3">
-                        {PALETTE.map((color, i) => (
+                        {PALETTE.map((color, i) => {
+                          const isActive = activeIndex === i;
+                          const distance = Math.abs(activeIndex - i);
+                          const isNear = distance === 1;
+
+                          return (
                           <div key={color.hex} className="relative">
-                            <div
-                              className="aspect-[1.45] rounded-xl"
+                            <motion.div
+                              className="relative overflow-hidden aspect-[1.45] rounded-xl"
+                              animate={{
+                                y: isActive ? -12 : isNear ? -4 : 0,
+                                scale: isActive ? 1.06 : isNear ? 1.015 : 0.98,
+                                opacity: isActive ? 1 : isNear ? 0.82 : 0.62,
+                              }}
+                              transition={{ duration: 0.48, ease: [0.16, 1, 0.3, 1] }}
                               style={{
                                 background: color.hex,
                                 border: `1px solid ${color.hex === "#000000" ? "rgba(244,244,242,0.22)" : cardBorder}`,
                                 boxShadow: isDark
-                                  ? `0 14px 36px ${color.hex === "#000000" ? "rgba(0,0,0,0.7)" : `${color.hex}2b`}`
-                                  : "0 12px 28px rgba(10,12,8,0.1)",
+                                  ? `0 ${isActive ? 28 : isNear ? 18 : 10}px ${isActive ? 70 : isNear ? 44 : 24}px ${color.hex === "#000000" ? "rgba(0,0,0,0.76)" : `${color.hex}${isActive ? "70" : isNear ? "3d" : "20"}`}`
+                                  : `0 ${isActive ? 24 : isNear ? 16 : 9}px ${isActive ? 54 : isNear ? 34 : 20}px rgba(10,12,8,${isActive ? 0.2 : isNear ? 0.12 : 0.06})`,
                               }}
                             >
+                              <motion.span
+                                className="pointer-events-none absolute inset-y-0 w-14 -skew-x-12"
+                                animate={{ left: isActive || isNear ? ["-35%", "115%"] : "-35%" }}
+                                transition={{
+                                  duration: isActive ? 1.15 : 1.55,
+                                  repeat: isActive || isNear ? Infinity : 0,
+                                  repeatDelay: isActive ? 0.65 : 1.4,
+                                  ease: "easeInOut",
+                                }}
+                                style={{
+                                  background: color.hex === "#000000"
+                                    ? "linear-gradient(90deg, transparent, rgba(244,244,242,0.18), transparent)"
+                                    : "linear-gradient(90deg, transparent, rgba(255,255,255,0.38), transparent)",
+                                }}
+                              />
                               <span
                                 className="absolute left-3 top-3"
                                 style={{
@@ -548,7 +729,7 @@ function PaletteSection() {
                               >
                                 {String(i + 1).padStart(2, "0")}
                               </span>
-                            </div>
+                            </motion.div>
                             {i < PALETTE.length - 1 && (
                               <span
                                 className="absolute -right-3 top-1/2 -translate-y-1/2"
@@ -562,7 +743,8 @@ function PaletteSection() {
                               </span>
                             )}
                           </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     </div>
                   </div>
@@ -594,19 +776,77 @@ function PaletteSection() {
                     ))}
                   </div>
 
-                  <div className="relative mt-8 h-10">
+                  <div
+                    ref={timelineRef}
+                    className="group relative mt-8 h-20 cursor-ew-resize select-none touch-none"
+                    role="slider"
+                    tabIndex={0}
+                    aria-label="Curseur de palette"
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-valuenow={Math.round(playhead)}
+                    onPointerDown={handleScrubStart}
+                    onPointerMove={handleScrubMove}
+                    onPointerUp={() => setIsScrubbing(false)}
+                    onPointerCancel={() => setIsScrubbing(false)}
+                    onKeyDown={(event) => {
+                      if (event.key === "ArrowLeft") setPlayhead((value) => Math.max(0, value - 5));
+                      if (event.key === "ArrowRight") setPlayhead((value) => Math.min(100, value + 5));
+                    }}
+                  >
+                    <div
+                      className="absolute left-10 right-10 top-1/2 h-3 -translate-y-1/2 rounded-full"
+                      style={{
+                        background: railBase,
+                        boxShadow: isDark ? "inset 0 0 18px rgba(244,244,242,0.045)" : "inset 0 0 14px rgba(10,12,8,0.08)",
+                      }}
+                    />
                     <div className="absolute left-10 right-10 top-1/2 h-px" style={{ background: rail }} />
+                    <motion.div
+                      className="absolute left-10 top-1/2 h-1 -translate-y-1/2 rounded-full"
+                      animate={{ width: `calc((100% - 5rem) * ${playhead / 100})` }}
+                      style={{
+                        background: `linear-gradient(90deg, ${ACCENT}, ${activeColor})`,
+                        boxShadow: `0 0 26px ${activeGlow}`,
+                      }}
+                    />
                     <div className="absolute left-10 right-10 top-1/2 flex -translate-y-1/2 justify-between">
                       {Array.from({ length: 34 }).map((_, i) => (
                         <span key={i} className="h-3 w-px" style={{ background: i % 5 === 0 ? r(0.24) : r(0.12) }} />
                       ))}
                     </div>
-                    <div
-                      className="absolute left-1/2 top-1/2 flex h-8 -translate-x-1/2 -translate-y-1/2 items-center gap-1"
-                      style={{ filter: isDark ? "drop-shadow(0 0 12px rgba(193,211,221,0.55))" : "drop-shadow(0 0 10px rgba(192,193,164,0.42))" }}
+                    <motion.div
+                      className="absolute top-1/2 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full"
+                      animate={{
+                        left: `calc(2.5rem + (100% - 5rem) * ${playhead / 100})`,
+                        scale: isScrubbing ? 1.05 : 1,
+                      }}
+                      transition={{ duration: isScrubbing ? 0.08 : 0.28, ease: "easeOut" }}
+                      style={{
+                        background: isDark ? "rgba(244,244,242,0.08)" : "rgba(255,255,255,0.68)",
+                        border: `1px solid ${isDark ? "rgba(244,244,242,0.18)" : "rgba(10,12,8,0.12)"}`,
+                        boxShadow: `0 12px 30px ${activeGlow}`,
+                      }}
                     >
-                      <span className="h-7 w-1.5 rounded-full" style={{ background: isDark ? "#c1d3dd" : ACCENT }} />
-                      <span className="h-7 w-1.5 rounded-full" style={{ background: isDark ? "#f4f4f2" : "#0a0c08" }} />
+                      <span className="h-5 w-1.5 rounded-full" style={{ background: activeColor === "#000000" && isDark ? "#f4f4f2" : activeColor }} />
+                    </motion.div>
+                    <div
+                      className="absolute bottom-0 left-1/2 flex -translate-x-1/2 items-center gap-2 opacity-70 transition-opacity duration-300 group-hover:opacity-100"
+                      style={{
+                        fontFamily: "'Roboto Mono', monospace",
+                        fontSize: "0.62rem",
+                        letterSpacing: "0.14em",
+                        color: textSoft,
+                      }}
+                    >
+                      <span>GLISSER POUR EXPLORER</span>
+                      <motion.span
+                        animate={{ x: [4, -4, 4] }}
+                        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                        style={{ color: activeColor === "#000000" && !isDark ? "#0a0c08" : activeColor }}
+                      >
+                        ←
+                      </motion.span>
                     </div>
                   </div>
                 </div>
@@ -1047,50 +1287,264 @@ function FinalSection() {
   const { t } = useI18n();
   const { isDark, r } = useTheme();
   const navigate = useNavigate();
+  const processItems = [
+    { label: "IDÉE", image: footerVisual09 },
+    { label: "TOURNAGE", image: footerVisual10 },
+    { label: "MONTAGE", image: footerVisual11 },
+    { label: "ÉTALONNAGE", image: footerVisual12 },
+    { label: "LIVRAISON", image: footerVisual13 },
+  ];
+  const sectionBg = isDark
+    ? "radial-gradient(ellipse at 72% 26%, rgba(193,211,221,0.08), transparent 34%), radial-gradient(ellipse at 26% 78%, rgba(192,193,164,0.08), transparent 36%), linear-gradient(145deg, #08101a 0%, #0d1724 54%, #070c13 100%)"
+    : "radial-gradient(ellipse at 70% 22%, rgba(193,211,221,0.22), transparent 36%), radial-gradient(ellipse at 30% 76%, rgba(192,193,164,0.18), transparent 38%), linear-gradient(145deg, #f4f4f2 0%, #ffffff 56%, #eef3f5 100%)";
+  const textStrong = isDark ? "#f4f4f2" : "#000000";
+  const textMuted = isDark ? "rgba(244,244,242,0.58)" : "rgba(0,0,0,0.52)";
 
   return (
-    <section className="px-6 md:px-16 py-24">
-      <div className="max-w-5xl mx-auto flex flex-col items-center">
-        <FadeIn className="mb-6">
-          <SectionLabel>{t("sn.final.label")}</SectionLabel>
-        </FadeIn>
+    <section className="px-4 py-20 md:px-10 md:py-24">
+      <div
+        className="relative mx-auto max-w-[1440px] overflow-hidden rounded-[2rem] px-6 py-12 md:px-12 lg:min-h-[620px] lg:px-12 lg:py-14 xl:px-16"
+        style={{
+          background: sectionBg,
+          border: `1px solid ${isDark ? "rgba(244,244,242,0.08)" : "rgba(0,0,0,0.06)"}`,
+          boxShadow: isDark ? "0 34px 120px rgba(0,0,0,0.36)" : "0 34px 120px rgba(0,0,0,0.08)",
+        }}
+      >
+        <div
+          className="pointer-events-none absolute left-[9%] top-[18%] h-9 w-9 rounded-lg"
+          style={{ background: `rgba(${SECONDARY_RGB},${isDark ? 0.16 : 0.34})` }}
+        />
+        <div
+          className="pointer-events-none absolute left-[6.5%] top-[13%] h-11 w-11 rounded-lg"
+          style={{ background: `rgba(${ACCENT_RGB},${isDark ? 0.18 : 0.42})` }}
+        />
+        <div
+          className="pointer-events-none absolute bottom-[20%] left-[52%] h-10 w-10 rounded-lg"
+          style={{ background: `rgba(${SECONDARY_RGB},${isDark ? 0.14 : 0.3})` }}
+        />
+        <div
+          className="pointer-events-none absolute bottom-[15%] left-[55%] h-9 w-9 rounded-lg"
+          style={{ background: `rgba(${ACCENT_RGB},${isDark ? 0.16 : 0.34})` }}
+        />
 
-        {/* Closing logo */}
         <FadeIn>
-          <div className="flex justify-center mb-10">
-            <img src={isDark ? logoIconWhite : logoIconBlack} alt="SNATSH" className="w-[96px] md:w-[128px]" />
+          <div className="relative z-10 min-h-[500px]">
+            <div
+              className="absolute left-0 right-0 top-[30%] hidden h-10 lg:block"
+              style={{
+                backgroundImage: `repeating-linear-gradient(90deg, ${isDark ? "rgba(244,244,242,0.1)" : "rgba(0,0,0,0.07)"} 0 1px, transparent 1px 12px)`,
+                WebkitMaskImage: "linear-gradient(90deg, transparent 0%, #000 6%, #000 88%, transparent 100%)",
+                maskImage: "linear-gradient(90deg, transparent 0%, #000 6%, #000 88%, transparent 100%)",
+              }}
+            />
+            <div
+              className="absolute left-0 right-[34%] top-[67%] hidden h-10 lg:block"
+              style={{
+                backgroundImage: `repeating-linear-gradient(90deg, ${isDark ? "rgba(244,244,242,0.1)" : "rgba(0,0,0,0.07)"} 0 1px, transparent 1px 12px)`,
+                WebkitMaskImage: "linear-gradient(90deg, transparent 0%, #000 6%, #000 92%, transparent 100%)",
+                maskImage: "linear-gradient(90deg, transparent 0%, #000 6%, #000 92%, transparent 100%)",
+              }}
+            />
+            <div className="hidden lg:block">
+              <span
+                className="absolute left-[23%] top-[27%] font-mono text-[0.5rem] tracking-[0.08em]"
+                style={{ color: textMuted }}
+              >
+                00:00:00
+              </span>
+              <span
+                className="absolute left-[60%] top-[27%] font-mono text-[0.5rem] tracking-[0.08em]"
+                style={{ color: textMuted }}
+              >
+                00:00:05
+              </span>
+              <span
+                className="absolute left-[23.8%] top-[31%] h-0 w-0 border-x-[4px] border-t-[8px] border-x-transparent"
+                style={{ borderTopColor: isDark ? "rgba(244,244,242,0.36)" : "rgba(0,0,0,0.24)" }}
+              />
+              <span
+                className="absolute left-[60.6%] top-[31%] h-0 w-0 border-x-[4px] border-t-[8px] border-x-transparent"
+                style={{ borderTopColor: isDark ? "rgba(244,244,242,0.36)" : "rgba(0,0,0,0.24)" }}
+              />
+            </div>
+
+            <div className="absolute left-0 top-[36%] hidden w-[68%] items-center gap-0 lg:flex">
+              {processItems.slice(0, 4).map((item, index) => (
+                <motion.div
+                  key={item.label}
+                  className="group relative h-[200px] flex-1 overflow-hidden rounded-[9px]"
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "120px 0px" }}
+                  transition={{ duration: 0.65, delay: index * 0.06, ease: "easeOut" }}
+                  style={{
+                    border: `1px solid ${isDark ? "rgba(244,244,242,0.1)" : "rgba(0,0,0,0.06)"}`,
+                    boxShadow: isDark ? "0 18px 42px rgba(0,0,0,0.26)" : "0 18px 42px rgba(0,0,0,0.08)",
+                    marginLeft: index === 0 ? 0 : -1,
+                  }}
+                >
+                  <img
+                    src={item.image}
+                    alt={`SNATSH ${item.label.toLowerCase()}`}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.035]"
+                    style={{ filter: isDark ? "saturate(0.85) contrast(0.96)" : "saturate(0.92) contrast(0.98)" }}
+                  />
+                </motion.div>
+              ))}
+              <motion.div
+                className="relative h-[200px] flex-[1.5] overflow-hidden rounded-[9px]"
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "120px 0px" }}
+                transition={{ duration: 0.65, delay: 0.24, ease: "easeOut" }}
+                style={{
+                  border: `1px solid ${isDark ? "rgba(244,244,242,0.08)" : "rgba(0,0,0,0.04)"}`,
+                  marginLeft: -1,
+                }}
+              >
+                <img
+                  src={processItems[4].image}
+                  alt={`SNATSH ${processItems[4].label.toLowerCase()}`}
+                  className="h-full w-full object-cover"
+                  style={{
+                    filter: isDark ? "blur(11px) saturate(0.68) opacity(0.34)" : "blur(11px) saturate(0.72) opacity(0.4)",
+                    transform: "scale(1.14)",
+                  }}
+                />
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background: isDark
+                      ? "linear-gradient(90deg, rgba(13,23,36,0.06), rgba(13,23,36,0.48) 68%, rgba(13,23,36,0.88))"
+                      : "linear-gradient(90deg, rgba(244,244,242,0.08), rgba(244,244,242,0.54) 68%, rgba(255,255,255,0.9))",
+                  }}
+                />
+              </motion.div>
+            </div>
+
+            <div className="hidden lg:block">
+              {processItems.map((item, index) => {
+                const left = index === 0 ? "7%" : index === 1 ? "18.5%" : index === 2 ? "30%" : index === 3 ? "42%" : "53.5%";
+                return (
+                  <div key={`label-${item.label}`} className="absolute top-[69%]" style={{ left }}>
+                    <span
+                      className="mx-auto mb-4 block h-0 w-0 border-x-[4px] border-b-[8px] border-x-transparent"
+                      style={{ borderBottomColor: index === 4 ? SECONDARY : isDark ? "rgba(244,244,242,0.32)" : "rgba(0,0,0,0.18)" }}
+                    />
+                    <p
+                      style={{
+                        fontFamily: "'Roboto Mono', monospace",
+                        fontSize: "0.66rem",
+                        letterSpacing: "0.1em",
+                        color: index === 4 ? SECONDARY : textMuted,
+                      }}
+                    >
+                      {item.label}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="grid gap-8 lg:hidden">
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+                {processItems.map((item) => (
+                  <div key={item.label}>
+                    <div className="aspect-[4/5] overflow-hidden rounded-lg">
+                      <img src={item.image} alt={`SNATSH ${item.label.toLowerCase()}`} className="h-full w-full object-cover" />
+                    </div>
+                    <p
+                      className="mt-3"
+                      style={{
+                        fontFamily: "'Roboto Mono', monospace",
+                        fontSize: "0.62rem",
+                        letterSpacing: "0.1em",
+                        color: textMuted,
+                      }}
+                    >
+                      {item.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-12 lg:absolute lg:right-[4%] lg:top-[38%] lg:mt-0 lg:w-[30%]">
+              <div className="relative px-4 py-5 lg:px-0 lg:py-0">
+                <span
+                  className="absolute -left-2 -top-2 hidden h-7 w-7 border-l border-t lg:block"
+                  style={{ borderColor: isDark ? "rgba(193,211,221,0.22)" : "rgba(193,211,221,0.7)" }}
+                />
+                <span
+                  className="absolute -right-2 -top-2 hidden h-7 w-7 border-r border-t lg:block"
+                  style={{ borderColor: isDark ? "rgba(193,211,221,0.22)" : "rgba(193,211,221,0.7)" }}
+                />
+                <span
+                  className="absolute -bottom-2 -left-2 hidden h-7 w-7 border-b border-l lg:block"
+                  style={{ borderColor: isDark ? "rgba(193,211,221,0.14)" : "rgba(193,211,221,0.46)" }}
+                />
+                <span
+                  className="absolute -bottom-2 -right-2 hidden h-7 w-7 border-b border-r lg:block"
+                  style={{ borderColor: isDark ? "rgba(193,211,221,0.14)" : "rgba(193,211,221,0.46)" }}
+                />
+                <img
+                  src={isDark ? logoIconTxtWhite : logoIconTxtBlack}
+                  alt="SNATSH"
+                  className="mb-10 w-[220px] md:w-[300px] lg:w-[380px]"
+                />
+                <h2
+                  style={{
+                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                    fontSize: "clamp(1.35rem, 1.55vw, 1.85rem)",
+                    lineHeight: 1.22,
+                    fontWeight: 520,
+                    letterSpacing: "0",
+                    color: textStrong,
+                  }}
+                >
+                  Des idées claires.<br />
+                  Des images qui <span style={{ color: ACCENT, fontWeight: 650 }}>marquent.</span>
+                </h2>
+                <div className="mt-8 flex items-center gap-0">
+                  <span
+                    className="h-px w-[205px]"
+                    style={{ background: isDark ? "rgba(193,211,221,0.28)" : "rgba(193,211,221,0.86)" }}
+                  />
+                  <span
+                    className="h-2 w-2 rounded-full"
+                    style={{ background: isDark ? "rgba(193,211,221,0.45)" : "rgba(193,211,221,0.95)" }}
+                  />
+                </div>
+                <p
+                  className="mt-16"
+                  style={{
+                    fontFamily: "'Roboto Mono', monospace",
+                    fontSize: "0.72rem",
+                    letterSpacing: "0.24em",
+                    color: textMuted,
+                  }}
+                >
+                  PRODUCTION AUDIOVISUELLE — 2026
+                </p>
+              </div>
+            </div>
           </div>
         </FadeIn>
 
-        <FadeIn>
-          <p
-            className="text-center max-w-md mb-12"
-            style={{
-              fontFamily: "'Roboto', sans-serif",
-              fontSize: "0.85rem",
-              lineHeight: 2,
-              color: r(0.3),
-            }}
-          >
-            {t("sn.final.text")}
-          </p>
-        </FadeIn>
-
-        <FadeIn>
-          <button
-            onClick={() => navigate("/projects")}
-            className="group flex items-center gap-3 px-6 py-3 rounded-full transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: "0.8rem",
-              border: `1px solid ${r(0.1)}`,
-              color: r(0.4),
-            }}
-          >
-            <ArrowLeft size={14} className="transition-transform group-hover:-translate-x-1" />
-            {t("sn.back")}
-          </button>
-        </FadeIn>
+        <button
+          onClick={() => navigate("/projects")}
+          className="group relative z-10 mt-8 flex w-fit items-center gap-3 rounded-full px-5 py-2.5 transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
+          style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: "0.75rem",
+            border: `1px solid ${r(0.1)}`,
+            color: r(0.4),
+            background: isDark ? "rgba(244,244,242,0.03)" : "rgba(255,255,255,0.42)",
+          }}
+        >
+          <ArrowLeft size={14} className="transition-transform group-hover:-translate-x-1" />
+          {t("sn.back")}
+        </button>
       </div>
     </section>
   );
@@ -1103,9 +1557,40 @@ export function ProjectSnatsh() {
   const { t } = useI18n();
   const { r, isDark } = useTheme();
   const navigate = useNavigate();
+  const [paletteGlow, setPaletteGlow] = useState(PALETTE[2].hex);
+  const pageGlow = paletteGlow === "#000000"
+    ? isDark
+      ? "rgba(244,244,242,0.09)"
+      : "rgba(0,0,0,0.18)"
+    : paletteGlow === "#FFFFFF" || paletteGlow === "#F4F4F2"
+      ? isDark
+        ? "rgba(244,244,242,0.18)"
+        : "rgba(192,193,164,0.38)"
+      : `${paletteGlow}${isDark ? "34" : "70"}`;
 
   return (
-    <div className="relative w-full">
+    <div className="relative isolate w-full">
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        <motion.div
+          className="absolute inset-[-10rem]"
+          animate={{
+            background: [
+              `radial-gradient(ellipse at 52% 12%, ${pageGlow} 0%, transparent ${isDark ? 34 : 42}%), radial-gradient(ellipse at 16% 36%, ${pageGlow} 0%, transparent ${isDark ? 32 : 40}%), radial-gradient(ellipse at 82% 63%, ${pageGlow} 0%, transparent ${isDark ? 34 : 42}%), radial-gradient(ellipse at 36% 92%, ${pageGlow} 0%, transparent ${isDark ? 30 : 38}%)`,
+              `radial-gradient(ellipse at 56% 14%, ${pageGlow} 0%, transparent ${isDark ? 36 : 44}%), radial-gradient(ellipse at 18% 40%, ${pageGlow} 0%, transparent ${isDark ? 34 : 42}%), radial-gradient(ellipse at 78% 66%, ${pageGlow} 0%, transparent ${isDark ? 36 : 44}%), radial-gradient(ellipse at 40% 90%, ${pageGlow} 0%, transparent ${isDark ? 32 : 40}%)`,
+            ],
+            opacity: isDark ? 0.92 : 1,
+          }}
+          transition={{ duration: 1.1, ease: "easeOut" }}
+        />
+        <motion.div
+          className="absolute inset-x-0 top-0 h-full"
+          animate={{
+            background: `linear-gradient(180deg, ${pageGlow} 0%, transparent 22%, ${pageGlow} 46%, transparent 72%, ${pageGlow} 100%)`,
+            opacity: isDark ? 0.16 : 0.36,
+          }}
+          transition={{ duration: 1.1, ease: "easeOut" }}
+        />
+      </div>
       <ProjectBackButton
         onClick={() => navigate("/projects")}
         style={{
@@ -1118,17 +1603,19 @@ export function ProjectSnatsh() {
         {t("sn.back")}
       </ProjectBackButton>
 
-      <HeroSection />
-      <IntroSection />
-      <ContextSection />
-      <LogoSection />
-      <DirectionSection />
-      <PaletteSection />
-      <TypographySection />
-      <ChoicesSection />
-      <InteractiveBook />
-      <MockupsSection />
-      <FinalSection />
+      <div className="relative z-10">
+        <HeroSection />
+        <IntroSection />
+        <ContextSection />
+        <LogoSection />
+        <DirectionSection />
+        <PaletteSection onActiveColorChange={setPaletteGlow} />
+        <TypographySection />
+        <ChoicesSection />
+        <InteractiveBook />
+        <MockupsSection />
+        <FinalSection />
+      </div>
     </div>
   );
 }
