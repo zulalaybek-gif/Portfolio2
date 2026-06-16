@@ -10,16 +10,10 @@ import { ProjectBackButton } from "./ProjectBackButton";
 /* ── Assets — SVG logo ── */
 import svgPaths from "../../imports/svg-ksrs7ua06u";
 import svgConstruction from "../../imports/svg-o0d2fxhm66";
-import imgProcess from "../../assets/mya/01-processus-creatif.png";
-import img1 from "../../assets/mya/02-applications.png";
-import img2 from "../../assets/mya/03-applications.png";
-import img3 from "../../assets/mya/04-applications.png";
-import img4 from "../../assets/mya/05-applications.png";
-import imgBox1 from "../../assets/mya/06-applications-boite-a-bijoux-1.jpg";
-import imgBox2 from "../../assets/mya/07-applications-boite-a-bijoux-2.png";
-import imgRing from "../../assets/mya/08-applications-bague-sans-fond.png";
-import imgKeychain from "../../assets/mya/09-applications-portes-clefs.jpg";
 import myaLogoAsset from "../../assets/mya/assets/01. assets.svg";
+import myaPaletteAsset from "../../assets/mya/assets/02.palette.png";
+import myaApplicationsAsset from "../../assets/mya/assets/03.applications.png";
+import myaProcessAsset from "../../assets/mya/assets/04.processus-creatif.png";
 
 /* ── Helpers ── */
 const ACCENT = "#D0B0D4";
@@ -683,49 +677,105 @@ function VariantsSection() {
    8. PALETTE
    ═══════════════════════════════════════════ */
 const colors = [
-  { hex: "#D0B0D4", name: "Lavender", rgb: "208 · 176 · 212" },
-  { hex: "#231332", name: "Deep Purple", rgb: "35 · 19 · 50" },
-  { hex: "#000000", name: "Black", rgb: "0 · 0 · 0" },
-  { hex: "#FFFFFF", name: "White", rgb: "255 · 255 · 255" },
+  { hex: "#D0B0D4", rgb: "RGB 208 · 176 · 212", className: "left-[76%] top-[17%]", side: "right" },
+  { hex: "#231332", rgb: "RGB 35 · 19 · 50", className: "right-[76%] top-[47%]", side: "left" },
+  { hex: "#000000", rgb: "RGB 0 · 0 · 0", className: "left-[86%] top-[47%]", side: "right" },
+  { hex: "#FFFFFF", rgb: "RGB 255 · 255 · 255", className: "left-[69%] bottom-[12%]", side: "right" },
 ];
 
 function PaletteSection() {
-  const { t } = useI18n();
-  const { r, isDark } = useTheme();
+  const { isDark } = useTheme();
+
+  const labelTextColor = isDark ? "rgba(255,255,255,0.78)" : "rgba(35,19,50,0.78)";
+  const labelSubColor = isDark ? "rgba(255,255,255,0.52)" : "rgba(35,19,50,0.5)";
+  const lineColor = isDark ? "rgba(208,176,212,0.34)" : "rgba(35,19,50,0.2)";
+
+  const ColorLabel = ({ color }: { color: (typeof colors)[number] }) => (
+    <div className={`flex items-center gap-2 md:gap-3 ${color.side === "left" ? "flex-row-reverse text-right" : ""}`}>
+      <span
+        className="h-3 w-3 shrink-0 rounded-full shadow-[0_0_18px_rgba(208,176,212,0.35)]"
+        style={{
+          background: color.hex,
+          border: color.hex === "#FFFFFF" ? `1px solid ${lineColor}` : "none",
+        }}
+      />
+      <span className="h-px w-6 shrink-0 md:w-20" style={{ background: lineColor }} />
+      <span className="min-w-0">
+        <span
+          className="block text-[0.74rem] font-light leading-none tracking-[0.08em] md:text-[0.82rem]"
+          style={{ fontFamily: "'Space Grotesk', sans-serif", color: labelTextColor }}
+        >
+          {color.hex}
+        </span>
+        <span
+          className="mt-2 block text-[0.55rem] font-light tracking-[0.06em] md:text-[0.64rem] md:tracking-[0.08em]"
+          style={{ fontFamily: "'Inter', sans-serif", color: labelSubColor }}
+        >
+          {color.rgb}
+        </span>
+      </span>
+    </div>
+  );
 
   return (
-    <section className="px-6 md:px-16 py-20">
-      <div className="max-w-5xl mx-auto">
-        <FadeIn className="mb-12">
-          <SectionLabel>{t("mya.palette.label")}</SectionLabel>
+    <section
+      className="relative overflow-hidden px-6 py-20 md:px-16 md:py-24 lg:min-h-[800px]"
+      style={{
+        background: isDark
+          ? "radial-gradient(circle at 67% 48%, rgba(208,176,212,0.16) 0%, rgba(35,19,50,0.08) 36%, transparent 66%)"
+          : "radial-gradient(circle at 67% 48%, rgba(208,176,212,0.34) 0%, rgba(255,255,255,0.86) 42%, rgba(250,247,252,0.96) 100%)",
+      }}
+    >
+      <div
+        className="pointer-events-none absolute right-[-12%] top-[7%] hidden h-72 w-72 rounded-full blur-3xl md:block"
+        style={{ background: "rgba(208,176,212,0.24)" }}
+      />
+      <div
+        className="pointer-events-none absolute bottom-[-14%] left-[5%] hidden h-64 w-64 rounded-full blur-3xl md:block"
+        style={{ background: "rgba(208,176,212,0.16)" }}
+      />
+
+      <div className="relative mx-auto grid max-w-7xl items-center gap-14 md:grid-cols-[31%_minmax(0,1fr)] lg:min-h-[650px] lg:gap-20">
+        <FadeIn className="max-w-[390px]">
+          <SectionLabel>PALETTE</SectionLabel>
+          <p
+            className="mt-10 text-[1rem] font-light leading-[1.9] tracking-[0.01em] md:text-[1.05rem]"
+            style={{ fontFamily: "'Cormorant Garamond', serif", color: labelTextColor }}
+          >
+            Une harmonie précieuse où le lilas délicat rencontre la profondeur mystérieuse, le noir absolu et la
+            pureté lumineuse.
+          </p>
+          <p
+            className="mt-7 text-[0.95rem] font-light leading-[1.85] tracking-[0.01em] md:text-[1rem]"
+            style={{ fontFamily: "'Cormorant Garamond', serif", color: labelTextColor }}
+          >
+            Quatre teintes joaillières pour sublimer chaque création.
+          </p>
         </FadeIn>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {colors.map((c, i) => (
-            <FadeIn key={c.hex} delay={i * 0.08}>
-              <div
-                className="rounded-2xl overflow-hidden transition-all duration-700"
-                style={{ border: `1px solid ${r(0.06)}` }}
-              >
-                <div
-                  className="w-full aspect-[4/3]"
-                  style={{
-                    background: c.hex,
-                    border: c.hex === "#FFFFFF" ? `1px solid ${r(0.1)}` : "none",
-                  }}
-                />
-                <div className="p-4" style={{ background: isDark ? "rgba(255,255,255,0.02)" : "rgba(0,0,0,0.02)" }}>
-                  <span className="block mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.8rem", fontWeight: 600, color: r(0.6) }}>
-                    {c.hex}
-                  </span>
-                  <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", color: r(0.2) }}>
-                    {c.rgb}
-                  </span>
+        <FadeIn delay={0.08} className="relative flex flex-col items-center md:items-center">
+          <div className="relative w-full md:w-[clamp(480px,55vw,620px)] lg:w-[clamp(620px,44vw,760px)]">
+            <img
+              src={myaPaletteAsset}
+              alt="Bijou floral MYA composé de quatre pierres aux couleurs de la palette"
+              className="mx-auto w-[min(86vw,380px)] object-contain drop-shadow-[0_32px_62px_rgba(35,19,50,0.18)] md:w-full"
+            />
+
+            <div className="absolute inset-0 hidden md:block">
+              {colors.map((color) => (
+                <div key={color.hex} className={`absolute ${color.className}`}>
+                  <ColorLabel color={color} />
                 </div>
-              </div>
-            </FadeIn>
-          ))}
-        </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-10 grid w-full max-w-[390px] grid-cols-2 gap-x-4 gap-y-6 md:hidden">
+            {colors.map((color) => (
+              <ColorLabel key={color.hex} color={color} />
+            ))}
+          </div>
+        </FadeIn>
       </div>
     </section>
   );
@@ -735,19 +785,194 @@ function PaletteSection() {
    9. CREATIVE PROCESS
    ═══════════════════════════════════════════ */
 function ProcessSection() {
-  const { t } = useI18n();
-  const { r } = useTheme();
+  const processTextColor = DARK_PURPLE;
+  const processMutedColor = "rgba(35,19,50,0.56)";
+  const processLineColor = "rgba(112,67,130,0.34)";
+
+  const ProcessIcon = ({ children }: { children: React.ReactNode }) => (
+    <span
+      className="flex h-11 w-11 items-center justify-center rounded-full border text-[1.25rem] font-light leading-none"
+      style={{
+        borderColor: "rgba(112,67,130,0.42)",
+        color: "rgba(112,67,130,0.8)",
+        fontFamily: "'Cormorant Garamond', serif",
+      }}
+    >
+      {children}
+    </span>
+  );
 
   return (
-    <section className="px-6 md:px-16 py-20">
-      <div className="max-w-5xl mx-auto">
-        <FadeIn className="mb-12">
-          <SectionLabel>{t("mya.process.label")}</SectionLabel>
-        </FadeIn>
-
+    <section className="px-4 py-20 md:px-10 md:py-24 lg:px-16 lg:py-28">
+      <div className="mx-auto max-w-[1450px]">
         <FadeIn>
-          <div className="mx-auto w-full max-w-3xl rounded-2xl overflow-hidden" style={{ border: `1px solid ${r(0.05)}` }}>
-            <img src={imgProcess} alt="Creative process" className="w-full object-cover" />
+          <div className="mx-auto w-full overflow-x-auto">
+            <div className="relative mx-auto min-w-[720px] max-w-[1400px] md:min-w-0">
+              <img
+                src={myaProcessAsset}
+                alt="Processus créatif MYA"
+                className="mx-auto block h-auto w-full object-contain drop-shadow-[0_22px_64px_rgba(35,19,50,0.06)]"
+              />
+
+              <div className="pointer-events-none absolute inset-0">
+                <div className="absolute left-[4.5%] top-[8.8%] flex items-center gap-5">
+                  <p
+                    className="text-[clamp(0.58rem,1vw,0.9rem)] font-semibold uppercase tracking-[0.26em]"
+                    style={{ fontFamily: "'Inter', sans-serif", color: processMutedColor }}
+                  >
+                    PROCESSUS CRÉATIF
+                  </p>
+                  <span className="h-px w-64 max-w-[18vw]" style={{ background: processLineColor }} />
+                  <span className="h-2 w-2 rotate-45" style={{ background: "rgba(112,67,130,0.7)" }} />
+                </div>
+
+                <h2
+                  className="absolute left-[4.5%] top-[12.7%] text-[clamp(2rem,4.4vw,4.1rem)] font-light leading-none tracking-[-0.01em]"
+                  style={{ fontFamily: "'Cormorant Garamond', serif", color: processTextColor }}
+                >
+                  création du logo MYA
+                </h2>
+                <p
+                  className="absolute left-[4.5%] top-[19.6%] max-w-[360px] text-[clamp(0.58rem,1vw,0.95rem)] leading-[1.45]"
+                  style={{ fontFamily: "'Inter', sans-serif", color: processMutedColor }}
+                >
+                  Un symbole pensé comme un bijou,<br />né d'une géométrie douce et d'un équilibre parfait.
+                </p>
+                <span
+                  className="absolute left-[5.1%] top-[24.6%] text-[1.1rem]"
+                  style={{ color: "rgba(208,176,212,0.86)" }}
+                >
+                  ✦
+                </span>
+
+                <div className="absolute left-[5.4%] top-[34%] flex items-start gap-4">
+                  <ProcessIcon>⌒</ProcessIcon>
+                  <div className="max-w-[150px]">
+                    <p className="text-[clamp(0.54rem,0.9vw,0.82rem)] font-semibold" style={{ color: processMutedColor }}>
+                      courbes
+                    </p>
+                    <p className="mt-2 text-[clamp(0.48rem,0.78vw,0.72rem)] leading-[1.35]" style={{ color: processMutedColor }}>
+                      Des courbes douces pour une sensation de fluidité et de féminité.
+                    </p>
+                  </div>
+                </div>
+                <span className="absolute left-[7.6%] top-[38.9%] h-[8.3%] w-px" style={{ background: processLineColor }} />
+                <span className="absolute left-[7.6%] top-[47.1%] h-px w-[14.6%]" style={{ background: processLineColor }} />
+                <span className="absolute left-[21.9%] top-[46.7%] h-2 w-2 rounded-full" style={{ background: "rgba(112,67,130,0.78)" }} />
+
+                <div className="absolute right-[34.5%] top-[34%] flex items-start gap-4">
+                  <ProcessIcon>✧</ProcessIcon>
+                  <div className="max-w-[145px]">
+                    <p className="text-[clamp(0.54rem,0.9vw,0.82rem)] font-semibold" style={{ color: processMutedColor }}>
+                      symétrie
+                    </p>
+                    <p className="mt-2 text-[clamp(0.48rem,0.78vw,0.72rem)] leading-[1.35]" style={{ color: processMutedColor }}>
+                      Une composition axiale pour un logo stable et harmonieux.
+                    </p>
+                  </div>
+                </div>
+                <span className="absolute left-[42.1%] top-[37.9%] h-px w-[11.4%]" style={{ background: processLineColor }} />
+                <span className="absolute left-[39.4%] top-[37.9%] h-[8.4%] w-px rotate-[32deg] origin-top" style={{ background: processLineColor }} />
+                <span className="absolute left-[39.3%] top-[45.7%] h-2 w-2 rounded-full" style={{ background: "rgba(112,67,130,0.78)" }} />
+
+                <div className="absolute left-[5.4%] top-[79.5%] flex items-start gap-4">
+                  <ProcessIcon>□</ProcessIcon>
+                  <div className="max-w-[145px]">
+                    <p className="text-[clamp(0.54rem,0.9vw,0.82rem)] font-semibold" style={{ color: processMutedColor }}>
+                      structure
+                    </p>
+                    <p className="mt-2 text-[clamp(0.48rem,0.78vw,0.72rem)] leading-[1.35]" style={{ color: processMutedColor }}>
+                      Construite sur un système de cercles entrelacés pour une cohérence parfaite.
+                    </p>
+                  </div>
+                </div>
+                <span className="absolute left-[17.6%] top-[85.6%] h-px w-[5.3%]" style={{ background: processLineColor }} />
+                <span className="absolute left-[22.8%] top-[77.9%] h-[8.4%] w-px rotate-[52deg] origin-bottom" style={{ background: processLineColor }} />
+                <span className="absolute left-[25.5%] top-[77.3%] h-2 w-2 rounded-full" style={{ background: "rgba(112,67,130,0.78)" }} />
+
+                <div className="absolute right-[34%] top-[80.8%] flex items-start gap-4">
+                  <ProcessIcon>⌬</ProcessIcon>
+                  <div className="max-w-[150px]">
+                    <p className="text-[clamp(0.54rem,0.9vw,0.82rem)] font-semibold" style={{ color: processMutedColor }}>
+                      équilibre
+                    </p>
+                    <p className="mt-2 text-[clamp(0.48rem,0.78vw,0.72rem)] leading-[1.35]" style={{ color: processMutedColor }}>
+                      Chaque élément s'équilibre pour créer une harmonie visuelle durable.
+                    </p>
+                  </div>
+                </div>
+                <span className="absolute left-[42%] top-[85.7%] h-px w-[5.7%]" style={{ background: processLineColor }} />
+                <span className="absolute left-[40.4%] top-[78.8%] h-[7.4%] w-px rotate-[-34deg] origin-bottom" style={{ background: processLineColor }} />
+                <span className="absolute left-[40.1%] top-[77.7%] h-2 w-2 rounded-full" style={{ background: "rgba(112,67,130,0.78)" }} />
+
+                <div className="absolute right-[7.8%] top-[34.2%] text-center">
+                  <p
+                    className="text-[clamp(0.56rem,0.9vw,0.82rem)] font-semibold uppercase tracking-[0.22em]"
+                    style={{ fontFamily: "'Inter', sans-serif", color: processTextColor }}
+                  >
+                    LE SYMBOLE FINAL
+                  </p>
+                  <div className="mt-5 flex items-center justify-center gap-3">
+                    <span className="h-px w-16" style={{ background: processLineColor }} />
+                    <span className="h-2 w-2 rotate-45" style={{ background: "rgba(112,67,130,0.72)" }} />
+                    <span className="h-px w-16" style={{ background: processLineColor }} />
+                  </div>
+                </div>
+
+                <span className="absolute right-[14.2%] top-[77.6%] text-[1.1rem]" style={{ color: "rgba(112,67,130,0.54)" }}>
+                  ✦
+                </span>
+                <p
+                  className="absolute right-[9.4%] top-[81.6%] max-w-[230px] text-center text-[clamp(0.5rem,0.8vw,0.76rem)] leading-[1.42]"
+                  style={{ fontFamily: "'Inter', sans-serif", color: processMutedColor }}
+                >
+                  Un symbole précieux et intemporel,<br />à l'image de l'univers MYA :<br />délicat, puissant et raffiné.
+                </p>
+                <div className="absolute right-[12.2%] top-[90.1%] text-center">
+                  <p
+                    className="text-[clamp(1.4rem,2.6vw,2.45rem)] font-light uppercase leading-none tracking-[0.18em]"
+                    style={{ fontFamily: "'Cormorant Garamond', serif", color: processTextColor }}
+                  >
+                    MYA
+                  </p>
+                  <p
+                    className="mt-2 text-[clamp(0.42rem,0.7vw,0.65rem)] uppercase tracking-[0.42em]"
+                    style={{ fontFamily: "'Inter', sans-serif", color: processMutedColor }}
+                  >
+                    JEWELRY
+                  </p>
+                </div>
+
+                <div
+                  className="absolute bottom-[2.7%] left-[2.1%] flex h-[5.5%] w-[95.8%] items-center rounded-xl px-[3.5%]"
+                  style={{
+                    background: "rgba(255,255,255,0.34)",
+                    boxShadow: "0 12px 34px rgba(35,19,50,0.08)",
+                    border: "1px solid rgba(255,255,255,0.34)",
+                  }}
+                >
+                  <span className="mr-8 text-[1rem]" style={{ color: "rgba(112,67,130,0.58)" }}>
+                    ✦
+                  </span>
+                  <p
+                    className="text-[clamp(0.44rem,0.75vw,0.68rem)] font-semibold uppercase tracking-[0.24em]"
+                    style={{ fontFamily: "'Inter', sans-serif", color: processMutedColor }}
+                  >
+                    CHAQUE DÉTAIL A SON RAISON D'ÊTRE.
+                  </p>
+                  <span className="mx-8 h-6 w-px" style={{ background: processLineColor }} />
+                  <p
+                    className="text-[clamp(0.44rem,0.75vw,0.68rem)] uppercase tracking-[0.24em]"
+                    style={{ fontFamily: "'Inter', sans-serif", color: processMutedColor }}
+                  >
+                    UN LOGO CONÇU AVEC INTENTION, PENSÉ POUR DURER.
+                  </p>
+                  <span className="ml-auto text-[1rem]" style={{ color: "rgba(112,67,130,0.58)" }}>
+                    ✧ ✧ ✧
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </FadeIn>
       </div>
@@ -759,98 +984,116 @@ function ProcessSection() {
    10. MOCKUPS / APPLICATIONS
    ═══════════════════════════════════════════ */
 function MockupsSection() {
-  const { t } = useI18n();
-  const { r, isDark } = useTheme();
-  const jewelryImages = [img1, img2, img3, img4];
+  const applicationTextColor = DARK_PURPLE;
+  const applicationMutedColor = "rgba(35,19,50,0.52)";
+  const applicationLightColor = "rgba(255,255,255,0.9)";
+  const applicationLightMutedColor = "rgba(255,255,255,0.72)";
 
   return (
-    <section className="px-6 md:px-16 py-20">
-      <div className="max-w-5xl mx-auto">
-        <FadeIn className="mb-12">
-          <SectionLabel>{t("mya.mockups.label")}</SectionLabel>
-        </FadeIn>
+    <section className="px-4 py-20 md:px-10 md:py-24 lg:px-16 lg:py-28">
+      <div className="mx-auto max-w-[1480px]">
+        <FadeIn>
+          <div className="mx-auto w-full overflow-x-auto">
+            <div className="relative mx-auto min-w-[720px] max-w-[1440px] md:min-w-0">
+              <img
+                src={myaApplicationsAsset}
+                alt="Applications MYA : bijoux, packaging, gravure et accessoires"
+                className="mx-auto block h-auto w-full object-contain drop-shadow-[0_24px_70px_rgba(35,19,50,0.08)]"
+              />
 
-        {/* Jewelry carousel */}
-        <FadeIn className="mb-5">
-          <div
-            className="relative mx-auto max-w-4xl overflow-hidden py-1"
-            style={{
-              WebkitMaskImage: "linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%)",
-              maskImage: "linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%)",
-            }}
-          >
-            <motion.div
-              className="flex w-max gap-3"
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ duration: 26, repeat: Infinity, ease: "linear" }}
-            >
-              {[...jewelryImages, ...jewelryImages].map((src, i) => (
-                <div
-                  key={`${src}-${i}`}
-                  className="w-[170px] shrink-0 overflow-hidden rounded-xl md:w-[220px]"
-                  style={{ border: `1px solid ${r(0.04)}` }}
+              <div className="pointer-events-none absolute inset-0">
+                <MyaLogoMark
+                  size={24}
+                  color={applicationTextColor}
+                  className="absolute left-1/2 top-[3.2%] -translate-x-1/2"
+                />
+                <h2
+                  className="absolute left-1/2 top-[7.8%] -translate-x-1/2 whitespace-nowrap text-center text-[clamp(2rem,4.1vw,4.1rem)] font-light uppercase leading-none tracking-[0.16em]"
+                  style={{ fontFamily: "'Cormorant Garamond', serif", color: applicationTextColor }}
                 >
-                  <img src={src} alt={`Jewelry ${(i % jewelryImages.length) + 1}`} className="block h-auto w-full" />
+                  APPLICATIONS
+                </h2>
+                <p
+                  className="absolute left-1/2 top-[15.2%] -translate-x-1/2 whitespace-nowrap text-center text-[clamp(0.58rem,1vw,0.95rem)] uppercase tracking-[0.26em]"
+                  style={{ fontFamily: "'Inter', sans-serif", color: applicationMutedColor }}
+                >
+                  A WORLD OF DETAILS. ONE SIGNATURE.
+                </p>
+                <div className="absolute left-1/2 top-[18.9%] flex -translate-x-1/2 items-center gap-4">
+                  <span className="h-px w-14" style={{ background: "rgba(35,19,50,0.16)" }} />
+                  <span className="h-2 w-2 rotate-45" style={{ background: "rgba(208,176,212,0.82)" }} />
+                  <span className="h-px w-14" style={{ background: "rgba(35,19,50,0.16)" }} />
                 </div>
-              ))}
-            </motion.div>
-          </div>
-        </FadeIn>
 
-        {/* Box mockups — side by side in a single white block */}
-        <FadeIn delay={0.1} className="mb-3">
-          <div className="flex flex-col md:flex-row rounded-2xl overflow-hidden" style={{ background: "#fff" }}>
-            <img src={imgBox2} alt="Box mockup" className="w-full md:w-1/2 object-cover block" />
-            <img src={imgBox1} alt="Box mockup" className="w-full md:w-1/2 object-cover block" />
-          </div>
-        </FadeIn>
+                <div className="absolute left-[7.5%] top-[76.2%]">
+                  <MyaLogoMark size={24} color={applicationLightColor} className="mb-4" />
+                  <p
+                    className="text-[clamp(0.56rem,0.95vw,0.86rem)] uppercase tracking-[0.18em]"
+                    style={{ fontFamily: "'Cormorant Garamond', serif", color: applicationLightColor }}
+                  >
+                    JEWELRY
+                  </p>
+                  <span className="mt-3 block h-px w-7" style={{ background: "rgba(255,255,255,0.56)" }} />
+                  <p
+                    className="mt-5 max-w-[120px] text-[clamp(0.48rem,0.78vw,0.72rem)] leading-[1.65]"
+                    style={{ fontFamily: "'Inter', sans-serif", color: applicationLightMutedColor }}
+                  >
+                    Timeless pieces, crafted to be cherished.
+                  </p>
+                </div>
 
-        {/* Ring mockup — no border, elegant floating showcase */}
-        <FadeIn delay={0.2} className="mb-3">
-          <div className="relative w-full max-w-2xl mx-auto">
-            <motion.img
-              src={imgRing}
-              alt="Ring mockup"
-              className="w-full rounded-2xl object-cover relative z-10"
-              animate={{
-                y: [0, -10, 0],
-                rotateZ: [-1, 1, -1],
-                scale: [1, 1.015, 1],
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-            {/* Dynamic shadow underneath */}
-            <motion.div
-              className="absolute bottom-2 left-1/2 -translate-x-1/2 rounded-full z-0"
-              style={{
-                width: "60%",
-                height: 18,
-                background: isDark
-                  ? `radial-gradient(ellipse, rgba(${ACCENT_RGB},0.18) 0%, transparent 70%)`
-                  : `radial-gradient(ellipse, rgba(0,0,0,0.10) 0%, transparent 70%)`,
-                filter: "blur(6px)",
-              }}
-              animate={{
-                scaleX: [1, 0.92, 1],
-                opacity: [0.7, 1, 0.7],
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-          </div>
-        </FadeIn>
+                <div className="absolute left-[29.1%] top-[43.8%]">
+                  <MyaLogoMark size={23} color={applicationMutedColor} className="mb-4" />
+                  <p
+                    className="text-[clamp(0.56rem,0.95vw,0.86rem)] uppercase tracking-[0.12em]"
+                    style={{ fontFamily: "'Cormorant Garamond', serif", color: applicationTextColor }}
+                  >
+                    PACKAGING
+                  </p>
+                  <span className="mt-3 block h-px w-7" style={{ background: "rgba(35,19,50,0.2)" }} />
+                  <p
+                    className="mt-5 max-w-[135px] text-[clamp(0.48rem,0.78vw,0.72rem)] leading-[1.65]"
+                    style={{ fontFamily: "'Inter', sans-serif", color: applicationMutedColor }}
+                  >
+                    Thoughtful packaging that elevates every precious moment.
+                  </p>
+                </div>
 
-        {/* Keychain mockup */}
-        <FadeIn delay={0.25}>
-          <div className="w-full max-w-2xl mx-auto rounded-2xl overflow-hidden" style={{ border: `1px solid ${r(0.05)}` }}>
-            <img src={imgKeychain} alt="Keychain mockup" className="w-full object-cover" />
+                <div className="absolute right-[7.8%] top-[42.1%]">
+                  <MyaLogoMark size={23} color={applicationMutedColor} className="mb-4" />
+                  <p
+                    className="text-[clamp(0.56rem,0.95vw,0.86rem)] uppercase tracking-[0.12em]"
+                    style={{ fontFamily: "'Cormorant Garamond', serif", color: applicationTextColor }}
+                  >
+                    ENGRAVING
+                  </p>
+                  <span className="mt-3 block h-px w-7" style={{ background: "rgba(35,19,50,0.2)" }} />
+                  <p
+                    className="mt-5 max-w-[120px] text-[clamp(0.48rem,0.78vw,0.72rem)] leading-[1.65]"
+                    style={{ fontFamily: "'Inter', sans-serif", color: applicationMutedColor }}
+                  >
+                    Personal touches that make it uniquely yours.
+                  </p>
+                </div>
+
+                <div className="absolute left-[38.5%] top-[75.6%]">
+                  <MyaLogoMark size={24} color={applicationMutedColor} className="mb-4" />
+                  <p
+                    className="text-[clamp(0.56rem,0.95vw,0.86rem)] uppercase tracking-[0.12em]"
+                    style={{ fontFamily: "'Cormorant Garamond', serif", color: applicationTextColor }}
+                  >
+                    ACCESSORIES
+                  </p>
+                  <span className="mt-3 block h-px w-7" style={{ background: "rgba(35,19,50,0.2)" }} />
+                  <p
+                    className="mt-5 max-w-[150px] text-[clamp(0.48rem,0.78vw,0.72rem)] leading-[1.65]"
+                    style={{ fontFamily: "'Inter', sans-serif", color: applicationMutedColor }}
+                  >
+                    Refined accents that carry our signature everywhere.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </FadeIn>
       </div>
