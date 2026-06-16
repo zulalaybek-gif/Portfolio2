@@ -10,6 +10,7 @@ import { useAnimationActive } from "./useAnimationActive";
 import elemDarkRaw from "../../imports/Fichier_2-2.svg?raw";
 import elemLightRaw from "../../imports/Fichier_1-2.svg?raw";
 import imgRadioLibreMobile from "../../assets/radio-libre/Mobile app.png";
+import imgRadioLibreHeader from "../../assets/radio-libre/assets/04.header.png";
 
 /* ── Palette ── */
 const BLUE = "#afd1ea";
@@ -129,13 +130,15 @@ function useBodyStyle() {
 
 /* ── Radio waves CSS ── */
 const radioWaveKeyframes = `
-@keyframes rl-wave-pulse {
-  0% { transform: scale(0.6); opacity: 0.7; }
-  100% { transform: scale(1.4); opacity: 0; }
-}
-@keyframes rl-float-line {
-  0%, 100% { transform: translateY(0) rotate(var(--rl-rot)); }
-  50% { transform: translateY(-12px) rotate(var(--rl-rot)); }
+@keyframes rl-dot-float {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: var(--rl-dot-opacity);
+  }
+  50% {
+    transform: translate3d(var(--rl-dot-x), var(--rl-dot-y), 0) scale(1.06);
+    opacity: calc(var(--rl-dot-opacity) * 0.72);
+  }
 }
 `;
 
@@ -153,96 +156,129 @@ function sanitizeInlineSvg(svg: string) {
    1. HERO
    ═══════════════════════════════════════════ */
 function HeroSection() {
-  const { isDark, r } = useTheme();
+  const { r } = useTheme();
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const yTitle = useTransform(scrollYProgress, [0, 1], [0, 60]);
   const opTitle = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const dots = [
+    { left: "49%", top: "38%", size: 10, color: PURPLE, opacity: 0.58, blur: 0, x: "7px", y: "-10px", duration: 8.4, delay: 0 },
+    { left: "61%", top: "36%", size: 7, color: "#ffffff", opacity: 0.72, blur: 0, x: "-5px", y: "8px", duration: 10.2, delay: 1.1 },
+    { left: "63%", top: "56%", size: 13, color: BLUE, opacity: 0.55, blur: 1, x: "6px", y: "-11px", duration: 9.6, delay: 0.45 },
+    { left: "55%", top: "65%", size: 12, color: PEACH, opacity: 0.54, blur: 0, x: "-7px", y: "-9px", duration: 7.6, delay: 1.7 },
+    { left: "68%", top: "62%", size: 9, color: PURPLE, opacity: 0.62, blur: 0, x: "5px", y: "9px", duration: 8.9, delay: 2.2 },
+    { left: "76%", top: "80%", size: 11, color: PEACH, opacity: 0.64, blur: 0, x: "6px", y: "-12px", duration: 9.2, delay: 0.8, ring: true },
+    { left: "82%", top: "48%", size: 16, color: BLUE, opacity: 0.48, blur: 1.2, x: "-8px", y: "10px", duration: 11.4, delay: 1.4 },
+    { left: "88%", top: "67%", size: 12, color: PEACH, opacity: 0.5, blur: 0.5, x: "-7px", y: "-10px", duration: 8.6, delay: 1.9 },
+    { left: "90%", top: "25%", size: 11, color: PURPLE, opacity: 0.5, blur: 0.8, x: "5px", y: "11px", duration: 10.8, delay: 0.25 },
+    { left: "93%", top: "79%", size: 22, color: BLUE, opacity: 0.52, blur: 1.2, x: "-9px", y: "-13px", duration: 12, delay: 1.05 },
+    { left: "95%", top: "30%", size: 15, color: "#ffffff", opacity: 0.68, blur: 0, x: "-6px", y: "9px", duration: 9.8, delay: 2.4 },
+  ];
 
   return (
-    <section ref={ref} className="relative w-full min-h-[80vh] flex flex-col items-center justify-center overflow-hidden px-6 py-28">
+    <section ref={ref} className="relative w-full min-h-[720px] lg:min-h-[860px] flex overflow-hidden px-6 py-28 md:px-12 lg:px-16">
       <style>{radioWaveKeyframes}</style>
 
-      {/* Background radio waves */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        {[0, 1, 2, 3, 4].map((i) => (
+      <img
+        src={imgRadioLibreHeader}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover"
+        style={{ objectPosition: "center center" }}
+      />
+
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        {dots.map((dot, i) => (
           <div
             key={i}
             className="absolute rounded-full"
             style={{
-              width: `${200 + i * 120}px`,
-              height: `${200 + i * 120}px`,
-              border: `1px solid`,
-              borderColor: isDark ? `rgba(175,209,234,${0.08 - i * 0.012})` : `rgba(190,169,203,${0.12 - i * 0.018})`,
-              animation: `rl-wave-pulse ${3 + i * 0.6}s ease-out infinite`,
-              animationDelay: `${i * 0.5}s`,
+              left: dot.left,
+              top: dot.top,
+              width: dot.size,
+              height: dot.size,
+              background: dot.ring ? "rgba(255,255,255,0.72)" : dot.color,
+              border: dot.ring ? `3px solid ${dot.color}` : "1px solid rgba(255,255,255,0.55)",
+              boxShadow: `0 0 ${dot.size * 1.25}px ${dot.color}`,
+              filter: dot.blur ? `blur(${dot.blur}px)` : undefined,
+              opacity: dot.opacity,
+              ["--rl-dot-opacity" as string]: dot.opacity,
+              ["--rl-dot-x" as string]: dot.x,
+              ["--rl-dot-y" as string]: dot.y,
+              animation: `rl-dot-float ${dot.duration}s ease-in-out infinite`,
+              animationDelay: `${dot.delay}s`,
             }}
           />
         ))}
       </div>
 
-      {/* Floating decorative lines */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[
-          { x: "12%", y: "20%", w: 60, rot: -15, color: BLUE, delay: 0 },
-          { x: "85%", y: "30%", w: 45, rot: 25, color: PURPLE, delay: 1.2 },
-          { x: "8%", y: "70%", w: 35, rot: 40, color: PEACH, delay: 0.6 },
-          { x: "90%", y: "75%", w: 50, rot: -30, color: BLUE, delay: 1.8 },
-          { x: "25%", y: "85%", w: 30, rot: 10, color: PURPLE, delay: 2.4 },
-          { x: "75%", y: "15%", w: 40, rot: -45, color: PEACH, delay: 0.3 },
-        ].map((line, i) => (
-          <div
-            key={i}
-            className="absolute rounded-full"
-            style={{
-              left: line.x,
-              top: line.y,
-              width: line.w,
-              height: 2,
-              background: line.color,
-              opacity: isDark ? 0.15 : 0.2,
-              ["--rl-rot" as string]: `${line.rot}deg`,
-              transform: `rotate(${line.rot}deg)`,
-              animation: `rl-float-line ${4 + i * 0.3}s ease-in-out infinite`,
-              animationDelay: `${line.delay}s`,
-            }}
-          />
-        ))}
-      </div>
+      <motion.div
+        className="absolute inset-0 z-10 w-full"
+        style={{ y: yTitle, opacity: opTitle }}
+      >
+        <div className="absolute left-[8vw] top-[29%] flex -translate-y-1/2 flex-col items-start gap-6 sm:left-[10vw] sm:flex-row sm:items-center sm:gap-8 md:left-[12vw] lg:left-[11vw]">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
+            className="w-[120px] shrink-0 md:w-[150px] lg:w-[170px]"
+          >
+            <RadioLibreIcon className="h-auto w-full" />
+          </motion.div>
 
-      <motion.div className="relative z-10 flex flex-col items-center" style={{ y: yTitle, opacity: opTitle }}>
-        {/* Inline SVG Logo */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.92 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
-          className="mb-12"
-          style={{ width: "clamp(260px, 45vw, 500px)" }}
-        >
-          <RadioLibreLogo className="w-full h-auto" />
-        </motion.div>
-
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-center max-w-xl mb-8"
-          style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", lineHeight: 1.8, color: r(0.35) }}
-        >
-          Identité visuelle complète pour une radio indépendante
-        </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.25 }}
+          >
+            <h1
+              className="mb-5 max-w-[360px]"
+              style={{
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: "clamp(3.3rem, 6vw, 5.25rem)",
+                fontWeight: 800,
+                lineHeight: 0.88,
+                color: "#000000",
+              }}
+            >
+              RADIO
+              <br />
+              LIBRE
+            </h1>
+            <p
+              className="max-w-[330px]"
+              style={{
+                fontFamily: "'Inter', sans-serif",
+                fontSize: "clamp(1rem, 1.35vw, 1.3rem)",
+                fontWeight: 700,
+                lineHeight: 1.35,
+                color: "rgba(78, 82, 101, 0.72)",
+              }}
+            >
+              Identité visuelle complète pour une radio indépendante
+            </p>
+          </motion.div>
+        </div>
 
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="flex flex-wrap justify-center gap-3"
+          className="absolute bottom-8 left-1/2 flex w-[min(90vw,760px)] -translate-x-1/2 flex-wrap justify-center gap-3 md:bottom-12"
         >
           {["Identité visuelle", "Sprint créatif", "Logo", "Typographie", "Palette"].map((tag) => (
             <span
               key={tag}
-              className="px-4 py-1.5 rounded-full"
-              style={{ fontSize: "0.7rem", fontFamily: "'Inter', sans-serif", border: `1px solid ${r(0.08)}`, color: r(0.3) }}
+              className="rounded-full px-5 py-2"
+              style={{
+                fontSize: "0.78rem",
+                fontFamily: "'Inter', sans-serif",
+                fontWeight: 700,
+                border: `1px solid ${r(0.08)}`,
+                color: "rgba(78, 82, 101, 0.68)",
+                background: "rgba(255,255,255,0.22)",
+                backdropFilter: "blur(6px)",
+              }}
             >
               {tag}
             </span>
@@ -326,153 +362,202 @@ function IntroSection() {
    3. LOGO CONSTRUCTION
    ═══════════════════════════════════════════ */
 function LogoConstructionSection() {
-  const { isDark, r, p } = useTheme();
+  const { p } = useTheme();
   const body = useBodyStyle();
 
   const concepts = [
     {
       label: "Micro",
+      short: "Symbole premier de la radio",
       desc: "Le signe évoque la silhouette d'un micro de studio, symbole premier de la radio.",
+      accent: BLUE,
       icon: (
-        <svg viewBox="0 0 64 64" className="w-full h-full">
-          <ellipse cx="32" cy="20" rx="12" ry="16" fill="none" stroke="url(#cg1)" strokeWidth="2" />
-          <line x1="32" y1="36" x2="32" y2="52" stroke="url(#cg1)" strokeWidth="2" />
-          <path d="M22 48 L42 48" stroke="url(#cg1)" strokeWidth="2" strokeLinecap="round" />
-          <defs>
-            <linearGradient id="cg1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor={BLUE} />
-              <stop offset="100%" stopColor={PURPLE} />
-            </linearGradient>
-          </defs>
+        <svg viewBox="0 0 64 64" className="h-full w-full" aria-hidden="true">
+          <rect x="22" y="10" width="20" height="32" rx="10" fill="none" stroke={BLUE} strokeWidth="2.4" />
+          <path d="M16 30c0 9.2 6.8 16 16 16s16-6.8 16-16" fill="none" stroke={BLUE} strokeWidth="2.4" strokeLinecap="round" />
+          <path d="M32 46v9M23 55h18" fill="none" stroke={BLUE} strokeWidth="2.4" strokeLinecap="round" />
+          <path d="M27 18h10M27 25h10M27 32h10" stroke={BLUE} strokeWidth="1.4" strokeLinecap="round" opacity="0.45" />
         </svg>
       ),
     },
     {
       label: "Ondes",
+      short: "Propagation sonore",
       desc: "Les cercles concentriques traduisent la propagation des ondes sonores.",
+      accent: PURPLE,
       icon: (
-        <svg viewBox="0 0 64 64" className="w-full h-full">
+        <svg viewBox="0 0 64 64" className="h-full w-full" aria-hidden="true">
           {[12, 20, 28].map((rr, i) => (
-            <circle key={i} cx="32" cy="32" r={rr} fill="none" stroke="url(#cg2)" strokeWidth="1.5" opacity={1 - i * 0.25} />
+            <circle key={i} cx="32" cy="32" r={rr} fill="none" stroke={PURPLE} strokeWidth="2" opacity={0.82 - i * 0.2} />
           ))}
-          <circle cx="32" cy="32" r="4" fill="url(#cg2)" />
-          <defs>
-            <linearGradient id="cg2" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor={PURPLE} />
-              <stop offset="100%" stopColor={PEACH} />
-            </linearGradient>
-          </defs>
+          <circle cx="32" cy="32" r="4.5" fill={PURPLE} opacity="0.8" />
         </svg>
       ),
     },
     {
       label: "Empreinte",
-      desc: "Les lignes concentriques rappellent une empreinte digitale — identité et proximité.",
+      short: "Identité humaine et proximité",
+      desc: "Les lignes concentriques représentent une empreinte digitale — identité et proximité.",
+      accent: PEACH,
       icon: (
-        <svg viewBox="0 0 64 64" className="w-full h-full">
-          {[0, 1, 2, 3].map((i) => (
-            <path
-              key={i}
-              d={`M ${20 + i * 3} ${44 - i * 4} Q 32 ${10 + i * 2} ${44 - i * 3} ${44 - i * 4}`}
-              fill="none"
-              stroke="url(#cg3)"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              opacity={1 - i * 0.2}
-            />
-          ))}
-          <defs>
-            <linearGradient id="cg3" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor={PEACH} />
-              <stop offset="100%" stopColor={BLUE} />
-            </linearGradient>
-          </defs>
+        <svg viewBox="0 0 64 64" className="h-full w-full" aria-hidden="true">
+          <path d="M22 46c-3-8-1.8-20 9.5-24.5 10-4 19.5 3.2 19.5 13" fill="none" stroke={PEACH} strokeWidth="2.1" strokeLinecap="round" />
+          <path d="M28 50c-3.5-9-.8-18.4 6.2-21.1 6.4-2.5 12.6 1.8 12.6 8.7" fill="none" stroke={PEACH} strokeWidth="2.1" strokeLinecap="round" opacity="0.82" />
+          <path d="M35 51c-2.4-6.5-1.4-13.8 3.2-15.5 3.3-1.2 6.2.8 6.2 4.5" fill="none" stroke={PEACH} strokeWidth="2.1" strokeLinecap="round" opacity="0.68" />
+          <path d="M18 34c.8-11.5 9.4-20 20.2-20 8.4 0 15.2 4.8 18 12" fill="none" stroke={PEACH} strokeWidth="1.5" strokeLinecap="round" opacity="0.38" />
         </svg>
       ),
     },
   ];
 
   return (
-    <section className="px-6 md:px-12 py-20">
-      <div className="max-w-5xl mx-auto">
+    <section className="px-6 py-20 md:px-12 md:py-24">
+      <div className="mx-auto max-w-6xl">
         <FadeIn>
-          <SectionLabel>Construction du logo</SectionLabel>
-          <h2
-            className="mt-5 mb-4"
-            style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: "clamp(1.6rem, 4vw, 2.4rem)",
-              fontWeight: 700,
-              lineHeight: 1.2,
-              letterSpacing: "-0.02em",
-              color: p.text,
-            }}
-          >
-            Micro. Ondes. Empreinte.
-          </h2>
-          <p style={{ ...body, maxWidth: "600px", marginBottom: "2.5rem" }}>
-            Le logo a été pensé à partir de plusieurs références formelles : le micro de studio, les ondes sonores et l'empreinte humaine. Le signe laisse aussi apparaître les lettres R et L, en écho au nom Radio Libre.
-          </p>
-        </FadeIn>
-
-        {/* Logo showcase */}
-        <FadeIn delay={0.1}>
           <div
-            className="rounded-3xl p-10 md:p-16 flex flex-col items-center gap-12 mb-12"
+            className="overflow-hidden rounded-[2rem] p-6 shadow-[0_28px_90px_rgba(88,101,128,0.12)] md:p-10 lg:p-14"
             style={{
-              background: isDark
-                ? "linear-gradient(160deg, rgba(175,209,234,0.04) 0%, rgba(190,169,203,0.02) 50%, rgba(236,181,159,0.04) 100%)"
-                : "linear-gradient(160deg, rgba(175,209,234,0.08) 0%, rgba(190,169,203,0.04) 50%, rgba(236,181,159,0.08) 100%)",
-              border: `1px solid ${r(0.05)}`,
+              background:
+                "linear-gradient(145deg, rgba(255,255,255,0.92) 0%, rgba(245,250,255,0.88) 48%, rgba(253,244,240,0.72) 100%)",
+              border: "1px solid rgba(175,209,234,0.28)",
             }}
           >
-            <div style={{ width: "clamp(180px, 35vw, 340px)" }}>
-              <RadioLibreLogo className="w-full h-auto" />
+            <div className="max-w-3xl">
+              <span
+                className="block uppercase"
+                style={{
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: "0.62rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.28em",
+                  color: "rgba(29,29,27,0.42)",
+                }}
+              >
+                CONSTRUCTION DU LOGO
+              </span>
+              <h2
+                className="mt-5"
+                style={{
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontSize: "clamp(2.1rem, 5vw, 4.8rem)",
+                  fontWeight: 800,
+                  lineHeight: 1.02,
+                  color: p.text,
+                }}
+              >
+                Micro<span style={{ color: BLUE }}>.</span>{" "}
+                Ondes<span style={{ color: PURPLE }}>.</span>{" "}
+                Empreinte<span style={{ color: PEACH }}>.</span>
+              </h2>
+              <p className="mt-5" style={{ ...body, maxWidth: "680px", color: "rgba(29,29,27,0.55)" }}>
+                Le logo de Radio Libre est pensé à partir de plusieurs références formelles : le micro de studio, les ondes sonores et l'empreinte humaine. Le signe laisse aussi apparaître les lettres R et L, en écho au nom Radio Libre.
+              </p>
             </div>
 
-            {/* Variations */}
-            <div className="flex items-stretch gap-6 flex-wrap justify-center">
-              {[
-                { label: "Sur fond sombre", bg: "#1d1d1b", border: undefined },
-                { label: "Sur fond clair", bg: "#ffffff", border: `1px solid ${r(0.08)}` },
-                { label: "Monochrome", bg: r(0.03), border: `1px solid ${r(0.06)}`, mono: true },
-              ].map((v) => (
-                <div key={v.label} className="flex flex-col items-center gap-2">
-                  <div
-                    className="w-16 h-16 rounded-xl flex items-center justify-center p-2.5"
-                    style={{ background: v.bg, border: v.border }}
-                  >
-                    <RadioLibreIcon
-                      className="w-full h-full"
-                      fill={(v as any).mono ? (isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.3)") : undefined}
-                    />
+            <div
+              className="relative mt-10 overflow-hidden rounded-[1.75rem] p-6 md:p-8 lg:p-10"
+              style={{
+                background: "rgba(255,255,255,0.58)",
+                border: "1px solid rgba(175,209,234,0.24)",
+                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.8), 0 18px 50px rgba(118,126,150,0.1)",
+              }}
+            >
+              <svg className="absolute left-[-8%] top-[18%] h-40 w-72 text-[#afd1ea] md:w-96" viewBox="0 0 420 160" aria-hidden="true">
+                {[0, 1, 2, 3, 4].map((i) => (
+                  <path
+                    key={i}
+                    d={`M0 ${58 + i * 12} C 90 ${18 + i * 8}, 150 ${112 + i * 4}, 238 ${68 + i * 6} S 350 ${38 + i * 10}, 420 ${74 + i * 4}`}
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    opacity={0.24 - i * 0.025}
+                  />
+                ))}
+              </svg>
+              <svg className="absolute bottom-[7%] right-[-6%] h-44 w-80 text-[#ecb59f] md:w-[28rem]" viewBox="0 0 460 170" aria-hidden="true">
+                {[0, 1, 2, 3, 4].map((i) => (
+                  <path
+                    key={i}
+                    d={`M0 ${78 + i * 10} C 95 ${32 + i * 9}, 160 ${118 + i * 5}, 250 ${82 + i * 7} S 372 ${42 + i * 8}, 460 ${72 + i * 5}`}
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.1"
+                    opacity={0.23 - i * 0.025}
+                  />
+                ))}
+              </svg>
+
+              <div className="relative z-10 grid items-center gap-10 lg:grid-cols-[1.25fr_auto_1fr]">
+                <div className="grid grid-cols-[1fr_auto_1fr_auto_1fr] items-start gap-3 md:gap-5">
+                  {concepts.map((concept, i) => (
+                    <div key={concept.label} className="contents">
+                      <div className="flex min-w-0 flex-col items-center text-center">
+                        <div
+                          className="flex h-16 w-16 items-center justify-center rounded-2xl md:h-20 md:w-20"
+                          style={{ background: `${concept.accent}24`, border: `1px solid ${concept.accent}55` }}
+                        >
+                          <div className="h-10 w-10 md:h-12 md:w-12">{concept.icon}</div>
+                        </div>
+                        <h3 className="mt-4" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.96rem", fontWeight: 700, color: p.text }}>
+                          {concept.label}
+                        </h3>
+                        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.68rem", lineHeight: 1.45, color: "rgba(29,29,27,0.5)" }}>
+                          {concept.short}
+                        </p>
+                      </div>
+                      {i < concepts.length - 1 && (
+                        <span className="mt-8 text-lg md:mt-10 md:text-2xl" style={{ color: "rgba(29,29,27,0.24)", fontWeight: 600 }}>
+                          +
+                        </span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex justify-center text-3xl md:text-4xl" style={{ color: "rgba(29,29,27,0.22)" }} aria-hidden="true">
+                  →
+                </div>
+
+                <div className="relative mx-auto flex min-h-[220px] w-full max-w-[360px] items-center justify-center">
+                  <svg className="absolute inset-0 h-full w-full" viewBox="0 0 360 240" aria-hidden="true">
+                    <path d="M40 120H320M180 28V212" stroke={BLUE} strokeWidth="1" strokeDasharray="6 8" opacity="0.26" />
+                    <circle cx="180" cy="120" r="88" fill="none" stroke={PURPLE} strokeWidth="1" strokeDasharray="5 7" opacity="0.2" />
+                    <circle cx="180" cy="120" r="120" fill="none" stroke={PEACH} strokeWidth="1" opacity="0.16" />
+                    <path d="M78 48C138 20 226 20 286 48" fill="none" stroke={BLUE} strokeWidth="1" opacity="0.2" />
+                    <path d="M78 192C138 220 226 220 286 192" fill="none" stroke={PEACH} strokeWidth="1" opacity="0.18" />
+                  </svg>
+                  <div className="relative w-[min(78vw,330px)]">
+                    <RadioLibreLogo className="h-auto w-full" />
                   </div>
-                  <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.55rem", color: r(0.2) }}>{v.label}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-3">
+              {concepts.map((concept) => (
+                <div
+                  key={concept.label}
+                  className="rounded-[1.35rem] p-5 shadow-[0_14px_42px_rgba(118,126,150,0.08)]"
+                  style={{ background: "rgba(255,255,255,0.64)", border: `1px solid ${concept.accent}33` }}
+                >
+                  <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl" style={{ background: `${concept.accent}24` }}>
+                    <div className="h-7 w-7">{concept.icon}</div>
+                  </div>
+                  <h3
+                    className="mb-3 flex items-center gap-2"
+                    style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.05rem", fontWeight: 700, color: p.text }}
+                  >
+                    {concept.label}
+                    <span className="h-2 w-2 rounded-full" style={{ background: concept.accent }} />
+                  </h3>
+                  <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.78rem", lineHeight: 1.75, color: "rgba(29,29,27,0.52)" }}>
+                    {concept.desc}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
         </FadeIn>
-
-        {/* 3 concepts — same height */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {concepts.map((c, i) => (
-            <FadeIn key={c.label} delay={0.1 + i * 0.08}>
-              <div
-                className="rounded-2xl p-6 flex flex-col items-center text-center h-full"
-                style={{ background: r(0.02), border: `1px solid ${r(0.04)}` }}
-              >
-                <div className="w-14 h-14 mb-4">{c.icon}</div>
-                <h4 className="mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: "0.95rem", color: p.text }}>
-                  {c.label}
-                </h4>
-                <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.78rem", lineHeight: 1.7, color: r(0.3), flex: 1 }}>
-                  {c.desc}
-                </p>
-              </div>
-            </FadeIn>
-          ))}
-        </div>
       </div>
     </section>
   );
@@ -482,161 +567,313 @@ function LogoConstructionSection() {
    4. PALETTE & TYPOGRAPHY
    ══════════════════════════════════════════ */
 function PaletteTypoSection() {
-  const { isDark, r, p } = useTheme();
-  const body = useBodyStyle();
+  const { p } = useTheme();
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const lower = "abcdefghijklmnopqrstuvwxyz";
+  const glyphs = "0123456789 ! @ # $ % &";
+  const faderPositions = ["32%", "45%", "39%", "56%", "48%"];
+  const vuBars = [8, 16, 11, 24, 14, 28, 18, 32, 22, 30, 36, 24, 31, 18, 24, 20, 14, 17];
+  const playerBars = [7, 10, 14, 9, 16, 22, 13, 18, 28, 18, 14, 24, 30, 20, 15, 22, 26, 17, 12, 18, 14, 9, 15, 8, 20, 26, 15, 12];
+  const sectionCss = `
+@keyframes rl-vu-soft {
+  0%, 100% { transform: scaleY(0.55); opacity: 0.45; }
+  50% { transform: scaleY(1); opacity: 0.8; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rl-vu-bar { animation: none !important; }
+}
+`;
+
+  function AudioIcon() {
+    return (
+      <svg viewBox="0 0 44 44" className="h-5 w-5" aria-hidden="true">
+        <path d="M11 22h4M29 22h4" stroke={BLUE} strokeWidth="2" strokeLinecap="round" />
+        <path d="M18 15v14M22 10v24M26 16v12" stroke={PEACH} strokeWidth="2" strokeLinecap="round" />
+        <path d="M14 18v8M30 17v10" stroke={PURPLE} strokeWidth="1.6" strokeLinecap="round" opacity="0.75" />
+      </svg>
+    );
+  }
+
+  function Waveform({ bars, compact = false }: { bars: number[]; compact?: boolean }) {
+    return (
+      <div className="flex h-full items-center gap-[3px]" aria-hidden="true">
+        {bars.map((h, i) => (
+          <span
+            key={i}
+            className="rl-vu-bar block w-[2px] rounded-full"
+            style={{
+              height: compact ? Math.max(4, h * 0.55) : h,
+              background: i % 3 === 0 ? BLUE : i % 3 === 1 ? PURPLE : PEACH,
+              opacity: compact ? 0.34 : 0.5,
+              transformOrigin: "center",
+              animation: `rl-vu-soft ${2.6 + (i % 5) * 0.25}s ease-in-out infinite`,
+              animationDelay: `${i * 0.07}s`,
+            }}
+          />
+        ))}
+      </div>
+    );
+  }
+
+  function Knob({ accent }: { accent: string }) {
+    return (
+      <div className="relative flex h-[88px] w-[88px] shrink-0 items-center justify-center" aria-hidden="true">
+        {Array.from({ length: 20 }).map((_, i) => (
+          <span
+            key={i}
+            className="absolute left-1/2 top-1/2 h-[1px] w-[7px] origin-left rounded-full"
+            style={{
+              background: accent,
+              opacity: 0.28,
+              transform: `rotate(${-132 + i * (264 / 19)}deg) translateX(31px)`,
+            }}
+          />
+        ))}
+        <div className="relative h-14 w-14 rounded-full bg-white shadow-[0_12px_30px_rgba(86,99,128,0.16),inset_0_1px_0_rgba(255,255,255,0.95)]">
+          <span className="absolute left-1/2 top-3 h-4 w-[3px] -translate-x-1/2 rounded-full" style={{ background: accent }} />
+        </div>
+        <span className="absolute bottom-0 left-1 text-[0.56rem] font-semibold text-[#94a0b4]">-∞</span>
+        <span className="absolute bottom-0 right-1 text-[0.56rem] font-semibold text-[#94a0b4]">+6</span>
+      </div>
+    );
+  }
+
+  function Fader({ color, name, code, index }: { color: string; name: string; code: string; index: number }) {
+    const isWhite = color.toLowerCase() === "#ffffff";
+    const rail = isWhite ? "#d9e1ec" : color;
+    return (
+      <div
+        className="relative flex min-w-0 flex-col items-center rounded-[1.2rem] px-3 pb-4 pt-5"
+        style={{
+          background: isWhite ? "rgba(255,255,255,0.72)" : `${color}14`,
+          border: `1px solid ${isWhite ? "rgba(148,160,180,0.22)" : `${color}36`}`,
+          boxShadow: "inset 0 1px 0 rgba(255,255,255,0.72)",
+        }}
+      >
+        <span
+          className="h-6 w-6 rounded-full shadow-[0_5px_16px_rgba(86,99,128,0.18)]"
+          style={{ background: color, border: isWhite ? "1px solid rgba(148,160,180,0.28)" : "1px solid rgba(255,255,255,0.5)" }}
+        />
+        <span className="mt-4 font-semibold" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.68rem", color: isWhite ? "#a3adbd" : color }}>
+          {code.replace("#", "")}
+        </span>
+        <span className="mt-1 text-center text-[0.6rem] font-medium text-[#9aa5b8]">{name}</span>
+
+        <div className="relative mt-5 h-[180px] w-full">
+          <div className="absolute left-1/2 top-0 h-full w-[3px] -translate-x-1/2 rounded-full" style={{ background: `${rail}55` }} />
+          <div className="absolute left-1/2 top-0 h-full w-[1px] -translate-x-1/2 rounded-full" style={{ background: rail }} />
+          {["+6", "0", "-6", "-12", "-18", "-24"].map((level, i) => (
+            <div key={level} className="absolute left-0 right-0 flex items-center justify-between text-[0.5rem] font-medium text-[#a2adbf]" style={{ top: `${i * 18}%` }}>
+              <span>{level}</span>
+              <span className="h-[1px] w-2 rounded-full bg-[#b8c4d4]" />
+              <span className="h-[1px] w-2 rounded-full bg-[#b8c4d4]" />
+            </div>
+          ))}
+          <div
+            className="absolute left-1/2 flex h-12 w-8 -translate-x-1/2 items-center justify-center rounded-xl bg-white shadow-[0_10px_22px_rgba(86,99,128,0.2)]"
+            style={{ top: faderPositions[index] }}
+          >
+            <span className="grid gap-[3px]">
+              {[0, 1, 2, 3].map((line) => (
+                <span key={line} className="block h-[1px] w-4 rounded-full bg-[#d5dce8]" />
+              ))}
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  function TypeChannel({ channel, accent, label, title, weights, cool = false }: { channel: string; accent: string; label: string; title: string; weights: string[]; cool?: boolean }) {
+    return (
+      <div
+        className="relative h-[240px] overflow-hidden rounded-[1.8rem] p-6 pr-[116px] shadow-[0_18px_52px_rgba(86,99,128,0.1)]"
+        style={{
+          background: cool ? "linear-gradient(145deg, rgba(255,255,255,0.68), rgba(244,249,255,0.66))" : "rgba(255,255,255,0.68)",
+          border: `1px solid ${accent}2f`,
+        }}
+      >
+        <div className="min-w-0">
+          <div className="mb-4 flex items-center justify-between gap-4">
+            <span className="uppercase tracking-[0.16em] text-[#8793aa]" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.68rem", fontWeight: 700 }}>
+              {label}
+            </span>
+            <span className="flex items-center gap-2 text-[0.68rem] font-bold text-[#9ba6b9]">
+              {channel}
+              <span className="h-3 w-3 rounded-full" style={{ background: accent, boxShadow: `0 0 0 4px ${accent}24` }} />
+            </span>
+          </div>
+          <h3 style={{ fontFamily: title === "Filson Pro" ? "'Space Grotesk', sans-serif" : "'Inter', sans-serif", fontSize: title === "Filson Pro" ? "clamp(2.5rem, 3.4vw, 3rem)" : "clamp(2.35rem, 3.2vw, 2.75rem)", fontWeight: title === "Filson Pro" ? 800 : 400, lineHeight: 1, color: p.text }}>
+            {title}
+          </h3>
+          <div className="mt-5 space-y-1.5 overflow-hidden text-[#8793aa]">
+            {[alphabet, lower, glyphs].map((set, i) => (
+              <div key={i} className="whitespace-nowrap" style={{ fontFamily: title === "Filson Pro" ? "'Space Grotesk', sans-serif" : "'Inter', sans-serif", fontSize: "0.68rem", letterSpacing: "0.04em", lineHeight: 1.4 }}>
+                {set}
+              </div>
+            ))}
+          </div>
+          <div className="mt-5 flex gap-2">
+            {weights.map((weight) => (
+              <span key={weight} className="rounded-full border border-[#d9e0ea] bg-white/60 px-4 py-1.5 text-[0.68rem] font-semibold text-[#8793aa]">
+                {weight}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div className="absolute right-6 top-7">
+          <Knob accent={accent} />
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <section className="px-6 md:px-12 py-20">
-      <div className="max-w-5xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-          {/* ── PALETTE ── */}
-          <FadeIn>
-            <div className="h-full flex flex-col">
-              <SectionLabel>Palette chromatique</SectionLabel>
-              <h3 className="mt-5 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.4rem", fontWeight: 700, color: p.text }}>
-                Doux mais dynamiques
-              </h3>
-              <p style={{ ...body, fontSize: "0.82rem", marginBottom: "1.5rem" }}>
-                La palette associe des tons doux mais dynamiques. Les couleurs servent à donner du rythme à l'identité et à renforcer sa lisibilité, tout en gardant une impression légère et accessible.
-              </p>
+    <section className="px-6 py-[90px] md:px-12">
+      <style>{sectionCss}</style>
+      <div className="mx-auto max-w-[1280px]">
+        <FadeIn>
+          <div className="relative">
+            <div className="pointer-events-none absolute left-[6%] top-24 h-44 w-44 rounded-full bg-[#afd1ea] opacity-20 blur-3xl" aria-hidden="true" />
+            <div className="pointer-events-none absolute right-[8%] top-4 h-56 w-56 rounded-full bg-[#ecb59f] opacity-20 blur-3xl" aria-hidden="true" />
 
-              <div className="flex gap-3 flex-1">
-                {PALETTE.map((c) => (
-                  <div key={c.hex} className="flex-1 flex flex-col">
-                    <div
-                      className="aspect-[1/1.5] rounded-xl mb-3 transition-transform duration-300 hover:scale-105"
-                      style={{
-                        background: c.hex,
-                        border: c.hex === "#ffffff" ? `1px solid ${r(0.1)}` : undefined,
-                        boxShadow: `0 4px 20px rgba(${c.rgb},0.15)`,
-                      }}
-                    />
-                    <span className="block text-center" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.6rem", color: r(0.35) }}>
-                      {c.hex.toUpperCase()}
-                    </span>
-                    <span className="block text-center" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.5rem", color: r(0.18) }}>
-                      {c.name}
-                    </span>
-                  </div>
-                ))}
-              </div>
-
-              {/* Gradient strip */}
-              <div className="mt-6 rounded-xl overflow-hidden" style={{ height: 6 }}>
-                <div className="w-full h-full" style={{ background: `linear-gradient(90deg, ${BLUE} 0%, ${PURPLE} 50%, ${PEACH} 100%)` }} />
-              </div>
-            </div>
-          </FadeIn>
-
-          {/* ── TYPOGRAPHY ── */}
-          <FadeIn delay={0.15}>
-            <div className="h-full flex flex-col">
-              <SectionLabel>Typographies</SectionLabel>
-              <h3 className="mt-5 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.4rem", fontWeight: 700, color: p.text }}>
-                Filson Pro & Avenir
-              </h3>
-              <p style={{ ...body, fontSize: "0.82rem", marginBottom: "1.5rem" }}>
-                La typographie du logo et des titres est Filson Pro, choisie pour son caractère impactant mais aussi plus libre et plus souple. La police Avenir complète le système pour les textes courants.
-              </p>
-
-              <div className="space-y-4 flex-1 flex flex-col">
-                {/* Filson Pro */}
-                <div className="rounded-2xl p-6 flex-1" style={{ background: r(0.02), border: `1px solid ${r(0.04)}` }}>
-                  <div className="flex items-center justify-between mb-3">
-                    <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.55rem", color: r(0.2), letterSpacing: "0.15em", textTransform: "uppercase" as const }}>
-                      Titres & Logo
-                    </span>
-                  </div>
-                  <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "2rem", fontWeight: 700, color: p.text, letterSpacing: "-0.02em" }}>
-                    Filson Pro
-                  </div>
-                  <div className="mt-2 flex gap-1 flex-wrap">
-                    {"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((l) => (
-                      <span key={l} style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.7rem", color: r(0.25) }}>{l}</span>
-                    ))}
-                  </div>
-                  <div className="mt-1 flex gap-1 flex-wrap">
-                    {"abcdefghijklmnopqrstuvwxyz".split("").map((l) => (
-                      <span key={l} style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.7rem", color: r(0.2) }}>{l}</span>
-                    ))}
-                  </div>
-                  <div className="mt-1 flex gap-1 flex-wrap">
-                    {"0123456789!@#$%&".split("").map((l, i) => (
-                      <span key={i} style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.7rem", color: r(0.15) }}>{l}</span>
-                    ))}
-                  </div>
-
-                  {/* Weight labels */}
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {["Bold", "Heavy", "Black"].map((w) => (
-                      <span
-                        key={w}
-                        style={{
-                          fontFamily: "'Inter', sans-serif",
-                          fontSize: "0.5rem",
-                          color: r(0.25),
-                          padding: "3px 10px",
-                          borderRadius: 20,
-                          border: `1px solid ${r(0.06)}`,
-                          letterSpacing: "0.05em",
-                        }}
-                      >
-                        {w}
-                      </span>
-                    ))}
-                  </div>
+            <div className="relative z-10 grid min-h-[190px] gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(360px,0.75fr)] lg:items-start">
+              <div className="flex items-start gap-5">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/70 shadow-[0_12px_32px_rgba(86,99,128,0.12)]">
+                  <AudioIcon />
                 </div>
+                <div>
+                  <span className="uppercase tracking-[0.32em] text-[#86bde3]" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.68rem", fontWeight: 800 }}>
+                    RADIO LIBRE
+                  </span>
+                  <h2 className="mt-3 max-w-[520px]" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(2.25rem, 4.4vw, 4rem)", fontWeight: 800, lineHeight: 1, color: p.text }}>
+                    Identité sonore & visuelle
+                  </h2>
+                  <p className="mt-4 max-w-[520px] text-[#7f8aa0]" style={{ fontFamily: "'Inter', sans-serif", fontSize: "1.05rem", lineHeight: 1.55 }}>
+                    Une palette douce et dynamique qui donne le rythme.
+                    <br />
+                    Des typographies complémentaires pour une voix claire, accessible et impactante.
+                  </p>
+                </div>
+              </div>
 
-                {/* Avenir */}
-                <div className="rounded-2xl p-6 flex-1" style={{ background: r(0.02), border: `1px solid ${r(0.04)}` }}>
-                  <div className="flex items-center justify-between mb-3">
-                    <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.55rem", color: r(0.2), letterSpacing: "0.15em", textTransform: "uppercase" as const }}>
-                      Corps de texte
-                    </span>
-                  </div>
-                  <div style={{ fontFamily: "'Inter', sans-serif", fontSize: "2rem", fontWeight: 400, color: p.text }}>
-                    Avenir
-                  </div>
-                  <div className="mt-2 flex gap-1 flex-wrap">
-                    {"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((l) => (
-                      <span key={l} style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.7rem", color: r(0.25) }}>{l}</span>
-                    ))}
-                  </div>
-                  <div className="mt-1 flex gap-1 flex-wrap">
-                    {"abcdefghijklmnopqrstuvwxyz".split("").map((l) => (
-                      <span key={l} style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.7rem", color: r(0.2) }}>{l}</span>
-                    ))}
-                  </div>
-                  <div className="mt-1 flex gap-1 flex-wrap">
-                    {"0123456789!@#$%&".split("").map((l, i) => (
-                      <span key={i} style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.7rem", color: r(0.15) }}>{l}</span>
-                    ))}
-                  </div>
-
-                  {/* Weight labels */}
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {["Book", "Roman", "Medium"].map((w) => (
-                      <span
-                        key={w}
-                        style={{
-                          fontFamily: "'Inter', sans-serif",
-                          fontSize: "0.5rem",
-                          color: r(0.25),
-                          padding: "3px 10px",
-                          borderRadius: 20,
-                          border: `1px solid ${r(0.06)}`,
-                          letterSpacing: "0.05em",
-                        }}
-                      >
-                        {w}
-                      </span>
-                    ))}
-                  </div>
+              <div className="relative hidden h-[150px] lg:block" aria-hidden="true">
+                <div className="absolute right-0 top-9 flex items-center gap-5">
+                  <div className="h-px w-20 bg-gradient-to-r from-transparent to-[#ecb59f]" />
+                  <span className="rounded-lg border border-[#ecb59f66] bg-white/50 px-4 py-2 text-xs font-bold text-[#e69b83]">ON AIR</span>
+                </div>
+                <div className="absolute bottom-6 right-0 h-20 w-full max-w-xl">
+                  <Waveform bars={[5, 7, 9, 6, 10, 14, 18, 12, 24, 30, 20, 16, 26, 34, 42, 28, 20, 18, 24, 16, 14, 18, 22, 12, 10, 16, 20, 14, 12, 9, 7, 6]} compact />
+                  <span className="absolute right-[34%] top-[-18px] h-28 w-px bg-[#ecb59f66]" />
                 </div>
               </div>
             </div>
-          </FadeIn>
-        </div>
+
+            <div className="relative z-10 mt-8 grid w-full items-start gap-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.85fr)]">
+              <svg className="pointer-events-none absolute left-[57%] top-[104px] hidden h-[260px] w-28 lg:block" viewBox="0 0 150 340" aria-hidden="true">
+                <path d="M0 58 C 56 58, 54 28, 104 28 L148 28" fill="none" stroke={PURPLE} strokeWidth="2" opacity="0.28" />
+                <path d="M0 132 C 62 132, 54 132, 104 132 L148 132" fill="none" stroke={BLUE} strokeWidth="2" opacity="0.32" />
+                <path d="M0 188 C 56 188, 54 228, 104 228 L148 228" fill="none" stroke={PEACH} strokeWidth="2" opacity="0.28" />
+                <circle cx="0" cy="58" r="5" fill={PURPLE} opacity="0.5" />
+                <circle cx="0" cy="132" r="5" fill={BLUE} opacity="0.55" />
+                <circle cx="0" cy="188" r="5" fill={PEACH} opacity="0.5" />
+                <circle cx="148" cy="28" r="5" fill={PURPLE} opacity="0.5" />
+                <circle cx="148" cy="228" r="5" fill={PEACH} opacity="0.5" />
+              </svg>
+
+              <div>
+                <div className="mb-4 flex items-center gap-3">
+                  <span className="h-3 w-3 rounded-full bg-[#afd1ea]" />
+                  <h3 className="uppercase tracking-[0.2em] text-[#8490a6]" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.72rem", fontWeight: 800 }}>
+                    PALETTE CHROMATIQUE
+                  </h3>
+                </div>
+
+                <div
+                  className="h-[514px] overflow-x-auto rounded-[2rem] p-6 shadow-[0_18px_56px_rgba(86,99,128,0.1)] lg:overflow-hidden"
+                  style={{ background: "rgba(255,255,255,0.68)", border: "1px solid rgba(175,209,234,0.24)", backdropFilter: "blur(10px)" }}
+                >
+                  <div className="grid min-w-[580px] grid-cols-5 gap-3 lg:min-w-0">
+                    {PALETTE.map((color, index) => (
+                      <Fader key={color.hex} color={color.hex} name={color.name} code={color.hex.toUpperCase()} index={index} />
+                    ))}
+                  </div>
+
+                  <div className="mt-5 flex h-[76px] items-center gap-4 rounded-2xl bg-white/60 px-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]">
+                    <button className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#dce4ef] bg-white shadow-[0_10px_22px_rgba(86,99,128,0.12)]" aria-label="Volume décoratif" type="button">
+                      <svg viewBox="0 0 32 32" className="h-5 w-5 text-[#8d9ab0]" aria-hidden="true">
+                        <path d="M8 19h5l6 5V8l-6 5H8v6Z" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+                        <path d="M22 12c1.5 2 1.5 6 0 8" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                      </svg>
+                    </button>
+                    <div className="flex h-10 flex-1 items-end justify-center gap-2">
+                      {vuBars.map((h, i) => (
+                        <span
+                          key={i}
+                          className="rl-vu-bar w-[3px] rounded-full"
+                          style={{
+                            height: h,
+                            background: i % 3 === 0 ? BLUE : i % 3 === 1 ? PURPLE : PEACH,
+                            opacity: 0.55,
+                            transformOrigin: "bottom",
+                            animation: `rl-vu-soft ${2.8 + (i % 4) * 0.2}s ease-in-out infinite`,
+                            animationDelay: `${i * 0.08}s`,
+                          }}
+                        />
+                      ))}
+                    </div>
+                    <span className="text-xs font-bold tracking-[0.16em] text-[#98a4b7]">VU</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="relative">
+                <div className="mb-4 flex items-center gap-3">
+                  <span className="h-3 w-3 rounded-full bg-[#bea9cb]" />
+                  <h3 className="uppercase tracking-[0.2em] text-[#8490a6]" style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.72rem", fontWeight: 800 }}>
+                    TYPOGRAPHIES
+                  </h3>
+                </div>
+                <div className="space-y-5">
+                  <TypeChannel channel="CH 01" accent={PURPLE} label="TITRES & LOGO" title="Filson Pro" weights={["Bold", "Heavy", "Black"]} />
+                  <TypeChannel channel="CH 02" accent={BLUE} label="CORPS DE TEXTE" title="Avenir" weights={["Book", "Roman", "Medium"]} cool />
+                </div>
+              </div>
+            </div>
+
+            <div
+              className="relative z-10 mt-8 grid gap-5 rounded-[1.75rem] p-4 shadow-[0_18px_55px_rgba(86,99,128,0.1)] md:h-[88px] md:grid-cols-[auto_1fr_auto_auto] md:items-center md:p-5"
+              style={{ background: "rgba(255,255,255,0.68)", border: "1px solid rgba(175,209,234,0.24)", backdropFilter: "blur(10px)" }}
+            >
+              <div className="flex items-center gap-4">
+                <button className="flex h-14 w-14 items-center justify-center rounded-full border border-[#dce4ef] bg-white shadow-[0_10px_26px_rgba(86,99,128,0.14)]" aria-label="Lecture décorative" type="button">
+                  <span className="ml-1 h-0 w-0 border-y-[8px] border-l-[12px] border-y-transparent border-l-[#92a1ba]" />
+                </button>
+                <div>
+                  <div className="text-sm font-bold tracking-[0.04em] text-[#8793aa]">RADIO LIBRE</div>
+                  <div className="text-xs font-medium text-[#a0aabb]">Playlist indépendante</div>
+                </div>
+                <svg viewBox="0 0 24 24" className="h-5 w-5 text-[#9aa6ba]" aria-hidden="true">
+                  <path d="M12 19s-7-4.4-7-9.2A3.7 3.7 0 0 1 12 7a3.7 3.7 0 0 1 7 2.8C19 14.6 12 19 12 19Z" fill="none" stroke="currentColor" strokeWidth="1.7" />
+                </svg>
+              </div>
+              <div className="h-12 overflow-hidden border-y-0 border-l-0 border-r-0 md:border-l md:border-r md:border-[#e4eaf2] md:px-8">
+                <Waveform bars={playerBars} compact />
+              </div>
+              <div className="rounded-2xl border border-[#e1e8f1] bg-white/50 px-5 py-3">
+                <div className="text-sm font-bold text-[#8793aa]">98.1 FM</div>
+                <div className="text-xs font-medium text-[#a0aabb]">Paris</div>
+              </div>
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#ecb59f22] text-[#ec9f85]">
+                <svg viewBox="0 0 32 32" className="h-6 w-6" aria-hidden="true">
+                  <path d="M16 20v7M12 27h8" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                  <circle cx="16" cy="14" r="3" fill="none" stroke="currentColor" strokeWidth="1.8" />
+                  <path d="M10 18a8 8 0 0 1 0-8M22 10a8 8 0 0 1 0 8M6 21a13 13 0 0 1 0-14M26 7a13 13 0 0 1 0 14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" opacity="0.7" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </FadeIn>
       </div>
     </section>
   );
