@@ -1,6 +1,6 @@
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { useRef, useEffect, useState, useCallback } from "react";
-import { ExternalLink, Play, Zap, Sparkles, Star } from "lucide-react";
+import { Code2, Crown, ExternalLink, Play, Rocket, Sparkles, Star, TrendingUp, Zap } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useI18n, type TranslationKey } from "./i18n";
 import { useTheme } from "./theme";
@@ -15,8 +15,6 @@ import imgCards from "../../assets/kittyhub/04-cards.png";
 import imgInterfaceMobile1 from "../../assets/kittyhub/05-interface-mobile.png";
 import imgInterfaceMobile2 from "../../assets/kittyhub/06-interface-mobile.png";
 import imgIpadApplication from "../../assets/kittyhub/07-application-ipad.png";
-import imgTeamWhite from "../../assets/kittyhub/08-equipe-version-blanc.png";
-import imgTeamBlack from "../../assets/kittyhub/09-equipe-version-noir.png";
 import imgBentoMockup from "../../assets/kittyhub/10-mockup-bento.jpg";
 import imgSituation from "../../assets/kittyhub/11-mise-en-situation.png";
 import imgMockup1 from "../../assets/kittyhub/12-MOCKUP-1.png";
@@ -28,11 +26,23 @@ import imgPaletteViolet from "../../assets/kittyhub/assets/02.palette.png";
 import imgPaletteBlue from "../../assets/kittyhub/assets/03.palette.png";
 import imgPaletteDark from "../../assets/kittyhub/assets/04.palette.png";
 import imgPaletteBooster from "../../assets/kittyhub/assets/05.palette.png";
+import imgTeamZulal from "../../assets/kittyhub/assets/06.équipe.png";
+import imgTeamEvan from "../../assets/kittyhub/assets/07.équipe.png";
+import imgTeamAdrien from "../../assets/kittyhub/assets/08.équipe.png";
+import imgTeamJay from "../../assets/kittyhub/assets/09.équipe.png";
 import imgLogoDarkCard from "../../assets/kittyhub/assets/10.logo-dark.png";
 import imgLogoLightCard from "../../assets/kittyhub/assets/11.logo-light.png";
 import imgFooterLight from "../../assets/kittyhub/assets/12.footer-light.png";
 import imgFooterDark from "../../assets/kittyhub/assets/13.footer-dark.png";
 import imgFooterLogo from "../../assets/kittyhub/assets/14.footer-logo.png";
+import imgHeroBackgroundLight from "../../assets/kittyhub/assets/15.background-light.png";
+import imgHeroBackgroundDark from "../../assets/kittyhub/assets/16.background-dark.png";
+import imgHeroSocleLight from "../../assets/kittyhub/assets/17.socle-light.png";
+import imgHeroSocleDark from "../../assets/kittyhub/assets/18.socle-dark.png";
+import imgHeroCardsLight from "../../assets/kittyhub/assets/19.cartes.light.png";
+import imgHeroCardsDark from "../../assets/kittyhub/assets/20.cartes-dark.png";
+import imgHeroDiamondsLight from "../../assets/kittyhub/assets/21.diamands-light.png";
+import imgHeroDiamondsDark from "../../assets/kittyhub/assets/22.diamands-dark.png";
 
 /* -- Helpers -- */
 const ACCENT = "#FD6235";
@@ -94,58 +104,125 @@ function useBodyStyle() {
    1. HERO
    =================================== */
 function HeroSection() {
-  const { t } = useI18n();
-  const { isDark, r } = useTheme();
+  const { isDark } = useTheme();
+  const shouldReduceMotion = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
-  const imgOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const heroBackground = isDark ? imgHeroBackgroundDark : imgHeroBackgroundLight;
+  const heroSocle = isDark ? imgHeroSocleDark : imgHeroSocleLight;
+  const heroCards = isDark ? imgHeroCardsDark : imgHeroCardsLight;
+  const heroDiamonds = isDark ? imgHeroDiamondsDark : imgHeroDiamondsLight;
 
   return (
-    <section ref={ref} className="relative w-full min-h-[80vh] flex flex-col items-center justify-center overflow-hidden px-6 py-20">
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: isDark
-            ? `radial-gradient(ellipse 60% 50% at 50% 45%, rgba(${ACCENT_RGB},0.12) 0%, transparent 70%)`
-            : `radial-gradient(ellipse 60% 50% at 50% 45%, rgba(${ACCENT_RGB},0.08) 0%, transparent 70%)`,
-        }}
-      />
-
-      <motion.div className="relative z-10 flex flex-col items-center" style={{ scale: imgScale, opacity: imgOpacity }}>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.3 }}
-          className="mb-8 flex items-center gap-4 justify-center"
-        >
-          <div className="w-8 h-[1px]" style={{ background: r(0.1) }} />
-          <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase", color: r(0.3) }}>
-            {t("kh.hero.label")} — {t("kh.hero.year")}
-          </span>
-          <div className="w-8 h-[1px]" style={{ background: r(0.1) }} />
-        </motion.div>
-
-        {/* Logo icon */}
-        <motion.div
-          initial={{ opacity: 0, y: 30, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
-          className="w-[220px] md:w-[300px] rounded-[40px] overflow-hidden flex items-center justify-center aspect-square"
+    <section
+      ref={ref}
+      className="relative isolate w-full overflow-hidden px-0 py-0"
+      style={{
+        background: isDark ? "#05030b" : "#f7f3fb",
+      }}
+    >
+      <div className="relative z-10 mx-auto aspect-[16/9] w-full max-w-[1536px] overflow-hidden">
+        <img
+          src={heroBackground}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div
+          className="absolute inset-0 pointer-events-none"
           style={{
-            background: ACCENT,
-            boxShadow: isDark
-              ? `0 40px 100px rgba(${ACCENT_RGB},0.3), 0 0 60px rgba(136,35,247,0.12)`
-              : `0 40px 100px rgba(${ACCENT_RGB},0.2), 0 0 60px rgba(136,35,247,0.08)`,
+            background: isDark
+              ? "radial-gradient(circle at 51% 48%, rgba(253,98,53,0.12), transparent 18%), radial-gradient(circle at 55% 50%, rgba(142,37,247,0.16), transparent 25%)"
+              : "radial-gradient(circle at 51% 48%, rgba(253,98,53,0.08), transparent 18%), radial-gradient(circle at 55% 50%, rgba(142,37,247,0.11), transparent 25%)",
           }}
-        >
-          <svg className="w-[55%]" fill="none" preserveAspectRatio="xMidYMid meet" viewBox="60 38 100 130">
-            <path d={svgPaths.pe2c7b00} fill="white" />
-            <path d={svgPaths.p1a04ad00} fill="white" />
-            <path d={svgPaths.p188bda80} fill="white" />
-          </svg>
-        </motion.div>
-      </motion.div>
+        />
+
+        <div className="absolute left-[4.5%] top-[14.7%] z-40 w-[22%] max-w-[330px]">
+          <div className="flex flex-col items-start">
+            <h1
+              className="whitespace-nowrap uppercase"
+              style={{
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: "clamp(1.38rem, 3.15vw, 3.5rem)",
+                lineHeight: 1,
+                fontWeight: 800,
+                letterSpacing: "0.13em",
+                background: "linear-gradient(90deg, #FD6235 0%, #EC4B88 45%, #8E25F7 100%)",
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                color: "transparent",
+                textShadow: isDark ? "0 0 28px rgba(253,98,53,0.16)" : "0 10px 34px rgba(142,37,247,0.12)",
+              }}
+            >
+              KITTY HUB
+            </h1>
+            <p
+              className="mt-[6%] whitespace-nowrap uppercase"
+              style={{
+                fontFamily: "'Inter', sans-serif",
+                fontSize: "clamp(0.54rem, 1.05vw, 0.98rem)",
+                fontWeight: 700,
+                letterSpacing: "0.08em",
+                color: isDark ? "rgba(220,213,255,0.66)" : "rgba(93,90,160,0.7)",
+              }}
+            >
+              COLLECT. TRADE. SHINE.
+            </p>
+            <span className="mt-[8%] block h-[3px] w-[28%] min-w-16 rounded-full bg-gradient-to-r from-[#FD6235] via-[#EC4B88] to-[#8E25F7]" />
+          </div>
+        </div>
+
+        <img
+          src={heroCards}
+          alt="Cartes collector Kitty Hub"
+          className="absolute left-[4.1%] top-[35.2%] z-30 w-[36.6%] max-w-none"
+        />
+
+        <img
+          src={heroSocle}
+          alt=""
+          aria-hidden="true"
+          className="absolute bottom-[6%] left-[30%] z-[25] w-[42%] max-w-none"
+        />
+
+        <div className="absolute left-[52.6%] top-[44.4%] z-[38] w-[18%] min-w-[220px] max-w-[300px] -translate-x-1/2 -translate-y-1/2">
+          <motion.div
+            className="relative aspect-square overflow-visible"
+            animate={shouldReduceMotion ? undefined : { y: [0, -6, 0] }}
+            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <div
+              className="absolute inset-[28%] rounded-[30%] blur-2xl"
+              style={{
+                background: isDark ? "rgba(253,98,53,0.34)" : "rgba(253,98,53,0.2)",
+              }}
+            />
+            <img
+              src={imgFooterLogo}
+              alt="Logo Kitty Hub"
+              className="absolute left-1/2 top-1/2 z-10 w-[800%] max-w-none -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_28px_54px_rgba(253,98,53,0.25)]"
+            />
+          </motion.div>
+        </div>
+
+        <motion.img
+          src={heroDiamonds}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 z-[36] h-full w-full object-cover pointer-events-none opacity-88"
+          animate={shouldReduceMotion ? undefined : {
+            y: [0, -10, 0],
+            x: [0, 3, 0],
+            rotate: [-0.2, 0.35, -0.2],
+            opacity: [0.82, 1, 0.86],
+            filter: [
+              "drop-shadow(0 0 10px rgba(142,37,247,0.2)) brightness(1)",
+              "drop-shadow(0 0 24px rgba(253,98,53,0.35)) brightness(1.18)",
+              "drop-shadow(0 0 14px rgba(29,164,208,0.28)) brightness(1.05)",
+            ],
+          }}
+          transition={{ duration: 7.5, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
     </section>
   );
 }
@@ -1264,19 +1341,224 @@ function WebInterfaceSection() {
    11b. TEAM
    =================================== */
 function TeamSection() {
-  const { t } = useI18n();
-  const { r, isDark } = useTheme();
+  const shouldReduceMotion = useReducedMotion();
+  const { isDark } = useTheme();
+  const titleColor = isDark ? "#fff" : "#2B253D";
+  const eyebrowColor = isDark ? "rgba(255,255,255,0.56)" : "rgba(43,37,61,0.48)";
+  const bodyColor = isDark ? "rgba(255,255,255,0.66)" : "rgba(43,37,61,0.66)";
+  const roleColor = isDark ? "rgba(226,218,255,0.84)" : "rgba(57,44,86,0.78)";
+  const descriptionColor = isDark ? "rgba(255,255,255,0.62)" : "rgba(43,37,61,0.62)";
+  const orbitBorder = isDark ? "rgba(255,255,255,0.18)" : "rgba(43,37,61,0.13)";
+  const orbitSoft = isDark ? "rgba(255,255,255,0.1)" : "rgba(43,37,61,0.08)";
+  const teamMembers = [
+    {
+      name: "Zulâl Aybek",
+      role: "CEO - Co-fondatrice",
+      description: "Digital Project Manager, Digital Strategy Expert and Creative Director.",
+      avatar: imgTeamZulal,
+      icon: Crown,
+      accent: "#FD6235",
+    },
+    {
+      name: "Adrien Desrames",
+      role: "COO - Co-fondateur",
+      description: "iOS Developer and mentor on the Apple Foundation Program.",
+      avatar: imgTeamAdrien,
+      icon: Rocket,
+      accent: "#1DA4D0",
+    },
+    {
+      name: "Jay Céleste",
+      role: "CTO",
+      description: "Creative Director.",
+      avatar: imgTeamJay,
+      icon: Code2,
+      accent: "#8E25F7",
+    },
+    {
+      name: "Évan Remeur",
+      role: "Senior Vice President Operations - Co-fondateur",
+      description: "Graduated from Apple Developer Academy, iOS and web developer.",
+      avatar: imgTeamEvan,
+      icon: TrendingUp,
+      accent: "#EC4B88",
+    },
+  ];
 
   return (
-    <section className="px-6 md:px-16 py-16">
-      <div className="max-w-5xl mx-auto">
-        <FadeIn className="mb-10">
-          <SectionLabel>{t("kh.team.label")}</SectionLabel>
+    <section className="relative overflow-hidden px-6 py-20 md:px-16 md:py-24">
+      <div className="absolute inset-0 pointer-events-none opacity-70" style={{ background: "radial-gradient(circle at 20% 18%, rgba(253,98,53,0.08), transparent 24%), radial-gradient(circle at 80% 28%, rgba(142,37,247,0.1), transparent 26%), radial-gradient(circle at 48% 78%, rgba(29,164,208,0.08), transparent 28%)" }} />
+      <motion.div
+        className="absolute left-[8%] top-[18%] h-20 w-20 rotate-12 border border-[#8E25F7]/25 bg-[#8E25F7]/[0.05] blur-[0.2px]"
+        style={{ clipPath: "polygon(50% 0%, 88% 28%, 72% 92%, 18% 78%, 0% 32%)" }}
+        animate={shouldReduceMotion ? undefined : { y: [0, -12, 0], rotate: [12, 20, 12], opacity: isDark ? [0.22, 0.46, 0.22] : [0.12, 0.28, 0.12] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute right-[11%] bottom-[18%] h-24 w-24 -rotate-12 border border-[#1DA4D0]/25 bg-[#1DA4D0]/[0.05]"
+        style={{ clipPath: "polygon(50% 0%, 95% 36%, 74% 100%, 24% 88%, 4% 30%)" }}
+        animate={shouldReduceMotion ? undefined : { y: [0, 14, 0], rotate: [-12, -22, -12], opacity: isDark ? [0.18, 0.42, 0.18] : [0.1, 0.24, 0.1] }}
+        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      <div className="relative mx-auto max-w-7xl">
+        <FadeIn className="mb-14">
+          <div className="max-w-xl">
+            <span
+              className="block uppercase"
+              style={{
+                fontFamily: "'Inter', sans-serif",
+                fontSize: "0.65rem",
+                letterSpacing: "0.28em",
+                color: eyebrowColor,
+              }}
+            >
+              ÉQUIPE
+            </span>
+            <h2
+              className="mt-4 uppercase"
+              style={{
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: "clamp(2.2rem, 5vw, 5rem)",
+                lineHeight: 0.92,
+                fontWeight: 800,
+                color: titleColor,
+              }}
+            >
+              NOTRE ÉQUIPE
+            </h2>
+            <p
+              className="mt-4"
+              style={{
+                fontFamily: "'Inter', sans-serif",
+                fontSize: "0.95rem",
+                color: bodyColor,
+              }}
+            >
+              Passionnés, créatifs et déterminés.
+            </p>
+            <span className="mt-6 block h-[3px] w-24 rounded-full bg-gradient-to-r from-[#FD6235] via-[#8E25F7] to-[#1DA4D0]" />
+          </div>
         </FadeIn>
 
         <FadeIn delay={0.1}>
-          <div className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-            <img src={isDark ? imgTeamBlack : imgTeamWhite} alt="KittyHub team" className="w-full object-cover" />
+          <div className="relative">
+            <svg className="pointer-events-none absolute left-0 top-[118px] hidden h-36 w-full opacity-70 lg:block" viewBox="0 0 1200 160" fill="none" aria-hidden="true">
+              <path d="M120 80 C 260 20, 420 20, 560 82 S 880 145, 1080 76" stroke="url(#kittyTeamLine)" strokeWidth="1.4" strokeDasharray="8 14" />
+              <path d="M210 118 C 380 152, 740 8, 1000 112" stroke="url(#kittyTeamLineSoft)" strokeWidth="1" strokeDasharray="3 18" />
+              <defs>
+                <linearGradient id="kittyTeamLine" x1="120" y1="80" x2="1080" y2="80" gradientUnits="userSpaceOnUse">
+                  <stop stopColor="#FD6235" stopOpacity="0.15" />
+                  <stop offset="0.52" stopColor="#8E25F7" stopOpacity="0.72" />
+                  <stop offset="1" stopColor="#1DA4D0" stopOpacity="0.18" />
+                </linearGradient>
+                <linearGradient id="kittyTeamLineSoft" x1="210" y1="112" x2="1000" y2="112" gradientUnits="userSpaceOnUse">
+                  <stop stopColor="#EC4B88" stopOpacity="0.08" />
+                  <stop offset="0.5" stopColor="#1DA4D0" stopOpacity="0.44" />
+                  <stop offset="1" stopColor="#FD6235" stopOpacity="0.1" />
+                </linearGradient>
+              </defs>
+            </svg>
+
+            <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+              {teamMembers.map((member, index) => {
+                const Icon = member.icon;
+                return (
+                  <motion.article
+                    key={member.name}
+                    className="group relative flex min-h-[430px] flex-col items-center text-center"
+                    whileHover={shouldReduceMotion ? undefined : { y: -8, scale: 1.015 }}
+                    transition={{ duration: 0.45, ease: "easeOut" }}
+                  >
+                    <div
+                      className="absolute top-10 h-52 w-52 rounded-full blur-3xl transition-opacity duration-500 group-hover:opacity-80"
+                      style={{ background: member.accent, opacity: isDark ? 0.24 : 0.14 }}
+                    />
+                    <motion.div
+                      className="relative mt-4 flex h-56 w-56 items-center justify-center rounded-full"
+                      animate={shouldReduceMotion ? undefined : { rotate: [0, 2.5, 0, -2.5, 0] }}
+                      transition={{ duration: 9 + index, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                      <div className="absolute inset-0 rounded-full border" style={{ borderColor: orbitSoft, background: isDark ? "rgba(255,255,255,0.025)" : "rgba(255,255,255,0.22)" }} />
+                      <div
+                        className="absolute inset-3 rounded-full border"
+                        style={{ borderColor: `${member.accent}${isDark ? "80" : "45"}`, boxShadow: `0 0 ${isDark ? 38 : 24}px ${member.accent}${isDark ? "38" : "1f"}` }}
+                      />
+                      <div className="absolute inset-[-14px] rounded-full border border-dashed" style={{ borderColor: orbitBorder }} />
+                      <div className="absolute h-[270px] w-[140px] rotate-[64deg] rounded-full border" style={{ borderColor: orbitSoft }} />
+                      <div className="absolute h-[270px] w-[140px] -rotate-[64deg] rounded-full border" style={{ borderColor: orbitSoft }} />
+                      <motion.span
+                        className="absolute right-5 top-5 h-2.5 w-2.5 rounded-full"
+                        style={{ background: member.accent, boxShadow: `0 0 20px ${member.accent}` }}
+                        animate={shouldReduceMotion ? undefined : { opacity: [0.35, 1, 0.35], scale: [0.8, 1.18, 0.8] }}
+                        transition={{ duration: 3.8 + index * 0.4, repeat: Infinity, ease: "easeInOut" }}
+                      />
+                      <div
+                        className="relative z-10 flex h-44 w-44 items-center justify-center rounded-full border p-3 shadow-[0_24px_70px_rgba(0,0,0,0.26)]"
+                        style={{
+                          borderColor: isDark ? "rgba(255,255,255,0.34)" : "rgba(255,255,255,0.92)",
+                          background: isDark
+                            ? `radial-gradient(circle at 50% 36%, rgba(255,255,255,0.1), transparent 40%), #12091f`
+                            : `radial-gradient(circle at 50% 36%, rgba(255,255,255,0.95), transparent 44%), #f8f3ff`,
+                          boxShadow: `0 22px 62px ${member.accent}${isDark ? "38" : "26"}`,
+                        }}
+                      >
+                        <img src={member.avatar} alt={member.name} className="relative z-10 h-full w-full object-contain opacity-100 drop-shadow-[0_14px_26px_rgba(0,0,0,0.18)]" />
+                      </div>
+                      <div
+                        className="absolute bottom-2 right-7 z-20 flex h-10 w-10 items-center justify-center rounded-full border backdrop-blur-md transition-transform duration-500 group-hover:scale-110"
+                        style={{
+                          borderColor: isDark ? "rgba(255,255,255,0.18)" : "rgba(43,37,61,0.12)",
+                          background: isDark ? "rgba(16,9,29,0.9)" : "rgba(255,255,255,0.82)",
+                          boxShadow: `0 0 24px ${member.accent}55`,
+                        }}
+                      >
+                        <Icon className="h-4 w-4" style={{ color: member.accent }} />
+                      </div>
+                    </motion.div>
+
+                    <h3
+                      className="mt-8"
+                      style={{
+                        fontFamily: "'Space Grotesk', sans-serif",
+                        fontSize: "1.2rem",
+                        fontWeight: 800,
+                        background: "linear-gradient(90deg, #FD6235 0%, #EC4B88 45%, #8E25F7 100%)",
+                        WebkitBackgroundClip: "text",
+                        backgroundClip: "text",
+                        color: "transparent",
+                      }}
+                    >
+                      {member.name}
+                    </h3>
+                    <p
+                      className="mt-2 min-h-[44px] px-3"
+                      style={{
+                        fontFamily: "'Inter', sans-serif",
+                        fontSize: "0.72rem",
+                        lineHeight: 1.5,
+                        letterSpacing: "0.08em",
+                        textTransform: "uppercase",
+                        color: roleColor,
+                      }}
+                    >
+                      {member.role}
+                    </p>
+                    <p
+                      className="mt-3 max-w-[230px]"
+                      style={{
+                        fontFamily: "'Inter', sans-serif",
+                        fontSize: "0.82rem",
+                        lineHeight: 1.65,
+                        color: descriptionColor,
+                      }}
+                    >
+                      {member.description}
+                    </p>
+                  </motion.article>
+                );
+              })}
+            </div>
           </div>
         </FadeIn>
       </div>
