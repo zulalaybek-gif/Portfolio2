@@ -16,7 +16,7 @@ import imgInterfaceMobile1 from "../../assets/kittyhub/05-interface-mobile.png";
 import imgInterfaceMobile2 from "../../assets/kittyhub/06-interface-mobile.png";
 import imgIpadApplication from "../../assets/kittyhub/07-application-ipad.png";
 import imgBentoMockup from "../../assets/kittyhub/10-mockup-bento.jpg";
-import imgSituation from "../../assets/kittyhub/11-mise-en-situation.png";
+import imgSituation from "../../assets/kittyhub/11-mise-en-situation-light.png";
 import imgMockup1 from "../../assets/kittyhub/12-MOCKUP-1.png";
 import imgMockup2 from "../../assets/kittyhub/13-MOCKUP-2.png";
 import imgPikatchu from "../../assets/kittyhub/14-pikatchu.png";
@@ -37,18 +37,17 @@ import imgFooterDark from "../../assets/kittyhub/assets/13.footer-dark.png";
 import imgFooterLogo from "../../assets/kittyhub/assets/14.footer-logo.png";
 import imgHeroBackgroundLight from "../../assets/kittyhub/assets/15.background-light.png";
 import imgHeroBackgroundDark from "../../assets/kittyhub/assets/16.background-dark.png";
-import imgHeroSocleLight from "../../assets/kittyhub/assets/17.socle-light.png";
-import imgHeroSocleDark from "../../assets/kittyhub/assets/18.socle-dark.png";
-import imgHeroCardsLight from "../../assets/kittyhub/assets/19.cartes.light.png";
-import imgHeroCardsDark from "../../assets/kittyhub/assets/20.cartes-dark.png";
-import imgHeroDiamondsLight from "../../assets/kittyhub/assets/21.diamands-light.png";
-import imgHeroDiamondsDark from "../../assets/kittyhub/assets/22.diamands-dark.png";
+import imgHeroSocleLight from "../../assets/kittyhub/assets/17.header-socle-light.png";
+import imgHeroSocleDark from "../../assets/kittyhub/assets/18.header-socle-dark.png";
+import imgHeroCardsLight from "../../assets/kittyhub/assets/19.header-cartes.light.png";
+import imgHeroCardsDark from "../../assets/kittyhub/assets/20.header-cartes-dark.png";
+import imgHeroDiamondsLight from "../../assets/kittyhub/assets/21.header-diamands-light.png";
+import imgHeroDiamondsDark from "../../assets/kittyhub/assets/22.header-diamands-dark.png";
 
 /* -- Helpers -- */
 const ACCENT = "#FD6235";
 const ACCENT_RGB = "253,98,53";
 const DARK_BG = "#07020b";
-const IPAD_PROTO_URL = "https://www.figma.com/proto/Yd1jdAY0vItJeAIf4tmsGa/kittyhub?page-id=547%3A2998&node-id=2000-8068&viewport=733%2C-7356%2C0.07&t=MdzZHiu2I41bwGOu-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=2000%3A8068&show-proto-sidebar=1";
 const WEB_PROTO_URL = "https://www.figma.com/proto/Yd1jdAY0vItJeAIf4tmsGa/kittyhub?node-id=3911-2622&viewport=212%2C-3898%2C0.11&t=xZg4qGYtJkw0EDwB-1&scaling=scale-down-width&content-scaling=fixed&starting-point-node-id=890%3A271&page-id=860%3A2";
 const WEB_PROTO_EMBED_URL = `https://www.figma.com/embed?embed_host=share&url=${encodeURIComponent(WEB_PROTO_URL)}`;
 
@@ -307,7 +306,7 @@ function ContextSection() {
 
   return (
     <section className="px-6 md:px-16 py-16">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start">
           <FadeIn>
             <SectionLabel>{t("kh.context.label")}</SectionLabel>
@@ -330,7 +329,7 @@ function DirectionSection() {
 
   return (
     <section className="px-6 md:px-16 py-16">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start">
           <FadeIn>
             <SectionLabel>{t("kh.direction.label")}</SectionLabel>
@@ -858,7 +857,7 @@ function LogoSection() {
               </div>
             </div>
 
-            <div className="relative z-10 grid grid-cols-1 items-center gap-10 pt-14 lg:grid-cols-[0.82fr_1.18fr] lg:gap-6 lg:pt-16">
+            <div className="relative z-10 grid grid-cols-1 items-center gap-12 pt-12 md:pt-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-12 lg:pt-14">
               <div className="max-w-[440px]">
                 <p className="mb-5 text-[11px] font-bold uppercase tracking-[0.32em]" style={{ color: ACCENT }}>
                   ✦ LOGO SYSTEM
@@ -925,10 +924,10 @@ function LogoSection() {
                 </div>
               </div>
 
-              <div className="relative min-h-[540px] overflow-visible lg:min-h-[620px]">
-                <div className="absolute left-[46%] top-[64%] h-[58px] w-[420px] -translate-x-1/2 rounded-full blur-[18px]" style={{ background: isDark ? "rgba(253,98,53,0.28)" : "rgba(142,37,247,0.12)" }} />
-                <div className="absolute left-[15%] top-[10%] h-[260px] w-[260px] rounded-full bg-[#8E25F7]/15 blur-[82px]" />
-                <div className="absolute right-[6%] top-[36%] h-[230px] w-[230px] rounded-full bg-[#1DA4D0]/12 blur-[82px]" />
+              <div className="relative min-h-[500px] overflow-visible sm:min-h-[560px] lg:min-h-[620px]">
+                <div className="absolute left-1/2 top-[63%] h-[52px] w-[min(72vw,430px)] -translate-x-1/2 rounded-full blur-[18px]" style={{ background: isDark ? "rgba(253,98,53,0.24)" : "rgba(142,37,247,0.1)" }} />
+                <div className="absolute left-[12%] top-[12%] h-[220px] w-[220px] rounded-full bg-[#8E25F7]/12 blur-[82px]" />
+                <div className="absolute right-[8%] top-[38%] h-[200px] w-[200px] rounded-full bg-[#1DA4D0]/10 blur-[82px]" />
 
                 {logoShards.map((shard, index) => (
                   <motion.div
@@ -966,7 +965,7 @@ function LogoSection() {
                 <motion.img
                   src={isDark ? imgLogoDarkCard : imgLogoLightCard}
                   alt={isDark ? "Carte logo Kitty Hub version sombre" : "Carte logo Kitty Hub version claire"}
-                  className="absolute left-[50%] top-[49%] z-20 w-[min(80vw,410px)] -translate-x-1/2 -translate-y-1/2 object-contain md:w-[455px] lg:left-[46%] lg:w-[520px]"
+                  className="absolute left-1/2 top-[44%] z-20 w-[min(76vw,360px)] -translate-x-1/2 -translate-y-1/2 object-contain sm:w-[390px] md:top-[46%] md:w-[430px] lg:left-[46%] lg:top-[48%] lg:w-[500px]"
                   initial={{ opacity: 0, y: 34, rotate: -3 }}
                   whileInView={{ opacity: 1, y: 0, rotate: -3 }}
                   viewport={{ once: true }}
@@ -978,15 +977,26 @@ function LogoSection() {
                   }}
                 />
 
-                <div className="absolute right-[-2%] top-[54%] z-30 hidden w-[104px] -translate-y-1/2 rounded-[18px] border p-4 text-right lg:block" style={{ background: isDark ? "rgba(7,2,11,0.58)" : "rgba(255,255,255,0.72)", borderColor: isDark ? "rgba(255,255,255,0.08)" : "rgba(7,2,11,0.08)" }}>
-                  <p className="text-[10px] font-bold uppercase tracking-[0.24em]" style={{ color: isDark ? "rgba(255,255,255,0.42)" : "rgba(7,2,11,0.42)" }}>Rarity</p>
-                  <p className="mt-1 text-[18px] font-black uppercase" style={{ color: ACCENT }}>Rare</p>
-                  <div className="my-4 h-px" style={{ background: isDark ? "rgba(255,255,255,0.09)" : "rgba(7,2,11,0.08)" }} />
-                  <p className="text-[10px] font-bold uppercase tracking-[0.24em]" style={{ color: isDark ? "rgba(255,255,255,0.42)" : "rgba(7,2,11,0.42)" }}>ID</p>
-                  <p className="mt-1 text-[18px] font-black" style={{ color: isDark ? "#fff" : DARK_BG }}>001</p>
-                  <div className="my-4 h-px" style={{ background: isDark ? "rgba(255,255,255,0.09)" : "rgba(7,2,11,0.08)" }} />
-                  <p className="text-[10px] font-bold uppercase tracking-[0.24em]" style={{ color: isDark ? "rgba(255,255,255,0.42)" : "rgba(7,2,11,0.42)" }}>ÉDITION</p>
-                  <p className="mt-1 text-[13px] font-bold uppercase" style={{ color: isDark ? "rgba(255,255,255,0.76)" : "rgba(7,2,11,0.7)" }}>Originale</p>
+                <div
+                  className="absolute bottom-4 left-1/2 z-30 grid w-[min(88%,430px)] -translate-x-1/2 grid-cols-3 gap-2 rounded-[18px] border p-3 text-center backdrop-blur-md md:bottom-6 md:w-[min(74%,470px)] lg:bottom-auto lg:left-auto lg:right-[4%] lg:top-[54%] lg:w-[122px] lg:-translate-y-1/2 lg:translate-x-0 lg:grid-cols-1 lg:gap-0 lg:p-4 lg:text-right"
+                  style={{
+                    background: isDark ? "rgba(7,2,11,0.66)" : "rgba(255,255,255,0.78)",
+                    borderColor: isDark ? "rgba(255,255,255,0.1)" : "rgba(7,2,11,0.08)",
+                    boxShadow: isDark ? "0 18px 44px rgba(0,0,0,0.36)" : "0 16px 34px rgba(35,19,50,0.11)",
+                  }}
+                >
+                  <div>
+                    <p className="text-[9px] font-bold uppercase tracking-[0.22em] md:text-[10px]" style={{ color: isDark ? "rgba(255,255,255,0.42)" : "rgba(7,2,11,0.42)" }}>Rarity</p>
+                    <p className="mt-1 text-[15px] font-black uppercase md:text-[18px]" style={{ color: ACCENT }}>Rare</p>
+                  </div>
+                  <div className="border-l pl-2 lg:mt-4 lg:border-l-0 lg:border-t lg:pl-0 lg:pt-4" style={{ borderColor: isDark ? "rgba(255,255,255,0.09)" : "rgba(7,2,11,0.08)" }}>
+                    <p className="text-[9px] font-bold uppercase tracking-[0.22em] md:text-[10px]" style={{ color: isDark ? "rgba(255,255,255,0.42)" : "rgba(7,2,11,0.42)" }}>ID</p>
+                    <p className="mt-1 text-[15px] font-black md:text-[18px]" style={{ color: isDark ? "#fff" : DARK_BG }}>001</p>
+                  </div>
+                  <div className="border-l pl-2 lg:mt-4 lg:border-l-0 lg:border-t lg:pl-0 lg:pt-4" style={{ borderColor: isDark ? "rgba(255,255,255,0.09)" : "rgba(7,2,11,0.08)" }}>
+                    <p className="text-[9px] font-bold uppercase tracking-[0.22em] md:text-[10px]" style={{ color: isDark ? "rgba(255,255,255,0.42)" : "rgba(7,2,11,0.42)" }}>ÉDITION</p>
+                    <p className="mt-1 text-[11px] font-bold uppercase md:text-[13px]" style={{ color: isDark ? "rgba(255,255,255,0.76)" : "rgba(7,2,11,0.7)" }}>Originale</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1058,11 +1068,11 @@ function AppIconsSection() {
    =================================== */
 function CardsSection() {
   const { t } = useI18n();
-  const { r } = useTheme();
+  const { r, isDark } = useTheme();
   const body = useBodyStyle();
 
   return (
-    <section className="px-6 md:px-16 py-16">
+    <section className="px-6 md:px-16 py-16 overflow-hidden">
       <div className="max-w-5xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start mb-10">
           <FadeIn>
@@ -1089,8 +1099,32 @@ function CardsSection() {
 
         {/* Full-width cards image */}
         <FadeIn delay={0.25}>
-          <div className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-            <img src={imgCards} alt="KittyHub cards system" className="w-full object-cover" />
+          <div
+            className="relative overflow-hidden rounded-[24px] border p-3 md:rounded-[30px] md:p-5"
+            style={{
+              background: isDark
+                ? "radial-gradient(circle at 18% 16%, rgba(253,98,53,0.13) 0%, transparent 34%), radial-gradient(circle at 84% 78%, rgba(142,37,247,0.16) 0%, transparent 36%), linear-gradient(135deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.015) 100%)"
+                : "radial-gradient(circle at 18% 16%, rgba(253,98,53,0.08) 0%, transparent 34%), radial-gradient(circle at 84% 78%, rgba(142,37,247,0.1) 0%, transparent 36%), linear-gradient(135deg, rgba(255,255,255,0.82) 0%, rgba(247,244,251,0.92) 100%)",
+              borderColor: isDark ? "rgba(255,255,255,0.09)" : "rgba(7,2,11,0.08)",
+              boxShadow: isDark ? "0 28px 90px rgba(0,0,0,0.42)" : "0 24px 70px rgba(35,19,50,0.12)",
+            }}
+          >
+            <div
+              className="pointer-events-none absolute inset-0 opacity-[0.05]"
+              style={{
+                backgroundImage: isDark
+                  ? "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)"
+                  : "linear-gradient(#07020b 1px, transparent 1px), linear-gradient(90deg, #07020b 1px, transparent 1px)",
+                backgroundSize: "34px 34px",
+              }}
+            />
+            <div
+              className="pointer-events-none absolute left-1/2 top-[58%] h-16 w-[72%] -translate-x-1/2 rounded-full blur-2xl"
+              style={{ background: isDark ? "rgba(253,98,53,0.2)" : "rgba(142,37,247,0.1)" }}
+            />
+            <div className="relative overflow-hidden rounded-[18px] border md:rounded-[22px]" style={{ borderColor: r(0.06) }}>
+              <img src={imgCards} alt="KittyHub cards system" className="w-full object-cover" />
+            </div>
           </div>
         </FadeIn>
       </div>
@@ -1103,11 +1137,11 @@ function CardsSection() {
    =================================== */
 function InterfaceSection() {
   const { t } = useI18n();
-  const { r } = useTheme();
+  const { r, isDark } = useTheme();
   const body = useBodyStyle();
 
   return (
-    <section className="px-6 md:px-16 py-16">
+    <section className="px-6 md:px-16 py-16 overflow-hidden">
       <div className="max-w-5xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start mb-10">
           <FadeIn>
@@ -1121,13 +1155,43 @@ function InterfaceSection() {
         {/* UI screenshots */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FadeIn delay={0.15}>
-            <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-              <img src={imgInterfaceMobile1} alt="KittyHub UI screen 1" className="w-full object-cover" />
+            <div
+              className="relative overflow-hidden rounded-[22px] border p-3 md:rounded-[26px] md:p-4"
+              style={{
+                background: isDark
+                  ? "radial-gradient(circle at 18% 12%, rgba(253,98,53,0.12) 0%, transparent 34%), linear-gradient(145deg, rgba(255,255,255,0.035), rgba(255,255,255,0.012))"
+                  : "radial-gradient(circle at 18% 12%, rgba(253,98,53,0.08) 0%, transparent 34%), linear-gradient(145deg, rgba(255,255,255,0.86), rgba(247,244,251,0.92))",
+                borderColor: isDark ? "rgba(255,255,255,0.08)" : "rgba(7,2,11,0.08)",
+                boxShadow: isDark ? "0 24px 70px rgba(0,0,0,0.34)" : "0 20px 54px rgba(35,19,50,0.11)",
+              }}
+            >
+              <div
+                className="pointer-events-none absolute left-1/2 top-[58%] h-14 w-[72%] -translate-x-1/2 rounded-full blur-2xl"
+                style={{ background: isDark ? "rgba(253,98,53,0.16)" : "rgba(142,37,247,0.08)" }}
+              />
+              <div className="relative overflow-hidden rounded-[16px] border md:rounded-[20px]" style={{ borderColor: r(0.06) }}>
+                <img src={imgInterfaceMobile1} alt="KittyHub UI screen 1" className="w-full object-cover" />
+              </div>
             </div>
           </FadeIn>
           <FadeIn delay={0.2}>
-            <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${r(0.04)}` }}>
-              <img src={imgInterfaceMobile2} alt="KittyHub UI screen 2" className="w-full object-cover" />
+            <div
+              className="relative overflow-hidden rounded-[22px] border p-3 md:rounded-[26px] md:p-4"
+              style={{
+                background: isDark
+                  ? "radial-gradient(circle at 82% 18%, rgba(142,37,247,0.14) 0%, transparent 36%), linear-gradient(145deg, rgba(255,255,255,0.035), rgba(255,255,255,0.012))"
+                  : "radial-gradient(circle at 82% 18%, rgba(142,37,247,0.09) 0%, transparent 36%), linear-gradient(145deg, rgba(255,255,255,0.86), rgba(247,244,251,0.92))",
+                borderColor: isDark ? "rgba(255,255,255,0.08)" : "rgba(7,2,11,0.08)",
+                boxShadow: isDark ? "0 24px 70px rgba(0,0,0,0.34)" : "0 20px 54px rgba(35,19,50,0.11)",
+              }}
+            >
+              <div
+                className="pointer-events-none absolute left-1/2 top-[58%] h-14 w-[72%] -translate-x-1/2 rounded-full blur-2xl"
+                style={{ background: isDark ? "rgba(142,37,247,0.16)" : "rgba(253,98,53,0.08)" }}
+              />
+              <div className="relative overflow-hidden rounded-[16px] border md:rounded-[20px]" style={{ borderColor: r(0.06) }}>
+                <img src={imgInterfaceMobile2} alt="KittyHub UI screen 2" className="w-full object-cover" />
+              </div>
             </div>
           </FadeIn>
         </div>
@@ -1139,6 +1203,18 @@ function InterfaceSection() {
 /* ===================================
    11a. iPAD PROTOTYPE
    =================================== */
+function IPadInterfacePreview() {
+  return (
+    <div className="relative aspect-[4/3] overflow-hidden rounded-[20px] border border-white/10 bg-[#07020B]">
+      <img
+        src={imgInterfaceMobile2}
+        alt="KittyHub interface mobile"
+        className="h-full w-full object-cover"
+      />
+    </div>
+  );
+}
+
 function IPadPrototypeSection() {
   const { t } = useI18n();
   const { r, isDark } = useTheme();
@@ -1146,7 +1222,7 @@ function IPadPrototypeSection() {
   const [isAnimationPlaying, setIsAnimationPlaying] = useState(false);
 
   return (
-    <section className="px-6 md:px-16 py-16">
+    <section className="px-6 md:px-16 py-16 overflow-hidden">
       <div className="max-w-5xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start mb-10">
           <FadeIn>
@@ -1158,6 +1234,7 @@ function IPadPrototypeSection() {
         </div>
 
         <FadeIn delay={0.15}>
+          <div className="grid gap-6 lg:grid-cols-2">
           <div
             className="rounded-2xl overflow-hidden relative"
             style={{
@@ -1242,26 +1319,7 @@ function IPadPrototypeSection() {
               </div>
             </div>
           </div>
-        </FadeIn>
-
-        {/* CTA link */}
-        <FadeIn delay={0.2}>
-          <div className="mt-6 flex justify-center">
-            <a
-              href={IPAD_PROTO_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-2 px-5 py-2.5 rounded-full transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
-              style={{
-                fontFamily: "'Inter', sans-serif",
-                fontSize: "0.78rem",
-                border: `1px solid ${r(0.1)}`,
-                color: r(0.4),
-              }}
-            >
-              {t("kh.ipad.cta")}
-              <ExternalLink size={13} className="transition-transform group-hover:translate-x-0.5" />
-            </a>
+          <IPadInterfacePreview />
           </div>
         </FadeIn>
       </div>
@@ -1285,50 +1343,73 @@ function WebInterfaceSection() {
 
         <FadeIn delay={0.1}>
           <div
-            className="rounded-2xl overflow-hidden"
+            className="relative overflow-hidden rounded-[24px] border p-3 md:rounded-[30px] md:p-5"
             style={{
-              border: `1px solid ${r(0.06)}`,
+              borderColor: isDark ? "rgba(255,255,255,0.09)" : "rgba(7,2,11,0.08)",
               boxShadow: isDark
-                ? "0 30px 80px rgba(0,0,0,0.4), 0 0 1px rgba(255,255,255,0.05)"
-                : "0 30px 80px rgba(0,0,0,0.1), 0 0 1px rgba(0,0,0,0.1)",
-              background: isDark ? "#0d0a11" : "#f8f7fa",
+                ? "0 32px 96px rgba(0,0,0,0.46), 0 0 34px rgba(142,37,247,0.08)"
+                : "0 26px 76px rgba(35,19,50,0.12), 0 0 28px rgba(142,37,247,0.08)",
+              background: isDark
+                ? "radial-gradient(circle at 18% 14%, rgba(253,98,53,0.12) 0%, transparent 34%), radial-gradient(circle at 86% 82%, rgba(142,37,247,0.15) 0%, transparent 36%), linear-gradient(135deg, rgba(255,255,255,0.035), rgba(255,255,255,0.012))"
+                : "radial-gradient(circle at 18% 14%, rgba(253,98,53,0.08) 0%, transparent 34%), radial-gradient(circle at 86% 82%, rgba(142,37,247,0.09) 0%, transparent 36%), linear-gradient(135deg, rgba(255,255,255,0.86), rgba(247,244,251,0.94))",
             }}
           >
-            {/* Browser bar */}
             <div
-              className="flex items-center gap-2 px-4 py-2.5"
+              className="pointer-events-none absolute inset-0 opacity-[0.05]"
               style={{
-                background: isDark ? "#1a1520" : "#f0eef2",
-                borderBottom: `1px solid ${r(0.06)}`,
+                backgroundImage: isDark
+                  ? "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)"
+                  : "linear-gradient(#07020b 1px, transparent 1px), linear-gradient(90deg, #07020b 1px, transparent 1px)",
+                backgroundSize: "34px 34px",
+              }}
+            />
+            <div
+              className="pointer-events-none absolute left-1/2 top-[60%] h-16 w-[72%] -translate-x-1/2 rounded-full blur-2xl"
+              style={{ background: isDark ? "rgba(253,98,53,0.16)" : "rgba(142,37,247,0.08)" }}
+            />
+            <div
+              className="relative overflow-hidden rounded-[18px] border md:rounded-[22px]"
+              style={{
+                borderColor: r(0.06),
+                background: isDark ? "#0d0a11" : "#f8f7fa",
               }}
             >
-              <div className="flex gap-1.5">
-                <div className="w-[10px] h-[10px] rounded-full" style={{ background: "#FF5F57" }} />
-                <div className="w-[10px] h-[10px] rounded-full" style={{ background: "#FEBC2E" }} />
-                <div className="w-[10px] h-[10px] rounded-full" style={{ background: "#28C840" }} />
-              </div>
+              {/* Browser bar */}
               <div
-                className="flex-1 mx-4 py-1 px-3 rounded-md text-center"
+                className="flex items-center gap-2 px-4 py-2.5"
                 style={{
-                  background: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.04)",
-                  fontFamily: "'Inter', sans-serif",
-                  fontSize: "0.55rem",
-                  color: r(0.3),
-                  letterSpacing: "0.02em",
+                  background: isDark ? "#1a1520" : "#f0eef2",
+                  borderBottom: `1px solid ${r(0.06)}`,
                 }}
               >
-                kittyhub.app
+                <div className="flex gap-1.5">
+                  <div className="w-[10px] h-[10px] rounded-full" style={{ background: "#FF5F57" }} />
+                  <div className="w-[10px] h-[10px] rounded-full" style={{ background: "#FEBC2E" }} />
+                  <div className="w-[10px] h-[10px] rounded-full" style={{ background: "#28C840" }} />
+                </div>
+                <div
+                  className="flex-1 mx-4 py-1 px-3 rounded-md text-center"
+                  style={{
+                    background: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.04)",
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "0.55rem",
+                    color: r(0.3),
+                    letterSpacing: "0.02em",
+                  }}
+                >
+                  kittyhub.app
+                </div>
               </div>
-            </div>
 
-            <div className="relative aspect-[16/10] min-h-[420px] md:min-h-[560px]">
-              <iframe
-                title={lang === "fr" ? "Prototype web KittyHub" : "KittyHub web prototype"}
-                src={WEB_PROTO_EMBED_URL}
-                allowFullScreen
-                className="absolute inset-0 h-full w-full border-0"
-                loading="lazy"
-              />
+              <div className="relative aspect-[16/10] min-h-[420px] md:min-h-[560px]">
+                <iframe
+                  title={lang === "fr" ? "Prototype web KittyHub" : "KittyHub web prototype"}
+                  src={WEB_PROTO_EMBED_URL}
+                  allowFullScreen
+                  className="absolute inset-0 h-full w-full border-0"
+                  loading="lazy"
+                />
+              </div>
             </div>
           </div>
         </FadeIn>
@@ -1708,7 +1789,7 @@ function FinalSection() {
 
   return (
     <section
-      className="relative overflow-hidden px-0 pb-20 pt-28 md:pb-24 md:pt-36"
+      className="relative overflow-hidden px-0 pb-24 pt-28 md:pb-28 md:pt-36"
       style={{
         background: isDark
           ? "linear-gradient(180deg, rgba(3,3,3,0) 0%, #08040d 42%, #030303 100%)"
@@ -1806,9 +1887,9 @@ function FinalSection() {
             <motion.img
               src={imgFooterLogo}
               alt=""
-              className="absolute left-1/2 top-[39%] z-30 w-[210px] -translate-x-1/2 -translate-y-1/2 object-contain drop-shadow-[0_26px_54px_rgba(253,98,53,0.46)] md:w-[340px] lg:w-[430px]"
+              className="absolute left-1/2 top-[39%] z-30 w-[200px] -translate-x-1/2 -translate-y-1/2 object-contain drop-shadow-[0_24px_48px_rgba(253,98,53,0.42)] md:w-[330px] lg:w-[420px]"
               draggable={false}
-              style={{ top: isDark ? "39%" : "22%" }}
+              style={{ top: isDark ? "39%" : "34%" }}
               animate={shouldReduceMotion ? undefined : { y: [0, -9, 0], rotate: [-1.5, 1.5, -1.5] }}
               transition={{ duration: 6.8, repeat: Infinity, ease: "easeInOut" }}
             />
@@ -1860,8 +1941,8 @@ function FinalSection() {
                   width: dot.size,
                   height: dot.size,
                   background: dot.color,
-                  opacity: isDark ? 0.6 : 0.5,
-                  boxShadow: `0 0 ${dot.size * 4}px ${dot.color}88`,
+                  opacity: isDark ? 0.46 : 0.38,
+                  boxShadow: `0 0 ${dot.size * 3}px ${dot.color}66`,
                 }}
                 animate={shouldReduceMotion ? undefined : {
                   x: [0, index % 2 ? 12 : -10, index % 3 ? -7 : 8, 0],
@@ -1906,8 +1987,8 @@ function FinalSection() {
                   width: dot.size,
                   height: dot.size,
                   background: dot.color,
-                  opacity: 0.54,
-                  boxShadow: `0 0 ${dot.size * 5}px ${dot.color}88`,
+                  opacity: 0.42,
+                  boxShadow: `0 0 ${dot.size * 3.5}px ${dot.color}66`,
                 }}
                 animate={shouldReduceMotion ? undefined : {
                   x: [0, index % 2 ? 13 : -11, index % 3 ? -6 : 8, 0],

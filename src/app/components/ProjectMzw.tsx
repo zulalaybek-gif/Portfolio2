@@ -427,7 +427,7 @@ function ContextSection() {
   const body = useBodyStyle();
 
   return (
-    <section className="px-6 md:px-16 py-16">
+    <section className="px-6 md:px-16 py-16 border border-black/10 bg-white/80 shadow-xl">
       <div className="max-w-5xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start">
           <FadeIn>
@@ -455,7 +455,7 @@ function DirectionSection() {
   const body = useBodyStyle();
 
   return (
-    <section className="px-6 md:px-16 py-16">
+    <section className="px-6 md:px-16 py-16 border border-black/10 bg-white/80 shadow-xl">
       <div className="max-w-5xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start mb-10">
           <FadeIn>

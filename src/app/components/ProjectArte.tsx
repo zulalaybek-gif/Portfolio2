@@ -1135,7 +1135,7 @@ function PropositionBlock({
   const body = useBodyStyle();
 
   return (
-    <section className="relative px-6 md:px-16 py-20 overflow-visible">
+    <section className="relative px-6 md:px-16 py-20 overflow-hidden">
       {/* Background glow for this proposition */}
       <ColorGlow colors={glowColors} count={8} />
 

@@ -670,7 +670,7 @@ function PaletteSection({ onActiveColorChange }: { onActiveColorChange?: (color:
   };
 
   return (
-    <section className="px-6 md:px-16 py-20">
+    <section className="px-6 md:px-16 py-20 overflow-hidden">
       <div className="max-w-6xl mx-auto">
         <div className="relative isolate">
           <motion.div
@@ -1021,7 +1021,7 @@ function TypographySection() {
   const alphabet = "Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz";
 
   return (
-    <section className="px-6 py-20 md:px-16 md:py-24">
+    <section className="px-6 py-20 md:px-16 md:py-24 overflow-hidden">
       <div className="mx-auto max-w-6xl">
         <div className="mb-12 grid gap-8 md:grid-cols-[0.9fr_1fr] md:items-end">
           <FadeIn>
@@ -1280,7 +1280,7 @@ function InteractiveBook() {
   };
 
   return (
-    <section className="px-6 md:px-16 py-16">
+    <section className="px-6 md:px-16 py-16 overflow-hidden">
       <div className="max-w-5xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start mb-10">
           <FadeIn>
@@ -1458,7 +1458,7 @@ function FinalSection() {
   const footerTrackTransition = { duration: 22, repeat: Infinity, ease: "easeInOut" as const };
 
   return (
-    <section className="relative overflow-visible px-3 py-20 md:px-8 md:py-24">
+    <section className="relative px-3 py-20 md:px-8 md:py-24 overflow-hidden">
       <div
         className="pointer-events-none absolute inset-0 z-0"
         style={{ background: sectionBg }}

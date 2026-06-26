@@ -79,7 +79,7 @@ function HeroSection() {
   const navigate = useNavigate();
 
   return (
-    <section className="relative px-6 md:px-12 pt-10 pb-16 overflow-hidden">
+    <section className="relative px-6 md:px-12 pt-10 pb-16 overflow-hidden border border-black/10 bg-white/80 shadow-xl">
       {/* Ambient cyan glow */}
       <div
         className="absolute inset-0 pointer-events-none"

@@ -261,7 +261,7 @@ function PhotosSection() {
   const nextPhoto = () => setActivePhoto((current) => (current + 1) % photos.length);
 
   return (
-    <section className="px-6 md:px-16 py-16">
+    <section className="px-6 md:px-16 py-16 overflow-hidden">
       <div className="max-w-4xl mx-auto">
         <FadeIn className="mb-8 md:mb-10">
           <SectionLabel>{t("roma.photos.label")}</SectionLabel>

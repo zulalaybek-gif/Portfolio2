@@ -411,7 +411,7 @@ function LogoConstructionSection() {
   ];
 
   return (
-    <section className="px-6 py-20 md:px-12 md:py-24">
+    <section className="px-6 py-20 md:px-12 md:py-24 overflow-hidden">
       <div className="mx-auto max-w-6xl">
         <FadeIn>
           <div
@@ -729,7 +729,7 @@ function PaletteTypoSection() {
   }
 
   return (
-    <section className="px-6 py-[90px] md:px-12">
+    <section className="px-6 py-[90px] md:px-12 overflow-hidden">
       <style>{sectionCss}</style>
       <div className="mx-auto max-w-[1280px]">
         <FadeIn>

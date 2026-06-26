@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
-import { ArrowLeft, MousePointerClick } from "lucide-react";
+import { ArrowLeft, ArrowRight, MousePointerClick } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useI18n, type TranslationKey } from "./i18n";
 import { useTheme } from "./theme";
@@ -101,38 +101,119 @@ function HeroSection() {
   const imgOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
-    <section ref={ref} className="relative w-full min-h-[80vh] flex flex-col items-center justify-center overflow-hidden px-6 py-20">
+    <section ref={ref} className="relative w-full min-h-[92svh] md:min-h-[80vh] flex flex-col items-center justify-center overflow-hidden px-5 pt-20 pb-12 md:px-6 md:py-20">
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background: isDark
-            ? `radial-gradient(ellipse 60% 50% at 50% 45%, rgba(${ACCENT_RGB},0.08) 0%, transparent 70%)`
-            : `radial-gradient(ellipse 60% 50% at 50% 45%, rgba(${ACCENT_RGB},0.12) 0%, transparent 70%)`,
+            ? `radial-gradient(ellipse 74% 54% at 50% 42%, rgba(${ACCENT_RGB},0.16) 0%, transparent 68%)`
+            : `radial-gradient(ellipse 74% 54% at 50% 42%, rgba(${ACCENT_RGB},0.15) 0%, transparent 68%)`,
         }}
       />
 
-      <motion.div className="relative z-10 flex flex-col items-center" style={{ scale: imgScale, opacity: imgOpacity }}>
+      <motion.div className="relative z-10 flex w-full max-w-[420px] flex-col items-center md:max-w-none" style={{ scale: imgScale, opacity: imgOpacity }}>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.3 }}
-          className="mb-8 flex items-center gap-4 justify-center"
+          className="mb-6 flex w-full items-center justify-center gap-3 md:mb-8 md:w-auto md:gap-4"
         >
-          <div className="w-8 h-[1px]" style={{ background: r(0.1) }} />
-          <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase", color: r(0.3) }}>
+          <div className="h-[1px] w-6 shrink-0 md:w-8" style={{ background: r(0.1) }} />
+          <span
+            className="text-center"
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "0.65rem",
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: r(0.3),
+            }}
+          >
             {t("mw.hero.label")} — {t("mw.hero.year")}
           </span>
-          <div className="w-8 h-[1px]" style={{ background: r(0.1) }} />
+          <div className="h-[1px] w-6 shrink-0 md:w-8" style={{ background: r(0.1) }} />
         </motion.div>
 
-        <Sphere3D backgroundUrl={imgSphere} size="large" />
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.45, ease: "easeOut" }}
+          className="mb-5 text-center md:hidden"
+        >
+          <h1
+            style={{
+              fontFamily: "'Space Grotesk', sans-serif",
+              fontSize: "clamp(3rem, 18vw, 4.8rem)",
+              lineHeight: 0.86,
+              fontWeight: 800,
+              color: isDark ? "#fff" : DARK_BLUE,
+            }}
+          >
+            Maker
+            <span
+              className="block"
+              style={{
+                background: `linear-gradient(115deg, ${ACCENT} 0%, #6E4CFF 42%, #DA3483 68%, #E5775B 100%)`,
+                WebkitBackgroundClip: "text",
+                color: "transparent",
+              }}
+            >
+              Week
+            </span>
+          </h1>
+          <p
+            className="mx-auto mt-4 max-w-[18rem]"
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "0.86rem",
+              lineHeight: 1.7,
+              color: r(0.38),
+            }}
+          >
+            {t("mw.intro.subtitle")}
+          </p>
+        </motion.div>
+
+        <div className="relative flex w-full justify-center">
+          <div
+            className="absolute left-1/2 top-1/2 h-[250px] w-[250px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl md:hidden"
+            style={{
+              background: isDark
+                ? "rgba(0,149,193,0.18)"
+                : "rgba(0,149,193,0.12)",
+            }}
+          />
+          <div className="relative scale-[1.08] md:scale-100">
+            <Sphere3D backgroundUrl={imgSphere} size="large" />
+          </div>
+        </div>
+
+        <motion.button
+          type="button"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.9, ease: "easeOut" }}
+          onClick={() => window.scrollTo({ top: window.innerHeight * 0.9, behavior: "smooth" })}
+          className="mt-8 flex min-h-[44px] items-center gap-3 rounded-full px-5 py-3 text-sm font-semibold transition-transform duration-300 active:scale-[0.98] md:hidden"
+          style={{
+            fontFamily: "'Inter', sans-serif",
+            color: "#fff",
+            background: `linear-gradient(115deg, ${DARK_BLUE} 0%, ${ACCENT} 52%, #E5775B 100%)`,
+            boxShadow: isDark
+              ? "0 18px 42px rgba(0,149,193,0.22)"
+              : "0 18px 42px rgba(0,149,193,0.24)",
+          }}
+        >
+          Découvrir le projet
+          <ArrowRight size={15} />
+        </motion.button>
 
         {/* Hint — drag to rotate */}
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 1.5 }}
-          className="mt-4 flex items-center gap-2"
+          className="mt-5 flex items-center gap-2 md:mt-4"
         >
           <MousePointerClick size={13} style={{ color: r(0.2) }} />
           <span
@@ -583,7 +664,7 @@ function GallerySection() {
   };
 
   return (
-    <section className="px-6 md:px-16 py-20 md:py-24">
+    <section className="px-6 md:px-16 py-20 md:py-24 overflow-hidden">
       <div className="max-w-6xl mx-auto">
         <style>{`
           @keyframes makerWeekGalleryLeft {
